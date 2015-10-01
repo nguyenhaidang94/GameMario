@@ -64,6 +64,9 @@
     <Filter Include="Main">
       <UniqueIdentifier>{7496afc3-c5b3-4631-be02-4ffa23846890}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameManager\Text">
+      <UniqueIdentifier>{ba477043-6bf5-47d3-9798-dce0bbca468e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprite.cpp">
@@ -117,6 +120,15 @@
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
+    <ClCompile Include="TextManager.cpp">
+      <Filter>GameManager\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -169,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="TextManager.h">
+      <Filter>GameManager\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>GameManager\GameScene\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

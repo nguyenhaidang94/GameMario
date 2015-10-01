@@ -73,6 +73,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameStatistics.cpp" />
     <ClCompile Include="Keyboard.cpp" />
@@ -85,6 +86,8 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="StartScene.cpp" />
+    <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="Unility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +95,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DynamicGameObject.h" />
+    <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameStatistics.h" />
     <ClInclude Include="Keyboard.h" />
@@ -104,6 +108,8 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="StartScene.h" />
+    <ClInclude Include="TextManager.h" />
     <ClInclude Include="Unility.h" />
   </ItemGroup>
   <ItemGroup>

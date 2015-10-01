@@ -24,6 +24,9 @@ void SceneManager::Initialize()
 {
 	PlayScene::GetInstance()->Initialize();
 	MenuScene::GetInstance()->Initialize();
+	StartScene::GetInstance()->Initialize();
+	GameOverScene::GetInstance()->Initialize();
+	_GameScene = MenuScene::GetInstance();		//start scene is menu
 }
 
 void SceneManager::SwitchScene(eSceneID sceneID)
@@ -32,14 +35,19 @@ void SceneManager::SwitchScene(eSceneID sceneID)
 	{
 	case eMenu:
 		_GameScene = MenuScene::GetInstance();
+		_GameScene->Load();
 		break;
 	case eStartMap:
+		_GameScene = StartScene::GetInstance();
+		_GameScene->Load();
 		break;
 	case ePlay:
 		_GameScene = PlayScene::GetInstance();
 		_GameScene->Load();
 		break;
 	case eGameOver:
+		_GameScene = GameOverScene::GetInstance();
+		_GameScene->Load();
 		break;
 	default:
 		break;

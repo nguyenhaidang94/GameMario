@@ -22,7 +22,7 @@ MenuScene *MenuScene::GetInstance()
 
 void MenuScene::Initialize()
 {
-	
+	_SpriteBanner = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMenuBanner);
 }
 
 void MenuScene::Update()
@@ -32,7 +32,7 @@ void MenuScene::Update()
 
 void MenuScene::Render()
 {
-	
+	_SpriteBanner->RenderFirstFrame(128, 352);
 }
 
 void MenuScene::Release()
@@ -48,6 +48,6 @@ void MenuScene::HandlingInput()
 {
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
-		SceneManager::GetInstance()->SwitchScene(eSceneID::ePlay);
+		SceneManager::GetInstance()->SwitchScene(eSceneID::eStartMap);
 	}
 }

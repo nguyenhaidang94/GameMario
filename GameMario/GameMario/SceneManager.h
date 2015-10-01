@@ -3,6 +3,8 @@
 #include "GameScene.h"
 #include "PlayScene.h"
 #include "MenuScene.h"
+#include "StartScene.h"
+#include "GameOverScene.h"
 using namespace std;
 
 class SceneManager

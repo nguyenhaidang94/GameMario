@@ -5,6 +5,7 @@
 #include "Background.h"
 #include "Mario.h"
 #include "GameStatistics.h"
+#include "SceneManager.h"
 
 class PlayScene :
 	public GameScene

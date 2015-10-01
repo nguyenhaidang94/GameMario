@@ -63,7 +63,6 @@ int Game::Game_Init(HINSTANCE hInstance, HWND hWnd)
 	SpriteManager::GetInstance()->LoadSprite(_spriteHandler);
 	Keyboard::GetInstance()->InitKeyboard(hInstance, hWnd);
 	SceneManager::GetInstance()->Initialize();
-	SceneManager::GetInstance()->SwitchScene(eSceneID::ePlay);
 	GameStatistics::GetInstance()->Initialize();
 	return 1;
 }
@@ -76,10 +75,11 @@ void Game::Game_Run(HWND hWnd)
 	if (_d3ddev == NULL)
 		return;
 
-	_d3ddev->Clear(1, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(255, 255, 255), 1, NULL);
+	_d3ddev->Clear(1, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, NULL);
 	if (_d3ddev->BeginScene())
 	{
 		SceneManager::GetInstance()->Render();
+		TextManager::GetInstance()->RenderScoreOnTop();
 		_d3ddev->EndScene();	
 
 	}

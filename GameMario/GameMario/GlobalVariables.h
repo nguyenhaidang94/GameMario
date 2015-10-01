@@ -17,6 +17,8 @@ enum eSpriteID
 { 
 	eBigMario = 0, 
 	eMap1_1 = 1,
+	eFont,
+	eMenuBanner,
 };
 
 enum eMarioState

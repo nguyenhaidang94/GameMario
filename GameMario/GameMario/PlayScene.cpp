@@ -25,6 +25,7 @@ void PlayScene::Initialize()
 {
 	_Background = new Background();
 	_Mario = new Mario();
+	_MapID = eWorldID::e1_1;
 }
 
 void PlayScene::ReadMapData()
@@ -73,7 +74,7 @@ vector<GameObject*> PlayScene::GetAllObject()
 
 void PlayScene::Load()
 {
-	LoadMap(_MapID);
+	LoadMap(GameStatistics::GetInstance()->GetWorldID());
 }
 
 void PlayScene::LoadMap(eWorldID mapID)
@@ -103,7 +104,8 @@ void PlayScene::Update()
 	//Test switch map
 	if(_Mario->GetPosition().x >= Camera::GetInstance()->GetWorldSize().x)
 	{
-		LoadMap(eWorldID::e1_2);
+		GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_2);
+		SceneManager::GetInstance()->SwitchScene(eSceneID::eStartMap);
 	}
 }
 

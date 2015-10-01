@@ -1,19 +1,18 @@
 #pragma once
 #include "GameScene.h"
-#include "Keyboard.h"
+#include "TextManager.h"
 #include "SceneManager.h"
-#include "SpriteManager.h"
 
-class MenuScene :
+class StartScene :
 	public GameScene
 {
 private:
-	Sprite *_SpriteBanner;
-	static MenuScene *Instance;
+	static StartScene *Instance;
+	DWORD _StartTime;
 public:
-	MenuScene(void);
-	~MenuScene(void);
-	static MenuScene *GetInstance();
+	StartScene(void);
+	~StartScene(void);
+	static StartScene *GetInstance();
 	//Initialize scene
 	void Initialize();
 	//Free menory use
@@ -24,7 +23,5 @@ public:
 	void Update();
 	//Load scene
 	void Load();
-	//---New---//
-	void HandlingInput();
 };
 

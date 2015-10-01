@@ -124,6 +124,29 @@ void Sprite::RenderFirstFrame(float x, float y)
 		);
 	_SpriteHandler->End();
 }
+
+void Sprite::FixedRenderAtFrame(float x, float y, int frameNo)
+{
+	RECT srect;
+
+	srect.left = (frameNo % _SpritePerRow)*(_Width);
+	srect.top = (frameNo / _SpritePerRow)*(_Height);
+	srect.right = srect.left + _Width;
+	srect.bottom = srect.top + _Height;
+
+	D3DXVECTOR3 position(x, y, 0);
+
+	D3DXVECTOR3 center((float)_Width / 2, (float)_Height / 2, 0);
+	_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	_SpriteHandler->Draw(
+		_Image,
+		&srect,
+		NULL,
+		&position,
+		D3DCOLOR_XRGB(255, 255, 255)
+		);
+	_SpriteHandler->End();
+}
  
 void Sprite::Release()
 {

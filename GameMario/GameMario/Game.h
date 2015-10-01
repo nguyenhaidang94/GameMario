@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "Keyboard.h"
 #include "GameStatistics.h"
+#include "TextManager.h"
 
 class Game
 {
