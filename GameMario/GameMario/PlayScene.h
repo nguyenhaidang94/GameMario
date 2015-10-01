@@ -1,0 +1,41 @@
+#pragma once
+#include "GameScene.h"
+#include <vector>
+#include "GameObject.h"
+#include "Background.h"
+#include "Mario.h"
+#include "GameStatistics.h"
+
+class PlayScene :
+	public GameScene
+{
+private:
+	eWorldID _MapID;
+	//Map object
+	Background *_Background;
+	vector<GameObject*> _ListObject;
+	Mario *_Mario;
+	static PlayScene *Instance;
+public:
+	PlayScene(void);
+	~PlayScene(void);
+	static PlayScene *GetInstance();
+	//Initialize scene
+	virtual void Initialize();
+	//Free menory use
+	virtual void Release();
+	//Render scence
+	virtual void Render();
+	//Update scene
+	virtual void Update();
+	//Load scene
+	virtual void Load();
+	//---New function---//
+	//Load new map
+	void LoadMap(eWorldID mapID);
+	//Read object data of map
+	void ReadMapData();
+	//Get list of all object in map
+	vector<GameObject*> GetAllObject();
+};
+

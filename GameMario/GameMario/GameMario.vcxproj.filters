@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{8e0752a5-a706-4ed1-87f9-068d18d0e031}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Sprite">
+      <UniqueIdentifier>{24d60ce7-24ae-4df9-acd0-58cfe02eace1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Camera">
+      <UniqueIdentifier>{853e70b7-f871-4004-8a6f-49578b85ed06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Physic">
+      <UniqueIdentifier>{bc0a161a-456f-432c-9835-36312a43d824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{448ce403-62b5-4173-853b-5b883a7929d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Input">
+      <UniqueIdentifier>{6d5e1646-fbbd-46b9-936f-807369f59ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameManager">
+      <UniqueIdentifier>{fe369db1-fe66-434c-957d-fffd4481f2ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Time">
+      <UniqueIdentifier>{0affa303-d05b-4310-b0f3-bfe78c6f5d23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{8573d58e-8015-403e-bb24-081f8beab9c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Background">
+      <UniqueIdentifier>{7805ed68-860e-46fd-8e1d-0adf3743cfb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\BaseClass">
+      <UniqueIdentifier>{d75178b6-c4bc-44be-9407-b2245c30324a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item">
+      <UniqueIdentifier>{d09a3a90-9ef3-4b00-a1fe-3a81ddc4574d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Mario">
+      <UniqueIdentifier>{dc5c3887-8541-47c4-9b61-c2e7e443dec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Monster">
+      <UniqueIdentifier>{32324389-cf58-45eb-9f5e-c4da1a1cfebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Object">
+      <UniqueIdentifier>{143cef69-939f-4ce2-89e2-d7ca334fd74a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{09ebb496-8d50-46f6-ab89-db98096ea5f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameManager\GamesSatistics">
+      <UniqueIdentifier>{71cc9dd0-ddd9-4113-acca-ec6a81a817b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameManager\GameScene">
+      <UniqueIdentifier>{3ff86ec3-0137-40f9-9020-e82405be2f1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameManager\GameScene\Scene">
+      <UniqueIdentifier>{7d5d8a2f-3455-4d7d-9bbb-7852852f63ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{b1861d37-ac24-4540-bced-1b64ff6ee687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{7496afc3-c5b3-4631-be02-4ffa23846890}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Framework\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteManager.cpp">
+      <Filter>Framework\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Unility.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Framework\Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>GameObject\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>GameObject\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObject\BaseClass</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicGameObject.cpp">
+      <Filter>GameObject\BaseClass</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>GameManager\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatistics.cpp">
+      <Filter>GameManager\GamesSatistics</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>GameManager\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sprite.h">
+      <Filter>Framework\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalVariables.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteManager.h">
+      <Filter>Framework\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Unility.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Framework\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>GameObject\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>GameObject\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicGameObject.h">
+      <Filter>GameObject\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>GameManager\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStatistics.h">
+      <Filter>GameManager\GamesSatistics</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>GameManager\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+</Project>
