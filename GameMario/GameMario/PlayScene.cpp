@@ -27,48 +27,6 @@ void PlayScene::Initialize()
 	_Mario = new Mario();
 }
 
-void PlayScene::Update()
-{
-	_Mario->Update();
-	
-	for (int i = 0; i < _ListObject.size(); i++)
-	{
-		_ListObject[i]->Update();
-	}
-	//Update camera
-	Camera::GetInstance()->Update(_Mario->GetPosition());
-	if(_Mario->GetPosition().x >= Camera::GetInstance()->GetWorldSize().x)
-	{
-		LoadMap(eWorldID::e1_2);
-	}
-}
-
-void PlayScene::Render()
-{
-	_Background->Render();
-	_Mario->Render();
-	for (int i = 0; i < _ListObject.size(); i++)
-	{
-		_ListObject[i]->Render();
-	}
-}
-
-void PlayScene::Load()
-{
-	LoadMap(_MapID);
-}
-
-void PlayScene::LoadMap(eWorldID mapID)
-{
-	this->Release();
-	_MapID = mapID;
-	//Reset some object
-	_Background->ReadMapData(_MapID);
-	_Mario->SetPosition(D3DXVECTOR2(0,64));
-	//Read object data in map
-	ReadMapData();
-}
-
 void PlayScene::ReadMapData()
 {
 	string fileName;
@@ -113,11 +71,92 @@ vector<GameObject*> PlayScene::GetAllObject()
 	return _ListObject;
 }
 
+void PlayScene::Load()
+{
+	LoadMap(_MapID);
+}
+
+void PlayScene::LoadMap(eWorldID mapID)
+{
+	this->Release();
+	_MapID = mapID;
+	//Reset some object
+	_Background->ReadMapData(_MapID);
+	_Mario->SetPosition(D3DXVECTOR2(0,64));
+	//Read object data in map
+	ReadMapData();
+}
+
+void PlayScene::Update()
+{
+	_Mario->Update();
+	
+	for (int i = 0; i < _ListObject.size(); i++)
+	{
+		_ListObject[i]->Update();
+	}
+	//Update camera
+	Camera::GetInstance()->Update(_Mario->GetPosition());
+	//Handling colison
+	HandlingCollision();
+
+	//Test switch map
+	if(_Mario->GetPosition().x >= Camera::GetInstance()->GetWorldSize().x)
+	{
+		LoadMap(eWorldID::e1_2);
+	}
+}
+
+void PlayScene::Render()
+{
+	_Background->Render();
+	_Mario->Render();
+	for (int i = 0; i < _ListObject.size(); i++)
+	{
+		_ListObject[i]->Render();
+	}
+}
+
 void PlayScene::Release()
 {
 	_Background->Release();
 	for (int i = 0; i < _ListObject.size(); i++)
 	{
 		_ListObject[i]->Release();
+	}
+}
+
+//----Temporary handling collision----//
+vector<GameObject*> PlayScene::GetListObjectOnScreen()
+{
+	Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
+	float normalX, normalY;
+	vector<GameObject*> result;
+	for(int i = 0; i < _ListObject.size(); i++)
+	{
+		if(sweptAABB(_ListObject[i]->GetBoundaryBox(), cameraBox, normalX, normalY) == 0)	//Neu co va cham
+		{
+			result.push_back(_ListObject[i]);
+		}
+	}
+	return result;
+}
+
+void PlayScene::HandlingCollision()
+{
+	vector<GameObject*> objectOnScreen = GetListObjectOnScreen();
+	float normalX, normalY;
+	for(int i = 0; i < objectOnScreen.size(); i++)
+	{
+		for(int j = i; j < objectOnScreen.size(); j++)
+		{
+			normalX = 0;
+			normalY = 0;
+			if(sweptAABB(objectOnScreen[i]->GetBoundaryBox(), objectOnScreen[j]->GetBoundaryBox(), normalX, normalY))
+			{
+				//Need to do something with normalX & normalY to calculate direction...
+				objectOnScreen[i]->OnCollision(objectOnScreen[j], eCollisionDirection::eNone);
+			}
+		}
 	}
 }

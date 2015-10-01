@@ -35,3 +35,13 @@ eObjectTypeID GameObject::GetObjectTypeID()
 {
 	return _ObjectTypeID;
 }
+
+void GameObject::SetTag(string tag)
+{
+	_Tag = tag;
+}
+
+string GameObject::GetTag()
+{
+	return _Tag;
+}

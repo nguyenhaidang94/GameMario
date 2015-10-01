@@ -3,6 +3,8 @@
 #include "GlobalVariables.h"
 #include "Sprite.h"
 #include "Collision.h"
+#include <string>
+using namespace std;;
 
 class GameObject
 {
@@ -10,6 +12,7 @@ protected:
 	eObjectTypeID _ObjectTypeID;	//Object ID
 	D3DXVECTOR2 _Position;
 	Sprite *_Sprite;
+	string _Tag;					//Custom tag for use if needed
 public:
 	GameObject(void);
 	GameObject(eObjectTypeID objectTypeID, D3DXVECTOR2 pos);
@@ -21,6 +24,9 @@ public:
 	//Set positon of object
 	void SetPosition(D3DXVECTOR2 position);
 
+	//Set tag of object
+	void SetTag(string tag);
+
 	//Get colision box of object
 	D3DXVECTOR2 GetPosition();
 
@@ -28,7 +34,10 @@ public:
 	eObjectTypeID GetObjectTypeID();
 
 	//Get colision box of object
-	virtual Box GetBox() = 0;
+	string GetTag();
+
+	//Get colision box of object
+	virtual Box GetBoundaryBox() = 0;
 
 	//Update object
 	virtual void Update() = 0;
@@ -38,5 +47,8 @@ public:
 
 	//Removes a gameobject, component or asset.
 	virtual void Release() = 0;
+
+	//Handling object when colision happened
+	virtual void OnCollision(GameObject *object, eCollisionDirection collisionDirection) = 0;
 };
 

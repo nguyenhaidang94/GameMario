@@ -1,6 +1,7 @@
 #pragma once
 #include "GlobalVariables.h"
 #include <d3dx9.h>
+#include "Collision.h"
 
 class Camera
 {
@@ -18,5 +19,6 @@ public:
 	void Update(D3DXVECTOR2 characterPosition);
 	D3DXVECTOR2 GetViewPort();
 	D3DXVECTOR2 GetWorldSize();
+	Box GetBoundaryBox();
 };
 

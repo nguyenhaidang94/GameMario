@@ -16,7 +16,8 @@ public:
 	void Update();
 	void Render();
 	void Release();
-	Box GetBox();
+	Box GetBoundaryBox();
+	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
 
 	//New
 	//Handling user input

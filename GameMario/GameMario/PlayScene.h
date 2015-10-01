@@ -16,6 +16,7 @@ private:
 	vector<GameObject*> _ListObject;
 	Mario *_Mario;
 	static PlayScene *Instance;
+	vector<GameObject*> GetListObjectOnScreen();
 public:
 	PlayScene(void);
 	~PlayScene(void);
@@ -37,5 +38,7 @@ public:
 	void ReadMapData();
 	//Get list of all object in map
 	vector<GameObject*> GetAllObject();
+	//Handling collision of map object
+	void HandlingCollision();
 };
 

@@ -6,7 +6,7 @@ Camera::Camera(void)
 {
 	_ViewPortX = 0;
 	_ViewPortY = SCREEN_HEIGHT;
-	_IsAllowBack = false;
+	_IsAllowBack = true;
 }
 
 Camera::~Camera(void)
@@ -31,25 +31,53 @@ void Camera::SetWorldSize(int worldWidth, int worldHeight)
 void Camera::Update(D3DXVECTOR2 characterPosition)
 {
 	//Update X axis
-	//If character in begin of the world
-	if(characterPosition.x - SCREEN_WIDTH/2 < 0)
+	//If character not go back and camera allow go back
+	if(!_IsAllowBack)
 	{
-		_ViewPortX = 0;
+		if(characterPosition.x > _OldX)
+		{
+			_OldX = characterPosition.x;
+			//If character in begin of the world
+			if(characterPosition.x - SCREEN_WIDTH/2 < 0)
+			{
+				_ViewPortX = 0;
+			}
+			else
+			{
+				//If character in end of world
+				if (characterPosition.x + SCREEN_WIDTH / 2 > _WorldWidth)
+				{
+					_ViewPortX = _WorldWidth - SCREEN_WIDTH;
+				}
+				//Normal case
+				else
+				{
+					_ViewPortX = (LONG)characterPosition.x - SCREEN_WIDTH / 2;
+				}
+			}
+		}
 	}
 	else
 	{
-		//If character in end of world
-		if (characterPosition.x + SCREEN_WIDTH / 2 > _WorldWidth)
+		//If character in begin of the world
+		if(characterPosition.x - SCREEN_WIDTH/2 < 0)
 		{
-			_ViewPortX = _WorldWidth - SCREEN_WIDTH;
+			_ViewPortX = 0;
 		}
-		//Normal case
 		else
 		{
-			_ViewPortX = (LONG)characterPosition.x - SCREEN_WIDTH / 2;
+			//If character in end of world
+			if (characterPosition.x + SCREEN_WIDTH / 2 > _WorldWidth)
+			{
+				_ViewPortX = _WorldWidth - SCREEN_WIDTH;
+			}
+			//Normal case
+			else
+			{
+				_ViewPortX = (LONG)characterPosition.x - SCREEN_WIDTH / 2;
+			}
 		}
 	}
-
 	////Update Y axis
 	////If character in begin of the world
 	//if(characterPosition.y - SCREEN_HEIGHT/2 < 0)
@@ -79,4 +107,9 @@ D3DXVECTOR2 Camera::GetViewPort()
 D3DXVECTOR2 Camera::GetWorldSize()
 {
 	return D3DXVECTOR2((float)_WorldWidth,(float) _WorldHeight);
+}
+
+Box Camera::GetBoundaryBox()
+{
+	return Box(_ViewPortX, _ViewPortY, SCREEN_WIDTH, SCREEN_HEIGHT);
 }

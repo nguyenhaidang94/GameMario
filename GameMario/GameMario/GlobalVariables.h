@@ -41,3 +41,12 @@ enum eSceneID
 	ePlay,
 	eGameOver,
 };
+
+enum eCollisionDirection
+{
+	eNone = 0,
+	eTop = 1,
+	eBottom,
+	eLeft,
+	eRight,
+};

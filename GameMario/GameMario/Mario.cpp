@@ -68,7 +68,17 @@ void Mario::Release()
 
 }
 
-Box Mario::GetBox()
+Box Mario::GetBoundaryBox()
 {
 	return Box();
+}
+
+void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
+{
+	//Handling collision by object type here
+	switch (object->GetObjectTypeID())
+	{
+	default:
+		break;
+	}
 }
