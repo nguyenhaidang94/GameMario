@@ -21,10 +21,10 @@ SpriteManager *SpriteManager::GetInstance()
 
 void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 {
-	_ListSprite[eSpriteID::eMap1_1] = new Sprite(SpriteHandler, L"resources\\map1.png", 64, 64, 61, 8, D3DCOLOR_XRGB(255,0,255));
-	_ListSprite[eSpriteID::eBigMario] = new Sprite(SpriteHandler, L"resources\\BigMario.png", (double)810/14, 64, 14, 14, D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eFont] = new Sprite(SpriteHandler, L"resources\\font.png", 20, 20, 36, 12, D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eMenuBanner] = new Sprite(SpriteHandler, L"resources\\MenuBanner.png", 256, 196, 1, 1, D3DCOLOR_XRGB(111, 133, 255));
+	_ListSprite[eSpriteID::eMap1_1] = new Sprite(SpriteHandler, L"resources\\Sprites\\map1.png", 64, 64, 61, 8, D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eBigMario] = new Sprite(SpriteHandler, L"resources\\Sprites\\BigMario.png", (double)810/14, 64, 14, 14, D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eFont] = new Sprite(SpriteHandler, L"resources\\Sprites\\font.png", 20, 20, 36, 12, D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eMenuBanner] = new Sprite(SpriteHandler, L"resources\\Sprites\\MenuBanner.png", 256, 196, 1, 1, D3DCOLOR_XRGB(111, 133, 255));
 }
 
 Sprite *SpriteManager::GetSprite(eSpriteID objectID)

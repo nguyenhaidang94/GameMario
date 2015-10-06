@@ -45,14 +45,38 @@ int Game::Init_Direct3D(HWND hWnd, int width, int height, int fullscreen)
 	return 1;
 }
 
+//Init sound
+int Game::Init_DirectSound(HWND hWnd)
+{
+	HRESULT hr;
+	hr = DirectSoundCreate8(0, &_lpDirectSound, 0);
+	if(FAILED(hr))
+	{
+		return false;
+	}
+	hr = _lpDirectSound->SetCooperativeLevel(hWnd, DSSCL_PRIORITY);
+	if(FAILED(hr))
+	{
+		return false;
+	}
+	return true;
+}
+
 int Game::Game_Init(HINSTANCE hInstance, HWND hWnd)
 {
 	HRESULT result;
 	DWORD test;
+	LPDIRECTSOUND lpDSound;
 
 	if (!Init_Direct3D(hWnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN))
 	{
 		MessageBox(hWnd, L"Error initializing Direct3D", L"Error", MB_OK);
+		return 0;
+	}
+
+	if (!Init_DirectSound(hWnd))
+	{
+		MessageBox(hWnd, L"Error initializing DirectSound", L"Error", MB_OK);
 		return 0;
 	}
 
@@ -64,6 +88,7 @@ int Game::Game_Init(HINSTANCE hInstance, HWND hWnd)
 	Keyboard::GetInstance()->InitKeyboard(hInstance, hWnd);
 	SceneManager::GetInstance()->Initialize();
 	GameStatistics::GetInstance()->Initialize();
+	SoundManager::GetInstance()->LoadSounds(_lpDirectSound);
 	return 1;
 }
 

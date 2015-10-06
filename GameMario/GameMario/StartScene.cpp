@@ -1,4 +1,5 @@
 #include "StartScene.h"
+#define WAIT_TIME 2000		//wait 2s
 
 StartScene *StartScene::Instance = NULL;
 
@@ -27,7 +28,7 @@ void StartScene::Initialize()
 
 void StartScene::Update()
 {
-	if((GetTickCount() - _StartTime) > 3000)	//wait 3s
+	if((GetTickCount() - _StartTime) > WAIT_TIME)
 	{
 		SceneManager::GetInstance()->SwitchScene(eSceneID::ePlay);
 	}
@@ -46,5 +47,4 @@ void StartScene::Release()
 void StartScene::Load()
 {
 	_StartTime = GetTickCount();
-	PlayScene::GetInstance()->LoadMap(GameStatistics::GetInstance()->GetWorldID());
 }

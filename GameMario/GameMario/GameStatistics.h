@@ -12,6 +12,7 @@ private:
 	int _CoinCount;
 	eWorldID _WolrdID;
 	static GameStatistics *Instance;
+	bool _IsTimePause;
 public:
 	GameStatistics(void);
 	~GameStatistics(void);
@@ -42,5 +43,9 @@ public:
 	void IncreaseCoin();
 	//Change current worldID
 	void ChangeWorld(eWorldID worldID);
+	//Reset time = 400s and unpause game
+	void ResetTime();
+	//Pause game time
+	void PauseTime();
 };
 

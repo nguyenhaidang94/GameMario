@@ -6,11 +6,11 @@ Mario::Mario(void)
 	_State = eMarioState::eIdle;
 	SetObjectType(eMario);
 	//Testing
-	SetVelocity(D3DXVECTOR2(2,2));
+	SetVelocity(D3DXVECTOR2(0,-2));
 	_CurrentFrame = 0;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
-	SetPosition(D3DXVECTOR2(0,64));
-	
+	SetPosition(D3DXVECTOR2(32,32));
+	_IsCollide = false;
 }
 
 
@@ -26,6 +26,8 @@ void Mario::Initialize()
 
 void Mario::HandlingInput()
 {
+	//testing
+	_State = eMarioState::eIdle;
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_D))
 	{
 		_State = eMarioState::eRun;
@@ -33,7 +35,9 @@ void Mario::HandlingInput()
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_K))
 	{
 		_State = eMarioState::eJump;
+		SoundManager::GetInstance()->GetSound(eSoundID::eJumpSmall)->Play();
 	}
+	
 }
 
 void Mario::Update()
@@ -44,18 +48,22 @@ void Mario::Update()
 	{
 	case eIdle:
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 7, 7);
+		_Velocity.x = 0;
 		break;
 	case eRun:
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 8, 10);
-		_Position.x += _Velocity.x;
+		_Velocity.x = 2;
 		break;
 	case eJump:
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 12, 12);
-		_Position.y += _Velocity.y;
+		_Velocity.y += 2;
 		break;
 	default:
 		break;
 	}
+	_Velocity.y -= 0.05;
+	_Position.x += _Velocity.x;
+	_Position.y += _Velocity.y;
 }
 
 void Mario::Render()
@@ -70,14 +78,25 @@ void Mario::Release()
 
 Box Mario::GetBoundaryBox()
 {
-	return Box();
+	//temporary
+	return Box(_Position.x - 32, _Position.y + 32, 64, 58, _Velocity.x, _Velocity.y);
 }
 
 void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
-	//Handling collision by object type here
+	//Handling collision by object goes here
 	switch (object->GetObjectTypeID())
 	{
+	case eGround:
+		switch (collisionDirection)
+		{
+		case eTop:
+			_Position.y = object->GetBoundaryBox().fY + 30;
+			break;
+		default:
+			break;
+		}
+		break;
 	default:
 		break;
 	}

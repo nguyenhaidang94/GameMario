@@ -81,9 +81,6 @@
     <ClCompile Include="Unility.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Framework\Physic</Filter>
-    </ClCompile>
     <ClCompile Include="Keyboard.cpp">
       <Filter>Framework\Input</Filter>
     </ClCompile>
@@ -129,6 +126,21 @@
     <ClCompile Include="GameOverScene.cpp">
       <Filter>GameManager\GameScene\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="dsutil.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SwepAABB.cpp">
+      <Filter>Framework\Physic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -145,9 +157,6 @@
     </ClInclude>
     <ClInclude Include="Unility.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Framework\Physic</Filter>
     </ClInclude>
     <ClInclude Include="Keyboard.h">
       <Filter>Framework\Input</Filter>
@@ -190,6 +199,21 @@
     </ClInclude>
     <ClInclude Include="GameOverScene.h">
       <Filter>GameManager\GameScene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="SwepAABB.h">
+      <Filter>Framework\Physic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

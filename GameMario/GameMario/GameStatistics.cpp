@@ -1,4 +1,5 @@
 #include "GameStatistics.h"
+#define GAME_TIME 400
 
 GameStatistics *GameStatistics::Instance = new GameStatistics();
 
@@ -26,7 +27,8 @@ void GameStatistics::Initialize()
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
-	_Time = 400;
+	_Time = GAME_TIME;
+	_IsTimePause = true;
 }
 
 void GameStatistics::Reset()
@@ -35,7 +37,7 @@ void GameStatistics::Reset()
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
-	_Time = 400;
+	_Time = GAME_TIME;
 }
 
 eWorldID GameStatistics::GetWorldID()
@@ -96,7 +98,10 @@ void GameStatistics::ChangeLife(bool isIncrease)
 
 void GameStatistics::DecreaseTime()
 {
-	_Time--;
+	if(!_IsTimePause)
+	{
+		_Time--;
+	}
 }
 
 void GameStatistics::IncreaseCoin()
@@ -107,4 +112,15 @@ void GameStatistics::IncreaseCoin()
 void GameStatistics::ChangeWorld(eWorldID worldID)
 {
 	_WolrdID = worldID;
+}
+
+void GameStatistics::ResetTime()
+{
+	_IsTimePause = false;
+	_Time = GAME_TIME;
+}
+
+void GameStatistics::PauseTime()
+{
+	_IsTimePause = true;
 }

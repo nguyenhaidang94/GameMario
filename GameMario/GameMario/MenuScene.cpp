@@ -32,7 +32,7 @@ void MenuScene::Update()
 
 void MenuScene::Render()
 {
-	_SpriteBanner->RenderFirstFrame(128, 352);
+	_SpriteBanner->RenderFirstFrame(256, 224);
 }
 
 void MenuScene::Release()

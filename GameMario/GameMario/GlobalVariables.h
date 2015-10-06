@@ -11,6 +11,7 @@ enum eObjectTypeID
 {
 	eUndefined = 0, 
 	eMario = 1,
+	eGround,
 };
 
 enum eSpriteID
@@ -51,4 +52,22 @@ enum eCollisionDirection
 	eBottom,
 	eLeft,
 	eRight,
+};
+
+enum eSoundID
+{
+	eSoundGameOver = 0,
+	eMarioDie = 1,
+	eRunningOutOfTime,
+	eStageClear,
+	eWorldClear,
+	e1Up,
+	eBrickSmash,
+	eBump,
+	eCoin,
+	eDownTheLlagpole,
+	eJumpSmall,
+	eJumpSuper,
+	ePipeTravel,
+	ePowerUp
 };

@@ -23,7 +23,7 @@ public:
 	void RenderAtFrame(float x, float y, int frameNo);
 	//Render at 1st frame
 	void RenderFirstFrame(float x, float y);
-	//Render at fixed location on screen
+	//Render at fixed location on screen, y axis from top
 	void FixedRenderAtFrame(float x, float y, int frameNo);
 	void Release();
 };

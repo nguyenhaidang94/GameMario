@@ -83,7 +83,7 @@ void Sprite::RenderAtFrame(float x, float y, int frameNo)
 	_SpriteHandler->Draw(
 		_Image,
 		&srect,
-		NULL,
+		&center,
 		&p,
 		D3DCOLOR_XRGB(255, 255, 255)
 		);
@@ -118,7 +118,7 @@ void Sprite::RenderFirstFrame(float x, float y)
 	_SpriteHandler->Draw(
 		_Image,
 		&srect,
-		NULL,
+		&center,
 		&p,
 		D3DCOLOR_XRGB(255, 255, 255)
 		);

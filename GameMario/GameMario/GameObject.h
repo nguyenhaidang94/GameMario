@@ -2,7 +2,7 @@
 #include <d3dx9.h>
 #include "GlobalVariables.h"
 #include "Sprite.h"
-#include "Collision.h"
+#include "SwepAABB.h"
 #include <string>
 using namespace std;;
 

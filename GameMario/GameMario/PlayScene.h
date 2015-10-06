@@ -6,6 +6,7 @@
 #include "Mario.h"
 #include "GameStatistics.h"
 #include "SceneManager.h"
+#include "Ground.h"
 
 class PlayScene :
 	public GameScene
@@ -18,6 +19,9 @@ private:
 	Mario *_Mario;
 	static PlayScene *Instance;
 	vector<GameObject*> GetListObjectOnScreen();
+
+	//get direction of colision base on normalx, normaly from SwepAABB
+	eCollisionDirection GetCollisionDirection(float normalx, float normaly);
 public:
 	PlayScene(void);
 	~PlayScene(void);

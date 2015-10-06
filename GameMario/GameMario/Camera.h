@@ -1,7 +1,7 @@
 #pragma once
 #include "GlobalVariables.h"
 #include <d3dx9.h>
-#include "Collision.h"
+#include "SwepAABB.h"
 
 class Camera
 {

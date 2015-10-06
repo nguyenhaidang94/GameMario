@@ -8,6 +8,7 @@
 #include "Keyboard.h"
 #include "GameStatistics.h"
 #include "TextManager.h"
+#include "SoundManager.h"
 
 class Game
 {
@@ -17,10 +18,12 @@ private:
 	LPDIRECT3DSURFACE9 _backbuffer;
 	LPDIRECT3DSURFACE9 _surface;
 	LPD3DXSPRITE _spriteHandler;
+	LPDIRECTSOUND8	_lpDirectSound;
 	DWORD _start;
 public:
 	Game(void);
 	int Init_Direct3D(HWND hWnd, int width, int height, int fullscreen);
+	int Init_DirectSound(HWND hWnd);
 	int Game_Init(HINSTANCE hInstance, HWND hWnd);
 	void Game_Run(HWND hWnd);
 	void Game_End(HWND hWnd);

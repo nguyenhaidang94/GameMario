@@ -51,7 +51,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;dsound.lib;dxerr.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,11 +71,13 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="SwepAABB.cpp" />
+    <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameStatistics.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -84,6 +86,8 @@
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="StartScene.cpp" />
@@ -93,11 +97,13 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Collision.h" />
+    <ClInclude Include="SwepAABB.h" />
+    <ClInclude Include="dsutil.h" />
     <ClInclude Include="DynamicGameObject.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameStatistics.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GlobalVariables.h" />
@@ -106,6 +112,8 @@
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StartScene.h" />

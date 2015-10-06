@@ -35,23 +35,21 @@ void SceneManager::SwitchScene(eSceneID sceneID)
 	{
 	case eMenu:
 		_GameScene = MenuScene::GetInstance();
-		_GameScene->Load();
 		break;
 	case eStartMap:
 		_GameScene = StartScene::GetInstance();
-		_GameScene->Load();
 		break;
 	case ePlay:
 		_GameScene = PlayScene::GetInstance();
-		_GameScene->Load();
 		break;
 	case eGameOver:
 		_GameScene = GameOverScene::GetInstance();
-		_GameScene->Load();
 		break;
 	default:
 		break;
 	}
+	GameStatistics::GetInstance()->PauseTime();
+	_GameScene->Load();
 }
 
 void SceneManager::Update()

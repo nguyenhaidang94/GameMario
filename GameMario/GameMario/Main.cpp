@@ -85,7 +85,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	DWORD frame_start = GetTickCount();	
 	DWORD count_per_frame = 1000 / FRAME_RATE;
-
+	DWORD game_time_start = GetTickCount();		//to minus current game time 
 
 	//main message loop
 	int done = 0;
@@ -107,6 +107,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			frame_start = now;
 			game->Game_Run(hWnd);
+			if(now - game_time_start > 1000)
+			{
+				GameStatistics::GetInstance()->DecreaseTime();
+				game_time_start = now;
+			}
 		}
 	}
 
