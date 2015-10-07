@@ -205,6 +205,15 @@ eCollisionDirection PlayScene::CheckCollision(DynamicGameObject *dynamicObj, Gam
 	//neu chua va cham
 	if (AABB(dynamicBox, unknownBox, moveX, moveY) == false)
 	{
+		//neu unknownObj co van toc thi tru van toc 2 vat
+		if (unknownBox.fVx != 0.0f || unknownBox.fVy != 0.0f)
+		{
+			dynamicBox.fVx -= unknownBox.fVx;
+			dynamicBox.fVy -= unknownBox.fVy;
+			unknownBox.fVx = 0.0f;
+			unknownBox.fVy = 0.0f;
+		}
+
 		//lay box o fram ke tiep
 		Box broadphasebox = getSweptBroadphaseBox(dynamicBox);
 		//neu o frame ke tiep vat se va cham
