@@ -7,6 +7,7 @@
 #include "GameStatistics.h"
 #include "SceneManager.h"
 #include "Ground.h"
+#include "SwepAABB.h"
 
 class PlayScene :
 	public GameScene
@@ -45,5 +46,11 @@ public:
 	vector<GameObject*> GetAllObject();
 	//Handling collision of map object
 	void HandlingCollision();
+	//
+	eCollisionDirection CheckCollision(DynamicGameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY);
+	//this function use for test collision
+	//and show result to messagebox
+	void Update(HWND hWnd);
+	void HandlingCollision(HWND hWnd);
 };
 

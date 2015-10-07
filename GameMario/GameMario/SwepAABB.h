@@ -1,17 +1,16 @@
 #pragma once
-
 #include <algorithm>
 #include <Windows.h>
 #include "GlobalVariables.h"
 
 struct Box
 {
-	float fX;
-	float fY;
-	float fWidth;//width
-	float fHeight;//height
-	float fVx;//veclocity x
-	float fVy;//velocity y
+	float fX;		//position x
+	float fY;		//position y
+	float fWidth;	//width
+	float fHeight;	//height
+	float fVx;		//veclocity x
+	float fVy;		//velocity y
 
 	Box()
 	{
@@ -57,3 +56,4 @@ bool AABBCheck(Box box1, Box box2);
 
 //
 bool AABB(Box box1, Box box2, float &moveX, float &moveY);
+

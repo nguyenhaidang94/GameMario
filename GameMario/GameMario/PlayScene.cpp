@@ -120,6 +120,32 @@ void PlayScene::Update()
 	//}
 }
 
+//this function use for test collision
+//and show result to messagebox
+void PlayScene::Update(HWND hWnd)
+{
+	_Mario->Update();
+
+	for (int i = 0; i < _ListObject.size(); i++)
+	{
+		_ListObject[i]->Update();
+	}
+
+	//Handling colison
+	HandlingCollision();
+
+	//Update camera
+	Camera::GetInstance()->Update(_Mario->GetPosition());
+
+
+	//Test switch map
+	//if(_Mario->GetPosition().x >= Camera::GetInstance()->GetWorldSize().x)
+	//{
+	//	GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_2);
+	//	SceneManager::GetInstance()->SwitchScene(eSceneID::eStartMap);
+	//}
+}
+
 void PlayScene::Render()
 {
 	_Background->Render();
@@ -142,18 +168,160 @@ void PlayScene::Release()
 //----Temporary handling collision----//
 vector<GameObject*> PlayScene::GetListObjectOnScreen()
 {
+	//Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
+	//float normalX, normalY;
+	//vector<GameObject*> result;
+	//for(int i = 0; i < _ListObject.size(); i++)
+	//{
+	//	Box a=  _ListObject[i]->GetBoundaryBox();
+	//	if(AABB(_ListObject[i]->GetBoundaryBox(), cameraBox, normalX, normalY))	//Neu co va cham
+	//	{
+	//		result.push_back(_ListObject[i]);
+	//	}
+	//}
+	//return result;
+
 	Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
-	float normalX, normalY;
 	vector<GameObject*> result;
-	for(int i = 0; i < _ListObject.size(); i++)
+	for (int i = 0; i < _ListObject.size(); i++)
 	{
-		Box a=  _ListObject[i]->GetBoundaryBox();
-		if(AABB(_ListObject[i]->GetBoundaryBox(), cameraBox, normalX, normalY))	//Neu co va cham
+		if (AABBCheck(cameraBox, _ListObject[i]->GetBoundaryBox()))	//Neu co va cham
 		{
 			result.push_back(_ListObject[i]);
 		}
 	}
 	return result;
+}
+
+//-------------------------------------------------------------
+//check collision of an dynamic object with another object
+//return CollisionDirection
+//-------------------------------------------------------------
+eCollisionDirection PlayScene::CheckCollision(DynamicGameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY)
+{
+	float normalX, normalY;
+	Box dynamicBox = dynamicObj->GetBoundaryBox();
+	Box unknownBox = unknownObj->GetBoundaryBox();
+
+	//neu chua va cham
+	if (AABB(dynamicBox, unknownBox, moveX, moveY) == false)
+	{
+		//lay box o fram ke tiep
+		Box broadphasebox = getSweptBroadphaseBox(dynamicBox);
+		//neu o frame ke tiep vat se va cham
+		if (AABB(broadphasebox, unknownBox, moveX, moveY) == true)
+		{
+			//su dung thuat toan sweptAABB de xac dinh va cham
+			float collisiontime = sweptAABB(dynamicBox, unknownBox, normalX, normalY);
+			//truong hop co xay ra va cham
+			if (collisiontime > 0.0f && collisiontime < 1.0f)
+			{
+				//normalY != 0.0f va moveY != 0 tuc va cham theo phuong doc
+				if (normalY != 0.0f && moveY != 0)
+				{
+					//va cham top
+					if (normalY == 1.0f)
+					{
+						//MessageBox(_hWnd, L"top", L"collision", MB_OK);
+						return eCollisionDirection::eTop;
+					}
+					//va cham bot
+					else if (normalY == -1.0f)
+					{
+						//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
+						return eCollisionDirection::eBottom;
+					}
+				}
+				//normalX != 0.0f va moveX != 0 tuc va cham theo phuong ngang
+				else if (normalX != 0.0f && moveX != 0.0f)
+				{
+					//va cham right
+					if (normalX == 1.0f)
+					{
+						//MessageBox(_hWnd, L"right", L"collision", MB_OK);
+						return eCollisionDirection::eRight;
+					}
+					//va cham left
+					else if (normalX == -1.0f)
+					{
+						//MessageBox(_hWnd, L"left", L"collision", MB_OK);
+						return eCollisionDirection::eLeft;
+					}
+				}
+			}
+		}
+	}
+	//neu da va cham
+	else
+	{
+		//va cham theo phuong doc
+		if (moveY != 0)
+		{
+			//top
+			if (moveY > 0.0f)
+			{
+				//MessageBox(_hWnd, L"top", L"collision", MB_OK);
+				return eCollisionDirection::eTop;
+			}
+			//bot
+			else
+			{
+				//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
+				return eCollisionDirection::eBottom;
+			}
+		}
+		//va cham theo phuong ngang
+		else if (moveX != 0)
+		{
+			//left
+			if (moveX < 0.0f)
+			{
+				//MessageBox(_hWnd, L"left", L"collision", MB_OK);
+				return eCollisionDirection::eLeft;
+			}
+			//right
+			else
+			{
+				//MessageBox(_hWnd, L"right", L"collision", MB_OK);
+				return eCollisionDirection::eRight;
+			}
+		}
+		//moveX == 0 va move Y == 0 tuc 2 vat dang tiep xuc
+		else
+		{
+			//truong hop goc cham goc thi khong xac dinh duoc huong va cham
+			if (dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY && dynamicBox.fX + dynamicBox.fWidth == unknownBox.fX
+				|| dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY && dynamicBox.fX == unknownBox.fX + unknownBox.fWidth)
+				return eCollisionDirection::eNone;
+
+			//tiep xuc voi mat tren cua vat unknown
+			if (dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY)
+			{
+				//MessageBox(_hWnd, L"top", L"collision", MB_OK);
+				return eCollisionDirection::eTop;
+			}
+			//tiep xuc o mat duoi cua vat unknown
+			else if (dynamicBox.fY == unknownBox.fY - unknownBox.fHeight)
+			{
+				//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
+				return eCollisionDirection::eBottom;
+			}
+			//tiep xuc o mat trai cua vat unknown
+			else if (dynamicBox.fX + dynamicBox.fWidth == unknownBox.fX)
+			{
+				//MessageBox(_hWnd, L"left", L"collision", MB_OK);
+				return eCollisionDirection::eLeft;
+			}
+			//tiep xuc o mat phai cua vat unknown
+			else if (dynamicBox.fX == unknownBox.fX + unknownBox.fWidth)
+			{
+				//MessageBox(_hWnd, L"right", L"collision", MB_OK);
+				return eCollisionDirection::eRight;
+			}
+		}
+	}
+
+	return eCollisionDirection::eNone;
 }
 
 void PlayScene::HandlingCollision()
@@ -185,6 +353,40 @@ void PlayScene::HandlingCollision()
 				objectOnScreen[i]->OnCollision(objectOnScreen[j], GetCollisionDirection(normalX, normalY));
 				objectOnScreen[j]->OnCollision(objectOnScreen[i], GetCollisionDirection(normalX, normalY));
 			}
+		}
+	}
+}
+
+//-------------------------------------------------------------
+//check collision of an dynamic object with another object
+//return CollisionDirection
+//-------------------------------------------------------------
+void PlayScene::HandlingCollision(HWND hWnd)
+{
+	vector<GameObject*> objectOnScreen = GetListObjectOnScreen();
+	float normalX, normalY;
+	float moveX, moveY;
+	for (int i = 0; i < objectOnScreen.size(); i++)
+	{
+		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
+		_Mario->OnCollision(objectOnScreen[i], direction);
+
+		switch (direction)
+		{
+		case eTop:
+			MessageBox(hWnd, L"top", L"collision", MB_OK);
+			break;
+		case eBottom:
+			MessageBox(hWnd, L"bottom", L"collision", MB_OK);
+			break;
+		case eLeft:
+			MessageBox(hWnd, L"left", L"collision", MB_OK);
+			break;
+		case eRight:
+			MessageBox(hWnd, L"right", L"collision", MB_OK);
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -223,3 +425,4 @@ eCollisionDirection PlayScene::GetCollisionDirection(float normalx, float normal
 	}
 	return eCollisionDirection::eNone;
 }
+

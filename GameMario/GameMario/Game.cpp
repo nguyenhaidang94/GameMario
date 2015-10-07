@@ -95,7 +95,7 @@ int Game::Game_Init(HINSTANCE hInstance, HWND hWnd)
 void Game::Game_Run(HWND hWnd)
 {
 	Keyboard::GetInstance()->ProcessKeyBoard();
-	SceneManager::GetInstance()->Update();
+	SceneManager::GetInstance()->Update(hWnd);
 
 	if (_d3ddev == NULL)
 		return;

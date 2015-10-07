@@ -2,7 +2,7 @@
 
 
 //---------------------------------------------
-//lay vi tri tiep theo cua box
+//lay vi tri o frame tiep theo cua box
 //---------------------------------------------
 Box getSweptBroadphaseBox(Box box)
 {
@@ -20,13 +20,13 @@ Box getSweptBroadphaseBox(Box box)
 
 //----------------------------------------------------------
 // returns true if the boxes are colliding (velocities are not used)
+// dung trong truong hop xet va cham voi viewport
 //----------------------------------------------------------
 bool AABBCheck(Box box1, Box box2)
 {
 	return !(box1.fX + box1.fWidth <= box2.fX || box1.fX >= box2.fX + box2.fWidth || box1.fY - box1.fHeight >= box2.fY || box1.fY <= box2.fY - box2.fHeight);
 }
 
-//HAM NAY CHUA SU DUNG
 //--------------------------------------------------------------------------
 //kiem tra va tranh va cham
 //tra ve true neu va cham

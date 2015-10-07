@@ -79,7 +79,7 @@ void Mario::Release()
 Box Mario::GetBoundaryBox()
 {
 	//temporary
-	return Box(_Position.x - 32, _Position.y + 32, 64, 58, _Velocity.x, _Velocity.y);
+	return Box(_Position.x - 29, _Position.y + 32, 58, 64, _Velocity.x, _Velocity.y);
 }
 
 void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirection)

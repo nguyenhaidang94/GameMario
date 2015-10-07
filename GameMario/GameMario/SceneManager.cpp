@@ -57,6 +57,16 @@ void SceneManager::Update()
 	_GameScene->Update();
 }
 
+//this function use for test collision
+//and show result to messagebox
+void SceneManager::Update(HWND hWnd)
+{
+	if (_GameScene->GetSceneId() == eSceneID::ePlay)
+		PlayScene::GetInstance()->Update(hWnd);
+	else
+		_GameScene->Update();
+}
+
 void SceneManager::Render()
 {
 	_GameScene->Render();

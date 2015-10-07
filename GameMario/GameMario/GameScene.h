@@ -20,5 +20,6 @@ public:
 	virtual void Update() = 0;
 	//Load scene
 	virtual void Load() = 0;
+	eSceneID GetSceneId(){ return _SceneID; }
 };
 

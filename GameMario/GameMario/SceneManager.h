@@ -21,5 +21,8 @@ public:
 	void Render();
 	void Release();
 	void SwitchScene(eSceneID sceneID);
+	//this function use for test collision
+	//and show result to messagebox
+	void Update(HWND hWnd);
 };
 
