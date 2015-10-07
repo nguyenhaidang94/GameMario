@@ -1,16 +1,20 @@
 #include "Mario.h"
 
+#define JUMP_VELOCITY_BOOST 2
+#define FALLDOWN_VELOCITY_DECREASE 0.1
+#define DEFAULT_VELOCITY -1
 
 Mario::Mario(void)
 {
 	_State = eMarioState::eIdle;
 	SetObjectType(eMario);
 	//Testing
-	SetVelocity(D3DXVECTOR2(0,-2));
+	SetVelocity(D3DXVECTOR2(0, DEFAULT_VELOCITY));
 	_CurrentFrame = 0;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
 	SetPosition(D3DXVECTOR2(32,32));
 	_IsCollide = false;
+	SetSize(D3DXVECTOR2(50, 64));
 }
 
 
@@ -30,12 +34,20 @@ void Mario::HandlingInput()
 	_State = eMarioState::eIdle;
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_D))
 	{
-		_State = eMarioState::eRun;
+		_State = eMarioState::eRunLeft;
 	}
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_K))
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_A))
 	{
-		_State = eMarioState::eJump;
-		SoundManager::GetInstance()->GetSound(eSoundID::eJumpSmall)->Play();
+		_State = eMarioState::eRunRight;
+	}
+	if(_State != eMarioState::eJump)
+	{
+		if(Keyboard::GetInstance()->IsKeyDown(DIK_K))
+		{
+			_State = eMarioState::eJump;
+			SoundManager::GetInstance()->GetSound(eSoundID::eJumpSmall)->Play();
+			_Velocity.y += JUMP_VELOCITY_BOOST;
+		}
 	}
 	
 }
@@ -50,9 +62,13 @@ void Mario::Update()
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 7, 7);
 		_Velocity.x = 0;
 		break;
-	case eRun:
+	case eRunLeft:
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 8, 10);
 		_Velocity.x = 2;
+		break;
+	case eRunRight:
+		_CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 3, 5);
+		_Velocity.x = -2;
 		break;
 	case eJump:
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 12, 12);
@@ -61,7 +77,7 @@ void Mario::Update()
 	default:
 		break;
 	}
-	_Velocity.y -= 0.05;
+	_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
 	_Position.x += _Velocity.x;
 	_Position.y += _Velocity.y;
 }
@@ -76,12 +92,6 @@ void Mario::Release()
 
 }
 
-Box Mario::GetBoundaryBox()
-{
-	//temporary
-	return Box(_Position.x - 32, _Position.y + 32, 64, 58, _Velocity.x, _Velocity.y);
-}
-
 void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
 	//Handling collision by object goes here
@@ -91,12 +101,29 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		switch (collisionDirection)
 		{
 		case eTop:
-			_Position.y = object->GetBoundaryBox().fY + 30;
+			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
+			_Velocity.y = DEFAULT_VELOCITY;
 			break;
 		default:
 			break;
 		}
 		break;
+	case ePipe:
+		switch (collisionDirection)
+		{
+		case eTop:
+			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
+			_Velocity.y = DEFAULT_VELOCITY;
+			break;
+		case eLeft:
+			_Position.x = object->GetBoundaryBox().fX - _Size.x/2;
+			break;
+		case eRight:
+			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2;
+			break;
+		default:
+			break;
+		}
 	default:
 		break;
 	}

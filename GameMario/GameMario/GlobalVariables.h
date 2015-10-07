@@ -12,6 +12,7 @@ enum eObjectTypeID
 	eUndefined = 0, 
 	eMario = 1,
 	eGround,
+	ePipe,
 };
 
 enum eSpriteID
@@ -20,12 +21,17 @@ enum eSpriteID
 	eMap1_1 = 1,
 	eFont,
 	eMenuBanner,
+	eSmallPipe,
+	eMediumPipe,
+	eBigPipe,
+	eHorizontalPipe,
 };
 
 enum eMarioState
 {
 	eIdle = 0,
-	eRun = 1,
+	eRunLeft = 1,
+	eRunRight = 2,
 	eJump
 };
 

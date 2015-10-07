@@ -83,7 +83,7 @@ void Background::Render()
 	{
 		for(int j = 0; j < _TotalVerticalTitle; j++)
 		{
-			_Sprite->RenderAtFrame((float)j * TITLE_SIZE, SCREEN_HEIGHT - (float)i * TITLE_SIZE, _BackgroundData[i][j]);
+			_Sprite->RenderAtFrame((float)j * TITLE_SIZE + TITLE_SIZE/2, SCREEN_HEIGHT - (float)i * TITLE_SIZE - TITLE_SIZE/2, _BackgroundData[i][j]);
 		}
 	}
 }

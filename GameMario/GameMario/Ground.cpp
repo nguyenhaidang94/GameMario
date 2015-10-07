@@ -33,11 +33,6 @@ void Ground::Release()
 
 }
 
-Box Ground::GetBoundaryBox()
-{
-	return Box(_Position.x - _Size.x/2, _Position.y + _Size.y/2, _Size.x, _Size.y);
-}
-
 void Ground::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
 	//Handling collision by object type here

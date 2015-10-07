@@ -19,3 +19,22 @@ vector<string> Unility::Split(const string &s, char delim) {
     }
     return tokens;
 }
+
+eCollisionDirection Unility::GetOppositeDirection(eCollisionDirection direction)
+{
+	switch (direction)
+	{
+	case eNone:
+		return eNone;
+	case eTop:
+		return eBottom;
+	case eBottom:
+		return eTop;
+	case eLeft:
+		return eRight;
+	case eRight:
+		return eLeft;
+	default:
+		return eNone;
+	}
+}

@@ -1,7 +1,7 @@
 #pragma once
 #include <d3dx9.h>
 #include "GlobalVariables.h"
-#include "Sprite.h"
+#include "SpriteManager.h"
 #include "SwepAABB.h"
 #include <string>
 using namespace std;;
@@ -13,6 +13,7 @@ protected:
 	D3DXVECTOR2 _Position;
 	Sprite *_Sprite;
 	string _Tag;					//Custom tag for use if needed
+	D3DXVECTOR2 _Size;				//Store object size
 public:
 	GameObject(void);
 	GameObject(eObjectTypeID objectTypeID, D3DXVECTOR2 pos);
@@ -27,6 +28,9 @@ public:
 	//Set tag of object
 	void SetTag(string tag);
 
+	//Set size of object
+	void SetSize(D3DXVECTOR2 size);
+
 	//Get colision box of object
 	D3DXVECTOR2 GetPosition();
 
@@ -37,7 +41,7 @@ public:
 	string GetTag();
 
 	//Get colision box of object
-	virtual Box GetBoundaryBox() = 0;
+	Box GetBoundaryBox();
 
 	//Update object
 	virtual void Update() = 0;

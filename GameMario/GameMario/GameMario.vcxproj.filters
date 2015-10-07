@@ -141,6 +141,9 @@
     <ClCompile Include="SwepAABB.cpp">
       <Filter>Framework\Physic</Filter>
     </ClCompile>
+    <ClCompile Include="Pipe.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="SwepAABB.h">
       <Filter>Framework\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>GameObject\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

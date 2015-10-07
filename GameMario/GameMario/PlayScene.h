@@ -7,6 +7,7 @@
 #include "GameStatistics.h"
 #include "SceneManager.h"
 #include "Ground.h"
+#include "Pipe.h"
 
 class PlayScene :
 	public GameScene
@@ -20,8 +21,8 @@ private:
 	static PlayScene *Instance;
 	vector<GameObject*> GetListObjectOnScreen();
 
-	//get direction of colision base on normalx, normaly from SwepAABB
-	eCollisionDirection GetCollisionDirection(float normalx, float normaly);
+	//get direction of colision between a dynamic and a static object
+	eCollisionDirection CheckCollision(DynamicGameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY);
 public:
 	PlayScene(void);
 	~PlayScene(void);

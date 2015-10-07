@@ -1,11 +1,15 @@
 #pragma once
+#include <string>
 #include "GameObject.h"
-class Ground : public GameObject
+
+class Pipe :public GameObject
 {
+private:
+	
 public:
-	Ground(void);
-	Ground(int x, int y, int width, int height);
-	~Ground(void);
+	Pipe(void);
+	Pipe(int x, int y, int width, int height, eSpriteID spriteID, std::string destination = NULL);
+	~Pipe(void);
 
 	//Inherited funtion
 	void Update();

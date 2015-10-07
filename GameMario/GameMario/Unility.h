@@ -2,6 +2,7 @@
 #include <vector>
 #include <string.h>
 #include <sstream>
+#include "GlobalVariables.h"
 using namespace std;
 
 static class Unility
@@ -16,5 +17,8 @@ public:
 	/// <param name="s">Character to split the string</param>
     /// <returns></returns>
 	static vector<string> Split(const string &s, char delim);
+
+	//Get opposite collision direction of given direction
+	static eCollisionDirection GetOppositeDirection(eCollisionDirection direction);
 };
 

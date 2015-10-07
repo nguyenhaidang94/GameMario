@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="SwepAABB.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
@@ -97,6 +98,7 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Pipe.h" />
     <ClInclude Include="SwepAABB.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="DynamicGameObject.h" />
