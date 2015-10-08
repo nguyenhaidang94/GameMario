@@ -96,6 +96,7 @@ void Game::Game_Run(HWND hWnd)
 {
 	Keyboard::GetInstance()->ProcessKeyBoard();
 	SceneManager::GetInstance()->Update();
+	EffectManager::GetInstance()->Update();
 
 	if (_d3ddev == NULL)
 		return;
@@ -104,6 +105,7 @@ void Game::Game_Run(HWND hWnd)
 	if (_d3ddev->BeginScene())
 	{
 		SceneManager::GetInstance()->Render();
+		EffectManager::GetInstance()->Render();
 		TextManager::GetInstance()->RenderScoreOnTop();
 		_d3ddev->EndScene();	
 
@@ -129,6 +131,7 @@ void Game::Game_End(HWND hWnd)
 
 	SceneManager::GetInstance()->Release();
 	SpriteManager::GetInstance()->Release();
+	EffectManager::GetInstance()->Release();
 }
 
 Game::~Game(void)

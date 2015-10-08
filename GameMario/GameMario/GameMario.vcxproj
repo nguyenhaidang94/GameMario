@@ -71,8 +71,11 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrickBreakEffect.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Pipe.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="SwepAABB.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
@@ -99,8 +102,11 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="BrickBreakEffect.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Pipe.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="SwepAABB.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="DynamicGameObject.h" />

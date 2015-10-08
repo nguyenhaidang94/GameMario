@@ -9,6 +9,7 @@
 #include "GameStatistics.h"
 #include "TextManager.h"
 #include "SoundManager.h"
+#include "EffectManager.h"
 
 class Game
 {

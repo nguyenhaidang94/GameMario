@@ -15,7 +15,7 @@ Mario::Mario(void)
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
 	SetPosition(D3DXVECTOR2(32,32));
 	_IsCollide = false;
-	SetSize(D3DXVECTOR2(40, 64));
+	SetSize(D3DXVECTOR2(32, 64));
 }
 
 

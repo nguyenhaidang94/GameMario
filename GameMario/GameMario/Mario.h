@@ -15,7 +15,7 @@ private:
 public:
 	Mario(void);
 	~Mario(void);
-	//Inherited funtion
+	//Inherited function
 	void Update();
 	void Render();
 	void Release();

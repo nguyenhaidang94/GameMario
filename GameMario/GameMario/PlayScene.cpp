@@ -162,7 +162,7 @@ vector<GameObject*> PlayScene::GetListObjectOnScreen()
 	for (int i = 0; i < _ListObject.size(); i++)
 	{
 		//object if not destroyed then add
-		if(_ListObject[i]->GetTag() != eGameTag::eIsDestroyed)
+		if(_ListObject[i]->GetTag() != eGameTag::eDestroyed)
 		{
 			if (AABBCheck(cameraBox, _ListObject[i]->GetBoundaryBox()))	//Neu co va cham
 			{
@@ -187,16 +187,16 @@ void PlayScene::HandlingCollision()
 			objectOnScreen[i]->OnCollision(_Mario, direction);
 		}
 
-		//and for other
-		for(int j = i + 1 ; j < objectOnScreen.size(); j++)
+		//and for other, FIX LATER
+		/*for(int j = i + 1 ; j < objectOnScreen.size(); j++)
 		{
-			eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
+			eCollisionDirection direction = CheckCollision(objectOnScreen[i], objectOnScreen[j], moveX, moveY);
 			if(direction != eCollisionDirection::eNone)
 			{
-				_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
-				objectOnScreen[i]->OnCollision(_Mario, direction);
+				objectOnScreen[i]->OnCollision(objectOnScreen[j], Unility::GetOppositeDirection(direction));
+				objectOnScreen[j]->OnCollision(objectOnScreen[i], direction);
 			}
-		}
+		}*/
 	}
 }
 

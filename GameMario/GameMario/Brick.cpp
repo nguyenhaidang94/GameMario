@@ -14,12 +14,14 @@ Brick::Brick(int objectID, int x, int y)
 	_DefaultX = x;
 	_Size.x = BRICK_WIDTH;
 	_Size.y = BRICK_HEIGHT;
+	_Type = -1;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eObjectTitle);
 	_ObjectTypeID = eObjectTypeID::eBrick;
 	//setup current sprite for brick
 	switch (objectID)
 	{
 	case 3:
+		_Type = 0;
 		_CurrentFrame = 0;
 		break;
 	default:
@@ -35,9 +37,10 @@ void Brick::Update()
 {
 }
 
+
 void Brick::Render()
 {
-	if(_Tag != eGameTag::eIsDestroyed)
+	if(_Tag != eGameTag::eDestroyed)
 	{
 		_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
 	}
@@ -45,7 +48,6 @@ void Brick::Render()
 
 void Brick::Release()
 {
-	delete this;
 }
 
 void Brick::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
@@ -61,12 +63,14 @@ void Brick::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			{
 			//big mario destroy brick
 			case eMarioIsBig:
-				_Tag = eGameTag::eIsDestroyed;
-				//missing brick destroy animation
+			case eMarioIsBigInvincible:
+				_Tag = eGameTag::eDestroyed;
+				EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eBrickBreak, _Type);
 				break;
 
 			//small mario make brick bounce
-			case eEmpty:
+			case eMarioIsSmall:
+			case eMarioIsSmallInvincible:
 				break;
 			default:
 				break;

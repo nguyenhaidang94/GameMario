@@ -3,6 +3,8 @@
 
 DynamicGameObject::DynamicGameObject(void)
 {
+	_Velocity.x = 0;
+	_Velocity.y = 0;
 }
 
 

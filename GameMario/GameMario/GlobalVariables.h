@@ -28,6 +28,7 @@ enum eSpriteID
 	eHorizontalPipe,
 	eCoin,
 	eObjectTitle,
+	eBrickDebris,
 };
 
 enum eMarioState
@@ -87,12 +88,20 @@ enum eGameTag
 	eEmpty = 0,	//no tag
 
 	//object is destroyed
-	eIsDestroyed = 1,
+	eDestroyed = 1,
 
 	//world tag
 	eU1_1,	//underground of world 1_1
 
 	//mario tag to check if mario status
-	eMarioIsInvincible,	//mario is in invincible
-	eMarioIsBig,		//mario is in big state
+	eMarioIsSmall,			//mario is in small state only
+	eMarioIsSmallInvincible,	//mario is in small state and invincible
+	eMarioIsBig,				//mario is in big state only
+	eMarioIsBigInvincible,	//mario is in big state and invincible
+			
+};
+
+enum eEffectID
+{
+	eBrickBreak = 0,
 };
