@@ -1,18 +1,46 @@
 #include "Pipe.h"
+#define PIPE_WIDTH 64
+#define HORIZONTAL_PIPE_WIDTH 64
+#define SMALL_PIPE_HEIGHT 64
+#define MEDIUM_PIPE_HEIGHT 96
+#define BIG_PIPE_HEIGHT 128
 
 Pipe::Pipe(void)
 {
 }
 
-Pipe::Pipe(int x, int y, int width, int height, eSpriteID spriteID, std::string destination)
+Pipe::Pipe(int objectID, int x, int y , std::string destination)
 {
 	_Position.x = x;
 	_Position.y = y;
-	_Size.x = width;
-	_Size.y = height;
-	_Tag = destination;
+	_Tag = Unility::GetGameTag(destination);
+
+	//set default value
 	_ObjectTypeID = eObjectTypeID::ePipe;
-	_Sprite = SpriteManager::GetInstance()->GetSprite(spriteID);
+	_Size.x = PIPE_WIDTH;		
+	_Size.y = SMALL_PIPE_HEIGHT;
+	//setup or each type of pipe
+	switch (objectID)
+	{
+	case 11:	//small
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallPipe);
+		_Size.y = SMALL_PIPE_HEIGHT;
+		break;
+	case 12:	//medium
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMediumPipe);
+		_Size.y = MEDIUM_PIPE_HEIGHT;
+		break;
+	case 13:	//big
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigPipe);
+		_Size.y = BIG_PIPE_HEIGHT;
+		break;
+	case eHorizontalPipe:	//horizontal
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eHorizontalPipe);
+		_Size.x = HORIZONTAL_PIPE_WIDTH;
+		break;
+	default:
+		break;
+	}
 }
 
 

@@ -4,12 +4,14 @@
 GameObject::GameObject(void)
 {
 	_ObjectTypeID = eObjectTypeID::eUndefined;
+	_Tag = eGameTag::eEmpty;
 }
 
 GameObject::GameObject(eObjectTypeID objectTypeID, D3DXVECTOR2 pos)
 {
 	_ObjectTypeID = objectTypeID;
 	_Position = pos;
+	_Tag = eGameTag::eEmpty;
 }
 
 GameObject::~GameObject(void)
@@ -41,12 +43,12 @@ eObjectTypeID GameObject::GetObjectTypeID()
 	return _ObjectTypeID;
 }
 
-void GameObject::SetTag(string tag)
+void GameObject::SetTag(eGameTag tag)
 {
 	_Tag = tag;
 }
 
-string GameObject::GetTag()
+eGameTag GameObject::GetTag()
 {
 	return _Tag;
 }

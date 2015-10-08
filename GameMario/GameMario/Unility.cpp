@@ -38,3 +38,13 @@ eCollisionDirection Unility::GetOppositeDirection(eCollisionDirection direction)
 		return eNone;
 	}
 }
+
+eGameTag Unility::GetGameTag(string tag)
+{
+	if(tag == "u1_1")		//underground of world 1_1
+	{
+		return eGameTag::eU1_1;
+	}
+
+	return eGameTag::eEmpty;
+}

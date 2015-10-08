@@ -8,13 +8,14 @@ Mario::Mario(void)
 {
 	_State = eMarioState::eIdle;
 	SetObjectType(eMario);
-	//Testing
+	//temporary Testing
+	_Tag = eGameTag::eMarioIsBig;
 	SetVelocity(D3DXVECTOR2(0, DEFAULT_VELOCITY));
 	_CurrentFrame = 0;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
 	SetPosition(D3DXVECTOR2(32,32));
 	_IsCollide = false;
-	SetSize(D3DXVECTOR2(50, 64));
+	SetSize(D3DXVECTOR2(40, 64));
 }
 
 
@@ -100,7 +101,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	case eGround:
 		switch (collisionDirection)
 		{
-		case eTop:
+		case eBottom:
 			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
 			_Velocity.y = DEFAULT_VELOCITY;
 			break;
@@ -111,19 +112,39 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	case ePipe:
 		switch (collisionDirection)
 		{
-		case eTop:
+		case eBottom:
 			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
 			_Velocity.y = DEFAULT_VELOCITY;
 			break;
-		case eLeft:
+		case eRight:
 			_Position.x = object->GetBoundaryBox().fX - _Size.x/2;
 			break;
-		case eRight:
+		case eLeft:
 			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2;
 			break;
 		default:
 			break;
 		}
+		break;
+	case eBrick:
+		switch (collisionDirection)
+		{
+		case eBottom:
+			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
+			_Velocity.y = DEFAULT_VELOCITY;
+			break;
+		case eRight:
+			_Position.x = object->GetBoundaryBox().fX - _Size.x/2;
+			break;
+		case eLeft:
+			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2;
+			break;
+		case eTop:
+			_Velocity.y = -_Velocity.y;
+		default:
+			break;
+		}
+		break;
 	default:
 		break;
 	}

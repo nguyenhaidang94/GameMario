@@ -57,25 +57,29 @@ void PlayScene::ReadMapData()
 	{
 		istringstream iss(line);
 
-		int ObjectID, x, y, width, height;
+		int objectID, x, y;
 		string tag;
-		if (!(iss >> ObjectID >> x >> y >> width >> height >>tag)) { break; } // error
+		if (!(iss >> objectID >> x >> y >>tag)) { break; } // error
 		//----------------
 		//Do something with data like create object
 		//Ex: _ListObject.push_back(new SomeObject(OjbectID, a, b, c));
-		switch (ObjectID)
+		switch (objectID)
 		{
+		//Case ground
 		case 1:
-			_ListObject.push_back(new Ground(x, y, width, height));
+			_ListObject.push_back(new Ground(x, y, atoi(tag.c_str())));
 			break;
+
+		//Case brick
+		case 3:
+			_ListObject.push_back(new Brick(objectID, x, y));
+			break;
+
+		//Case pipe
 		case 11:
-			_ListObject.push_back(new Pipe(x, y, width,height, eSpriteID::eSmallPipe, tag));
-			break;
 		case 12:
-			_ListObject.push_back(new Pipe(x, y, width,height, eSpriteID::eMediumPipe, tag));
-			break;
 		case 13:
-			_ListObject.push_back(new Pipe(x, y, width,height, eSpriteID::eBigPipe, tag));
+			_ListObject.push_back(new Pipe(objectID, x, y, tag));
 			break;
 		default:
 			break;
@@ -157,9 +161,13 @@ vector<GameObject*> PlayScene::GetListObjectOnScreen()
 	vector<GameObject*> result;
 	for (int i = 0; i < _ListObject.size(); i++)
 	{
-		if (AABBCheck(cameraBox, _ListObject[i]->GetBoundaryBox()))	//Neu co va cham
+		//object if not destroyed then add
+		if(_ListObject[i]->GetTag() != eGameTag::eIsDestroyed)
 		{
-			result.push_back(_ListObject[i]);
+			if (AABBCheck(cameraBox, _ListObject[i]->GetBoundaryBox()))	//Neu co va cham
+			{
+				result.push_back(_ListObject[i]);
+			}
 		}
 	}
 	return result;
@@ -175,8 +183,8 @@ void PlayScene::HandlingCollision()
 		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
 		if(direction != eCollisionDirection::eNone)
 		{
-			_Mario->OnCollision(objectOnScreen[i], direction);
-			objectOnScreen[i]->OnCollision(_Mario, Unility::GetOppositeDirection(direction));
+			_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
+			objectOnScreen[i]->OnCollision(_Mario, direction);
 		}
 
 		//and for other
@@ -185,8 +193,8 @@ void PlayScene::HandlingCollision()
 			eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
 			if(direction != eCollisionDirection::eNone)
 			{
-				_Mario->OnCollision(objectOnScreen[i], direction);
-				objectOnScreen[i]->OnCollision(_Mario, Unility::GetOppositeDirection(direction));
+				_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
+				objectOnScreen[i]->OnCollision(_Mario, direction);
 			}
 		}
 	}
@@ -194,7 +202,7 @@ void PlayScene::HandlingCollision()
 
 //-------------------------------------------------------------
 //check collision of an dynamic object with another object
-//return CollisionDirection
+//return CollisionDirection of 2nd object
 //-------------------------------------------------------------
 eCollisionDirection PlayScene::CheckCollision(DynamicGameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY)
 {

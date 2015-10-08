@@ -20,5 +20,8 @@ public:
 
 	//Get opposite collision direction of given direction
 	static eCollisionDirection GetOppositeDirection(eCollisionDirection direction);
+
+	//Get enum eGameTag from tag generate by map editor
+	static eGameTag GetGameTag(string tag);
 };
 

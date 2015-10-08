@@ -141,7 +141,7 @@ void Sprite::FixedRenderAtFrame(float x, float y, int frameNo)
 	_SpriteHandler->Draw(
 		_Image,
 		&srect,
-		NULL,
+		&center,
 		&position,
 		D3DCOLOR_XRGB(255, 255, 255)
 		);

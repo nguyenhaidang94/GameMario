@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "Ground.h"
 #include "Pipe.h"
+#include "Brick.h"
 
 class PlayScene :
 	public GameScene

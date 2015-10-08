@@ -13,6 +13,7 @@ enum eObjectTypeID
 	eMario = 1,
 	eGround,
 	ePipe,
+	eBrick,
 };
 
 enum eSpriteID
@@ -25,6 +26,8 @@ enum eSpriteID
 	eMediumPipe,
 	eBigPipe,
 	eHorizontalPipe,
+	eCoin,
+	eObjectTitle,
 };
 
 enum eMarioState
@@ -70,10 +73,26 @@ enum eSoundID
 	e1Up,
 	eBrickSmash,
 	eBump,
-	eCoin,
+	eCoinAppear,
 	eDownTheLlagpole,
 	eJumpSmall,
 	eJumpSuper,
 	ePipeTravel,
 	ePowerUp
+};
+
+//game tag use in game
+enum eGameTag
+{
+	eEmpty = 0,	//no tag
+
+	//object is destroyed
+	eIsDestroyed = 1,
+
+	//world tag
+	eU1_1,	//underground of world 1_1
+
+	//mario tag to check if mario status
+	eMarioIsInvincible,	//mario is in invincible
+	eMarioIsBig,		//mario is in big state
 };

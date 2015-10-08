@@ -12,7 +12,7 @@ protected:
 	eObjectTypeID _ObjectTypeID;	//Object ID
 	D3DXVECTOR2 _Position;
 	Sprite *_Sprite;
-	string _Tag;					//Custom tag for use if needed
+	eGameTag _Tag;					//Custom tag for use if needed
 	D3DXVECTOR2 _Size;				//Store object size
 public:
 	GameObject(void);
@@ -26,7 +26,7 @@ public:
 	void SetPosition(D3DXVECTOR2 position);
 
 	//Set tag of object
-	void SetTag(string tag);
+	void SetTag(eGameTag tag);
 
 	//Set size of object
 	void SetSize(D3DXVECTOR2 size);
@@ -38,7 +38,7 @@ public:
 	eObjectTypeID GetObjectTypeID();
 
 	//Get colision box of object
-	string GetTag();
+	eGameTag GetTag();
 
 	//Get colision box of object
 	Box GetBoundaryBox();
