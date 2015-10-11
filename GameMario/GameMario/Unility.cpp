@@ -41,10 +41,37 @@ eCollisionDirection Unility::GetOppositeDirection(eCollisionDirection direction)
 
 eGameTag Unility::GetGameTag(string tag)
 {
+	if(tag == "-1")
+	{
+		return eGameTag::eEmpty;
+	}
+	//world tag
 	if(tag == "u1_1")		//underground of world 1_1
 	{
 		return eGameTag::eU1_1;
 	}
 
+	//item tag
+	if(tag == "mushroom")
+	{
+		return eGameTag::eStoreMushroom;
+	}
+
+	if(tag == "coin")
+	{
+		return eGameTag::eStoreCoin;
+	}
+
+	if(tag == "1up")
+	{
+		return eGameTag::eStore1Up;
+	}
+
+	if(tag == "star")
+	{
+		return eGameTag::eStoreStar;
+	}
+
+	//no tag
 	return eGameTag::eEmpty;
 }

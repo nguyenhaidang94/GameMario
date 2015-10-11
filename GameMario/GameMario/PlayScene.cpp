@@ -71,19 +71,36 @@ void PlayScene::ReadMapData()
 			break;
 
 		//Case brick
-		case 3:
+		case 3:	//brown normal
+		case 5:	//blue normal
 			_ListObject.push_back(new Brick(objectID, x, y));
 			break;
 
 		//Case pipe
-		case 11:
-		case 12:
-		case 13:
+		case 11:	//small
+		case 12:	//medium
+		case 13:	//big
 			_ListObject.push_back(new Pipe(objectID, x, y, tag));
 			break;
+
+		//case brick with item
+		case 19:	//brick with 1up
+		case 17:	//brick with coin
+		case 21:	//brick with star
+			_ListObject.push_back(new ItemBrick(objectID, x, y));
+			break;
+
+		//case question block
+		case 18:	//question block with mushroom
+		case 10:	//normal question block
+			_ListObject.push_back(new QuestionBlock(objectID, x, y));
+			break;
+
 		default:
 			break;
 		}
+
+
 		//-----------------
 		lineNumber++;
 	}
@@ -117,7 +134,16 @@ void PlayScene::Update()
 	
 	for (int i = 0; i < _ListObject.size(); i++)
 	{
-		_ListObject[i]->Update();
+		if(_ListObject[i]->GetTag() != eGameTag::eDestroyed)
+		{
+			_ListObject[i]->Update();
+		}
+		else
+		{
+			//remomve object if it's destroyed
+			delete _ListObject[i];
+			_ListObject.erase(_ListObject.begin() + i);
+		}
 	}
 
 	//Handling colison
@@ -177,26 +203,62 @@ void PlayScene::HandlingCollision()
 {
 	vector<GameObject*> objectOnScreen = GetListObjectOnScreen();
 	float moveX, moveY;
+
+	//--Variable to handle collide with multiple brick--
+	int indexClosestBrickCollide = -1;	//mario only collide with 1 brick at the time, this store the closest one
+	eCollisionDirection directionClosestBrick = eCollisionDirection::eNone;
+
+	//--Handle collision with all object on screen
 	for(int i = 0; i < objectOnScreen.size(); i++)
 	{
 		//check colision with mario...
 		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
 		if(direction != eCollisionDirection::eNone)
 		{
-			_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
-			objectOnScreen[i]->OnCollision(_Mario, direction);
+			//if not collide with brick, dispatch collision. If brick handle later
+			if(objectOnScreen[i]->GetObjectTypeID() != eObjectTypeID::eBrick)
+			{
+				_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
+				objectOnScreen[i]->OnCollision(_Mario, direction);
+			}
+			else
+			{
+				//if 1st brick
+				if(indexClosestBrickCollide == -1)
+				{
+					indexClosestBrickCollide = i;
+					directionClosestBrick = direction;
+				}
+				else
+				{
+					//check if it closer than the closest
+					if(abs(_Mario->GetPosition().x - objectOnScreen[i]->GetPosition().x) < 
+						abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
+					{
+						indexClosestBrickCollide = i;
+						directionClosestBrick = direction;
+					}
+				}
+			}
 		}
 
 		//and for other, FIX LATER
-		/*for(int j = i + 1 ; j < objectOnScreen.size(); j++)
+		for(int j = i + 1 ; j < objectOnScreen.size(); j++)
 		{
+			
 			eCollisionDirection direction = CheckCollision(objectOnScreen[i], objectOnScreen[j], moveX, moveY);
 			if(direction != eCollisionDirection::eNone)
 			{
 				objectOnScreen[i]->OnCollision(objectOnScreen[j], Unility::GetOppositeDirection(direction));
 				objectOnScreen[j]->OnCollision(objectOnScreen[i], direction);
 			}
-		}*/
+		}
+	}
+	//Handle collide with brick if have any
+	if(indexClosestBrickCollide != -1)
+	{
+		_Mario->OnCollision(objectOnScreen[indexClosestBrickCollide], Unility::GetOppositeDirection(directionClosestBrick));
+		objectOnScreen[indexClosestBrickCollide]->OnCollision(_Mario, directionClosestBrick);
 	}
 }
 
@@ -204,7 +266,7 @@ void PlayScene::HandlingCollision()
 //check collision of an dynamic object with another object
 //return CollisionDirection of 2nd object
 //-------------------------------------------------------------
-eCollisionDirection PlayScene::CheckCollision(DynamicGameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY)
+eCollisionDirection PlayScene::CheckCollision(GameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY)
 {
 	float normalX, normalY;
 	Box dynamicBox = dynamicObj->GetBoundaryBox();
@@ -338,4 +400,9 @@ eCollisionDirection PlayScene::CheckCollision(DynamicGameObject *dynamicObj, Gam
 	}
 
 	return eCollisionDirection::eNone;
+}
+
+void PlayScene::AddObjectToScene(GameObject *object)
+{
+	_ListObject.push_back(object);
 }

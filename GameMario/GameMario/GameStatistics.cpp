@@ -47,7 +47,7 @@ eWorldID GameStatistics::GetWorldID()
 
 int GameStatistics::GetScore()
 {
-	return _WolrdID;
+	return _Score;
 }
 
 int GameStatistics::GetLife()

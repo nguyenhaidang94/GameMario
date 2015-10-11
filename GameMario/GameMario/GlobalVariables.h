@@ -14,6 +14,11 @@ enum eObjectTypeID
 	eGround,
 	ePipe,
 	eBrick,
+	eMagicMushroom,
+	eFireFlower,
+	e1upMushroom,
+	eStarMan,
+
 };
 
 enum eSpriteID
@@ -29,6 +34,7 @@ enum eSpriteID
 	eCoin,
 	eObjectTitle,
 	eBrickDebris,
+	eItems,
 };
 
 enum eMarioState
@@ -92,6 +98,12 @@ enum eGameTag
 
 	//world tag
 	eU1_1,	//underground of world 1_1
+	
+	//item store by object tag
+	eStoreMushroom,
+	eStoreCoin,
+	eStoreStar,
+	eStore1Up,
 
 	//mario tag to check if mario status
 	eMarioIsSmall,			//mario is in small state only
@@ -103,5 +115,13 @@ enum eGameTag
 
 enum eEffectID
 {
-	eBrickBreak = 0,
+	eBreakBrick = 0,
+	eObtainCoin = 1,
+	eObtainScore,
+};
+
+enum eBlockTypeID
+{
+	eBrownBlock = 0,
+	eBlueBlock = 1,
 };

@@ -1,8 +1,8 @@
 #include "BrickBreakEffect.h"
 #define DEFAULT_VELOCITY_X 1
-#define DEFAULT_VELOCITY_HIGH_Y 2
-#define DEFAULT_VELOCITY_LOW_Y 1
-#define FALLDOWN_VELOCITY_DECREASE 0.1
+#define DEFAULT_VELOCITY_HIGH_Y 6
+#define DEFAULT_VELOCITY_LOW_Y 4
+#define FALLDOWN_VELOCITY_DECREASE 0.2
 
 BrickBreakEffect::BrickBreakEffect(void)
 {
@@ -41,7 +41,8 @@ void BrickBreakEffect::Update()
 			_DebrisVelocity[i].y -= FALLDOWN_VELOCITY_DECREASE;
 		}
 		//check one of high debris, if it fall out of screen, kill effect 
-		if(_DebrisPosition[0].x < 0)	//hard code, current screen lowest point on y axis is 0
+		Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
+		if(_DebrisPosition[0].y < cameraBox.fY - cameraBox.fHeight)
 		{
 			_IsAlive = false;
 		}

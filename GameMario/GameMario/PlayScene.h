@@ -1,14 +1,17 @@
 #pragma once
 #include "GameScene.h"
 #include <vector>
+#include <math.h>
 #include "GameObject.h"
 #include "Background.h"
-#include "Mario.h"
 #include "GameStatistics.h"
 #include "SceneManager.h"
+#include "Mario.h"
 #include "Ground.h"
 #include "Pipe.h"
 #include "Brick.h"
+#include "ItemBrick.h"
+#include "QuestionBlock.h"
 
 class PlayScene :
 	public GameScene
@@ -23,7 +26,7 @@ private:
 	vector<GameObject*> GetListObjectOnScreen();
 
 	//get direction of colision between a dynamic and a static object
-	eCollisionDirection CheckCollision(DynamicGameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY);
+	eCollisionDirection CheckCollision(GameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY);
 public:
 	PlayScene(void);
 	~PlayScene(void);
@@ -47,5 +50,7 @@ public:
 	vector<GameObject*> GetAllObject();
 	//Handling collision of map object
 	void HandlingCollision();
+	//Add object to scene
+	void AddObjectToScene(GameObject *object);
 };
 

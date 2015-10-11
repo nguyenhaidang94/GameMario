@@ -32,6 +32,7 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eCoin] = new Sprite(SpriteHandler, L"resources\\Sprites\\coin.png", 32, 32, 8, 4,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eObjectTitle] = new Sprite(SpriteHandler, L"resources\\Sprites\\ObjectTitle.png", 32, 32, 11, 11,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eBrickDebris] = new Sprite(SpriteHandler, L"resources\\Sprites\\BrickDebris.png", 16, 16, 8, 8,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eItems] = new Sprite(SpriteHandler, L"resources\\Sprites\\Items.png", 32, 32, 35, 8,D3DCOLOR_XRGB(255, 0, 255));
 }
 
 Sprite *SpriteManager::GetSprite(eSpriteID objectID)

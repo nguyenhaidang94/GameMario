@@ -1,29 +1,22 @@
 #include "Brick.h"
 
-#define BRICK_WIDTH 32
-#define BRICK_HEIGHT 32
-
 Brick::Brick(void)
 {
 }
 
 Brick::Brick(int objectID, int x, int y)
 {
-	_Position.x = x;
-	_Position.y = y;
-	_DefaultX = x;
-	_Size.x = BRICK_WIDTH;
-	_Size.y = BRICK_HEIGHT;
-	_Type = -1;
-	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eObjectTitle);
-	_ObjectTypeID = eObjectTypeID::eBrick;
+	Initialize(x, y);
 	//setup current sprite for brick
 	switch (objectID)
 	{
-	case 3:
-		_Type = 0;
+	case 3:	
+		_Type = eBlockTypeID::eBrownBlock;
 		_CurrentFrame = 0;
 		break;
+	case 5:
+		_Type = eBlockTypeID::eBlueBlock;
+		_CurrentFrame = 6;
 	default:
 		break;
 	}
@@ -35,6 +28,17 @@ Brick::~Brick(void)
 
 void Brick::Update()
 {
+	if(_IsBounce)
+	{
+		_Position.y += _Velocity.y;
+		_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
+		if(_Position.y <= _DefaultY)
+		{
+			_Velocity.y = 0;
+			_Position.y = _DefaultY;
+			_IsBounce = false;
+		}
+	}
 }
 
 
@@ -59,18 +63,21 @@ void Brick::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		switch (collisionDirection)
 		{
 		case eBottom:
+			//handle how brick behave base on mario state
 			switch (object->GetTag())
 			{
 			//big mario destroy brick
 			case eMarioIsBig:
 			case eMarioIsBigInvincible:
 				_Tag = eGameTag::eDestroyed;
-				EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eBrickBreak, _Type);
+				EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eBreakBrick, _Type);
 				break;
 
 			//small mario make brick bounce
 			case eMarioIsSmall:
 			case eMarioIsSmallInvincible:
+				_Velocity.y = BOUNCE_VELOCITY;
+				_IsBounce = true;
 				break;
 			default:
 				break;

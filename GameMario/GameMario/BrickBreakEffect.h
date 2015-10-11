@@ -1,5 +1,6 @@
 #pragma once
 #include "Effect.h"
+#include "Camera.h"
 #include <vector>
 
 class BrickBreakEffect : public Effect

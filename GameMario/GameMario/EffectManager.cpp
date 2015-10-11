@@ -24,11 +24,17 @@ void EffectManager::ShowEffect(D3DXVECTOR2 position ,eEffectID effectID, int tag
 {
 	switch (effectID)
 	{
-	case eBrickBreak:
+	case eBreakBrick:
 		if(tag >= 0 && tag <= 1)	//this effect currently only have 2 effect at 0 and 1
 		{
 			_ListEffect.push_back(new BrickBreakEffect(position, tag));
 		}
+		break;
+	case eObtainCoin:
+		_ListEffect.push_back(new ObtainCoinEffect(position, tag));
+		break;
+	case eObtainScore:
+		_ListEffect.push_back(new ObtainScoreEffect(position, tag));
 		break;
 	default:
 		break;
@@ -45,6 +51,7 @@ void EffectManager::Update()
 		}
 		else
 		{
+			delete _ListEffect[i];
 			_ListEffect.erase(_ListEffect.begin() + i);	//delete current effect if it died
 		}
 	}

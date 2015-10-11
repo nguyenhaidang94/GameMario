@@ -24,8 +24,8 @@ public:
 	void Release();
 
 	//Advance to next frame between startFrame and endFrame
-	int NextFrame(int currentFrame, int startFrame, int endFrame);
+	static int NextFrame(int currentFrame, int startFrame, int endFrame);
 	//Advance to previous frame between startFrame and endFrame
-	int PreviousFrame(int currentFrame, int startFrame, int endFrame);
+	static int PreviousFrame(int currentFrame, int startFrame, int endFrame);
 };
 

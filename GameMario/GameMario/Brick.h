@@ -1,14 +1,10 @@
 #pragma once
-#include "DynamicGameObject.h"
+#include "Block.h"
 #include "EffectManager.h"
+#include "Unility.h"
 
-class Brick : public DynamicGameObject
+class Brick : public Block
 {
-private:
-	Sprite *_Sprite;
-	int _CurrentFrame;	//manage brick frame in sprite
-	int _DefaultX;		//store default brick's position to bring back after brick bounce
-	int _Type;			//0 is brown, 1 is blue
 public:
 	Brick(void);
 	//Object ID is id of brick from map editor

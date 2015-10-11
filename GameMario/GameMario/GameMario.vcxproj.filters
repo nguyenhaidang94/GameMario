@@ -64,11 +64,14 @@
     <Filter Include="Main">
       <UniqueIdentifier>{7496afc3-c5b3-4631-be02-4ffa23846890}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameManager\Text">
+    <Filter Include="Framework\Effect">
+      <UniqueIdentifier>{b4d1605d-b3d3-47a9-8e0b-3ae438d8cd04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Text">
       <UniqueIdentifier>{ba477043-6bf5-47d3-9798-dce0bbca468e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Effect">
-      <UniqueIdentifier>{b4d1605d-b3d3-47a9-8e0b-3ae438d8cd04}</UniqueIdentifier>
+    <Filter Include="GameObject\Object\Brick">
+      <UniqueIdentifier>{e130abf0-1a9f-421f-9445-a5a231a9a4fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +124,7 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="TextManager.cpp">
-      <Filter>GameManager\Text</Filter>
+      <Filter>Framework\Text</Filter>
     </ClCompile>
     <ClCompile Include="StartScene.cpp">
       <Filter>GameManager\GameScene\Scene</Filter>
@@ -147,17 +150,38 @@
     <ClCompile Include="Pipe.cpp">
       <Filter>GameObject\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>GameObject\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>Effect</Filter>
+      <Filter>Framework\Effect</Filter>
     </ClCompile>
     <ClCompile Include="BrickBreakEffect.cpp">
-      <Filter>Effect</Filter>
+      <Filter>Framework\Effect</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
-      <Filter>Effect</Filter>
+      <Filter>Framework\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ObtainCoinEffect.cpp">
+      <Filter>Framework\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ObtainScoreEffect.cpp">
+      <Filter>Framework\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBrick.cpp">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionBlock.cpp">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="FireFlower.cpp">
+      <Filter>GameObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -210,7 +234,7 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="TextManager.h">
-      <Filter>GameManager\Text</Filter>
+      <Filter>Framework\Text</Filter>
     </ClInclude>
     <ClInclude Include="StartScene.h">
       <Filter>GameManager\GameScene\Scene</Filter>
@@ -236,17 +260,38 @@
     <ClInclude Include="Pipe.h">
       <Filter>GameObject\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>GameObject\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>Effect</Filter>
+      <Filter>Framework\Effect</Filter>
     </ClInclude>
     <ClInclude Include="BrickBreakEffect.h">
-      <Filter>Effect</Filter>
+      <Filter>Framework\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
-      <Filter>Effect</Filter>
+      <Filter>Framework\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ObtainCoinEffect.h">
+      <Filter>Framework\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ObtainScoreEffect.h">
+      <Filter>Framework\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBrick.h">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBlock.h">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="FireFlower.h">
+      <Filter>GameObject\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

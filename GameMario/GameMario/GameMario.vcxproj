@@ -70,12 +70,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBreakEffect.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="FireFlower.cpp" />
+    <ClCompile Include="ItemBrick.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="ObtainCoinEffect.cpp" />
+    <ClCompile Include="ObtainScoreEffect.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="SwepAABB.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
@@ -101,12 +108,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Block.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBreakEffect.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="FireFlower.h" />
+    <ClInclude Include="ItemBrick.h" />
+    <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="ObtainCoinEffect.h" />
+    <ClInclude Include="ObtainScoreEffect.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="SwepAABB.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="DynamicGameObject.h" />
