@@ -83,9 +83,9 @@ namespace Map_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap block3 {
+        internal static System.Drawing.Bitmap box_coin1 {
             get {
-                object obj = ResourceManager.GetObject("block3", resourceCulture);
+                object obj = ResourceManager.GetObject("box_coin1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,69 @@ namespace Map_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap block4 {
+        internal static System.Drawing.Bitmap box_coin2 {
             get {
-                object obj = ResourceManager.GetObject("block4", resourceCulture);
+                object obj = ResourceManager.GetObject("box_coin2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap box_mushroom1 {
+            get {
+                object obj = ResourceManager.GetObject("box_mushroom1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap box_mushroom2 {
+            get {
+                object obj = ResourceManager.GetObject("box_mushroom2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap box_mushroom3 {
+            get {
+                object obj = ResourceManager.GetObject("box_mushroom3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap box_mushroom4 {
+            get {
+                object obj = ResourceManager.GetObject("box_mushroom4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap box_star1 {
+            get {
+                object obj = ResourceManager.GetObject("box_star1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap box_star2 {
+            get {
+                object obj = ResourceManager.GetObject("box_star2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -106,26 +166,6 @@ namespace Map_Editor.Properties {
         internal static System.Drawing.Bitmap brick {
             get {
                 object obj = ResourceManager.GetObject("brick", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap brick2 {
-            get {
-                object obj = ResourceManager.GetObject("brick2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap brick3 {
-            get {
-                object obj = ResourceManager.GetObject("brick3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,6 +213,16 @@ namespace Map_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap flag {
+            get {
+                object obj = ResourceManager.GetObject("flag", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap goompa {
             get {
                 object obj = ResourceManager.GetObject("goompa", resourceCulture);
@@ -203,39 +253,19 @@ namespace Map_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lift {
+            get {
+                object obj = ResourceManager.GetObject("lift", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap money_block {
             get {
                 object obj = ResourceManager.GetObject("money_block", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap mushroom {
-            get {
-                object obj = ResourceManager.GetObject("mushroom", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap mushroom2 {
-            get {
-                object obj = ResourceManager.GetObject("mushroom2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap mushroom3 {
-            get {
-                object obj = ResourceManager.GetObject("mushroom3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -316,16 +346,6 @@ namespace Map_Editor.Properties {
         internal static System.Drawing.Bitmap plant2 {
             get {
                 object obj = ResourceManager.GetObject("plant2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap star {
-            get {
-                object obj = ResourceManager.GetObject("star", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

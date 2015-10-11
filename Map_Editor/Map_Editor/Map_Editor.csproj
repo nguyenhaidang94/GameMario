@@ -82,6 +82,16 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Resources\Tiles\lift.png" />
+    <None Include="Resources\Tiles\flag.png" />
+    <None Include="Resources\Items\box_star2.png" />
+    <None Include="Resources\Items\box_star1.png" />
+    <None Include="Resources\Items\box_coin2.png" />
+    <None Include="Resources\Items\box_coin1.png" />
+    <None Include="Resources\Items\box_mushroom4.png" />
+    <None Include="Resources\Items\box_mushroom3.png" />
+    <None Include="Resources\Items\box_mushroom2.png" />
+    <None Include="Resources\Items\box_mushroom1.png" />
     <None Include="Resources\Enemies\goompa.png" />
     <None Include="Resources\Enemies\goompa2.png" />
     <None Include="Resources\Enemies\plant.png" />

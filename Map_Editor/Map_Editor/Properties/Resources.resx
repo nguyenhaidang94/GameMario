@@ -124,8 +124,8 @@
   <data name="money_block" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\money_block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mushroom3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Items\mushroom3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="flag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tiles\flag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pipe5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\pipe5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,29 +148,20 @@
   <data name="turtle2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Enemies\turtle2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="star" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Items\star.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="turtle4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Enemies\turtle4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="block4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiles\block4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="box_coin1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_coin1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mushroom2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Items\mushroom2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="block3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiles\block3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="box_star1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_star1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="eraser_bg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Eraser\eraser_bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="brick3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiles\brick3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="block2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\block2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mushroom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Items\mushroom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="turtle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Enemies\turtle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,37 +169,52 @@
   <data name="goompa2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Enemies\goompa2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="box_mushroom2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_mushroom2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pipe3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\pipe3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="goompa" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Enemies\goompa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="plant" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Enemies\plant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="box_coin2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_coin2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="brick4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\brick4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="brick2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiles\brick2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="box_mushroom4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_mushroom4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="plant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Enemies\plant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="eraser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Eraser\eraser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="box_star2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_star2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pipe1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\pipe1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="goompa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Enemies\goompa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pipe2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\pipe2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="box_mushroom1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_mushroom1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pipe4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tiles\pipe4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="box_mushroom3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Items\box_mushroom3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="coin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Items\coin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="turtle4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Enemies\turtle4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="lift" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tiles\lift.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -42,7 +42,7 @@ namespace Map_Editor
         {
             InitializeComponent();
             _MapObj = new MapObject();
-            InitListPbTile();
+            InitListPb();
             _IsMouseDown = false;
             _SelectedObj = null;
             _startPoint = new Point();
@@ -72,7 +72,7 @@ namespace Map_Editor
         }
 
         //khoi tao danh sach picture box chua anh cua enemy
-        private void InitListPbTile()
+        private void InitListPb()
         {
             _ListPicbox = new List<PictureBox>();
             _ListPicbox.Add(_pbEraser);
@@ -80,23 +80,29 @@ namespace Map_Editor
             _ListPicbox.Add(_pbTile1);
             _ListPicbox.Add(_pbTile2);
             _ListPicbox.Add(_pbTile3);
+            _ListPicbox.Add(_pbTile2);
+            _ListPicbox.Add(_pbTile3);
             _ListPicbox.Add(_pbTile4);
             _ListPicbox.Add(_pbTile5);
             _ListPicbox.Add(_pbTile6);
             _ListPicbox.Add(_pbTile7);
+            _ListPicbox.Add(_pbTile8);
+            _ListPicbox.Add(_pbTile5);
             _ListPicbox.Add(_pbTile8);
             _ListPicbox.Add(_pbTile9);
             _ListPicbox.Add(_pbTile10);
             _ListPicbox.Add(_pbTile11);
             _ListPicbox.Add(_pbTile12);
             _ListPicbox.Add(_pbTile13);
-            _ListPicbox.Add(_pbTile14);
-            _ListPicbox.Add(_pbTile15);
             _ListPicbox.Add(_pbItem1);
             _ListPicbox.Add(_pbItem2);
             _ListPicbox.Add(_pbItem3);
             _ListPicbox.Add(_pbItem4);
             _ListPicbox.Add(_pbItem5);
+            _ListPicbox.Add(_pbItem6);
+            _ListPicbox.Add(_pbItem7);
+            _ListPicbox.Add(_pbItem8);
+            _ListPicbox.Add(_pbItem9);
             _ListPicbox.Add(_pbEnemy1);
             _ListPicbox.Add(_pbEnemy2);
             _ListPicbox.Add(_pbEnemy3);
