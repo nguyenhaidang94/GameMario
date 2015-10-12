@@ -36,7 +36,7 @@ void ObtainCoinEffect::Update()
 		if(_CoinPosition.y < _BeginingY + 48 && _CoinVelocity.y < 0)	//belown begining position plus 48 and when coin goes down
 		{
 			_IsAlive = false;
-			EffectManager::GetInstance()->ShowEffect(_CoinPosition, eEffectID::eObtainScore, _ScoreEarn);
+			EffectManager::GetInstance()->ShowEffect(_CoinPosition, eEffectID::eFloatingText, _ScoreEarn);
 		}
 		//control coin rate
 		DWORD now = GetTickCount();

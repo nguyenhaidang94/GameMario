@@ -12,6 +12,7 @@
 #include "Brick.h"
 #include "ItemBrick.h"
 #include "QuestionBlock.h"
+#include "HardBlock.h"
 
 class PlayScene :
 	public GameScene

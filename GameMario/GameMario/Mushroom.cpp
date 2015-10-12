@@ -52,9 +52,10 @@ void Mushroom::Update()
 		_Position.x += _Velocity.x;
 		_Position.y += _Velocity.y;
 
+		//destroy mushroom if it goes off screen
 		Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
-		if(_Position.x < cameraBox.fX || _Position.x > cameraBox.fX + cameraBox.fWidth||
-			_Position.y > cameraBox.fY || _Position.y < cameraBox.fY - cameraBox.fHeight)
+		if(_Position.x < cameraBox.fX - TITLE_SIZE|| _Position.x > cameraBox.fX + cameraBox.fWidth + TITLE_SIZE||
+			_Position.y > cameraBox.fY + TITLE_SIZE|| _Position.y < cameraBox.fY - cameraBox.fHeight - TITLE_SIZE)
 		{
 			_Tag = eGameTag::eDestroyed;
 		}
@@ -114,8 +115,16 @@ void Mushroom::OnCollision(GameObject *object, eCollisionDirection collisionDire
 	//case mario
 	case eMario:
 		_Tag = eGameTag::eDestroyed;
-		GameStatistics::GetInstance()->ChangeScore(MUSHROOM_SCORE);		//inscrease score
-		EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eObtainScore, MUSHROOM_SCORE);
+		if(_ObjectTypeID == eObjectTypeID::e1upMushroom)
+		{
+			GameStatistics::GetInstance()->ChangeLife(true);		//inscrease life by 1
+			EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eFloatingText, -2);	//show 1up text
+		}
+		if(_ObjectTypeID == eObjectTypeID::eMagicMushroom)
+		{
+			GameStatistics::GetInstance()->ChangeScore(MUSHROOM_SCORE);		//inscrease score
+			EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eFloatingText, MUSHROOM_SCORE);
+		}
 		break;
 	default:
 		break;

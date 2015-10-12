@@ -16,12 +16,14 @@ void Background::Initialize(int totalHorizontal, int totalVertical)
 	//Initate _BackgroundData array
 	_TotalHorizontalTitle = totalHorizontal;
 	_TotalVerticalTitle = totalVertical;
-	_BackgroundData = new int*[_TotalHorizontalTitle];
-	for(int i = 0; i < _TotalHorizontalTitle; ++i)
-		_BackgroundData[i] = new int[_TotalVerticalTitle];
+	_BackgroundData = new int*[_TotalVerticalTitle];
+	for(int i = 0; i < _TotalVerticalTitle; ++i)
+		_BackgroundData[i] = new int[_TotalHorizontalTitle];
 
 	//Set world size for camera
-	Camera::GetInstance()->SetWorldSize(_TotalVerticalTitle * TITLE_SIZE, _TotalHorizontalTitle * TITLE_SIZE);
+	Camera::GetInstance()->SetWorldSize(_TotalHorizontalTitle * TITLE_SIZE, _TotalVerticalTitle * TITLE_SIZE);
+
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMapTile);
 }
 
 void Background::ReadMapData(eWorldID mapID)
@@ -30,11 +32,9 @@ void Background::ReadMapData(eWorldID mapID)
 	switch (mapID)
 	{
 	case e1_1:
-		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMap1_1);
 		fileName = "1_1";
 		break;
 	case e1_2:
-		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMap1_1);
 		fileName = "1_2";
 		break;
 	case e1_3:
@@ -63,13 +63,13 @@ void Background::ReadMapData(eWorldID mapID)
 		else
 		{
 			//Read Background - each line is a Background horizontal title
-			vector<string> temp = Unility::Split(line, ' ');
+			vector<string> temp = Unility::Split(line, ',');
 			
-			for(int i = 0; i < _TotalVerticalTitle; i++)
+			for(int i = 0; i < _TotalHorizontalTitle; i++)
 			{
 				//convert string into character
 				titleID = atoi(temp[i].c_str());
-				_BackgroundData[lineNumber - 1][i] = titleID;
+				_BackgroundData[lineNumber - 1][i] = titleID -1;	//TiledMap generate base 1, so we have to -1
 			}
 			temp.clear();
 		}
@@ -79,9 +79,12 @@ void Background::ReadMapData(eWorldID mapID)
 
 void Background::Render()
 {
-	for(int i = 0; i < _TotalHorizontalTitle; i++)
+	int minRange = Camera::GetInstance()->GetBoundaryBox().fX / TITLE_SIZE;
+	int maxRange = minRange + SCREEN_HEIGHT/TITLE_SIZE + 2;
+	for(int i = 0; i < _TotalVerticalTitle; i++)
 	{
-		for(int j = 0; j < _TotalVerticalTitle; j++)
+		//only render background on sight
+		for(int j = minRange; j < maxRange; j++)
 		{
 			_Sprite->RenderAtFrame((float)j * TITLE_SIZE + TITLE_SIZE/2, SCREEN_HEIGHT - (float)i * TITLE_SIZE - TITLE_SIZE/2, _BackgroundData[i][j]);
 		}

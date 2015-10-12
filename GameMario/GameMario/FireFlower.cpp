@@ -59,6 +59,14 @@ void FireFlower::Update()
 			}
 		}
 	}
+
+	//destroy flower if it goes off screen
+	Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
+	if(_Position.x < cameraBox.fX - TITLE_SIZE|| _Position.x > cameraBox.fX + cameraBox.fWidth + TITLE_SIZE||
+			_Position.y > cameraBox.fY + TITLE_SIZE|| _Position.y < cameraBox.fY - cameraBox.fHeight - TITLE_SIZE)
+	{
+		_Tag = eGameTag::eDestroyed;
+	}
 }
 
 void FireFlower::Render()
@@ -80,7 +88,7 @@ void FireFlower::OnCollision(GameObject *object, eCollisionDirection collisionDi
 	case eMario:
 		_Tag = eGameTag::eDestroyed;
 		GameStatistics::GetInstance()->ChangeScore(FLOWER_SCORE);		//inscrease score
-		EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eObtainScore, FLOWER_SCORE);
+		EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eFloatingText, FLOWER_SCORE);
 		break;
 	default:
 		break;

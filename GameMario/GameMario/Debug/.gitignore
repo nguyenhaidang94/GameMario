@@ -28,3 +28,14 @@
 /vc120.idb
 /vc120.pdb
 *.obj
+/link-cvtres.read.1.tlog
+/link-cvtres.write.1.tlog
+/link-rc.read.1.tlog
+/link-rc.write.1.tlog
+/link.command.1.tlog
+/link.read.1.tlog
+/link.write.1.tlog
+/GameMario.lastbuildstate
+/vc110.idb
+/vc110.pdb
+*.1.tlog

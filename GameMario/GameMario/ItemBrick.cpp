@@ -12,7 +12,7 @@ ItemBrick::~ItemBrick(void)
 }
 
 
-ItemBrick::ItemBrick(int objectID, int x, int y)
+ItemBrick::ItemBrick(int objectID, int x, int y, string tag)
 {
 	Initialize(x, y);
 	_IsHitted = false;
@@ -37,6 +37,14 @@ ItemBrick::ItemBrick(int objectID, int x, int y)
 		break;
 	default:
 		break;
+	}
+	if(tag == "invi")
+	{
+		_IsInvisible = true;
+	}
+	else
+	{
+		_IsInvisible = false;
 	}
 }
 
@@ -80,7 +88,10 @@ void ItemBrick::Render()
 {
 	if(_Tag != eGameTag::eDestroyed)
 	{
-		_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
+		if(!_IsInvisible)
+		{
+			_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
+		}
 	}
 }
 
@@ -101,7 +112,8 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 			case eBottom:
 				//bounce
 				_Velocity.y = BOUNCE_VELOCITY;
-				_IsBounce = true;			
+				_IsBounce = true;	
+				_IsInvisible = false;
 
 				//handle item in brick
 				switch (_Tag)
@@ -124,15 +136,13 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 					{
 					case eMarioIsSmall:
 					case eMarioIsSmallInvincible:
-						//-------------------
 						//Spawn a mushroom here
-						//-------------------
+						PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
 						break;
 					case eMarioIsBig:
 					case eMarioIsBigInvincible:
-						//-------------------
 						//Spawn a fire flower here
-						//-------------------
+						PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Type ,_Position.x, _Position.y));
 						break;
 					default:
 						break;
@@ -141,9 +151,8 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 
 					//case 1up
 				case eStore1Up:
-					//-------------------
 					//Spawn a 1up mushroom here
-					//-------------------
+					PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
 					break;
 
 				//case star

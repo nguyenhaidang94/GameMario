@@ -162,9 +162,6 @@
     <ClCompile Include="ObtainCoinEffect.cpp">
       <Filter>Framework\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="ObtainScoreEffect.cpp">
-      <Filter>Framework\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="ItemBrick.cpp">
       <Filter>GameObject\Object\Brick</Filter>
     </ClCompile>
@@ -182,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="FireFlower.cpp">
       <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HardBlock.cpp">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingTextEffect.cpp">
+      <Filter>Framework\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,9 +275,6 @@
     <ClInclude Include="ObtainCoinEffect.h">
       <Filter>Framework\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="ObtainScoreEffect.h">
-      <Filter>Framework\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="ItemBrick.h">
       <Filter>GameObject\Object\Brick</Filter>
     </ClInclude>
@@ -292,6 +292,12 @@
     </ClInclude>
     <ClInclude Include="FireFlower.h">
       <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HardBlock.h">
+      <Filter>GameObject\Object\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingTextEffect.h">
+      <Filter>Framework\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

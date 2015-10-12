@@ -33,8 +33,15 @@ void EffectManager::ShowEffect(D3DXVECTOR2 position ,eEffectID effectID, int tag
 	case eObtainCoin:
 		_ListEffect.push_back(new ObtainCoinEffect(position, tag));
 		break;
-	case eObtainScore:
-		_ListEffect.push_back(new ObtainScoreEffect(position, tag));
+	case eFloatingText:
+		if(tag == -2)	//-2 is tag for 1up mushroom
+		{
+			_ListEffect.push_back(new FloatingTextEffect(position, "1up"));
+		}
+		else
+		{
+			_ListEffect.push_back(new FloatingTextEffect(position, to_string(tag)));
+		}
 		break;
 	default:
 		break;

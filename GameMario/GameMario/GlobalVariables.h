@@ -2,10 +2,10 @@
 
 //Game setting
 #define SCREEN_WIDTH 512
-#define SCREEN_HEIGHT 448
+#define SCREEN_HEIGHT 480
 #define FRAME_RATE 60		//60 FPS
 #define FULLSCREEN 0		//Not full screen
-#define TITLE_SIZE 64		//a title is 64x64
+#define TITLE_SIZE 32		//a title is 32x32
 //Enum
 enum eObjectTypeID
 {
@@ -24,7 +24,7 @@ enum eObjectTypeID
 enum eSpriteID
 { 
 	eBigMario = 0, 
-	eMap1_1 = 1,
+	eMapTile = 1,
 	eFont,
 	eMenuBanner,
 	eSmallPipe,
@@ -117,7 +117,7 @@ enum eEffectID
 {
 	eBreakBrick = 0,
 	eObtainCoin = 1,
-	eObtainScore,
+	eFloatingText,
 };
 
 enum eBlockTypeID

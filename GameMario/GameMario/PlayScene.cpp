@@ -75,7 +75,10 @@ void PlayScene::ReadMapData()
 		case 5:	//blue normal
 			_ListObject.push_back(new Brick(objectID, x, y));
 			break;
-
+		//Case hard block
+		case 4:
+			_ListObject.push_back(new HardBlock(objectID, x, y));
+			break;
 		//Case pipe
 		case 11:	//small
 		case 12:	//medium
@@ -87,7 +90,7 @@ void PlayScene::ReadMapData()
 		case 19:	//brick with 1up
 		case 17:	//brick with coin
 		case 21:	//brick with star
-			_ListObject.push_back(new ItemBrick(objectID, x, y));
+			_ListObject.push_back(new ItemBrick(objectID, x, y, tag));
 			break;
 
 		//case question block
@@ -205,8 +208,7 @@ void PlayScene::HandlingCollision()
 	float moveX, moveY;
 
 	//--Variable to handle collide with multiple brick--
-	int indexClosestBrickCollide = -1;	//mario only collide with 1 brick at the time, this store the closest one
-	eCollisionDirection directionClosestBrick = eCollisionDirection::eNone;
+	int indexClosestBrickCollide = -1;	//mario only collide on top with 1 brick at the time, this store the closest one
 
 	//--Handle collision with all object on screen
 	for(int i = 0; i < objectOnScreen.size(); i++)
@@ -215,19 +217,13 @@ void PlayScene::HandlingCollision()
 		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
 		if(direction != eCollisionDirection::eNone)
 		{
-			//if not collide with brick, dispatch collision. If brick handle later
-			if(objectOnScreen[i]->GetObjectTypeID() != eObjectTypeID::eBrick)
-			{
-				_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
-				objectOnScreen[i]->OnCollision(_Mario, direction);
-			}
-			else
+			//if collide with brick on top, store and handle later
+			if(objectOnScreen[i]->GetObjectTypeID() == eObjectTypeID::eBrick && direction == eCollisionDirection::eBottom)
 			{
 				//if 1st brick
 				if(indexClosestBrickCollide == -1)
 				{
 					indexClosestBrickCollide = i;
-					directionClosestBrick = direction;
 				}
 				else
 				{
@@ -236,9 +232,13 @@ void PlayScene::HandlingCollision()
 						abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
 					{
 						indexClosestBrickCollide = i;
-						directionClosestBrick = direction;
 					}
 				}
+			}
+			else	//send collision
+			{
+				_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
+				objectOnScreen[i]->OnCollision(_Mario, direction);
 			}
 		}
 
@@ -257,8 +257,8 @@ void PlayScene::HandlingCollision()
 	//Handle collide with brick if have any
 	if(indexClosestBrickCollide != -1)
 	{
-		_Mario->OnCollision(objectOnScreen[indexClosestBrickCollide], Unility::GetOppositeDirection(directionClosestBrick));
-		objectOnScreen[indexClosestBrickCollide]->OnCollision(_Mario, directionClosestBrick);
+		_Mario->OnCollision(objectOnScreen[indexClosestBrickCollide], Unility::GetOppositeDirection(eCollisionDirection::eBottom));
+		objectOnScreen[indexClosestBrickCollide]->OnCollision(_Mario, eCollisionDirection::eBottom);
 	}
 }
 

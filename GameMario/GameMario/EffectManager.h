@@ -3,7 +3,7 @@
 #include "Effect.h"
 #include "BrickBreakEffect.h"
 #include "ObtainCoinEffect.h"
-#include "ObtainScoreEffect.h"
+#include "FloatingTextEffect.h"
 
 class EffectManager
 {

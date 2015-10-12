@@ -1,13 +1,13 @@
-#include "ObtainScoreEffect.h"
+#include "FloatingTextEffect.h"
 
 #define DEFAULT_VELOCITY_Y -5	//negative value because this use top-left positon
 #define DISAPPEAR_RANGE 64
 
-ObtainScoreEffect::ObtainScoreEffect(void)
+FloatingTextEffect::FloatingTextEffect(void)
 {
 }
 
-ObtainScoreEffect::ObtainScoreEffect(D3DXVECTOR2 position, int score)
+FloatingTextEffect::FloatingTextEffect(D3DXVECTOR2 position, string score)
 {
 	_ScorePosition = WorldPostionToFixedPostion(position);
 	_BeginingY = _ScorePosition.y;
@@ -16,17 +16,17 @@ ObtainScoreEffect::ObtainScoreEffect(D3DXVECTOR2 position, int score)
 	_IsAlive = true;
 }
 
-ObtainScoreEffect::~ObtainScoreEffect(void)
+FloatingTextEffect::~FloatingTextEffect(void)
 {
 }
 
-D3DXVECTOR2 ObtainScoreEffect::WorldPostionToFixedPostion(D3DXVECTOR2 position)
+D3DXVECTOR2 FloatingTextEffect::WorldPostionToFixedPostion(D3DXVECTOR2 position)
 {
 	//x axis hardcode minus 30 to center text
 	return D3DXVECTOR2(position.x - Camera::GetInstance()->GetViewPort().x - 30, Camera::GetInstance()->GetViewPort().y - position.y);
 }
 
-void ObtainScoreEffect::Update()
+void FloatingTextEffect::Update()
 {
 	if(_IsAlive)
 	{
@@ -38,15 +38,15 @@ void ObtainScoreEffect::Update()
 	}
 }
 
-void ObtainScoreEffect::Render()
+void FloatingTextEffect::Render()
 {
 	if(_IsAlive)
 	{
-		TextManager::GetInstance()->FixedRender(to_string(_Score), _ScorePosition.x, _ScorePosition.y);
+		TextManager::GetInstance()->FixedRender(_Score, _ScorePosition.x, _ScorePosition.y);
 	}
 }
 
-void ObtainScoreEffect::Release()
+void FloatingTextEffect::Release()
 {
 	
 }
