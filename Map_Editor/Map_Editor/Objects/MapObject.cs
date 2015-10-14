@@ -7,37 +7,6 @@ using System.Threading.Tasks;
 
 namespace Map_Editor.Objects
 {
-    public struct ENEMY_INFO
-    {
-        private int _X;
-        public int X
-        {
-            get { return _X; }
-            set { _X = value; }
-        }
-
-        private int _Y;
-        public int Y
-        {
-            get { return _Y; }
-            set { _Y = value; }
-        }
-
-        private int _Id;
-        public int Id
-        {
-            get { return _Id; }
-            set { _Id = value; }
-        }
-
-        public ENEMY_INFO(int x, int y, int id)
-        {
-            this._X = x;
-            this._Y = y;
-            this._Id = id;
-        }
-    }
-
     public class MapObject
     {
         #region CONSTANT
@@ -59,27 +28,32 @@ namespace Map_Editor.Objects
             set { _ListGround = value; }
         }
 
-        private List<TileObject> _ListEnemy;
-        public List<TileObject> ListEnemy
+        private List<TileObject> _ListObject;
+        public List<TileObject> ListObject
         {
-            get { return _ListEnemy; }
-            set { _ListEnemy = value; }
+            get { return _ListObject; }
+            set { _ListObject = value; }
         }
-
-        /// <summary>
-        /// arr tile number
-        /// </summary>
-        public int[][] ArrTileNumber;
 
         /// <summary>
         /// rows
         /// </summary>
-        public int MapRow;
+        public int MapRow { get; set; }
 
         /// <summary>
         /// clolumn
         /// </summary>
-        public int MapColumn;
+        public int MapColumn { get; set; }
+
+        /// <summary>
+        /// width
+        /// </summary>
+        public int MapWidth { get; set; }
+
+        /// <summary>
+        /// height
+        /// </summary>
+        public int MapHeight { get; set; }
 
         /// <summary>
         /// constructor
@@ -87,44 +61,32 @@ namespace Map_Editor.Objects
         public MapObject()
         {
             _ListGround = new List<TileObject>();
-            _ListEnemy = new List<TileObject>();
+            _ListObject = new List<TileObject>();
         }
 
         //lay enemy tai diem p
-        public TileObject GetEnemyAtPoint(System.Drawing.Point p)
+        public TileObject GetObjectAtPoint(int x, int y)
         {
-            if (_ListEnemy.Count == 0)
+            if (_ListObject.Count == 0)
                 return null;
 
-            foreach (TileObject tileObj in _ListEnemy)
+            foreach (TileObject tileObj in _ListObject)
             {
-                System.Drawing.Rectangle r = new System.Drawing.Rectangle(
-                    new System.Drawing.Point(
-                        tileObj.TilePoint.X - tileObj.TileSize.Width/2,
-                        tileObj.TilePoint.Y - tileObj.TileSize.Height/2),
-                    tileObj.TileSize
-                    );
-                if (r.Contains(p))
+                if (tileObj.IsContainPoint(x, y))
                     return tileObj;
             }
             return null;
         }
 
         //lay ground tai diem p
-        public TileObject GetGroundAtPoint(System.Drawing.Point p)
+        public TileObject GetGroundAtPoint(int x, int y)
         {
             if (_ListGround.Count == 0)
                 return null;
             foreach (TileObject tileObj in _ListGround)
             {
-                System.Drawing.Rectangle r = new System.Drawing.Rectangle(
-                    new System.Drawing.Point(
-                        tileObj.TilePoint.X - tileObj.TileSize.Width / 2,
-                        tileObj.TilePoint.Y - tileObj.TileSize.Height / 2),
-                    tileObj.TileSize
-                    );
-                if (r.Contains(p))
-                    return tileObj;
+                if (tileObj.IsContainPoint(x, y))
+                return tileObj;
             }
             return null;
         }
