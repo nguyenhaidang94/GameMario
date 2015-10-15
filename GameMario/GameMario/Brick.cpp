@@ -10,11 +10,11 @@ Brick::Brick(int objectID, int x, int y)
 	//setup current sprite for brick
 	switch (objectID)
 	{
-	case 3:	
+	case 2:	
 		_Type = eBlockTypeID::eBrownBlock;
 		_CurrentFrame = 0;
 		break;
-	case 5:
+	case 3:
 		_Type = eBlockTypeID::eBlueBlock;
 		_CurrentFrame = 6;
 	default:
@@ -40,7 +40,6 @@ void Brick::Update()
 		}
 	}
 }
-
 
 void Brick::Render()
 {

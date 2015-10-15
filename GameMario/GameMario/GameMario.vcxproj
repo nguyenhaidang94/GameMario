@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -79,10 +79,12 @@
     <ClCompile Include="HardBlock.cpp" />
     <ClCompile Include="ItemBrick.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObtainCoinEffect.cpp" />
     <ClCompile Include="FloatingTextEffect.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="SwepAABB.cpp" />
     <ClCompile Include="dsutil.cpp" />
@@ -118,10 +120,12 @@
     <ClInclude Include="HardBlock.h" />
     <ClInclude Include="ItemBrick.h" />
     <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="ObtainCoinEffect.h" />
     <ClInclude Include="FloatingTextEffect.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="SwepAABB.h" />
     <ClInclude Include="dsutil.h" />

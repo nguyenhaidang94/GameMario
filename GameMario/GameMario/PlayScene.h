@@ -13,6 +13,7 @@
 #include "ItemBrick.h"
 #include "QuestionBlock.h"
 #include "HardBlock.h"
+#include "QuadTree.h"
 
 class PlayScene :
 	public GameScene
@@ -21,9 +22,9 @@ private:
 	eWorldID _MapID;
 	//Map object
 	Background *_Background;
-	vector<GameObject*> _ListObject;
 	Mario *_Mario;
 	static PlayScene *Instance;
+	vector<GameObject*> _ListObject;
 	vector<GameObject*> GetListObjectOnScreen();
 
 	//get direction of colision between a dynamic and a static object

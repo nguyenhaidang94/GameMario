@@ -19,18 +19,18 @@ ItemBrick::ItemBrick(int objectID, int x, int y, string tag)
 	//setup current sprite for brick
 	switch (objectID)
 	{
-	case 17:	//brown brick contain coin
+	case 18:	//brown brick contain 1up
+		_Type = eBlockTypeID::eBrownBlock;	//brown
+		_CurrentFrame = 0;
+		_Tag = eGameTag::eStore1Up;
+		break;
+	case 20:	//brown brick contain coin
 		_Type = eBlockTypeID::eBrownBlock;	//brown
 		_CurrentFrame = 0;
 		_CointLeft = 7;
 		_Tag = eGameTag::eStoreCoin;
 		break;
-	case 19:	//brown brick contain 1up
-		_Type = eBlockTypeID::eBrownBlock;	//brown
-		_CurrentFrame = 0;
-		_Tag = eGameTag::eStore1Up;
-		break;
-	case 21:	//brown brick contain star
+	case 22:	//brown brick contain star
 		_Type = eBlockTypeID::eBrownBlock;	//brown
 		_CurrentFrame = 0;
 		_Tag = eGameTag::eStoreStar;

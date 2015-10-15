@@ -67,36 +67,36 @@ void PlayScene::ReadMapData()
 		{
 		//Case ground
 		case 1:
-			_ListObject.push_back(new Ground(x, y, atoi(tag.c_str())));
+			//_ListObject.push_back(new Ground(x, y, atoi(tag.c_str())));
 			break;
 
 		//Case brick
-		case 3:	//brown normal
-		case 5:	//blue normal
-			_ListObject.push_back(new Brick(objectID, x, y));
+		case 2:	//brown normal
+		case 3:	//blue normal
+			//_ListObject.push_back(new Brick(objectID, x, y));
 			break;
 		//Case hard block
 		case 4:
-			_ListObject.push_back(new HardBlock(objectID, x, y));
+			//_ListObject.push_back(new HardBlock(objectID, x, y));
 			break;
 		//Case pipe
-		case 11:	//small
-		case 12:	//medium
-		case 13:	//big
-			_ListObject.push_back(new Pipe(objectID, x, y, tag));
+		case 9:		//small
+		case 10:	//medium
+		case 11:	//big
+			//_ListObject.push_back(new Pipe(objectID, x, y, tag));
 			break;
 
 		//case brick with item
-		case 19:	//brick with 1up
-		case 17:	//brick with coin
-		case 21:	//brick with star
-			_ListObject.push_back(new ItemBrick(objectID, x, y, tag));
+		case 18:	//brick with 1up
+		case 20:	//brick with coin
+		case 22:	//brick with star
+			//_ListObject.push_back(new ItemBrick(objectID, x, y, tag));
 			break;
 
 		//case question block
-		case 18:	//question block with mushroom
-		case 10:	//normal question block
-			_ListObject.push_back(new QuestionBlock(objectID, x, y));
+		case 8:	//normal question block
+		case 16:	//question block with mushroom
+			//_ListObject.push_back(new QuestionBlock(objectID, x, y));
 			break;
 
 		default:
@@ -109,10 +109,10 @@ void PlayScene::ReadMapData()
 	}
 }
 
-vector<GameObject*> PlayScene::GetAllObject()
-{
-	return _ListObject;
-}
+//vector<GameObject*> PlayScene::GetAllObject()
+//{
+//	return _ListObject;
+//}
 
 void PlayScene::Load()
 {
@@ -129,23 +129,24 @@ void PlayScene::LoadMap(eWorldID mapID)
 	_Mario->SetPosition(D3DXVECTOR2(32,256));
 	//Read object data in map
 	ReadMapData();
+	//QuadTree::GetInstance()->BuildQuadTree(_MapID);
 }
 
 void PlayScene::Update()
 {
 	_Mario->Update();
-	
-	for (int i = 0; i < _ListObject.size(); i++)
+	QuadTree::GetInstance()->RetrieveObjectsOnScreen();
+	for (int i = 0; i < QuadTree::GetInstance()->GetObjectsOnScreen().size(); i++)
 	{
-		if(_ListObject[i]->GetTag() != eGameTag::eDestroyed)
+		if (QuadTree::GetInstance()->GetObjectsOnScreen()[i]->GetTag() != eGameTag::eDestroyed)
 		{
-			_ListObject[i]->Update();
+			QuadTree::GetInstance()->GetObjectsOnScreen()[i]->Update();
 		}
 		else
 		{
 			//remomve object if it's destroyed
-			delete _ListObject[i];
-			_ListObject.erase(_ListObject.begin() + i);
+			delete QuadTree::GetInstance()->GetObjectsOnScreen()[i];
+			QuadTree::GetInstance()->GetObjectsOnScreen().erase(QuadTree::GetInstance()->GetObjectsOnScreen().begin() + i);
 		}
 	}
 
@@ -168,19 +169,16 @@ void PlayScene::Render()
 {
 	_Background->Render();
 	_Mario->Render();
-	for (int i = 0; i < _ListObject.size(); i++)
+	for (int i = 0; i < QuadTree::GetInstance()->GetObjectsOnScreen().size(); i++)
 	{
-		_ListObject[i]->Render();
+		QuadTree::GetInstance()->GetObjectsOnScreen()[i]->Render();
 	}
 }
 
 void PlayScene::Release()
 {
 	_Background->Release();
-	for (int i = 0; i < _ListObject.size(); i++)
-	{
-		_ListObject[i]->Release();
-	}
+	_ListObject.clear();
 }
 
 //----Temporary handling collision----//
@@ -211,14 +209,14 @@ void PlayScene::HandlingCollision()
 	int indexClosestBrickCollide = -1;	//mario only collide on top with 1 brick at the time, this store the closest one
 
 	//--Handle collision with all object on screen
-	for(int i = 0; i < objectOnScreen.size(); i++)
+	for (int i = 0; i < objectOnScreen.size(); i++)
 	{
 		//check colision with mario...
 		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
 		if(direction != eCollisionDirection::eNone)
 		{
 			//if collide with brick on top, store and handle later
-			if(objectOnScreen[i]->GetObjectTypeID() == eObjectTypeID::eBrick && direction == eCollisionDirection::eBottom)
+			if (objectOnScreen[i]->GetObjectTypeID() == eObjectTypeID::eBrick && direction == eCollisionDirection::eBottom)
 			{
 				//if 1st brick
 				if(indexClosestBrickCollide == -1)
@@ -228,7 +226,7 @@ void PlayScene::HandlingCollision()
 				else
 				{
 					//check if it closer than the closest
-					if(abs(_Mario->GetPosition().x - objectOnScreen[i]->GetPosition().x) < 
+					if (abs(_Mario->GetPosition().x - objectOnScreen[i]->GetPosition().x) <
 						abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
 					{
 						indexClosestBrickCollide = i;
@@ -243,7 +241,7 @@ void PlayScene::HandlingCollision()
 		}
 
 		//and for other, FIX LATER
-		for(int j = i + 1 ; j < objectOnScreen.size(); j++)
+		for (int j = i + 1; j < objectOnScreen.size(); j++)
 		{
 			
 			eCollisionDirection direction = CheckCollision(objectOnScreen[i], objectOnScreen[j], moveX, moveY);

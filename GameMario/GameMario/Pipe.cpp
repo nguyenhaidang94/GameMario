@@ -22,19 +22,19 @@ Pipe::Pipe(int objectID, int x, int y , std::string destination)
 	//setup or each type of pipe
 	switch (objectID)
 	{
-	case 11:	//small
+	case 9:	//small
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallPipe);
 		_Size.y = SMALL_PIPE_HEIGHT;
 		break;
-	case 12:	//medium
+	case 10:	//medium
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMediumPipe);
 		_Size.y = MEDIUM_PIPE_HEIGHT;
 		break;
-	case 13:	//big
+	case 11:	//big
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigPipe);
 		_Size.y = BIG_PIPE_HEIGHT;
 		break;
-	case eHorizontalPipe:	//horizontal
+	case 12:	//horizontal
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eHorizontalPipe);
 		_Size.x = HORIZONTAL_PIPE_WIDTH;
 		break;

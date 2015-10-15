@@ -1,7 +1,7 @@
 #pragma once
 
 //Game setting
-#define SCREEN_WIDTH 512
+#define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 480
 #define FRAME_RATE 60		//60 FPS
 #define FULLSCREEN 0		//Not full screen
@@ -124,4 +124,12 @@ enum eBlockTypeID
 {
 	eBrownBlock = 0,
 	eBlueBlock = 1,
+};
+
+enum eNodePosition
+{
+	eTopLeft = 1,
+	eTopRight = 2,
+	eBotLeft = 3,
+	eBotRight = 4
 };
