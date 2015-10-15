@@ -67,36 +67,36 @@ void PlayScene::ReadMapData()
 		{
 		//Case ground
 		case 1:
-			//_ListObject.push_back(new Ground(x, y, atoi(tag.c_str())));
+			_ListObject.push_back(new Ground(x, y, atoi(tag.c_str())));
 			break;
 
 		//Case brick
 		case 2:	//brown normal
 		case 3:	//blue normal
-			//_ListObject.push_back(new Brick(objectID, x, y));
+			_ListObject.push_back(new Brick(objectID, x, y));
 			break;
 		//Case hard block
 		case 4:
-			//_ListObject.push_back(new HardBlock(objectID, x, y));
+			_ListObject.push_back(new HardBlock(objectID, x, y));
 			break;
 		//Case pipe
 		case 9:		//small
 		case 10:	//medium
 		case 11:	//big
-			//_ListObject.push_back(new Pipe(objectID, x, y, tag));
+			_ListObject.push_back(new Pipe(objectID, x, y, tag));
 			break;
 
 		//case brick with item
 		case 18:	//brick with 1up
 		case 20:	//brick with coin
 		case 22:	//brick with star
-			//_ListObject.push_back(new ItemBrick(objectID, x, y, tag));
+			_ListObject.push_back(new ItemBrick(objectID, x, y, tag));
 			break;
 
 		//case question block
 		case 8:	//normal question block
 		case 16:	//question block with mushroom
-			//_ListObject.push_back(new QuestionBlock(objectID, x, y));
+			_ListObject.push_back(new QuestionBlock(objectID, x, y));
 			break;
 
 		default:
@@ -135,18 +135,17 @@ void PlayScene::LoadMap(eWorldID mapID)
 void PlayScene::Update()
 {
 	_Mario->Update();
-	QuadTree::GetInstance()->RetrieveObjectsOnScreen();
-	for (int i = 0; i < QuadTree::GetInstance()->GetObjectsOnScreen().size(); i++)
+	for (int i = 0; i < _ListObject.size(); i++)
 	{
-		if (QuadTree::GetInstance()->GetObjectsOnScreen()[i]->GetTag() != eGameTag::eDestroyed)
+		if (_ListObject[i]->GetTag() != eGameTag::eDestroyed)
 		{
-			QuadTree::GetInstance()->GetObjectsOnScreen()[i]->Update();
+			_ListObject[i]->Update();
 		}
 		else
 		{
 			//remomve object if it's destroyed
-			delete QuadTree::GetInstance()->GetObjectsOnScreen()[i];
-			QuadTree::GetInstance()->GetObjectsOnScreen().erase(QuadTree::GetInstance()->GetObjectsOnScreen().begin() + i);
+			delete _ListObject[i];
+			_ListObject.erase(_ListObject.begin() + i);
 		}
 	}
 
@@ -169,9 +168,9 @@ void PlayScene::Render()
 {
 	_Background->Render();
 	_Mario->Render();
-	for (int i = 0; i < QuadTree::GetInstance()->GetObjectsOnScreen().size(); i++)
+	for (int i = 0; i < _ListObject.size(); i++)
 	{
-		QuadTree::GetInstance()->GetObjectsOnScreen()[i]->Render();
+		_ListObject[i]->Render();
 	}
 }
 

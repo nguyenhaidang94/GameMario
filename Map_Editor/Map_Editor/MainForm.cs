@@ -566,16 +566,23 @@ namespace Map_Editor
             else
             {
                 int id = _ListPicbox.IndexOf(_SelectedPicbox);
-                TileObject enemyObj = _MapObj.GetObjectAtPoint(e.Location.X, _MapObj.MapHeight - e.Location.Y);
+                int x = e.Location.X;
+                int y = _MapObj.MapHeight - e.Location.Y;
+                TileObject enemyObj = _MapObj.GetObjectAtPoint(x, y);
                 if (enemyObj != null)
                 {
                     if (enemyObj.Id != id)
                     {
                         enemyObj.Id = id;
-                        enemyObj.BoundaryBox.X = e.Location.X;
-                        enemyObj.BoundaryBox.Y = _MapObj.MapHeight - e.Location.Y;
                         enemyObj.BoundaryBox.Width = _SelectedPicbox.Image.Width * 2;
                         enemyObj.BoundaryBox.Height = _SelectedPicbox.Image.Height * 2;
+                        if (enemyObj.BoundaryBox.Width == MapObject.COLUMN_SIZE
+                            && enemyObj.BoundaryBox.Height == MapObject.ROW_SIZE)
+                        {
+                            enemyObj.BoundaryBox.X = (x / MapObject.COLUMN_SIZE) * MapObject.COLUMN_SIZE + MapObject.COLUMN_SIZE / 2;
+                            enemyObj.BoundaryBox.Y = (y / MapObject.ROW_SIZE) * MapObject.ROW_SIZE + MapObject.ROW_SIZE / 2;
+                        }
+                        
                         _SelectedObj = enemyObj;
                         _txtNote.Text = _SelectedObj.Note;
                     }
@@ -587,13 +594,24 @@ namespace Map_Editor
                 }
                 else
                 {
-                    enemyObj = new TileObject(
-                        id,
-                        e.Location.X,
-                        _MapObj.MapHeight - e.Location.Y,
-                        _SelectedPicbox.Image.Width * 2,
-                        _SelectedPicbox.Image.Height * 2
-                        );
+                    if (_SelectedPicbox.Image.Width * 2 == MapObject.COLUMN_SIZE
+                            && _SelectedPicbox.Image.Width * 2 == MapObject.ROW_SIZE)
+                    {
+                        enemyObj = new TileObject(
+                            id,
+                            (x / MapObject.COLUMN_SIZE) * MapObject.COLUMN_SIZE + MapObject.COLUMN_SIZE / 2,
+                            (y / MapObject.ROW_SIZE) * MapObject.ROW_SIZE + MapObject.ROW_SIZE / 2,
+                            _SelectedPicbox.Image.Width * 2,
+                            _SelectedPicbox.Image.Height * 2
+                            );
+                    }
+                    else
+                    {
+                        enemyObj = new TileObject(id, x, y,
+                            _SelectedPicbox.Image.Width * 2,
+                            _SelectedPicbox.Image.Height * 2
+                            );
+                    }
                     _MapObj.ListObject.Add(enemyObj);
                     _SelectedObj = enemyObj;
                     _txtNote.Text = _SelectedObj.Note;
