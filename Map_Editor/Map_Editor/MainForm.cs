@@ -216,33 +216,24 @@ namespace Map_Editor
                 {
                     foreach (TileObject obj in node.ListObject)
                     {
-                        switch (obj.Id)
-                        {
-                            case (int)eOBJECT.GROUND:
-                                sw.WriteLine(
+                        if (string.IsNullOrEmpty(obj.Note))
+                            sw.WriteLine(
                                 obj.Id.ToString() + " "
-                                 + obj.BoundaryBox.X.ToString() + " "
-                                 + obj.BoundaryBox.Y.ToString() + " "
-                                 + obj.BoundaryBox.Width.ToString()
-                                 );
-                                break;
-                            default:
-                                if (string.IsNullOrEmpty(obj.Note))
-                                    sw.WriteLine(
-                                        obj.Id.ToString() + " "
-                                         + obj.BoundaryBox.X.ToString() + " "
-                                         + obj.BoundaryBox.Y.ToString() + " "
-                                         + "-1"
-                                         );
-                                else
-                                    sw.WriteLine(
-                                        obj.Id.ToString() + " "
-                                         + obj.BoundaryBox.X.ToString() + " "
-                                         + obj.BoundaryBox.Y.ToString() + " "
-                                         + obj.Note
-                                         );
-                                break;
-                        }
+                                    + obj.MovementRangeBox.X.ToString() + " "
+                                    + obj.MovementRangeBox.Y.ToString() + " "
+                                    + obj.MovementRangeBox.Width.ToString() + " "
+                                    + obj.MovementRangeBox.Height.ToString() + " "
+                                    + "-1"
+                                    );
+                        else
+                            sw.WriteLine(
+                                obj.Id.ToString() + " "
+                                    + obj.MovementRangeBox.X.ToString() + " "
+                                    + obj.MovementRangeBox.Y.ToString() + " "
+                                    + obj.MovementRangeBox.Width.ToString() + " "
+                                    + obj.MovementRangeBox.Height.ToString() + " "
+                                    + obj.Note
+                                    );
                     }
                 }
                 else
