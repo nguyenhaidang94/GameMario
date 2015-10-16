@@ -11,6 +11,11 @@ Block::~Block(void)
 {
 }
 
+Box Block::GetMovementRangeBox()
+{
+	return GetBoundaryBox();
+}
+
 void Block::Initialize(int x, int y)
 {
 	_Position.x = x;

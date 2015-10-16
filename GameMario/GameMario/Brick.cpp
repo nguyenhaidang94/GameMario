@@ -24,6 +24,13 @@ Brick::Brick(int objectID, int x, int y)
 
 Brick::~Brick(void)
 {
+	int temp = 0;
+	temp += 1;
+}
+
+Box Brick::GetMovementRangeBox()
+{
+	return GetBoundaryBox();
 }
 
 void Brick::Update()

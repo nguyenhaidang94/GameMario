@@ -53,6 +53,11 @@ void Mario::HandlingInput()
 	
 }
 
+Box Mario::GetMovementRangeBox()
+{
+	return GetBoundaryBox();
+}
+
 void Mario::Update()
 {
 	//Just testing

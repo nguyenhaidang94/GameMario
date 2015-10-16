@@ -16,8 +16,8 @@ QuadTree* QuadTree::GetInstance()
 
 void QuadTree::BuildQuadTree(eWorldID mapID)
 {
-	if (_MapQuadTree.size() > 0)
-		_MapQuadTree.clear();
+	//used to support add subnodes
+	std::map<int, Node*> mapQuadTree;
 	_RootNode = NULL;
 
 	string fileName;
@@ -48,8 +48,8 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 		issReadNode >> nodeId >> nodePosX >> nodePosY >> nodeWidth >> nodeHeight >> numOfObjects;
 		{
 			int parentId = nodeId / 10;
-			if (_MapQuadTree.find(nodeId) == _MapQuadTree.end()
-				&& (parentId == 0 || _MapQuadTree.find(parentId) != _MapQuadTree.end()))
+			if (mapQuadTree.find(nodeId) == mapQuadTree.end()
+				&& (parentId == 0 || mapQuadTree.find(parentId) != mapQuadTree.end()))
 			{
 				Node* node = new Node(nodeId, nodePosX, nodePosY, nodeWidth, nodeHeight);
 				for (int i = 0; i < numOfObjects; i++)
@@ -68,7 +68,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					{
 						//Case ground
 					case 1:
-						node->_ListObjects.push_back(new Ground(x, y, atoi(tag.c_str())));
+						node->_ListObjects.push_back(new Ground(x, y, w));
 						break;
 
 						//Case brick
@@ -106,7 +106,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					}
 				}	//end for loop
 				
-				_MapQuadTree[nodeId] = node;
+				mapQuadTree[nodeId] = node;
 				//there is only one node has a parentId = 0
 				if (parentId == 0)
 					_RootNode = node;
@@ -115,17 +115,17 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					int nodePosition = nodeId % 10;
 					switch (nodePosition)
 					{
-					case (int)eNodePosition::eTopLeft:
-						_MapQuadTree[parentId]->_Tl = node;
+					case eNodePosition::eTopLeft:
+						mapQuadTree[parentId]->_Tl = node;
 						break;
-					case (int)eNodePosition::eTopRight:
-						_MapQuadTree[parentId]->_Tr = node;
+					case eNodePosition::eTopRight:
+						mapQuadTree[parentId]->_Tr = node;
 						break;
-					case (int)eNodePosition::eBotLeft:
-						_MapQuadTree[parentId]->_Bl = node;
+					case eNodePosition::eBotLeft:
+						mapQuadTree[parentId]->_Bl = node;
 						break;
-					case (int)eNodePosition::eBotRight:
-						_MapQuadTree[parentId]->_Br = node;
+					case eNodePosition::eBotRight:
+						mapQuadTree[parentId]->_Br = node;
 						break;
 					default:
 						break;
@@ -134,7 +134,12 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 			}
 		}
 	}
+	mapQuadTree.clear();
+}
 
+void QuadTree::InsertObject(GameObject* object, Box objBox)
+{
+	_RootNode->InsertObject(object, objBox);
 }
 
 void QuadTree::RetrieveObjectsInNode(Node* node, Box sightBox)
@@ -144,7 +149,21 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box sightBox)
 		if (node->_ListObjects.size() > 0)
 		{
 			for (int i = 0; i < node->_ListObjects.size(); i++)
-				_ObjectsOnScreen.push_back(node->_ListObjects[i]);
+			{
+				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed)
+				{
+					node->_ListObjects[i]->Update();
+					//check if object intersects with sightBox
+					if (AABBCheck(sightBox, node->_ListObjects[i]->GetBoundaryBox()))
+						_ObjectsOnScreen.push_back(node->_ListObjects[i]);
+				}
+				else
+				{
+					//remomve object if it's destroyed
+					delete node->_ListObjects[i];
+					node->_ListObjects.erase(node->_ListObjects.begin() + i);
+				}
+			}
 		}
 		if (node->_Tl != NULL)
 			RetrieveObjectsInNode(node->_Tl, sightBox);
@@ -170,29 +189,26 @@ std::vector<GameObject*> QuadTree::GetObjectsOnScreen()
 	return _ObjectsOnScreen;
 }
 
-void QuadTree::Clear(Node* node)
+void QuadTree::ClearNode(Node* node)
 {
 	if (node != NULL)
 	{
-		Clear(node->_Tl);
-		delete node->_Tl;
-		Clear(node->_Tr);
-		delete node->_Tr;
-		Clear(node->_Bl);
-		delete node->_Bl;
-		Clear(node->_Br);
-		delete node->_Br;
+		ClearNode(node->_Tl);
+		ClearNode(node->_Tr);
+		ClearNode(node->_Bl);
+		ClearNode(node->_Br);
 
+		int nodeId = node->GetNodeId();
 		node->Release();
 		delete node;
+		node = NULL;
 	}
 }
 
 void QuadTree::Release()
 {
 	_ObjectsOnScreen.clear();
-	_MapQuadTree.clear();
-	Clear(_RootNode);
+	ClearNode(_RootNode);
 }
 
 QuadTree::~QuadTree()
