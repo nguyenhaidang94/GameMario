@@ -7,7 +7,6 @@ PlayScene::PlayScene(void)
 	
 }
 
-
 PlayScene::~PlayScene(void)
 {
 }
@@ -109,10 +108,10 @@ void PlayScene::ReadMapData()
 	}
 }
 
-//vector<GameObject*> PlayScene::GetAllObject()
-//{
-//	return _ListObject;
-//}
+vector<GameObject*> PlayScene::GetAllObject()
+{
+	return _ListObject;
+}
 
 void PlayScene::Load()
 {
@@ -128,26 +127,27 @@ void PlayScene::LoadMap(eWorldID mapID)
 	_Background->ReadMapData(_MapID);
 	_Mario->SetPosition(D3DXVECTOR2(32,256));
 	//Read object data in map
-	ReadMapData();
-	//QuadTree::GetInstance()->BuildQuadTree(_MapID);
+	//ReadMapData();
+	QuadTree::GetInstance()->BuildQuadTree(_MapID);
 }
 
 void PlayScene::Update()
 {
 	_Mario->Update();
-	for (int i = 0; i < _ListObject.size(); i++)
-	{
-		if (_ListObject[i]->GetTag() != eGameTag::eDestroyed)
-		{
-			_ListObject[i]->Update();
-		}
-		else
-		{
-			//remomve object if it's destroyed
-			delete _ListObject[i];
-			_ListObject.erase(_ListObject.begin() + i);
-		}
-	}
+	QuadTree::GetInstance()->UpdateObjectsOnScreen();
+	//for (int i = 0; i < _ListObject.size(); i++)
+	//{
+	//	if (_ListObject[i]->GetTag() != eGameTag::eDestroyed)
+	//	{
+	//		_ListObject[i]->Update();
+	//	}
+	//	else
+	//	{
+	//		//remomve object if it's destroyed
+	//		delete _ListObject[i];
+	//		_ListObject.erase(_ListObject.begin() + i);
+	//	}
+	//}
 
 	//Handling colison
 	HandlingCollision();
@@ -155,7 +155,6 @@ void PlayScene::Update()
 	//Update camera
 	Camera::GetInstance()->Update(_Mario->GetPosition());
 	
-
 	//Test switch map
 	//if(_Mario->GetPosition().x >= Camera::GetInstance()->GetWorldSize().x)
 	//{
@@ -168,9 +167,14 @@ void PlayScene::Render()
 {
 	_Background->Render();
 	_Mario->Render();
-	for (int i = 0; i < _ListObject.size(); i++)
+	/*for (int i = 0; i < _ListObject.size(); i++)
 	{
 		_ListObject[i]->Render();
+	}*/
+	vector<GameObject*> listObj = QuadTree::GetInstance()->GetObjectsOnScreen();
+	for (int i = 0; i < listObj.size(); i++)
+	{
+		listObj[i]->Render();
 	}
 }
 
@@ -201,7 +205,8 @@ vector<GameObject*> PlayScene::GetListObjectOnScreen()
 
 void PlayScene::HandlingCollision()
 {
-	vector<GameObject*> objectOnScreen = GetListObjectOnScreen();
+	//vector<GameObject*> objectOnScreen = GetListObjectOnScreen();
+	vector<GameObject*> objectOnScreen = QuadTree::GetInstance()->GetObjectsOnScreen();
 	float moveX, moveY;
 
 	//--Variable to handle collide with multiple brick--
@@ -401,5 +406,5 @@ eCollisionDirection PlayScene::CheckCollision(GameObject *dynamicObj, GameObject
 
 void PlayScene::AddObjectToScene(GameObject *object)
 {
-	_ListObject.push_back(object);
+	//_ListObject.push_back(object);
 }

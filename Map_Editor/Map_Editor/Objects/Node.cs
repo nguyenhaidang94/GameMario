@@ -153,7 +153,7 @@ namespace Map_Editor.Objects
             //if object doesn't belong to node, then return
             if (!Box.IsIntersect(node.BoundaryBox, obj.MovementRangeBox))
                 return;
-
+   
             //if node covers all screenhight and screenwidth, then divide it into 4 subnodes
             if (node.BoundaryBox.Width >= SCREEN_WIDTH + 6 && node.BoundaryBox.Height >= SCREEN_HEIGHT + 6)
             {
@@ -166,11 +166,25 @@ namespace Map_Editor.Objects
                 if (node._Br == null)
                     node._Br = new Node(node._NodeId, REGION.BOT_RIGHT, node.BoundaryBox);
 
-                //insert each subnode to node
-                InsertNode(node._Tl, obj);
-                InsertNode(node._Tr, obj);
-                InsertNode(node._Bl, obj);
-                InsertNode(node._Br, obj);
+                int left, right, top, bot;
+                left = obj.MovementRangeBox.X - obj.MovementRangeBox.Width / 2;
+                right = obj.MovementRangeBox.X + obj.MovementRangeBox.Width / 2;
+                top = obj.MovementRangeBox.Y + obj.MovementRangeBox.Height / 2;
+                bot = obj.MovementRangeBox.Y - obj.MovementRangeBox.Height / 2;
+                //if object places in two diagonals, then add it to node
+                if ((left <= node.BoundaryBox.X && right >= node.BoundaryBox.X)
+                    || (bot <= node.BoundaryBox.Y && top >= node.BoundaryBox.Y))
+                {
+                    node.ListObject.Add(obj);
+                }
+                else
+                {
+                    //insert each subnode to node
+                    InsertNode(node._Tl, obj);
+                    InsertNode(node._Tr, obj);
+                    InsertNode(node._Bl, obj);
+                    InsertNode(node._Br, obj);
+                }
             }
             //else if node just covers enough screenwidth or screenheight, then add obj to node
             else

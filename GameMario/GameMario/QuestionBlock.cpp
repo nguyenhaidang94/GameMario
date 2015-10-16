@@ -17,7 +17,7 @@ QuestionBlock::QuestionBlock(int objectID, int x, int y)
 	//setup current sprite for brick
 	switch (objectID)
 	{
-	case 8:	//normal question block
+	case 6:	//normal question block
 		_Type = eBlockTypeID::eBrownBlock;	//brown
 		_CurrentFrame = 2;
 		_Tag = eGameTag::eEmpty;
