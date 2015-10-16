@@ -24,8 +24,6 @@ private:
 	Background *_Background;
 	Mario *_Mario;
 	static PlayScene *Instance;
-	vector<GameObject*> _ListObject;
-	vector<GameObject*> GetListObjectOnScreen();
 
 	//get direction of colision between a dynamic and a static object
 	eCollisionDirection CheckCollision(GameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY);
@@ -46,13 +44,7 @@ public:
 	//---New function---//
 	//Load new map
 	void LoadMap(eWorldID mapID);
-	//Read object data of map
-	void ReadMapData();
-	//Get list of all object in map
-	vector<GameObject*> GetAllObject();
 	//Handling collision of map object
 	void HandlingCollision();
-	//Add object to scene
-	void AddObjectToScene(GameObject *object);
 };
 

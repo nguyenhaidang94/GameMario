@@ -123,12 +123,20 @@ void QuestionBlock::OnCollision(GameObject *object, eCollisionDirection collisio
 					case eMarioIsSmall:
 					case eMarioIsSmallInvincible:
 						//Spawn a mushroom here
-						PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
+						//PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
+						{
+							DynamicGameObject *mushroom = new Mushroom(_Position.x, _Position.y, _Tag);
+							QuadTree::GetInstance()->InsertObject(mushroom, mushroom->GetMovementRangeBox());
+						}
 						break;
 					case eMarioIsBig:
 					case eMarioIsBigInvincible:
 						//Spawn a fire flower here
-						PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Type ,_Position.x, _Position.y));
+						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Type ,_Position.x, _Position.y));
+						{
+							GameObject *fireflower = new FireFlower(_Type, _Position.x, _Position.y);
+							QuadTree::GetInstance()->InsertObject(fireflower, fireflower->GetBoundaryBox());
+						}
 						break;
 					default:
 						break;

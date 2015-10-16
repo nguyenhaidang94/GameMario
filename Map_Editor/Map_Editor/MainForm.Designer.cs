@@ -39,6 +39,8 @@
             this._lblBotLeftY = new System.Windows.Forms.Label();
             this._lblCenterX = new System.Windows.Forms.Label();
             this._lblBotLeftX = new System.Windows.Forms.Label();
+            this._pbLand = new System.Windows.Forms.PictureBox();
+            this._pbEraser = new System.Windows.Forms.PictureBox();
             this._btnLoadBG = new System.Windows.Forms.Button();
             this._btnSetNote = new System.Windows.Forms.Button();
             this._btnSetCenter = new System.Windows.Forms.Button();
@@ -49,8 +51,6 @@
             this._btnSaveMap = new System.Windows.Forms.Button();
             this._tabMapContent = new System.Windows.Forms.TabControl();
             this._tabTiles = new System.Windows.Forms.TabPage();
-            this._tabItemsEnemies = new System.Windows.Forms.TabPage();
-            this._pnlDrawMap = new System.Windows.Forms.Panel();
             this._pbTile13 = new System.Windows.Forms.PictureBox();
             this._pbTile12 = new System.Windows.Forms.PictureBox();
             this._pbTile11 = new System.Windows.Forms.PictureBox();
@@ -64,6 +64,7 @@
             this._pbTile3 = new System.Windows.Forms.PictureBox();
             this._pbTile2 = new System.Windows.Forms.PictureBox();
             this._pbTile1 = new System.Windows.Forms.PictureBox();
+            this._tabItemsEnemies = new System.Windows.Forms.TabPage();
             this._pbEnemy8 = new System.Windows.Forms.PictureBox();
             this._pbEnemy7 = new System.Windows.Forms.PictureBox();
             this._pbEnemy6 = new System.Windows.Forms.PictureBox();
@@ -81,12 +82,12 @@
             this._pbItem6 = new System.Windows.Forms.PictureBox();
             this._pbItem2 = new System.Windows.Forms.PictureBox();
             this._pbItem1 = new System.Windows.Forms.PictureBox();
-            this._pbLand = new System.Windows.Forms.PictureBox();
-            this._pbEraser = new System.Windows.Forms.PictureBox();
+            this._pnlDrawMap = new System.Windows.Forms.Panel();
             this._pnlButtonContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._pbLand)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbEraser)).BeginInit();
             this._tabMapContent.SuspendLayout();
             this._tabTiles.SuspendLayout();
-            this._tabItemsEnemies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile11)).BeginInit();
@@ -100,6 +101,7 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbTile3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile1)).BeginInit();
+            this._tabItemsEnemies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy6)).BeginInit();
@@ -117,8 +119,6 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbItem6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbLand)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbEraser)).BeginInit();
             this.SuspendLayout();
             // 
             // _pnlButtonContent
@@ -228,6 +228,31 @@
             this._lblBotLeftX.Size = new System.Drawing.Size(24, 20);
             this._lblBotLeftX.TabIndex = 15;
             this._lblBotLeftX.Text = "X:";
+            // 
+            // _pbLand
+            // 
+            this._pbLand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._pbLand.BackColor = System.Drawing.Color.Transparent;
+            this._pbLand.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this._pbLand.Image = ((System.Drawing.Image)(resources.GetObject("_pbLand.Image")));
+            this._pbLand.Location = new System.Drawing.Point(20, 585);
+            this._pbLand.Name = "_pbLand";
+            this._pbLand.Size = new System.Drawing.Size(64, 64);
+            this._pbLand.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._pbLand.TabIndex = 13;
+            this._pbLand.TabStop = false;
+            // 
+            // _pbEraser
+            // 
+            this._pbEraser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._pbEraser.BackColor = System.Drawing.Color.Transparent;
+            this._pbEraser.Image = global::Map_Editor.Properties.Resources.eraser_bg;
+            this._pbEraser.Location = new System.Drawing.Point(20, 511);
+            this._pbEraser.Name = "_pbEraser";
+            this._pbEraser.Size = new System.Drawing.Size(64, 64);
+            this._pbEraser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._pbEraser.TabIndex = 12;
+            this._pbEraser.TabStop = false;
             // 
             // _btnLoadBG
             // 
@@ -343,43 +368,6 @@
             this._tabTiles.TabIndex = 0;
             this._tabTiles.Text = "Tiles & Objects";
             this._tabTiles.UseVisualStyleBackColor = true;
-            // 
-            // _tabItemsEnemies
-            // 
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy8);
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy7);
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy6);
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy5);
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy4);
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy3);
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy2);
-            this._tabItemsEnemies.Controls.Add(this._pbEnemy1);
-            this._tabItemsEnemies.Controls.Add(this._pbItem5);
-            this._tabItemsEnemies.Controls.Add(this._pbItem4);
-            this._tabItemsEnemies.Controls.Add(this._pbItem3);
-            this._tabItemsEnemies.Controls.Add(this._pbItem9);
-            this._tabItemsEnemies.Controls.Add(this._pbItem8);
-            this._tabItemsEnemies.Controls.Add(this._pbItem7);
-            this._tabItemsEnemies.Controls.Add(this._pbItem6);
-            this._tabItemsEnemies.Controls.Add(this._pbItem2);
-            this._tabItemsEnemies.Controls.Add(this._pbItem1);
-            this._tabItemsEnemies.Location = new System.Drawing.Point(4, 22);
-            this._tabItemsEnemies.Name = "_tabItemsEnemies";
-            this._tabItemsEnemies.Padding = new System.Windows.Forms.Padding(3);
-            this._tabItemsEnemies.Size = new System.Drawing.Size(656, 189);
-            this._tabItemsEnemies.TabIndex = 1;
-            this._tabItemsEnemies.Text = "Items and Enemies";
-            this._tabItemsEnemies.UseVisualStyleBackColor = true;
-            // 
-            // _pnlDrawMap
-            // 
-            this._pnlDrawMap.AutoScroll = true;
-            this._pnlDrawMap.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this._pnlDrawMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._pnlDrawMap.Location = new System.Drawing.Point(120, 0);
-            this._pnlDrawMap.Name = "_pnlDrawMap";
-            this._pnlDrawMap.Size = new System.Drawing.Size(664, 446);
-            this._pnlDrawMap.TabIndex = 2;
             // 
             // _pbTile13
             // 
@@ -523,6 +511,33 @@
             this._pbTile1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this._pbTile1.TabIndex = 7;
             this._pbTile1.TabStop = false;
+            // 
+            // _tabItemsEnemies
+            // 
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy8);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy7);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy6);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy5);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy4);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy3);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy2);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy1);
+            this._tabItemsEnemies.Controls.Add(this._pbItem5);
+            this._tabItemsEnemies.Controls.Add(this._pbItem4);
+            this._tabItemsEnemies.Controls.Add(this._pbItem3);
+            this._tabItemsEnemies.Controls.Add(this._pbItem9);
+            this._tabItemsEnemies.Controls.Add(this._pbItem8);
+            this._tabItemsEnemies.Controls.Add(this._pbItem7);
+            this._tabItemsEnemies.Controls.Add(this._pbItem6);
+            this._tabItemsEnemies.Controls.Add(this._pbItem2);
+            this._tabItemsEnemies.Controls.Add(this._pbItem1);
+            this._tabItemsEnemies.Location = new System.Drawing.Point(4, 22);
+            this._tabItemsEnemies.Name = "_tabItemsEnemies";
+            this._tabItemsEnemies.Padding = new System.Windows.Forms.Padding(3);
+            this._tabItemsEnemies.Size = new System.Drawing.Size(656, 189);
+            this._tabItemsEnemies.TabIndex = 1;
+            this._tabItemsEnemies.Text = "Items and Enemies";
+            this._tabItemsEnemies.UseVisualStyleBackColor = true;
             // 
             // _pbEnemy8
             // 
@@ -711,30 +726,15 @@
             this._pbItem1.TabIndex = 8;
             this._pbItem1.TabStop = false;
             // 
-            // _pbLand
+            // _pnlDrawMap
             // 
-            this._pbLand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._pbLand.BackColor = System.Drawing.Color.Transparent;
-            this._pbLand.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this._pbLand.Image = ((System.Drawing.Image)(resources.GetObject("_pbLand.Image")));
-            this._pbLand.Location = new System.Drawing.Point(20, 585);
-            this._pbLand.Name = "_pbLand";
-            this._pbLand.Size = new System.Drawing.Size(64, 64);
-            this._pbLand.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this._pbLand.TabIndex = 13;
-            this._pbLand.TabStop = false;
-            // 
-            // _pbEraser
-            // 
-            this._pbEraser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._pbEraser.BackColor = System.Drawing.Color.Transparent;
-            this._pbEraser.Image = global::Map_Editor.Properties.Resources.eraser_bg;
-            this._pbEraser.Location = new System.Drawing.Point(20, 511);
-            this._pbEraser.Name = "_pbEraser";
-            this._pbEraser.Size = new System.Drawing.Size(64, 64);
-            this._pbEraser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this._pbEraser.TabIndex = 12;
-            this._pbEraser.TabStop = false;
+            this._pnlDrawMap.AutoScroll = true;
+            this._pnlDrawMap.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this._pnlDrawMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._pnlDrawMap.Location = new System.Drawing.Point(120, 0);
+            this._pnlDrawMap.Name = "_pnlDrawMap";
+            this._pnlDrawMap.Size = new System.Drawing.Size(664, 446);
+            this._pnlDrawMap.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -744,15 +744,17 @@
             this.Controls.Add(this._pnlDrawMap);
             this.Controls.Add(this._tabMapContent);
             this.Controls.Add(this._pnlButtonContent);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(800, 700);
             this.Name = "MainForm";
             this.Text = "Map_Editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this._pnlButtonContent.ResumeLayout(false);
             this._pnlButtonContent.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._pbLand)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbEraser)).EndInit();
             this._tabMapContent.ResumeLayout(false);
             this._tabTiles.ResumeLayout(false);
-            this._tabItemsEnemies.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._pbTile13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile11)).EndInit();
@@ -766,6 +768,7 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbTile3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile1)).EndInit();
+            this._tabItemsEnemies.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy6)).EndInit();
@@ -783,8 +786,6 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbItem6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbLand)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbEraser)).EndInit();
             this.ResumeLayout(false);
 
         }
