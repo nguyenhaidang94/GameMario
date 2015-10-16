@@ -91,42 +91,38 @@ namespace Map_Editor
         private void InitListPb()
         {
             _ListPicbox = new List<PictureBox>();
-            _ListPicbox.Add(_pbEraser);
-            _ListPicbox.Add(_pbLand);
-            _ListPicbox.Add(_pbTile1);
-            _ListPicbox.Add(_pbTile2);
-            _ListPicbox.Add(_pbTile3);
-            _ListPicbox.Add(_pbTile2);
-            _ListPicbox.Add(_pbTile3);
-            _ListPicbox.Add(_pbTile4);
-            _ListPicbox.Add(_pbTile5);
-            _ListPicbox.Add(_pbTile6);
-            _ListPicbox.Add(_pbTile7);
-            _ListPicbox.Add(_pbTile8);
-            _ListPicbox.Add(_pbTile5);
-            _ListPicbox.Add(_pbTile8);
-            _ListPicbox.Add(_pbTile9);
-            _ListPicbox.Add(_pbTile10);
-            _ListPicbox.Add(_pbTile11);
-            _ListPicbox.Add(_pbTile12);
-            _ListPicbox.Add(_pbTile13);
-            _ListPicbox.Add(_pbItem1);
-            _ListPicbox.Add(_pbItem2);
-            _ListPicbox.Add(_pbItem3);
-            _ListPicbox.Add(_pbItem4);
-            _ListPicbox.Add(_pbItem5);
-            _ListPicbox.Add(_pbItem6);
-            _ListPicbox.Add(_pbItem7);
-            _ListPicbox.Add(_pbItem8);
-            _ListPicbox.Add(_pbItem9);
-            _ListPicbox.Add(_pbEnemy1);
-            _ListPicbox.Add(_pbEnemy2);
-            _ListPicbox.Add(_pbEnemy3);
-            _ListPicbox.Add(_pbEnemy4);
-            _ListPicbox.Add(_pbEnemy5);
-            _ListPicbox.Add(_pbEnemy6);
-            _ListPicbox.Add(_pbEnemy7);
-            _ListPicbox.Add(_pbEnemy8);
+            _ListPicbox.Add(_pbEraser);//0
+            _ListPicbox.Add(_pbLand);//1
+            _ListPicbox.Add(_pbTile1);//2
+            _ListPicbox.Add(_pbTile2);//3
+            _ListPicbox.Add(_pbTile3);//4
+            _ListPicbox.Add(_pbTile4);//5
+            _ListPicbox.Add(_pbTile5);//6
+            _ListPicbox.Add(_pbTile6);//7
+            _ListPicbox.Add(_pbTile7);//8
+            _ListPicbox.Add(_pbTile8);//9
+            _ListPicbox.Add(_pbTile9);//10
+            _ListPicbox.Add(_pbTile10);//11
+            _ListPicbox.Add(_pbTile11);//12
+            _ListPicbox.Add(_pbTile12);//13
+            _ListPicbox.Add(_pbTile13);//14
+            _ListPicbox.Add(_pbItem1);//15
+            _ListPicbox.Add(_pbItem2);//16
+            _ListPicbox.Add(_pbItem3);//17
+            _ListPicbox.Add(_pbItem4);//18
+            _ListPicbox.Add(_pbItem5);//19
+            _ListPicbox.Add(_pbItem6);//20
+            _ListPicbox.Add(_pbItem7);//21
+            _ListPicbox.Add(_pbItem8);//22
+            _ListPicbox.Add(_pbItem9);//23
+            _ListPicbox.Add(_pbEnemy1);//24
+            _ListPicbox.Add(_pbEnemy2);//25
+            _ListPicbox.Add(_pbEnemy3);//26
+            _ListPicbox.Add(_pbEnemy4);//27
+            _ListPicbox.Add(_pbEnemy5);//28
+            _ListPicbox.Add(_pbEnemy6);//29
+            _ListPicbox.Add(_pbEnemy7);//30
+            _ListPicbox.Add(_pbEnemy8);//31
 
             foreach (PictureBox pb in _ListPicbox)
                 pb.Click += pictureBox_Click;
@@ -236,14 +232,11 @@ namespace Map_Editor
                                     );
                     }
                 }
-                else
-                {
-                    //write subnodes
-                    WriteNode(node.Tl, sw);
-                    WriteNode(node.Tr, sw);
-                    WriteNode(node.Bl, sw);
-                    WriteNode(node.Br, sw);
-                }
+                //write subnodes
+                WriteNode(node.Tl, sw);
+                WriteNode(node.Tr, sw);
+                WriteNode(node.Bl, sw);
+                WriteNode(node.Br, sw);
             }
         }
 

@@ -82,8 +82,9 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 						break;
 						//Case pipe
 					case 9:		//small
-					case 10:	//medium
-					case 11:	//big
+					case 10:		//medium
+					case 11:		//big
+					case 12:		//horizontal
 						node->_ListObjects.push_back(new Pipe(objectID, x, y, tag));
 						break;
 
@@ -95,7 +96,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 						break;
 
 						//case question block
-					case 8:	//normal question block
+					case 6:	//normal question block
 					case 16:	//question block with mushroom
 						node->_ListObjects.push_back(new QuestionBlock(objectID, x, y));
 						break;
@@ -156,7 +157,7 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box sightBox)
 	}
 }
 
-void QuadTree::RetrieveObjectsOnScreen()
+void QuadTree::UpdateObjectsOnScreen()
 {
 	if (_ObjectsOnScreen.size() > 0)
 		_ObjectsOnScreen.clear();

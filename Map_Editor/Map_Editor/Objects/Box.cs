@@ -44,7 +44,6 @@ namespace Map_Editor.Objects
             _Height = height;
         }
 
-
         //check two boxs are intersect
         public static bool IsIntersect(Box box1, Box box2)
         {

@@ -22,7 +22,7 @@ public:
 	QuadTree();
 	void BuildQuadTree(eWorldID mapID);
 	void RetrieveObjectsInNode(Node* node, Box sightBox);
-	void RetrieveObjectsOnScreen();
+	void UpdateObjectsOnScreen();
 	std::vector<GameObject*> GetObjectsOnScreen();
 	void Clear(Node* node);
 	void Release();
