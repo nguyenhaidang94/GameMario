@@ -6,7 +6,7 @@
 class Pipe :public GameObject
 {
 private:
-	
+	float _RenderPriority;	//default 0.5, horizoltal pipe will have higher priority when render
 public:
 	Pipe(void);
 	//Object ID is id of pipe from map editor
