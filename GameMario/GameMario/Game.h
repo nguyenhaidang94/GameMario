@@ -25,6 +25,7 @@ public:
 	Game(void);
 	int Init_Direct3D(HWND hWnd, int width, int height, int fullscreen);
 	int Init_DirectSound(HWND hWnd);
+	int Init_SpriteHandle();
 	int Game_Init(HINSTANCE hInstance, HWND hWnd);
 	void Game_Run(HWND hWnd);
 	void Game_End(HWND hWnd);

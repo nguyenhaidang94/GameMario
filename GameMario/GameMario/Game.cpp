@@ -62,6 +62,17 @@ int Game::Init_DirectSound(HWND hWnd)
 	return true;
 }
 
+//Init sprite handler
+int Game::Init_SpriteHandle()
+{
+	HRESULT hr = D3DXCreateSprite(_d3ddev, &_spriteHandler);
+	if(FAILED(hr))
+	{
+		return false;
+	}
+	return true;
+}
+
 int Game::Game_Init(HINSTANCE hInstance, HWND hWnd)
 {
 	HRESULT result;
@@ -80,15 +91,19 @@ int Game::Game_Init(HINSTANCE hInstance, HWND hWnd)
 		return 0;
 	}
 
-	D3DXCreateSprite(_d3ddev, &_spriteHandler);
+	if (!Init_SpriteHandle())
+	{
+		MessageBox(hWnd, L"Error initializing SpriteHandler", L"Error", MB_OK);
+		return 0;
+	}
 
 	//Init game object 
 	//Sprite manager
 	SpriteManager::GetInstance()->LoadSprite(_spriteHandler);
 	Keyboard::GetInstance()->InitKeyboard(hInstance, hWnd);
-	SceneManager::GetInstance()->Initialize();
 	GameStatistics::GetInstance()->Initialize();
 	SoundManager::GetInstance()->LoadSounds(_lpDirectSound);
+	SceneManager::GetInstance()->Initialize();
 	return 1;
 }
 
@@ -104,9 +119,13 @@ void Game::Game_Run(HWND hWnd)
 	_d3ddev->Clear(1, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, NULL);
 	if (_d3ddev->BeginScene())
 	{
+		_spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_BACKTOFRONT);
+
 		SceneManager::GetInstance()->Render();
 		EffectManager::GetInstance()->Render();
 		TextManager::GetInstance()->RenderScoreOnTop();
+
+		_spriteHandler->End();
 		_d3ddev->EndScene();	
 
 	}

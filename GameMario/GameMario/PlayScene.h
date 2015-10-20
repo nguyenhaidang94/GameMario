@@ -7,12 +7,6 @@
 #include "GameStatistics.h"
 #include "SceneManager.h"
 #include "Mario.h"
-#include "Ground.h"
-#include "Pipe.h"
-#include "Brick.h"
-#include "ItemBrick.h"
-#include "QuestionBlock.h"
-#include "HardBlock.h"
 #include "QuadTree.h"
 
 class PlayScene :
@@ -27,6 +21,9 @@ private:
 
 	//get direction of colision between a dynamic and a static object
 	eCollisionDirection CheckCollision(GameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY);
+
+	//Get new position for mario in new world base on tag
+	D3DXVECTOR2 GetNewMarioPosition(eGameTag tag);
 public:
 	PlayScene(void);
 	~PlayScene(void);
@@ -43,7 +40,7 @@ public:
 	virtual void Load();
 	//---New function---//
 	//Load new map
-	void LoadMap(eWorldID mapID);
+	void LoadMap();
 	//Handling collision of map object
 	void HandlingCollision();
 };

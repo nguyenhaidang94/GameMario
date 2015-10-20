@@ -41,6 +41,9 @@ void Background::ReadMapData(eWorldID mapID)
 		break;
 	case e1_4:
 		break;
+	case eUnderground1_1:
+		fileName = "u1_1";
+		break;
 	default:
 		break;
 	}
@@ -86,14 +89,14 @@ void Background::Render()
 		//only render background on sight
 		for(int j = minRange; j < maxRange; j++)
 		{
-			_Sprite->RenderAtFrame((float)j * TITLE_SIZE + TITLE_SIZE/2, SCREEN_HEIGHT - (float)i * TITLE_SIZE - TITLE_SIZE/2, _BackgroundData[i][j]);
+			_Sprite->RenderAtFrame((float)j * TITLE_SIZE + TITLE_SIZE/2, SCREEN_HEIGHT - (float)i * TITLE_SIZE - TITLE_SIZE/2, _BackgroundData[i][j], 0.4);
 		}
 	}
 }
 
 void Background::Release()
 {
-	for(int i = 0; i < _TotalHorizontalTitle; i++)
+	for(int i = 0; i < _TotalVerticalTitle; i++)
 	{
 		delete[] _BackgroundData[i];
 	}

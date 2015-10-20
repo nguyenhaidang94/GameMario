@@ -13,12 +13,12 @@ enum eObjectTypeID
 	eMario = 1,
 	eGround,
 	ePipe,
+	ePipeHorizontal,
 	eBrick,
 	eMagicMushroom,
 	eFireFlower,
 	e1upMushroom,
 	eStarMan,
-
 };
 
 enum eSpriteID
@@ -31,6 +31,8 @@ enum eSpriteID
 	eMediumPipe,
 	eBigPipe,
 	eHorizontalPipe,
+	eTallPipe,
+	eTallerPipe,
 	eCoin,
 	eObjectTitle,
 	eBrickDebris,
@@ -50,7 +52,8 @@ enum eWorldID
 	e1_1 = 0,
 	e1_2 = 1,
 	e1_3,
-	e1_4
+	e1_4,
+	eUnderground1_1,
 };
 
 enum eSceneID
@@ -93,11 +96,14 @@ enum eGameTag
 {
 	eEmpty = 0,	//no tag
 
-	//object is destroyed
-	eDestroyed = 1,
+	//object state
+	eDestroyed = 1,		//object is destroyed
+	eIgnoreCollision,	//stop checking collison
+
 
 	//world tag
-	eU1_1,	//underground of world 1_1
+	eToUnderground1_1,	//underground of world 1_1
+	eToMiddleOnGround1_1,	//middle on ground of world 1_1
 	
 	//item store by object tag
 	eStoreMushroom,

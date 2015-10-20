@@ -9,6 +9,7 @@
 #include "ItemBrick.h"
 #include "QuestionBlock.h"
 #include "HardBlock.h"
+#include "Coin.h"
 
 class QuadTree
 {

@@ -5,8 +5,8 @@
 
 #define BRICK_WIDTH 32
 #define BRICK_HEIGHT 32
-#define BOUNCE_VELOCITY 4
-#define FALLDOWN_VELOCITY_DECREASE 0.5
+#define BOUNCE_VELOCITY 2
+#define FALLDOWN_VELOCITY_DECREASE 0.3
 
 class Block :
 	public DynamicGameObject

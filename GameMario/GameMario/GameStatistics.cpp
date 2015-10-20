@@ -70,6 +70,7 @@ string GameStatistics::GetCurrentWorldName()
 	switch (_WolrdID)
 	{
 	case e1_1:
+	case eUnderground1_1:
 		return "1_1";
 		break;
 	case e1_2:

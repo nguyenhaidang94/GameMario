@@ -24,19 +24,18 @@ void PlayScene::Initialize()
 {
 	_Background = new Background();
 	_Mario = new Mario();
-	_MapID = eWorldID::e1_1;
 }
 
 void PlayScene::Load()
 {
-	LoadMap(GameStatistics::GetInstance()->GetWorldID());
+	LoadMap();
 	GameStatistics::GetInstance()->ResetTime();
 }
 
-void PlayScene::LoadMap(eWorldID mapID)
+void PlayScene::LoadMap()
 {
 	this->Release();
-	_MapID = mapID;
+	_MapID = GameStatistics::GetInstance()->GetWorldID();
 	//Reset some object
 	_Background->ReadMapData(_MapID);
 	_Mario->SetPosition(D3DXVECTOR2(32,256));
@@ -47,6 +46,9 @@ void PlayScene::LoadMap(eWorldID mapID)
 
 void PlayScene::Update()
 {
+	//Handling colison
+	HandlingCollision();
+
 	_Mario->Update();
 	//for (int i = 0; i < _ListObject.size(); i++)
 	//{
@@ -78,18 +80,30 @@ void PlayScene::Update()
 	//	}
 	//}
 
-	//Handling colison
-	HandlingCollision();
+
 
 	//Update camera
 	Camera::GetInstance()->Update(_Mario->GetPosition());
 	
 	//Test switch map
-	//if(_Mario->GetPosition().x >= Camera::GetInstance()->GetWorldSize().x)
-	//{
-	//	GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_2);
-	//	SceneManager::GetInstance()->SwitchScene(eSceneID::eStartMap);
-	//}
+	//switch world if CheckSwitchWorld is not eEmpty
+	if(_Mario->CheckSwitchWorld() != eGameTag::eEmpty)
+	{
+		eWorldID targetWorldID = Unility::GetWorldIDFromTag(_Mario->CheckSwitchWorld());
+		//same world, dont use startscene
+		if(Unility::IsInSameMap(targetWorldID, GameStatistics::GetInstance()->GetWorldID()))
+		{
+			GameStatistics::GetInstance()->ChangeWorld(targetWorldID);
+			this->LoadMap();
+			_Mario->SetPosition(GetNewMarioPosition(_Mario->CheckSwitchWorld()));	//get positon of mario in new world
+			_Mario->ResetPipeTag();
+		}
+		else	//change to startscene
+		{
+			GameStatistics::GetInstance()->ChangeWorld(targetWorldID);
+			SceneManager::GetInstance()->SwitchScene(eSceneID::eStartMap);
+		}
+	}
 }
 
 void PlayScene::Render()
@@ -118,6 +132,15 @@ void PlayScene::HandlingCollision()
 	//vector<GameObject*> objectOnScreen = GetListObjectOnScreen();
 	vector<GameObject*> objectOnScreen = QuadTree::GetInstance()->GetObjectsOnScreen();
 	float moveX, moveY;
+
+	//remove all object have ignore collision tag
+	for (int i = objectOnScreen.size() - 1; i >= 0; i--)
+	{
+		if(objectOnScreen[i]->GetTag() == eGameTag::eIgnoreCollision)
+		{
+			objectOnScreen.erase(objectOnScreen.begin() + i);
+		}
+	}
 
 	//--Variable to handle collide with multiple brick--
 	int indexClosestBrickCollide = -1;	//mario only collide on top with 1 brick at the time, this store the closest one
@@ -312,4 +335,18 @@ eCollisionDirection PlayScene::CheckCollision(GameObject *dynamicObj, GameObject
 	}
 
 	return eCollisionDirection::eNone;
+}
+
+
+D3DXVECTOR2 PlayScene::GetNewMarioPosition(eGameTag tag)
+{
+	switch (tag)
+	{
+	case eToUnderground1_1:
+		return D3DXVECTOR2(48, 448);
+	case eToMiddleOnGround1_1:
+		return D3DXVECTOR2(5250, 128);
+	default:
+		break;
+	}
 }

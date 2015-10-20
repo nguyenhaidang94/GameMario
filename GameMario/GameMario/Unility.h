@@ -23,5 +23,11 @@ public:
 
 	//Get enum eGameTag from tag generate by map editor
 	static eGameTag GetGameTag(string tag);
+
+	//Get enum eWorldID from eGameTag
+	static eWorldID GetWorldIDFromTag(eGameTag tag);
+
+	//Check if 2 worldID in same map
+	static bool IsInSameMap(eWorldID world1, eWorldID world2);
 };
 

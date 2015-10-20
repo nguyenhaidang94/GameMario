@@ -54,7 +54,7 @@ Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPWSTR Path, double Width, double Hei
 	}
 }
 
-void Sprite::RenderAtFrame(float x, float y, int frameNo)
+void Sprite::RenderAtFrame(float x, float y, int frameNo, float priority)
 {
 	RECT srect;
 
@@ -76,10 +76,9 @@ void Sprite::RenderAtFrame(float x, float y, int frameNo)
 	D3DXVECTOR4 vp_pos;
 	D3DXVec3Transform(&vp_pos, &position, &mt);
 
-	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, 0);
+	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, priority);
 	D3DXVECTOR3 center((float)_Width / 2, (float)_Height / 2, 0);
 
-	_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	_SpriteHandler->Draw(
 		_Image,
 		&srect,
@@ -87,10 +86,9 @@ void Sprite::RenderAtFrame(float x, float y, int frameNo)
 		&p,
 		D3DCOLOR_XRGB(255, 255, 255)
 		);
-	_SpriteHandler->End();
 }
 
-void Sprite::RenderFirstFrame(float x, float y)
+void Sprite::RenderFirstFrame(float x, float y, float priority)
 {
 	RECT srect;
 
@@ -112,9 +110,9 @@ void Sprite::RenderFirstFrame(float x, float y)
 	D3DXVECTOR4 vp_pos;
 	D3DXVec3Transform(&vp_pos, &position, &mt);
 
-	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, 0);
+	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, priority);
 	D3DXVECTOR3 center((float)_Width / 2, (float)_Height / 2, 0);
-	_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
 	_SpriteHandler->Draw(
 		_Image,
 		&srect,
@@ -122,10 +120,9 @@ void Sprite::RenderFirstFrame(float x, float y)
 		&p,
 		D3DCOLOR_XRGB(255, 255, 255)
 		);
-	_SpriteHandler->End();
 }
 
-void Sprite::FixedRenderAtFrame(float x, float y, int frameNo)
+void Sprite::FixedRenderAtFrame(float x, float y, int frameNo, float priority)
 {
 	RECT srect;
 
@@ -134,10 +131,9 @@ void Sprite::FixedRenderAtFrame(float x, float y, int frameNo)
 	srect.right = srect.left + _Width;
 	srect.bottom = srect.top + _Height;
 
-	D3DXVECTOR3 position(x, y, 0);
+	D3DXVECTOR3 position(x, y, priority);
 
 	D3DXVECTOR3 center((float)_Width / 2, (float)_Height / 2, 0);
-	_SpriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	_SpriteHandler->Draw(
 		_Image,
 		&srect,
@@ -145,7 +141,6 @@ void Sprite::FixedRenderAtFrame(float x, float y, int frameNo)
 		&position,
 		D3DCOLOR_XRGB(255, 255, 255)
 		);
-	_SpriteHandler->End();
 }
  
 void Sprite::Release()

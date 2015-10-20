@@ -49,13 +49,13 @@ void FireFlower::Update()
 		frame_start = now;
 		if(_Type == eBlockTypeID::eBrownBlock)
 		{
-			_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 3);
+			_CurrentFrame = SpriteManager::NextFrame(_CurrentFrame, 0, 3);
 		}
 		else
 		{
 			if(_Type == eBlockTypeID::eBlueBlock)
 			{
-				_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 4, 7);
+				_CurrentFrame = SpriteManager::NextFrame(_CurrentFrame, 4, 7);
 			}
 		}
 	}

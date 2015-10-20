@@ -1,10 +1,10 @@
 #include "Mushroom.h"
 
-#define DEFAULT_VELOCITY_X 2.5
-#define DEFAULT_VELOCITY_Y -2.5
+#define DEFAULT_VELOCITY_X 2
+#define DEFAULT_VELOCITY_Y -4
 #define MUSHROOM_SPAWM_VELOCITY_Y 0.5
-#define MUSHROOM_WIDTH 32
-#define MUSHROOM_HEIGHT 32
+#define MUSHROOM_WIDTH 31
+#define MUSHROOM_HEIGHT 31
 #define MUSHROOM_SCORE 1000
 
 Mushroom::Mushroom(void)
@@ -15,11 +15,12 @@ Mushroom::Mushroom(int x, int y, eGameTag mushroomType)
 {
 	_Position = D3DXVECTOR2(x, y);
 	_Velocity = D3DXVECTOR2(DEFAULT_VELOCITY_X, DEFAULT_VELOCITY_Y);
-	_Size = D3DXVECTOR2(0, 0);
+	_Size = D3DXVECTOR2(MUSHROOM_WIDTH, MUSHROOM_HEIGHT);
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eItems);
 	_IsSpawnDone = false;
 	_BeginningPositionY = y;
-	_IsStandOnObject = false;
+	_IsGoingRight = true;
+	_Tag = eGameTag::eIgnoreCollision;	//ignore collision when on spawn animation
 	_ObjectTypeID = eObjectTypeID::eMagicMushroom;
 	switch (mushroomType)
 	{
@@ -50,10 +51,6 @@ void Mushroom::Update()
 {
 	if(_IsSpawnDone)
 	{
-		if(!_IsStandOnObject)
-		{
-			_Velocity.y = DEFAULT_VELOCITY_Y;
-		}
 		_Position.x += _Velocity.x;
 		_Position.y += _Velocity.y;
 
@@ -65,7 +62,16 @@ void Mushroom::Update()
 			_Tag = eGameTag::eDestroyed;
 		}
 
-		_IsStandOnObject = false;	//reset to check if object stand on anything next frame
+		//setup velocity again
+		_Velocity.y = DEFAULT_VELOCITY_Y;
+		if(_IsGoingRight)
+		{
+			_Velocity.x = DEFAULT_VELOCITY_X;
+		}
+		else
+		{
+			_Velocity.x = -DEFAULT_VELOCITY_X;
+		}
 	}
 	else
 	{
@@ -73,14 +79,14 @@ void Mushroom::Update()
 		if(_Position.y > _BeginningPositionY + 32)
 		{
 			_IsSpawnDone = true;
-			_Size = D3DXVECTOR2(MUSHROOM_WIDTH, MUSHROOM_HEIGHT);
+			_Tag = eGameTag::eEmpty;	//stop ignore collison
 		}
 	}
 }
 
 void Mushroom::Render()
 {
-	_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
+	_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame, 0.4);
 }
 
 void Mushroom::Release()
@@ -102,15 +108,16 @@ void Mushroom::OnCollision(GameObject *object, eCollisionDirection collisionDire
 		case eBottom:
 			_Position.y = objectBox.fY + _Size.y/2;
 			_Velocity.y = 0;
-			_IsStandOnObject = true;
 			break;
 		case eLeft:
-			_Position.x = objectBox.fX + objectBox.fWidth + _Size.y/2;
-			_Velocity.x = -_Velocity.x;
+			_Position.x = objectBox.fX + objectBox.fWidth + _Size.y/2 + 1;
+			_Velocity.x = 0;
+			_IsGoingRight = true;
 			break;
 		case eRight:
-			_Position.x = objectBox.fX - _Size.y/2;
-			_Velocity.x = -_Velocity.x;
+			_Position.x = objectBox.fX - _Size.y/2 - 1;
+			_Velocity.x = 0;
+			_IsGoingRight = false;
 			break;
 		default:
 			break;

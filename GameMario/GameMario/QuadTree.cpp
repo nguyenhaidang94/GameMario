@@ -33,6 +33,9 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 		break;
 	case e1_4:
 		break;
+	case eUnderground1_1:
+		fileName = "u1_1_quadtree";
+		break;
 	default:
 		break;
 	}
@@ -66,41 +69,51 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					//Ex: _ListObject.push_back(new SomeObject(OjbectID, a, b, c));
 					switch (objectID)
 					{
-						//Case ground
+					//Case ground
 					case 1:
 						node->_ListObjects.push_back(new Ground(x, y, w));
 						break;
 
-						//Case brick
+					//Case brick
 					case 2:	//brown normal
 					case 3:	//blue normal
 						node->_ListObjects.push_back(new Brick(objectID, x, y));
 						break;
-						//Case hard block
+					//Case hard block
 					case 4:
 						node->_ListObjects.push_back(new HardBlock(objectID, x, y));
 						break;
-						//Case pipe
+					//Case pipe
 					case 9:		//small
-					case 10:		//medium
-					case 11:		//big
-					case 12:		//horizontal
+					case 10:	//medium
+					case 11:	//big
+					case 12:	//horizontal
+					case 13:	//tall
+					case 14:	//taller
 						node->_ListObjects.push_back(new Pipe(objectID, x, y, tag));
 						break;
 
-						//case brick with item
-					case 18:	//brick with 1up
-					case 20:	//brick with coin
-					case 22:	//brick with star
+					//case brick with item
+					case 17:	//brown brick with 1up
+					case 18:	//blue brick with mushroom
+					case 19:	//blue brick with 1up
+					case 20:	//brown brick with coin
+					case 21:	//blue brick with coin
+					case 22:	//brown brick with star
+					case 23:	//blue brick with star
 						node->_ListObjects.push_back(new ItemBrick(objectID, x, y, tag));
 						break;
 
-						//case question block
+					//case question block
 					case 6:	//normal question block
 					case 16:	//question block with mushroom
 						node->_ListObjects.push_back(new QuestionBlock(objectID, x, y));
 						break;
 
+					//case coin
+					case 15: //coin
+						node->_ListObjects.push_back(new Coin(x, y));
+						break;
 					default:
 						break;
 					}

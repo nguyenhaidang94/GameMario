@@ -8,8 +8,10 @@ Mario::Mario(void)
 {
 	_State = eMarioState::eIdle;
 	SetObjectType(eMario);
+	_PipeTag = eGameTag::eEmpty;
+	_IsOnVerticlePipe = false;
 	//temporary Testing
-	_Tag = eGameTag::eMarioIsBig;
+	_Tag = eGameTag::eMarioIsSmall;
 	SetVelocity(D3DXVECTOR2(0, DEFAULT_VELOCITY));
 	_CurrentFrame = 0;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
@@ -50,7 +52,13 @@ void Mario::HandlingInput()
 			_Velocity.y += JUMP_VELOCITY_BOOST;
 		}
 	}
-	
+	if(_PipeTag != eGameTag::eEmpty && _IsOnVerticlePipe)
+	{
+		if(!Keyboard::GetInstance()->IsKeyDown(DIK_S))
+		{
+			_PipeTag = eGameTag::eEmpty;	//if mario dont press down, reset _PipeTag
+		}
+	}
 }
 
 Box Mario::GetMovementRangeBox()
@@ -83,9 +91,14 @@ void Mario::Update()
 	default:
 		break;
 	}
-	_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
 	_Position.x += _Velocity.x;
 	_Position.y += _Velocity.y;
+	if(_Velocity.y == 0)
+	{
+		_Velocity.y = DEFAULT_VELOCITY;
+	}
+	_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
+	_IsOnVerticlePipe = false;
 }
 
 void Mario::Render()
@@ -115,6 +128,28 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		}
 		break;
 	case ePipe:
+		_IsOnVerticlePipe = true;
+		switch (collisionDirection)
+		{
+		case eBottom:
+			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
+			_Velocity.y = DEFAULT_VELOCITY;
+			if(object->GetTag() != eGameTag::eEmpty)
+			{
+				_PipeTag = object->GetTag();
+			}
+			break;
+		case eRight:
+			_Position.x = object->GetBoundaryBox().fX - _Size.x/2;
+			break;
+		case eLeft:
+			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2;
+			break;
+		default:
+			break;
+		}
+		break;
+	case ePipeHorizontal:
 		switch (collisionDirection)
 		{
 		case eBottom:
@@ -123,6 +158,10 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			break;
 		case eRight:
 			_Position.x = object->GetBoundaryBox().fX - _Size.x/2;
+			if(object->GetTag() != eGameTag::eEmpty)
+			{
+				_PipeTag = object->GetTag();
+			}
 			break;
 		case eLeft:
 			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2;
@@ -136,13 +175,15 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		{
 		case eBottom:
 			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
-			_Velocity.y = DEFAULT_VELOCITY;
+			_Velocity.y = 0;
 			break;
 		case eRight:
-			_Position.x = object->GetBoundaryBox().fX - _Size.x/2;
+			_Position.x = object->GetBoundaryBox().fX - _Size.x/2 - 1;
+			_Velocity.x = 0;
 			break;
 		case eLeft:
-			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2;
+			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 +1;
+			_Velocity.x = 0;
 			break;
 		case eTop:
 			_Velocity.y = -_Velocity.y;
@@ -153,4 +194,14 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	default:
 		break;
 	}
+}
+
+eGameTag Mario::CheckSwitchWorld()
+{
+	return _PipeTag;
+}
+
+void Mario::ResetPipeTag()
+{
+	_PipeTag = eGameTag::eEmpty;
 }

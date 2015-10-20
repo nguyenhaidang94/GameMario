@@ -48,7 +48,11 @@ eGameTag Unility::GetGameTag(string tag)
 	//world tag
 	if(tag == "u1_1")		//underground of world 1_1
 	{
-		return eGameTag::eU1_1;
+		return eGameTag::eToUnderground1_1;
+	}
+	if(tag == "m1_1")
+	{
+		return eGameTag::eToMiddleOnGround1_1;
 	}
 
 	//item tag
@@ -74,4 +78,28 @@ eGameTag Unility::GetGameTag(string tag)
 
 	//no tag
 	return eGameTag::eEmpty;
+}
+
+eWorldID Unility::GetWorldIDFromTag(eGameTag tag)
+{
+	if(tag == eGameTag::eToUnderground1_1)
+	{
+		return eWorldID::eUnderground1_1;
+	}
+
+	if(tag == eGameTag::eToMiddleOnGround1_1)
+	{
+		return eWorldID::e1_1;
+	}
+}
+
+bool Unility::IsInSameMap(eWorldID world1, eWorldID world2)
+{
+	if(world1 == eWorldID::e1_1 && world2 == eWorldID::eUnderground1_1 || 
+		world1 == eWorldID::eUnderground1_1 && world2 == eWorldID::e1_1 )
+	{
+		return true;
+	}
+
+	return false;
 }
