@@ -1,9 +1,9 @@
 #pragma once
 #include "Block.h"
 #include "EffectManager.h"
-#include "PlayScene.h"
 #include "Mushroom.h"
 #include "FireFlower.h"
+#include "GameStatistics.h"
 
 class QuestionBlock :
 	public Block

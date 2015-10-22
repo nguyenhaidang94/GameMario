@@ -4,18 +4,19 @@
 #define FALLDOWN_VELOCITY_DECREASE 0.1
 #define DEFAULT_VELOCITY -1
 
+Mario *Mario::Instance = NULL;
+
 Mario::Mario(void)
 {
 	_State = eMarioState::eIdle;
 	SetObjectType(eMario);
 	_PipeTag = eGameTag::eEmpty;
-	_IsOnVerticlePipe = false;
 	//temporary Testing
 	_Tag = eGameTag::eMarioIsSmall;
 	SetVelocity(D3DXVECTOR2(0, DEFAULT_VELOCITY));
 	_CurrentFrame = 0;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
-	SetPosition(D3DXVECTOR2(32,32));
+	SetPosition(D3DXVECTOR2(48,118));
 	_IsCollide = false;
 	SetSize(D3DXVECTOR2(32, 64));
 }
@@ -23,6 +24,15 @@ Mario::Mario(void)
 
 Mario::~Mario(void)
 {
+}
+
+Mario *Mario::GetInstance()
+{
+	if(Instance == NULL)
+	{
+		Instance = new Mario();
+	}
+	return Instance;
 }
 
 void Mario::Initialize()
@@ -52,11 +62,15 @@ void Mario::HandlingInput()
 			_Velocity.y += JUMP_VELOCITY_BOOST;
 		}
 	}
-	if(_PipeTag != eGameTag::eEmpty && _IsOnVerticlePipe)
+	if(_PipeTag != eGameTag::eEmpty)
 	{
-		if(!Keyboard::GetInstance()->IsKeyDown(DIK_S))
+		if(Keyboard::GetInstance()->IsKeyDown(DIK_S))
 		{
-			_PipeTag = eGameTag::eEmpty;	//if mario dont press down, reset _PipeTag
+			GameStatistics::GetInstance()->ChangeWorld(Unility::GetWorldIDFromTag(_PipeTag));
+		}
+		else
+		{
+			_PipeTag = eGameTag::eEmpty;
 		}
 	}
 }
@@ -98,7 +112,13 @@ void Mario::Update()
 		_Velocity.y = DEFAULT_VELOCITY;
 	}
 	_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
-	_IsOnVerticlePipe = false;
+	
+	//if _PipeTag != empty mean switch scene, set mario posion in new world and reset _PipeTag
+	if(_PipeTag != eGameTag::eEmpty)
+	{
+		SetPosition(GetNewMarioPosition(_PipeTag));
+		_PipeTag = eGameTag::eEmpty;
+	}
 }
 
 void Mario::Render()
@@ -128,7 +148,6 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		}
 		break;
 	case ePipe:
-		_IsOnVerticlePipe = true;
 		switch (collisionDirection)
 		{
 		case eBottom:
@@ -158,9 +177,11 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			break;
 		case eRight:
 			_Position.x = object->GetBoundaryBox().fX - _Size.x/2;
-			if(object->GetTag() != eGameTag::eEmpty)
+			_PipeTag = object->GetTag();
+			if(_PipeTag != eGameTag::eEmpty)
 			{
-				_PipeTag = object->GetTag();
+				GameStatistics::GetInstance()->ChangeWorld(Unility::GetWorldIDFromTag(_PipeTag));
+				SetPosition(GetNewMarioPosition(_PipeTag));
 			}
 			break;
 		case eLeft:
@@ -196,12 +217,16 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	}
 }
 
-eGameTag Mario::CheckSwitchWorld()
+D3DXVECTOR2 Mario::GetNewMarioPosition(eGameTag tag)
 {
-	return _PipeTag;
-}
-
-void Mario::ResetPipeTag()
-{
-	_PipeTag = eGameTag::eEmpty;
+	switch (tag)
+	{
+	case eToUnderground1_1:
+		return D3DXVECTOR2(48, 448);
+	case eToMiddleOnGround1_1:
+		return D3DXVECTOR2(5250, 128);
+	default:
+		break;
+	}
+	return D3DXVECTOR2();
 }

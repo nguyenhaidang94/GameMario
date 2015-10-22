@@ -1,8 +1,12 @@
 #pragma once
+#include <fstream>
+#include <string>
+#include <sstream>
 #include "GameScene.h"
 #include "Keyboard.h"
-#include "SceneManager.h"
 #include "SpriteManager.h"
+#include "TextManager.h"
+using namespace std;
 
 class MenuScene :
 	public GameScene
@@ -10,6 +14,7 @@ class MenuScene :
 private:
 	Sprite *_SpriteBanner;
 	static MenuScene *Instance;
+	string _TopScore;
 public:
 	MenuScene(void);
 	~MenuScene(void);

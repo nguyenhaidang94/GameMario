@@ -52,7 +52,6 @@ void Coin::OnCollision(GameObject *object, eCollisionDirection collisionDirectio
 		_Tag = eGameTag::eDestroyed;
 		GameStatistics::GetInstance()->ChangeScore(COIN_SCORE);		//inscrease score
 		GameStatistics::GetInstance()->IncreaseCoin();		//inscrease score
-		EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eFloatingText, COIN_SCORE);
 		break;
 	default:
 		break;

@@ -1,5 +1,4 @@
 #pragma once
-#include "GlobalVariables.h"
 #include "GameStatistics.h"
 
 class GameScene

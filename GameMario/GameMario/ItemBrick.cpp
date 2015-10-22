@@ -158,7 +158,7 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 						//PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
 						{
 							DynamicGameObject *mushroom = new Mushroom(_Position.x, _Position.y, _Tag);
-							QuadTree::GetInstance()->InsertObject(mushroom, mushroom->GetMovementRangeBox());
+							GameStatistics::GetInstance()->AddObjectToScene(mushroom);
 						}
 						break;
 					case eMarioIsBig:
@@ -167,7 +167,7 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Type ,_Position.x, _Position.y));
 						{
 							GameObject *fireflower = new FireFlower(_Type, _Position.x, _Position.y);
-							QuadTree::GetInstance()->InsertObject(fireflower, fireflower->GetBoundaryBox());
+							GameStatistics::GetInstance()->AddObjectToScene(fireflower);
 						}
 						break;
 					default:
@@ -178,10 +178,9 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 					//case 1up
 				case eStore1Up:
 					//Spawn a 1up mushroom here
-					//PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
 					{
 						DynamicGameObject *mushroom = new Mushroom(_Position.x, _Position.y, _Tag);
-						QuadTree::GetInstance()->InsertObject(mushroom, mushroom->GetMovementRangeBox());
+						GameStatistics::GetInstance()->AddObjectToScene(mushroom);
 					}
 					break;
 

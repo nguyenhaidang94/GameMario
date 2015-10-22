@@ -3,8 +3,6 @@
 #include "GlobalVariables.h"
 #include "SpriteManager.h"
 #include "SwepAABB.h"
-#include <string>
-using namespace std;;
 
 class GameObject
 {

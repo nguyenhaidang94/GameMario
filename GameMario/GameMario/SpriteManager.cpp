@@ -24,7 +24,7 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eMapTile] = new Sprite(SpriteHandler, L"resources\\Sprites\\MapTile.png", 32, 32, 29, 6, D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eBigMario] = new Sprite(SpriteHandler, L"resources\\Sprites\\BigMario.png", (double)810/14, 64, 14, 14, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eFont] = new Sprite(SpriteHandler, L"resources\\Sprites\\font.png", 20, 20, 36, 12, D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eMenuBanner] = new Sprite(SpriteHandler, L"resources\\Sprites\\MenuBanner.png", 256, 196, 1, 1, D3DCOLOR_XRGB(111, 133, 255));
+	_ListSprite[eSpriteID::eMenuBanner] = new Sprite(SpriteHandler, L"resources\\Sprites\\MenuBanner.png", 355, 179, 1, 1, D3DCOLOR_XRGB(111, 133, 255));
 	_ListSprite[eSpriteID::eSmallPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\SmallPipe.png", 64, 64, 1, 1, D3DCOLOR_XRGB(255, 255, 255));
 	_ListSprite[eSpriteID::eMediumPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\MediumPipe.png", 64, 96, 1, 1, D3DCOLOR_XRGB(255, 255, 255));
 	_ListSprite[eSpriteID::eBigPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\BigPipe.png", 64, 128, 1, 1, D3DCOLOR_XRGB(255, 255, 255));

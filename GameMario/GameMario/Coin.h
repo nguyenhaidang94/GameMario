@@ -1,7 +1,6 @@
 #pragma once
 #include "gameobject.h"
 #include "GameStatistics.h"
-#include "EffectManager.h"
 
 class Coin :
 	public GameObject

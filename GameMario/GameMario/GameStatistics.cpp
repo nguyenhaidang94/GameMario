@@ -1,7 +1,7 @@
 #include "GameStatistics.h"
 #define GAME_TIME 400
 
-GameStatistics *GameStatistics::Instance = new GameStatistics();
+GameStatistics *GameStatistics::Instance = NULL;
 
 GameStatistics::GameStatistics(void)
 {
@@ -14,7 +14,7 @@ GameStatistics::~GameStatistics(void)
 
 GameStatistics* GameStatistics::GetInstance()
 {
-	if(Instance == 0)
+	if(Instance == NULL)
 	{
 		Instance = new GameStatistics();
 	}
@@ -24,16 +24,19 @@ GameStatistics* GameStatistics::GetInstance()
 void GameStatistics::Initialize()
 {
 	_WolrdID = eWorldID::e1_1;
+	_CurrentSceneID = eSceneID::eMenu;
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
 	_Time = GAME_TIME;
 	_IsTimePause = true;
+	_ListObjectAddToScene = new std::vector<GameObject*>();
 }
 
 void GameStatistics::Reset()
 {
 	_WolrdID = eWorldID::e1_1;
+	_CurrentSceneID = eSceneID::eMenu;
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
@@ -65,7 +68,7 @@ int GameStatistics::GetTime()
 	return _Time;
 }
 
-string GameStatistics::GetCurrentWorldName()
+std::string GameStatistics::GetCurrentWorldName()
 {
 	switch (_WolrdID)
 	{
@@ -124,4 +127,24 @@ void GameStatistics::ResetTime()
 void GameStatistics::PauseTime()
 {
 	_IsTimePause = true;
+}
+
+eSceneID GameStatistics::GetSceneID()
+{
+	return _CurrentSceneID;
+}
+
+void GameStatistics::ChangeScene(eSceneID sceneID)
+{
+	_CurrentSceneID = sceneID;
+}
+
+void GameStatistics::AddObjectToScene(GameObject *object)
+{
+	_ListObjectAddToScene->push_back(object);
+}
+
+std::vector<GameObject*>* GameStatistics::GetListObjectAddToScene()
+{
+	return _ListObjectAddToScene;
 }

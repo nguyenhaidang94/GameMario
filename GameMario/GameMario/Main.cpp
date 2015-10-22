@@ -3,7 +3,7 @@
 #include "Game.h"
 
 //Macro
-#define APPTITLE L"TESTING GAME"
+#define APPTITLE L"SUPER MARIO BROS"
 #define SCREEN WS_OVERLAPPEDWINDOW
 
 //window event callback function

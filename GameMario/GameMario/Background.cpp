@@ -4,6 +4,7 @@ Background::Background(void)
 {
 	_TotalHorizontalTitle = 0;
 	_TotalVerticalTitle = 0;
+	_WorldSize = D3DXVECTOR2();
 }
 
 
@@ -21,7 +22,7 @@ void Background::Initialize(int totalHorizontal, int totalVertical)
 		_BackgroundData[i] = new int[_TotalHorizontalTitle];
 
 	//Set world size for camera
-	Camera::GetInstance()->SetWorldSize(_TotalHorizontalTitle * TITLE_SIZE, _TotalVerticalTitle * TITLE_SIZE);
+	_WorldSize = D3DXVECTOR2(_TotalHorizontalTitle * TITLE_SIZE, _TotalVerticalTitle * TITLE_SIZE);
 
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMapTile);
 }
@@ -101,4 +102,9 @@ void Background::Release()
 		delete[] _BackgroundData[i];
 	}
 	delete[] _BackgroundData;
+}
+
+D3DXVECTOR2 Background::GetWorldSize()
+{
+	return _WorldSize;
 }

@@ -15,7 +15,7 @@ public:
 	static Camera *GetInstance();
 	Camera(void);
 	~Camera(void);
-	void SetWorldSize(int worldWidth, int worldHeight);
+	void SetWorldSize(D3DXVECTOR2 worldSize);
 	void Update(D3DXVECTOR2 characterPosition);
 	D3DXVECTOR2 GetViewPort();
 	D3DXVECTOR2 GetWorldSize();

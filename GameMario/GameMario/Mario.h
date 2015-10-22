@@ -5,7 +5,7 @@
 #include "Keyboard.h"
 #include "SoundManager.h"
 #include "GameStatistics.h"
-
+#include "Unility.h"
 
 class Mario : public DynamicGameObject
 {
@@ -14,8 +14,12 @@ private:
 	eMarioState _State;
 	bool _IsCollide;	//check if collided with ground
 	D3DXVECTOR2 _CollisionPoint; 
-	bool _IsOnVerticlePipe;
 	eGameTag _PipeTag;	//if mario stand on pipe with tag can go to another world, store tag here
+
+	static Mario *Instance;
+
+	//Get new position for mario in new world base on tag
+	D3DXVECTOR2 GetNewMarioPosition(eGameTag tag);
 public:
 	Mario(void);
 	~Mario(void);
@@ -27,13 +31,11 @@ public:
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
 
 	//New
+	//Get an instance of class mario
+	static Mario *GetInstance();
 	//Handling user input
 	void HandlingInput();
 	//Initialize
 	void Initialize();
-	//if return gametag different eEmpty, switch scence
-	eGameTag CheckSwitchWorld();
-	//reset _PipeTag
-	void ResetPipeTag();
 };
 

@@ -2,7 +2,6 @@
 #include "Node.h"
 #include <sstream>
 #include <fstream>
-#include "Mario.h"
 #include "Ground.h"
 #include "Pipe.h"
 #include "Brick.h"

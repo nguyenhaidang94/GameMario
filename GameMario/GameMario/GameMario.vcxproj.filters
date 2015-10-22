@@ -73,7 +73,7 @@
     <Filter Include="GameObject\Object\Brick">
       <UniqueIdentifier>{e130abf0-1a9f-421f-9445-a5a231a9a4fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\QuadTree">
+    <Filter Include="Framework\QuadTree">
       <UniqueIdentifier>{6cb3c8a9-204d-4b8b-b2e6-69a5e8113730}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -190,13 +190,16 @@
       <Filter>Framework\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Node.cpp">
-      <Filter>GameObject\QuadTree</Filter>
+      <Filter>Framework\QuadTree</Filter>
     </ClCompile>
     <ClCompile Include="QuadTree.cpp">
-      <Filter>GameObject\QuadTree</Filter>
+      <Filter>Framework\QuadTree</Filter>
     </ClCompile>
     <ClCompile Include="Coin.cpp">
       <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayMap.cpp">
+      <Filter>GameManager\GameScene\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,13 +315,16 @@
       <Filter>Framework\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
-      <Filter>GameObject\QuadTree</Filter>
+      <Filter>Framework\QuadTree</Filter>
     </ClInclude>
     <ClInclude Include="QuadTree.h">
-      <Filter>GameObject\QuadTree</Filter>
+      <Filter>Framework\QuadTree</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayMap.h">
+      <Filter>GameManager\GameScene\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

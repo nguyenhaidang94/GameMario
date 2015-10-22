@@ -1,17 +1,16 @@
 #pragma once
 #include <vector>
-#include "GameScene.h"
 #include "PlayScene.h"
 #include "MenuScene.h"
 #include "StartScene.h"
 #include "GameOverScene.h"
-using namespace std;
 
 class SceneManager
 {
 private:
-	GameScene* _GameScene;
+	std::map<eSceneID, GameScene*> _LisScene;
 	static SceneManager *Instance;
+	eSceneID _CurrentSceneID;
 public:
 	SceneManager(void);
 	~SceneManager(void);

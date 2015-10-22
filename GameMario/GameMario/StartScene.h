@@ -1,7 +1,6 @@
 #pragma once
 #include "GameScene.h"
 #include "TextManager.h"
-#include "SceneManager.h"
 
 class StartScene :
 	public GameScene

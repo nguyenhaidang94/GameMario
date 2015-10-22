@@ -103,3 +103,20 @@ bool Unility::IsInSameMap(eWorldID world1, eWorldID world2)
 
 	return false;
 }
+
+string Unility::IntToFixedLengthString(int value, int digits) {
+    int uvalue = value;
+    if (value < 0) {
+        uvalue = -uvalue;
+    }
+    string result;
+    while (digits-- > 0) {
+        result += ('0' + uvalue % 10);
+        uvalue /= 10;
+    }
+    if (value < 0) {
+        result += '-';
+    }
+    reverse(result.begin(), result.end());
+    return result;
+}

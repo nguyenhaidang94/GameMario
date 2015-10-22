@@ -1,8 +1,9 @@
 #pragma once
 #include "Block.h"
-#include "Unility.h"
-#include "EffectManager.h"
-#include "PlayScene.h"
+#include "FireFlower.h"
+#include "Mushroom.h"
+#include "GameStatistics.h"
+
 class ItemBrick :
 	public Block
 {

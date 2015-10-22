@@ -22,47 +22,36 @@ SceneManager *SceneManager::GetInstance()
 
 void SceneManager::Initialize()
 {
-	PlayScene::GetInstance()->Initialize();
-	MenuScene::GetInstance()->Initialize();
-	StartScene::GetInstance()->Initialize();
-	GameOverScene::GetInstance()->Initialize();
-	_GameScene = MenuScene::GetInstance();		//start scene is menu
+	_CurrentSceneID = eSceneID::eMenu;
+	_LisScene[eSceneID::eMenu] = new MenuScene();
+	_LisScene[eSceneID::eStartMap] = new StartScene();
+	_LisScene[eSceneID::ePlay] = new PlayScene();
+	_LisScene[eSceneID::eGameOver] = new GameOverScene();
+	_LisScene[_CurrentSceneID]->Load();
 }
 
 void SceneManager::SwitchScene(eSceneID sceneID)
 {
-	switch (sceneID)
-	{
-	case eMenu:
-		_GameScene = MenuScene::GetInstance();
-		break;
-	case eStartMap:
-		_GameScene = StartScene::GetInstance();
-		break;
-	case ePlay:
-		_GameScene = PlayScene::GetInstance();
-		break;
-	case eGameOver:
-		_GameScene = GameOverScene::GetInstance();
-		break;
-	default:
-		break;
-	}
+	_CurrentSceneID = sceneID;
 	GameStatistics::GetInstance()->PauseTime();
-	_GameScene->Load();
+	_LisScene[_CurrentSceneID]->Load();
 }
 
 void SceneManager::Update()
 {
-	_GameScene->Update();
+	_LisScene[_CurrentSceneID]->Update();
+
+	if(_CurrentSceneID != GameStatistics::GetInstance()->GetSceneID())
+	{
+		this->SwitchScene(GameStatistics::GetInstance()->GetSceneID());
+	}
 }
 
 void SceneManager::Render()
 {
-	_GameScene->Render();
+	_LisScene[_CurrentSceneID]->Render();
 }
 
 void SceneManager::Release()
 {
-	
 }

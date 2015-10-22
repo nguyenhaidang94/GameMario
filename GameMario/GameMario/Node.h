@@ -1,5 +1,5 @@
 #pragma once
-#include "DynamicGameObject.h"
+#include "GameObject.h"
 #include "SwepAABB.h"
 #include <vector>
 

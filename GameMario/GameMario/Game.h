@@ -4,12 +4,12 @@
 #include <d3dx9.h>
 #include "GlobalVariables.h"
 #include "SpriteManager.h"
-#include "SceneManager.h"
 #include "Keyboard.h"
 #include "GameStatistics.h"
 #include "TextManager.h"
 #include "SoundManager.h"
 #include "EffectManager.h"
+#include "SceneManager.h"
 
 class Game
 {

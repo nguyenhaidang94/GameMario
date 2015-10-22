@@ -22,8 +22,7 @@ FloatingTextEffect::~FloatingTextEffect(void)
 
 D3DXVECTOR2 FloatingTextEffect::WorldPostionToFixedPostion(D3DXVECTOR2 position)
 {
-	//x axis hardcode minus 30 to center text
-	return D3DXVECTOR2(position.x - Camera::GetInstance()->GetViewPort().x - 30, Camera::GetInstance()->GetViewPort().y - position.y);
+	return D3DXVECTOR2(position.x - Camera::GetInstance()->GetViewPort().x, Camera::GetInstance()->GetViewPort().y - position.y);
 }
 
 void FloatingTextEffect::Update()

@@ -1,10 +1,11 @@
 #include "StartScene.h"
-#define WAIT_TIME 2000		//wait 2s
+#define WAIT_TIME 1000		//wait 1s
 
 StartScene *StartScene::Instance = NULL;
 
 StartScene::StartScene(void)
 {
+	_SceneID = eSceneID::eStartMap;
 }
 
 
@@ -23,21 +24,20 @@ StartScene *StartScene::GetInstance()
 
 void StartScene::Initialize()
 {
-	_StartTime = GetTickCount();
 }
 
 void StartScene::Update()
 {
 	if((GetTickCount() - _StartTime) > WAIT_TIME)
 	{
-		SceneManager::GetInstance()->SwitchScene(eSceneID::ePlay);
+		GameStatistics::GetInstance()->ChangeScene(eSceneID::ePlay);
 	}
 }
 
 void StartScene::Render()
 {
-	TextManager::GetInstance()->FixedRender("world " + GameStatistics::GetInstance()->GetCurrentWorldName(), 176, 160);
-	TextManager::GetInstance()->FixedRender("x " + to_string(GameStatistics::GetInstance()->GetLife()), 240, 196);
+	TextManager::GetInstance()->FixedRender("world " + GameStatistics::GetInstance()->GetCurrentWorldName(), SCREEN_WIDTH/2, 160);
+	TextManager::GetInstance()->FixedRender("x " + to_string(GameStatistics::GetInstance()->GetLife()), SCREEN_WIDTH/2, 196);
 }
 
 void StartScene::Release()

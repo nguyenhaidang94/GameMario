@@ -1,5 +1,5 @@
 #pragma once
-#include <string.h>
+#include <string>
 #include <sstream>
 #include <fstream>
 #include "Camera.h"
@@ -15,6 +15,7 @@ private:
 	int	_TotalHorizontalTitle;		//total horizontal title of Background
 	int** _BackgroundData;			//Store Background data in 2d array
 	Sprite *_Sprite;
+	D3DXVECTOR2 _WorldSize;
 public:
 	Background(void);
 	~Background(void);
@@ -29,5 +30,8 @@ public:
 
     //Release Background menory
 	void Release();
+
+	//Get WorldSize
+	D3DXVECTOR2 GetWorldSize();
 };
 

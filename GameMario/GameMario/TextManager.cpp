@@ -46,33 +46,36 @@ int TextManager::GetFrameNumberFromChar(char c)
 
 void TextManager::Render(string text, int x, int y)
 {
+	int startPosition = x - text.length() * TEXT_SIZE / 2;	//allign center for text
 	for(int i = 0; i < text.size(); i++)
 	{
-		_Sprite->RenderAtFrame(x + i * TEXT_SIZE, y, GetFrameNumberFromChar(text[i]));
+		_Sprite->RenderAtFrame(startPosition + i * TEXT_SIZE, y, GetFrameNumberFromChar(text[i]));
 	}
 }
 
 void TextManager::FixedRender(string text, int x, int y)
 {
+	int startPosition = x - text.length() * TEXT_SIZE / 2;	//allign center for text
 	for(int i = 0; i < text.size(); i++)
 	{
 		int temp = GetFrameNumberFromChar(text[i]);
-		_Sprite->FixedRenderAtFrame(x + i * TEXT_SIZE, y, GetFrameNumberFromChar(text[i]));
+		_Sprite->FixedRenderAtFrame(startPosition + i * TEXT_SIZE, y, GetFrameNumberFromChar(text[i]));
 	}
 }
 
 void TextManager::RenderScoreOnTop()
 {
-	FixedRender("mario", 32, 32);
-	FixedRender(to_string(GameStatistics::GetInstance()->GetScore()), 32, 55);
-	FixedRender("x" + to_string(GameStatistics::GetInstance()->GetCoinCount()), 164, 55);
-	FixedRender("world", 224, 32);
-	FixedRender(GameStatistics::GetInstance()->GetCurrentWorldName(), 240, 55);
-	FixedRender("time", 388, 32);
-	FixedRender(to_string(GameStatistics::GetInstance()->GetTime()), 388, 55);
-
+	FixedRender("mario", 92, 32);
+	FixedRender(Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetScore(), 6), 102, 55);
 	//Render coin effer at score on top
-	SpriteManager::GetInstance()->GetSprite(eSpriteID::eCoin)->FixedRenderAtFrame(140, 55, _CurrentFrame);
+	SpriteManager::GetInstance()->GetSprite(eSpriteID::eCoin)->FixedRenderAtFrame(180, 55, _CurrentFrame);
+	FixedRender("x" + Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetCoinCount(), 2), 230, 55);
+	FixedRender("world", 332, 32);
+	FixedRender(GameStatistics::GetInstance()->GetCurrentWorldName(), 338, 55);
+	FixedRender("time", 450, 32);
+	FixedRender(Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetTime(), 3), 450, 55);
+
+
 	//control coin rate
 	DWORD now = GetTickCount();
 	if (now - frame_start >= count_per_frame) 

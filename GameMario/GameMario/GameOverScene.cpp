@@ -4,6 +4,7 @@ GameOverScene *GameOverScene::Instance = NULL;
 
 GameOverScene::GameOverScene(void)
 {
+	_SceneID = eSceneID::eGameOver;
 }
 
 
@@ -41,5 +42,4 @@ void GameOverScene::Release()
 
 void GameOverScene::Load()
 {
-	
 }

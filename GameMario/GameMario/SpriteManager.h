@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include <map>
 
-static class SpriteManager
+class SpriteManager
 {
 private:
 	std::map<eSpriteID, Sprite*> _ListSprite;		//Store all sprite of game

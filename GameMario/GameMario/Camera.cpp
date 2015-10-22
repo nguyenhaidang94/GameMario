@@ -22,10 +22,10 @@ Camera *Camera::GetInstance()
 	return Instance;
 }
 
-void Camera::SetWorldSize(int worldWidth, int worldHeight)
+void Camera::SetWorldSize(D3DXVECTOR2 worldSize)
 {
-	_WorldHeight = worldHeight;
-	_WorldWidth = worldWidth;
+	_WorldWidth = worldSize.x;
+	_WorldHeight = worldSize.y;
 }
 
 void Camera::Update(D3DXVECTOR2 characterPosition)

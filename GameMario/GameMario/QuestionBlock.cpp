@@ -126,7 +126,7 @@ void QuestionBlock::OnCollision(GameObject *object, eCollisionDirection collisio
 						//PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
 						{
 							DynamicGameObject *mushroom = new Mushroom(_Position.x, _Position.y, _Tag);
-							QuadTree::GetInstance()->InsertObject(mushroom, mushroom->GetMovementRangeBox());
+							GameStatistics::GetInstance()->AddObjectToScene(mushroom);
 						}
 						break;
 					case eMarioIsBig:
@@ -135,7 +135,7 @@ void QuestionBlock::OnCollision(GameObject *object, eCollisionDirection collisio
 						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Type ,_Position.x, _Position.y));
 						{
 							GameObject *fireflower = new FireFlower(_Type, _Position.x, _Position.y);
-							QuadTree::GetInstance()->InsertObject(fireflower, fireflower->GetBoundaryBox());
+							GameStatistics::GetInstance()->AddObjectToScene(fireflower);
 						}
 						break;
 					default:

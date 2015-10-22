@@ -1,7 +1,7 @@
 #pragma once
 
 //Game setting
-#define SCREEN_WIDTH 480
+#define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 480
 #define FRAME_RATE 60		//60 FPS
 #define FULLSCREEN 0		//Not full screen

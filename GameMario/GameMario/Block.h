@@ -1,7 +1,7 @@
 #pragma once
 #include "dynamicgameobject.h"
-#include "EffectManager.h"
 #include "Unility.h"
+
 
 #define BRICK_WIDTH 32
 #define BRICK_HEIGHT 32
