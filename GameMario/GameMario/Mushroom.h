@@ -16,7 +16,6 @@ public:
 	~Mushroom(void);
 
 	//Inherited function
-	Box GetMovementRangeBox();
 	void Update();
 	void Render();
 	void Release();

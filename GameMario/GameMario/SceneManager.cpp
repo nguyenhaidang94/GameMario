@@ -54,4 +54,5 @@ void SceneManager::Render()
 
 void SceneManager::Release()
 {
+	_LisScene[eSceneID::ePlay]->Release();
 }

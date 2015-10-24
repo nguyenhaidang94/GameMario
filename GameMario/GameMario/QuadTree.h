@@ -13,19 +13,32 @@
 class QuadTree
 {
 private:
-	static QuadTree* _Instance;
+	//root node
 	Node* _RootNode;
+	//object on screen
 	std::vector<GameObject*> _ObjectsOnScreen;
+	//dictionary datatype, used to browse node through it's id
+	std::map<int, Node*> _MapQuadTree;
 public:
-	static QuadTree* GetInstance();
+	//constructor
 	QuadTree();
+	//read file and build quadtree
 	void BuildQuadTree(eWorldID mapID);
+	//insert object to quadtree
 	void InsertObject(GameObject* object, Box objBox);
+	//retrieve objects in node
 	void RetrieveObjectsInNode(Node* node, Box sightBox);
+	//update object on screen
 	void UpdateObjectsOnScreen();
+	//return objects on screen
 	std::vector<GameObject*> GetObjectsOnScreen();
-	void ClearNode(Node* node);
+	//delete subnode
+	void DeleteSubnode(Node *node);
+	//delete node
+	void DeleteNode(Node* node);
+	//realease quadtree
 	void Release();
+	//destructor
 	~QuadTree();
 };
 

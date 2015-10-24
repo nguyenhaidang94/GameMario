@@ -42,11 +42,6 @@ Mushroom::~Mushroom(void)
 {
 }
 
-Box Mushroom::GetMovementRangeBox()
-{
-	return GetBoundaryBox();
-}
-
 void Mushroom::Update()
 {
 	if(_IsSpawnDone)

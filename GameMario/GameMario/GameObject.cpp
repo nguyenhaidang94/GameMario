@@ -5,6 +5,7 @@ GameObject::GameObject(void)
 {
 	_ObjectTypeID = eObjectTypeID::eUndefined;
 	_Tag = eGameTag::eEmpty;
+	_IsStatic = true;
 }
 
 GameObject::GameObject(eObjectTypeID objectTypeID, D3DXVECTOR2 pos)
@@ -12,6 +13,7 @@ GameObject::GameObject(eObjectTypeID objectTypeID, D3DXVECTOR2 pos)
 	_ObjectTypeID = objectTypeID;
 	_Position = pos;
 	_Tag = eGameTag::eEmpty;
+	_IsStatic = true;
 }
 
 GameObject::~GameObject(void)
@@ -56,4 +58,9 @@ eGameTag GameObject::GetTag()
 Box GameObject::GetBoundaryBox()
 {
 	return Box(_Position.x - _Size.x/2, _Position.y + _Size.y/2, _Size.x, _Size.y);
+}
+
+bool GameObject::IsDynamic()
+{
+	return !_IsStatic;
 }

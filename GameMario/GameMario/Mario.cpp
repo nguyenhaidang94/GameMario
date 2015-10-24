@@ -92,15 +92,15 @@ void Mario::Update()
 		break;
 	case eRunLeft:
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 8, 10);
-		_Velocity.x = 2;
+		_Velocity.x = 3;
 		break;
 	case eRunRight:
 		_CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 3, 5);
-		_Velocity.x = -2;
+		_Velocity.x = -3;
 		break;
 	case eJump:
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 12, 12);
-		_Velocity.y += 2;
+		//_Velocity.y += 2;
 		break;
 	default:
 		break;

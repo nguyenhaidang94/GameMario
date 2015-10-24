@@ -19,7 +19,6 @@ protected:
 public:
 	Block(void);
 	~Block(void);
-	Box GetMovementRangeBox();
 	//Initialize block with basic attribute like velocity, positon, sprite, objectID
 	void Initialize(int x, int y);
 };

@@ -12,6 +12,7 @@ protected:
 	Sprite *_Sprite;
 	eGameTag _Tag;					//Custom tag for use if needed
 	D3DXVECTOR2 _Size;				//Store object size
+	bool _IsStatic;
 public:
 	GameObject(void);
 	GameObject(eObjectTypeID objectTypeID, D3DXVECTOR2 pos);
@@ -40,6 +41,9 @@ public:
 
 	//Get colision box of object
 	Box GetBoundaryBox();
+
+	//
+	bool IsDynamic();
 
 	//Update object
 	virtual void Update() = 0;
