@@ -189,6 +189,10 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 				//-------------------
 				//Spawn a star here
 				//-------------------
+				{
+					GameObject *fireflower = new FireFlower(_Type, _Position.x, _Position.y);
+					GameStatistics::GetInstance()->AddObjectToScene(fireflower);
+				}
 				break;
 
 				default:	//default switch _Tag

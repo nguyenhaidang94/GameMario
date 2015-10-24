@@ -87,7 +87,7 @@ void PlayMap::HandlingCollision()
 	for (int i = 0; i < objectOnScreen.size(); i++)
 	{
 		//check colision with mario...
-		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], moveX, moveY);
+		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i]);
 		if(direction != eCollisionDirection::eNone)
 		{
 			//if collide with brick on top, store and handle later
@@ -119,7 +119,7 @@ void PlayMap::HandlingCollision()
 		for (int j = i + 1; j < objectOnScreen.size(); j++)
 		{
 			
-			eCollisionDirection direction = CheckCollision(objectOnScreen[i], objectOnScreen[j], moveX, moveY);
+			eCollisionDirection direction = CheckCollision(objectOnScreen[i], objectOnScreen[j]);
 			if(direction != eCollisionDirection::eNone)
 			{
 				objectOnScreen[i]->OnCollision(objectOnScreen[j], Unility::GetOppositeDirection(direction));
@@ -139,9 +139,10 @@ void PlayMap::HandlingCollision()
 //check collision of an dynamic object with another object
 //return CollisionDirection of 2nd object
 //-------------------------------------------------------------
-eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *unknownObj, float &moveX, float &moveY)
+eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *unknownObj)
 {
 	float normalX, normalY;
+	float moveX, moveY;
 	Box dynamicBox = dynamicObj->GetBoundaryBox();
 	Box unknownBox = unknownObj->GetBoundaryBox();
 
@@ -215,7 +216,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 				return eCollisionDirection::eTop;
 			}
 			//bot
-			else
+			else if (moveY < 0.0f)
 			{
 				//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
 				return eCollisionDirection::eBottom;
@@ -231,7 +232,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 				return eCollisionDirection::eLeft;
 			}
 			//right
-			else
+			else if (moveX > 0.0f)
 			{
 				//MessageBox(_hWnd, L"right", L"collision", MB_OK);
 				return eCollisionDirection::eRight;

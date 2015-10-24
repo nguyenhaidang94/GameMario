@@ -16,6 +16,13 @@ Node::Node(int nodeId, int x, int y, int w, int h)
 	_Br = NULL;
 }
 
+bool Node::IsEmpty()
+{
+	if (_Tl != NULL || _Tr != NULL || _Bl != NULL || _Br != NULL)
+		return false;
+	return true;
+}
+
 int Node::GetNodeId()
 {
 	return _NodeId;
@@ -26,7 +33,7 @@ Box Node::GetBoundaryBox()
 	return _BoundaryBox;
 }
 
-void Node::InsertObject(GameObject* object, Box objectBox)
+void Node::InsertObject(std::map<int, Node*> mapQuadTree, GameObject* object, Box objectBox)
 {
 	//if object doesn't belong to node, then return
 	if (!AABBCheck(_BoundaryBox, objectBox))
@@ -36,37 +43,49 @@ void Node::InsertObject(GameObject* object, Box objectBox)
 	if (_BoundaryBox.fWidth >= SCREEN_WIDTH + 6 && _BoundaryBox.fHeight >= SCREEN_HEIGHT + 6)
 	{
 		if (_Tl == NULL)
+		{
 			_Tl = new Node(
 				_NodeId * 10 + eNodePosition::eTopLeft,
 				_X - _Width / 4,
 				_Y + _Height / 4,
 				_Width / 2,
 				_Height / 2
-			);
+				);
+			mapQuadTree[_Tl->GetNodeId()] = _Tl;
+		}
 		if (_Tr == NULL)
+		{
 			_Tr = new Node(
 				_NodeId * 10 + eNodePosition::eTopRight,
 				_X + _Width / 4,
 				_Y + _Height / 4,
 				_Width / 2,
 				_Height / 2
-			);
+				);
+			mapQuadTree[_Tr->GetNodeId()] = _Tr;
+		}
 		if (_Bl == NULL)
+		{
 			_Bl = new Node(
 				_NodeId * 10 + eNodePosition::eBotLeft,
 				_X - _Width / 4,
 				_Y - _Height / 4,
 				_Width / 2,
 				_Height / 2
-			);
+				);
+			mapQuadTree[_Bl->GetNodeId()] = _Bl;
+		}
 		if (_Br == NULL)
+		{
 			_Br = new Node(
 				_NodeId * 10 + eNodePosition::eBotRight,
 				_X + _Width / 4,
 				_Y - _Height / 4,
 				_Width / 2,
 				_Height / 2
-			);
+				);
+			mapQuadTree[_Br->GetNodeId()] = _Br;
+		}
 
 		float left, right, top, bot;
 		left = objectBox.fX;
@@ -82,10 +101,10 @@ void Node::InsertObject(GameObject* object, Box objectBox)
 		else
 		{
 			//insert each subnode to node
-			_Tl->InsertObject(object, objectBox);
-			_Tr->InsertObject(object, objectBox);
-			_Bl->InsertObject(object, objectBox);
-			_Br->InsertObject(object, objectBox);
+			_Tl->InsertObject(mapQuadTree, object, objectBox);
+			_Tr->InsertObject(mapQuadTree, object, objectBox);
+			_Bl->InsertObject(mapQuadTree, object, objectBox);
+			_Br->InsertObject(mapQuadTree, object, objectBox);
 		}
 	}
 	//else if node just covers enough screenwidth or screenheight, then add obj to node
@@ -95,7 +114,14 @@ void Node::InsertObject(GameObject* object, Box objectBox)
 
 void Node::Release()
 {
-	_ListObjects.clear();
+	while (_ListObjects.size() > 0)
+	{
+		std::vector<GameObject*>::iterator itr = _ListObjects.begin();
+		(*itr)->Release();
+		delete (*itr);
+		(*itr) = NULL;
+		_ListObjects.erase(itr);
+	}
 }
 
 Node::~Node()
