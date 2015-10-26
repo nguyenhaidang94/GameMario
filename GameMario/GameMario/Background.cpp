@@ -79,6 +79,7 @@ void Background::ReadMapData(eWorldID mapID)
 		}
 		lineNumber++;
 	}
+	infile.close();
 }
 
 void Background::Render()

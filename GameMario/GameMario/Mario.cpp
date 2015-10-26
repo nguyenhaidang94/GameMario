@@ -119,6 +119,30 @@ void Mario::Update()
 		SetPosition(GetNewMarioPosition(_PipeTag));
 		_PipeTag = eGameTag::eEmpty;
 	}
+
+	//if mario not reach checkpoint yet, check and update if mario reach it
+	if(!GameStatistics::GetInstance()->IsMarioReachCheckpoint())
+	{
+		if(_Position.x >= GameStatistics::GetInstance()->GetCheckpoint().x)
+		{
+			GameStatistics::GetInstance()->ChangeCheckpointStatus(true);
+		}
+	}
+
+	//test game over
+	if(_Position.y < (Camera::GetInstance()->GetBoundaryBox().fY - Camera::GetInstance()->GetBoundaryBox().fHeight))
+	{
+		//still have life left
+		if(GameStatistics::GetInstance()->GetLife() > 1)
+		{
+			GameStatistics::GetInstance()->ChangeLife(false);
+			GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);
+		}
+		else
+		{
+			GameStatistics::GetInstance()->ChangeScene(eSceneID::eGameOver);
+		}
+	}
 }
 
 void Mario::Render()
@@ -137,12 +161,24 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	switch (object->GetObjectTypeID())
 	{
 	case eGround:
+	case eBrick:
+	case eHardBrick:
 		switch (collisionDirection)
 		{
 		case eBottom:
 			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
-			_Velocity.y = DEFAULT_VELOCITY;
+			_Velocity.y = 0;
 			break;
+		case eRight:
+			_Position.x = object->GetBoundaryBox().fX - _Size.x/2 - 1;
+			_Velocity.x = 0;
+			break;
+		case eLeft:
+			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 +1;
+			_Velocity.x = 0;
+			break;
+		case eTop:
+			_Velocity.y = -_Velocity.y;
 		default:
 			break;
 		}
@@ -187,27 +223,6 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		case eLeft:
 			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2;
 			break;
-		default:
-			break;
-		}
-		break;
-	case eBrick:
-		switch (collisionDirection)
-		{
-		case eBottom:
-			_Position.y = object->GetBoundaryBox().fY + _Size.y/2;
-			_Velocity.y = 0;
-			break;
-		case eRight:
-			_Position.x = object->GetBoundaryBox().fX - _Size.x/2 - 1;
-			_Velocity.x = 0;
-			break;
-		case eLeft:
-			_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 +1;
-			_Velocity.x = 0;
-			break;
-		case eTop:
-			_Velocity.y = -_Velocity.y;
 		default:
 			break;
 		}

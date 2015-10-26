@@ -14,7 +14,7 @@ class Block :
 protected:
 	int _CurrentFrame;	//manage brick frame in sprite
 	int _DefaultY;		//store default brick's position to bring back after brick bounce
-	eBlockTypeID _Type;			//color of the block
+	eColorID _Color;			//color of the block
 	bool _IsBounce;
 public:
 	Block(void);

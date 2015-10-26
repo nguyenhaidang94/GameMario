@@ -18,12 +18,12 @@ QuestionBlock::QuestionBlock(int objectID, int x, int y)
 	switch (objectID)
 	{
 	case 6:	//normal question block
-		_Type = eBlockTypeID::eBrownBlock;	//brown
+		_Color = eColorID::eBrown;	//brown
 		_CurrentFrame = 2;
 		_Tag = eGameTag::eEmpty;
 		break;
 	case 16:	//brown brick contain murshroom
-		_Type = eBlockTypeID::eBrownBlock;	//brown
+		_Color = eColorID::eBrown;	//brown
 		_CurrentFrame = 2;
 		_Tag = eGameTag::eStoreMushroom;
 		break;
@@ -51,13 +51,13 @@ void QuestionBlock::Update()
 				_IsBounce = false;
 				_IsHitted = true;
 
-				if(_Type == eBlockTypeID::eBrownBlock)
+				if(_Color == eColorID::eBrown)
 				{
 					_CurrentFrame = 5;
 				}
 				else
 				{
-					if(_Type == eBlockTypeID::eBlueBlock)
+					if(_Color == eColorID::eBlue)
 					{
 						_CurrentFrame = 10;
 					}
@@ -71,13 +71,13 @@ void QuestionBlock::Update()
 			if (now - frame_start >= count_per_frame) 
 			{
 				frame_start = now;
-				if(_Type == eBlockTypeID::eBrownBlock)
+				if(_Color == eColorID::eBrown)
 				{
 					_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 2, 4);
 				}
 				else
 				{
-					if(_Type == eBlockTypeID::eBlueBlock)
+					if(_Color == eColorID::eBlue)
 					{
 						_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 7, 9);
 					}
@@ -102,7 +102,7 @@ void QuestionBlock::Release()
 
 void QuestionBlock::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
-	if(!_IsHitted)	//if already turn into hardblock, ignore collision
+	if(!(_IsHitted || _IsBounce))	//if already turn into hardblock or is bouncing, ignore collision
 	{
 		//Handling collision by object type here
 		switch (object->GetObjectTypeID())
@@ -132,9 +132,9 @@ void QuestionBlock::OnCollision(GameObject *object, eCollisionDirection collisio
 					case eMarioIsBig:
 					case eMarioIsBigInvincible:
 						//Spawn a fire flower here
-						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Type ,_Position.x, _Position.y));
+						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Color ,_Position.x, _Position.y));
 						{
-							GameObject *fireflower = new FireFlower(_Type, _Position.x, _Position.y);
+							GameObject *fireflower = new FireFlower(_Color, _Position.x, _Position.y);
 							GameStatistics::GetInstance()->AddObjectToScene(fireflower);
 						}
 						break;

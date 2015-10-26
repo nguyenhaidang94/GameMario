@@ -15,6 +15,7 @@ enum eObjectTypeID
 	ePipe,
 	ePipeHorizontal,
 	eBrick,
+	eHardBrick,
 	eMagicMushroom,
 	eFireFlower,
 	e1upMushroom,
@@ -126,10 +127,10 @@ enum eEffectID
 	eFloatingText,
 };
 
-enum eBlockTypeID
+enum eColorID
 {
-	eBrownBlock = 0,
-	eBlueBlock = 1,
+	eBrown = 0,
+	eBlue = 1,
 };
 
 enum eNodePosition

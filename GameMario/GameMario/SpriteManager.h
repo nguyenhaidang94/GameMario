@@ -6,7 +6,7 @@ class SpriteManager
 {
 private:
 	std::map<eSpriteID, Sprite*> _ListSprite;		//Store all sprite of game
-	static SpriteManager *Instance;				
+	static SpriteManager *_Instance;				
 public:
 	SpriteManager(void);
 	~SpriteManager(void);

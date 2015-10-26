@@ -18,39 +18,39 @@ ItemBrick::ItemBrick(int objectID, int x, int y, string tag)
 	switch (objectID)
 	{
 	case 17:	//brown brick contain 1up
-		_Type = eBlockTypeID::eBrownBlock;
+		_Color = eColorID::eBrown;
 		_CurrentFrame = 0;
 		_Tag = eGameTag::eStore1Up;
 		break;
 	case 18:	//blue brick contain mushroom
-		_Type = eBlockTypeID::eBlueBlock;
+		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
 		_Tag = eGameTag::eStoreMushroom;
 		break;
 	case 19:	//blue brick with 1up
-		_Type = eBlockTypeID::eBlueBlock;
+		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
 		_Tag = eGameTag::eStore1Up;
 		break;
 	case 20:	//brown brick contain coin
-		_Type = eBlockTypeID::eBrownBlock;
+		_Color = eColorID::eBrown;
 		_CurrentFrame = 0;
 		_CointLeft = 7;
 		_Tag = eGameTag::eStoreCoin;
 		break;
 	case 21:	//blue brick contain coin
-		_Type = eBlockTypeID::eBlueBlock;
+		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
 		_CointLeft = 7;
 		_Tag = eGameTag::eStoreCoin;
 		break;
 	case 22:	//brown brick contain star
-		_Type = eBlockTypeID::eBrownBlock;
+		_Color = eColorID::eBrown;
 		_CurrentFrame = 0;
 		_Tag = eGameTag::eStoreStar;
 		break;
 	case 23:	//blue brick contain star
-		_Type = eBlockTypeID::eBlueBlock;
+		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
 		_Tag = eGameTag::eStoreStar;
 		break;
@@ -85,15 +85,15 @@ void ItemBrick::Update()
 				{
 					_IsHitted = true;
 
-					if(_Type == eBlockTypeID::eBrownBlock)
+					if(_Color == eColorID::eBrown)
 					{
 						_CurrentFrame = 5;
 					}
 					else
 					{
-						if(_Type == eBlockTypeID::eBlueBlock)
+						if(_Color == eColorID::eBlue)
 						{
-							_CurrentFrame = 10;
+							_CurrentFrame = 11;
 						}
 					}
 				}
@@ -119,7 +119,7 @@ void ItemBrick::Release()
 
 void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
-	if(!_IsHitted)	//if already turn into hardblock, ignore collision
+	if(!(_IsHitted || _IsBounce))	//if already turn into hardblock or is bouncing, ignore collision
 	{
 		//Handling collision by object type here
 		switch (object->GetObjectTypeID())
@@ -164,9 +164,9 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 					case eMarioIsBig:
 					case eMarioIsBigInvincible:
 						//Spawn a fire flower here
-						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Type ,_Position.x, _Position.y));
+						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Color ,_Position.x, _Position.y));
 						{
-							GameObject *fireflower = new FireFlower(_Type, _Position.x, _Position.y);
+							GameObject *fireflower = new FireFlower(_Color, _Position.x, _Position.y);
 							GameStatistics::GetInstance()->AddObjectToScene(fireflower);
 						}
 						break;
@@ -186,13 +186,8 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 
 				//case star
 				case eStoreStar:
-				//-------------------
 				//Spawn a star here
-				//-------------------
-				{
-					GameObject *fireflower = new FireFlower(_Type, _Position.x, _Position.y);
-					GameStatistics::GetInstance()->AddObjectToScene(fireflower);
-				}
+					GameStatistics::GetInstance()->AddObjectToScene(new Starman(_Color, _Position.x, _Position.y));
 				break;
 
 				default:	//default switch _Tag

@@ -10,7 +10,6 @@ public:
 	Brick(int objectID, int x, int y);
 	~Brick(void);
 
-	Box GetMovementRangeBox();
 	//Inherited funtion
 	void Update();
 	void Render();

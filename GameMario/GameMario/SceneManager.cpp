@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 
-SceneManager *SceneManager::Instance = NULL;
+SceneManager *SceneManager::_Instance = NULL;
 
 SceneManager::SceneManager(void)
 {
@@ -13,33 +13,33 @@ SceneManager::~SceneManager(void)
 
 SceneManager *SceneManager::GetInstance()
 {
-	if(Instance == NULL)
+	if(_Instance == NULL)
 	{
-		Instance = new SceneManager();
+		_Instance = new SceneManager();
 	}
-	return Instance;
+	return _Instance;
 }
 
 void SceneManager::Initialize()
 {
 	_CurrentSceneID = eSceneID::eMenu;
-	_LisScene[eSceneID::eMenu] = new MenuScene();
-	_LisScene[eSceneID::eStartMap] = new StartScene();
-	_LisScene[eSceneID::ePlay] = new PlayScene();
-	_LisScene[eSceneID::eGameOver] = new GameOverScene();
-	_LisScene[_CurrentSceneID]->Load();
+	_ListScene[eSceneID::eMenu] = new MenuScene();
+	_ListScene[eSceneID::eStartMap] = new StartScene();
+	_ListScene[eSceneID::ePlay] = new PlayScene();
+	_ListScene[eSceneID::eGameOver] = new GameOverScene();
+	_ListScene[_CurrentSceneID]->Load();
 }
 
 void SceneManager::SwitchScene(eSceneID sceneID)
 {
 	_CurrentSceneID = sceneID;
 	GameStatistics::GetInstance()->PauseTime();
-	_LisScene[_CurrentSceneID]->Load();
+	_ListScene[_CurrentSceneID]->Load();
 }
 
 void SceneManager::Update()
 {
-	_LisScene[_CurrentSceneID]->Update();
+	_ListScene[_CurrentSceneID]->Update();
 
 	if(_CurrentSceneID != GameStatistics::GetInstance()->GetSceneID())
 	{
@@ -49,10 +49,10 @@ void SceneManager::Update()
 
 void SceneManager::Render()
 {
-	_LisScene[_CurrentSceneID]->Render();
+	_ListScene[_CurrentSceneID]->Render();
 }
 
 void SceneManager::Release()
 {
-	_LisScene[eSceneID::ePlay]->Release();
+	_ListScene[eSceneID::ePlay]->Release();
 }

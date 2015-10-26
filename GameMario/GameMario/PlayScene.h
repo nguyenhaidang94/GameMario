@@ -9,7 +9,6 @@ class PlayScene :
 {
 private:
 	eWorldID _WorldID;
-	static PlayScene *Instance;
 	std::map<eWorldID, PlayMap*> _ListMap;
 
 	//Handling collision of map object
@@ -17,7 +16,6 @@ private:
 public:
 	PlayScene(void);
 	~PlayScene(void);
-	static PlayScene *GetInstance();
 	//Initialize scene
 	void Initialize();
 	//Free menory use

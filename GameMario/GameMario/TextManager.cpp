@@ -2,14 +2,14 @@
 #define TEXT_SIZE 20		//each text sprite is 20x20
 #define COIN_FRAME_RATE 8	//coin at top score swap 8 time per sec
 
-TextManager *TextManager::Instance = NULL;
+TextManager *TextManager::_Instance = NULL;
 
 TextManager::TextManager(void)
 {
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eFont);
 	_CurrentFrame = 0;
-	count_per_frame = 1000 / COIN_FRAME_RATE;
-	frame_start = GetTickCount();
+	_CountPerFrame = 1000 / COIN_FRAME_RATE;
+	_FrameStart = GetTickCount();
 }
 
 
@@ -19,11 +19,11 @@ TextManager::~TextManager(void)
 
 TextManager *TextManager::GetInstance()
 {
-	if(Instance == NULL)
+	if(_Instance == NULL)
 	{
-		Instance = new TextManager();
+		_Instance = new TextManager();
 	}
-	return Instance;
+	return _Instance;
 }
 
 int TextManager::GetFrameNumberFromChar(char c)
@@ -78,9 +78,9 @@ void TextManager::RenderScoreOnTop()
 
 	//control coin rate
 	DWORD now = GetTickCount();
-	if (now - frame_start >= count_per_frame) 
+	if (now - _FrameStart >= _CountPerFrame) 
 	{
-		frame_start = now;
+		_FrameStart = now;
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 3);
 	}
 }

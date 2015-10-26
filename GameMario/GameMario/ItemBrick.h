@@ -2,6 +2,7 @@
 #include "Block.h"
 #include "FireFlower.h"
 #include "Mushroom.h"
+#include "Starman.h"
 #include "GameStatistics.h"
 
 class ItemBrick :

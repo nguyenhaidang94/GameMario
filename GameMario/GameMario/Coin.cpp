@@ -13,7 +13,7 @@ Coin::Coin(int x, int y)
 {
 	_Position = D3DXVECTOR2(x, y);
 	_CurrentFrame = 0;
-	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eCoin);
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eItems);
 	_Size = D3DXVECTOR2(COIN_WIDTH, COIN_HEIGHT);
 	count_per_frame = 1000 / COIN_FRAME_RATE;
 	frame_start = GetTickCount();
@@ -29,7 +29,7 @@ void Coin::Update()
 	if (now - frame_start >= count_per_frame) 
 	{
 		frame_start = now;
-		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 3);
+		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 16, 19);
 	}
 }
 void Coin::Render()

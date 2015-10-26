@@ -11,11 +11,11 @@ Brick::Brick(int objectID, int x, int y)
 	switch (objectID)
 	{
 	case 2:	
-		_Type = eBlockTypeID::eBrownBlock;
+		_Color = eColorID::eBrown;
 		_CurrentFrame = 0;
 		break;
 	case 3:
-		_Type = eBlockTypeID::eBlueBlock;
+		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
 	default:
 		break;
@@ -26,11 +26,6 @@ Brick::~Brick(void)
 {
 	int temp = 0;
 	temp += 1;
-}
-
-Box Brick::GetMovementRangeBox()
-{
-	return GetBoundaryBox();
 }
 
 void Brick::Update()
@@ -50,10 +45,7 @@ void Brick::Update()
 
 void Brick::Render()
 {
-	if(_Tag != eGameTag::eDestroyed)
-	{
-		_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
-	}
+	_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
 }
 
 void Brick::Release()
@@ -62,37 +54,40 @@ void Brick::Release()
 
 void Brick::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
-	//Handling collision by object type here
-	switch (object->GetObjectTypeID())
+	//ignore collision when object is boucning
+	if(!_IsBounce)
 	{
-	case eMario:
-		switch (collisionDirection)
+		switch (object->GetObjectTypeID())
 		{
-		case eBottom:
-			//handle how brick behave base on mario state
-			switch (object->GetTag())
+		case eMario:
+			switch (collisionDirection)
 			{
-			//big mario destroy brick
-			case eMarioIsBig:
-			case eMarioIsBigInvincible:
-				_Tag = eGameTag::eDestroyed;
-				EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eBreakBrick, _Type);
-				break;
+			case eBottom:
+				//handle how brick behave base on mario state
+				switch (object->GetTag())
+				{
+				//big mario destroy brick
+				case eMarioIsBig:
+				case eMarioIsBigInvincible:
+					_Tag = eGameTag::eDestroyed;
+					EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eBreakBrick, _Color);
+					break;
 
-			//small mario make brick bounce
-			case eMarioIsSmall:
-			case eMarioIsSmallInvincible:
-				_Velocity.y = BOUNCE_VELOCITY;
-				_IsBounce = true;
+				//small mario make brick bounce
+				case eMarioIsSmall:
+				case eMarioIsSmallInvincible:
+					_Velocity.y = BOUNCE_VELOCITY;
+					_IsBounce = true;
+					break;
+				default:
+					break;
+				}
 				break;
 			default:
 				break;
 			}
-			break;
 		default:
 			break;
 		}
-	default:
-		break;
 	}
 }

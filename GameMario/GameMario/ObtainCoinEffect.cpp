@@ -17,8 +17,8 @@ ObtainCoinEffect::ObtainCoinEffect(D3DXVECTOR2 position, int scoreEarn)
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eCoin);
 	_ScoreEarn = scoreEarn;
 	_IsAlive = true;
-	count_per_frame = 1000 / COIN_FRAME_RATE;
-	frame_start = GetTickCount();
+	_CountPerFrame = 1000 / COIN_FRAME_RATE;
+	_FrameStart = GetTickCount();
 }
 
 ObtainCoinEffect::~ObtainCoinEffect(void)
@@ -40,9 +40,9 @@ void ObtainCoinEffect::Update()
 		}
 		//control coin rate
 		DWORD now = GetTickCount();
-		if (now - frame_start >= count_per_frame) 
+		if (now - _FrameStart >= _CountPerFrame) 
 		{
-			frame_start = now;
+			_FrameStart = now;
 			_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 4,8);
 		}
 	}

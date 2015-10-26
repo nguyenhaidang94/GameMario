@@ -11,8 +11,8 @@ private:
 	int _BeginingY;		//Begining positon in y axis
 	int _ScoreEarn;
 	//manage frame rate
-	DWORD count_per_frame;
-	DWORD frame_start;
+	DWORD _CountPerFrame;
+	DWORD _FrameStart;
 public:
 	ObtainCoinEffect(void);
 	//position is position of the block gererate coin

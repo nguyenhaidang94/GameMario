@@ -10,19 +10,20 @@ FireFlower::FireFlower(void)
 {
 }
 
-FireFlower::FireFlower(eBlockTypeID blockType, int x, int y)
+FireFlower::FireFlower(eColorID blockColor, int x, int y)
 {
 	_Position = D3DXVECTOR2(x, y);
 	_BeginningPositionY = y;
-	_Size = D3DXVECTOR2(0, 0);
+	_Size = D3DXVECTOR2(FLOWER_WIDTH, FLOWER_HEIGHT);
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eItems);
 	_CurrentFrame = 0;
 	_IsSpawnDone = false;
 	_ObjectTypeID = eObjectTypeID::eFireFlower;
-	_Type = blockType;
+	_Color = blockColor;
+	_Tag = eGameTag::eIgnoreCollision;	//ignore collision when on spawn animation
 
-	count_per_frame = 1000 / FRAME_RATE;
-	frame_start = GetTickCount();
+	_CounPerFrame = 1000 / FRAME_RATE;
+	_FrameStart = GetTickCount();
 }
 
 
@@ -35,8 +36,9 @@ void FireFlower::Update()
 	if(!_IsSpawnDone)
 	{
 		_Position.y += FLOWER_SPAWM_VELOCITY_Y;
-		if(_Position.y > _BeginningPositionY + 32)
+		if(_Position.y > _BeginningPositionY + TITLE_SIZE)
 		{
+			_Position.y = _BeginningPositionY + TITLE_SIZE;
 			_IsSpawnDone = true;
 			_Size = D3DXVECTOR2(FLOWER_WIDTH, FLOWER_HEIGHT);
 		}
@@ -44,16 +46,16 @@ void FireFlower::Update()
 
 	//control frame rate
 	DWORD now = GetTickCount();
-	if (now - frame_start >= count_per_frame) 
+	if (now - _FrameStart >= _CounPerFrame) 
 	{
-		frame_start = now;
-		if(_Type == eBlockTypeID::eBrownBlock)
+		_FrameStart = now;
+		if(_Color == eColorID::eBrown)
 		{
 			_CurrentFrame = SpriteManager::NextFrame(_CurrentFrame, 0, 3);
 		}
 		else
 		{
-			if(_Type == eBlockTypeID::eBlueBlock)
+			if(_Color == eColorID::eBlue)
 			{
 				_CurrentFrame = SpriteManager::NextFrame(_CurrentFrame, 4, 7);
 			}

@@ -201,6 +201,9 @@
     <ClCompile Include="PlayMap.cpp">
       <Filter>GameManager\GameScene\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Starman.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -325,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="PlayMap.h">
       <Filter>GameManager\GameScene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Starman.h">
+      <Filter>GameObject\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

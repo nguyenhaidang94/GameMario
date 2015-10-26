@@ -13,12 +13,10 @@ class MenuScene :
 {
 private:
 	Sprite *_SpriteBanner;
-	static MenuScene *Instance;
 	string _TopScore;
 public:
 	MenuScene(void);
 	~MenuScene(void);
-	static MenuScene *GetInstance();
 	//Initialize scene
 	void Initialize();
 	//Free menory use

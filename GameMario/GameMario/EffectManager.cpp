@@ -1,6 +1,6 @@
 #include "EffectManager.h"
 
-EffectManager *EffectManager::Instance = NULL;
+EffectManager *EffectManager::_Instance = NULL;
 
 EffectManager::EffectManager(void)
 {
@@ -13,11 +13,11 @@ EffectManager::~EffectManager(void)
 
 EffectManager *EffectManager::GetInstance()
 {
-	if(Instance == NULL)
+	if(_Instance == NULL)
 	{
-		Instance = new EffectManager();
+		_Instance = new EffectManager();
 	}
-	return Instance;
+	return _Instance;
 }
 
 void EffectManager::ShowEffect(D3DXVECTOR2 position ,eEffectID effectID, int tag)

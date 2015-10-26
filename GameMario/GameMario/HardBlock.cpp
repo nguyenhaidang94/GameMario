@@ -8,11 +8,12 @@ HardBlock::HardBlock(void)
 HardBlock::HardBlock(int objectID, int x, int y)
 {
 	Initialize(x, y);
+	_ObjectTypeID = eObjectTypeID::eHardBrick;
 	//setup current sprite for brick
 	switch (objectID)
 	{
 	case 4:	
-		_Type = eBlockTypeID::eBrownBlock;
+		_Color = eColorID::eBrown;
 		_CurrentFrame = 1;
 		break;
 	default:

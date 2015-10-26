@@ -9,7 +9,7 @@ class EffectManager
 {
 private:
 	std::vector<Effect*> _ListEffect;
-	static EffectManager *Instance;	
+	static EffectManager *_Instance;	
 public:
 	EffectManager(void);
 	~EffectManager(void);

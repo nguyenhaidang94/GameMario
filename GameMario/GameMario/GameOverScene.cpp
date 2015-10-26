@@ -1,6 +1,5 @@
 #include "GameOverScene.h"
-
-GameOverScene *GameOverScene::Instance = NULL;
+#define WAIT_TIME 1000		//wait 1s plus load time
 
 GameOverScene::GameOverScene(void)
 {
@@ -12,15 +11,6 @@ GameOverScene::~GameOverScene(void)
 {
 }
 
-GameOverScene *GameOverScene::GetInstance()
-{
-	if(Instance == NULL)
-	{
-		Instance = new GameOverScene();
-	}
-	return Instance;
-}
-
 void GameOverScene::Initialize()
 {
 	
@@ -28,12 +18,20 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Update()
 {
-	
+	if((GetTickCount() - _StartTime) > WAIT_TIME)
+	{
+		GameStatistics::GetInstance()->ChangeScene(eSceneID::eMenu);
+	}
+
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_SPACE))
+	{
+		GameStatistics::GetInstance()->ChangeScene(eSceneID::eMenu);
+	}
 }
 
 void GameOverScene::Render()
 {
-	
+	TextManager::GetInstance()->FixedRender("Game Over", SCREEN_WIDTH/2, 160);
 }
 
 void GameOverScene::Release()
@@ -42,4 +40,31 @@ void GameOverScene::Release()
 
 void GameOverScene::Load()
 {
+	_StartTime = GetTickCount();
+	//save score to file
+	try
+	{
+		fstream file(L"resources\\TopScore.txt");
+		string line;
+		int topScore;
+		while (getline(file, line))
+		{
+			topScore = atoi(line.c_str());
+		}
+
+		//if current score higher than top score, save
+		int currentScore = GameStatistics::GetInstance()->GetScore() ;
+		if(currentScore > topScore)
+		{
+			//cant write file directly, so have to reopen the file
+			file.close();
+			file.open(L"resources\\TopScore.txt", std::fstream::out | std::fstream::trunc);
+			file << currentScore;	//write to file
+		}
+		file.close();
+	}
+	catch(exception e)
+	{
+		//handle sth here
+	}
 }

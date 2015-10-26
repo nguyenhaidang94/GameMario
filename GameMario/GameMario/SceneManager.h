@@ -8,8 +8,8 @@
 class SceneManager
 {
 private:
-	std::map<eSceneID, GameScene*> _LisScene;
-	static SceneManager *Instance;
+	std::map<eSceneID, GameScene*> _ListScene;
+	static SceneManager *_Instance;
 	eSceneID _CurrentSceneID;
 public:
 	SceneManager(void);

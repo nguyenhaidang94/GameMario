@@ -7,7 +7,6 @@ class Coin :
 {
 private:
 	int _CurrentFrame;
-
 	//control rate
 	DWORD count_per_frame;
 	DWORD frame_start;

@@ -1,6 +1,6 @@
 #include "Keyboard.h"
 
-Keyboard *Keyboard::Instance = NULL;
+Keyboard *Keyboard::_Instance = NULL;
 
 Keyboard::Keyboard(void)
 {
@@ -15,11 +15,11 @@ Keyboard::~Keyboard(void)
 
 Keyboard *Keyboard::GetInstance()
 {
-	if (Instance == NULL)
+	if (_Instance == NULL)
 	{
-		Instance = new Keyboard();
+		_Instance = new Keyboard();
 	}
-	return Instance;
+	return _Instance;
 }
 
 void Keyboard::InitKeyboard(HINSTANCE hInstance, HWND hWnd)

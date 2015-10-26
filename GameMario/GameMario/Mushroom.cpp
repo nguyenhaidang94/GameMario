@@ -1,10 +1,10 @@
 #include "Mushroom.h"
 
 #define DEFAULT_VELOCITY_X 2
-#define DEFAULT_VELOCITY_Y -4
+#define DEFAULT_VELOCITY_Y -5
 #define MUSHROOM_SPAWM_VELOCITY_Y 0.5
 #define MUSHROOM_WIDTH 31
-#define MUSHROOM_HEIGHT 31
+#define MUSHROOM_HEIGHT 32
 #define MUSHROOM_SCORE 1000
 
 Mushroom::Mushroom(void)
@@ -71,8 +71,9 @@ void Mushroom::Update()
 	else
 	{
 		_Position.y += MUSHROOM_SPAWM_VELOCITY_Y;
-		if(_Position.y > _BeginningPositionY + 32)
+		if(_Position.y > _BeginningPositionY + TITLE_SIZE)
 		{
+			_Position.y = _BeginningPositionY + TITLE_SIZE;
 			_IsSpawnDone = true;
 			_Tag = eGameTag::eEmpty;	//stop ignore collison
 		}
@@ -96,6 +97,7 @@ void Mushroom::OnCollision(GameObject *object, eCollisionDirection collisionDire
 	switch (object->GetObjectTypeID())
 	{
 	case eBrick:
+	case eHardBrick:
 	case eGround:
 	case ePipe:
 		switch (collisionDirection)

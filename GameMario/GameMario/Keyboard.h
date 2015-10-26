@@ -15,7 +15,7 @@ protected:
 	HINSTANCE _hInstance;
 	HWND _hWnd;
 	BYTE  _KeyStates[256];			// DirectInput keyboard state buffer 
-	static Keyboard *Instance;
+	static Keyboard *_Instance;
 	// Buffered keyboard data
 	DIDEVICEOBJECTDATA _KeyEvents[KEYBOARD_BUFFER_SIZE];
 public:

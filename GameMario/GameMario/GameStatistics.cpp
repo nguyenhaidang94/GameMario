@@ -1,7 +1,7 @@
 #include "GameStatistics.h"
 #define GAME_TIME 400
 
-GameStatistics *GameStatistics::Instance = NULL;
+GameStatistics *GameStatistics::_Instance = NULL;
 
 GameStatistics::GameStatistics(void)
 {
@@ -14,11 +14,11 @@ GameStatistics::~GameStatistics(void)
 
 GameStatistics* GameStatistics::GetInstance()
 {
-	if(Instance == NULL)
+	if(_Instance == NULL)
 	{
-		Instance = new GameStatistics();
+		_Instance = new GameStatistics();
 	}
-	return Instance;
+	return _Instance;
 }
 
 void GameStatistics::Initialize()
@@ -28,21 +28,22 @@ void GameStatistics::Initialize()
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
+	_IsReachCheckpoint = false;
 	_Time = GAME_TIME;
 	_IsTimePause = true;
 	_ListObjectAddToScene = new std::vector<GameObject*>();
 }
 
+#pragma region Game stats
 void GameStatistics::Reset()
 {
 	_WolrdID = eWorldID::e1_1;
-	_CurrentSceneID = eSceneID::eMenu;
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
 	_Time = GAME_TIME;
+	_IsReachCheckpoint = false;
 }
-
 eWorldID GameStatistics::GetWorldID()
 {
 	return _WolrdID;
@@ -63,11 +64,47 @@ int GameStatistics::GetCoinCount()
 	return _CoinCount;
 }
 
+void GameStatistics::IncreaseCoin()
+{
+	_CoinCount++;
+}
+
 int GameStatistics::GetTime()
 {
 	return _Time;
 }
 
+void GameStatistics::ChangeScore(int amount)
+{
+	_Score += amount;
+}
+
+void GameStatistics::ChangeLife(bool isIncrease)
+{
+	isIncrease? _Life++ : _Life--;
+}
+
+void GameStatistics::DecreaseTime()
+{
+	if(!_IsTimePause)
+	{
+		_Time--;
+	}
+}
+
+void GameStatistics::ResetTime()
+{
+	_IsTimePause = false;
+	_Time = GAME_TIME;
+}
+
+void GameStatistics::PauseTime()
+{
+	_IsTimePause = true;
+}
+#pragma endregion
+
+#pragma region World, Scene and Objects
 std::string GameStatistics::GetCurrentWorldName()
 {
 	switch (_WolrdID)
@@ -90,44 +127,11 @@ std::string GameStatistics::GetCurrentWorldName()
 	}
 }
 
-void GameStatistics::ChangeScore(int amount)
-{
-	_Score += amount;
-}
-
-void GameStatistics::ChangeLife(bool isIncrease)
-{
-	isIncrease? _Life++ : _Life--;
-}
-
-void GameStatistics::DecreaseTime()
-{
-	if(!_IsTimePause)
-	{
-		_Time--;
-	}
-}
-
-void GameStatistics::IncreaseCoin()
-{
-	_CoinCount++;
-}
-
 void GameStatistics::ChangeWorld(eWorldID worldID)
 {
 	_WolrdID = worldID;
 }
 
-void GameStatistics::ResetTime()
-{
-	_IsTimePause = false;
-	_Time = GAME_TIME;
-}
-
-void GameStatistics::PauseTime()
-{
-	_IsTimePause = true;
-}
 
 eSceneID GameStatistics::GetSceneID()
 {
@@ -148,3 +152,28 @@ std::vector<GameObject*>* GameStatistics::GetListObjectAddToScene()
 {
 	return _ListObjectAddToScene;
 }
+
+D3DXVECTOR2 GameStatistics::GetCheckpoint()
+{
+	//hard code...
+	switch (_WolrdID)
+	{
+	case e1_1:
+		return D3DXVECTOR2(2640, 80);
+		break;
+	default:
+		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint
+		break;
+	}
+}
+
+void GameStatistics::ChangeCheckpointStatus(bool isReachCheckpoint)
+{
+	_IsReachCheckpoint = isReachCheckpoint;
+}
+
+bool GameStatistics::IsMarioReachCheckpoint()
+{
+	return _IsReachCheckpoint;
+}
+#pragma endregion

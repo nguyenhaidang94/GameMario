@@ -138,6 +138,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 			}
 		}
 	}
+	file.close();
 }
 
 void QuadTree::InsertObject(GameObject* object, Box objBox)

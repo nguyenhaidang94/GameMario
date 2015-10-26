@@ -1,17 +1,19 @@
 #pragma once
 #include "GameScene.h"
 #include "TextManager.h"
+#include "Mario.h"
 
 class StartScene :
 	public GameScene
 {
 private:
-	static StartScene *Instance;
 	DWORD _StartTime;
+
+	//get position of mario when start world
+	D3DXVECTOR2 GetMarioStartPosition();
 public:
 	StartScene(void);
 	~StartScene(void);
-	static StartScene *GetInstance();
 	//Initialize scene
 	void Initialize();
 	//Free menory use

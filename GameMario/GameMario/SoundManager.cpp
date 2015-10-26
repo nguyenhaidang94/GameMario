@@ -1,6 +1,6 @@
 #include "SoundManager.h"
 
-SoundManager *SoundManager::Instance = NULL;
+SoundManager *SoundManager::_Instance = NULL;
 
 SoundManager::SoundManager(void)
 {
@@ -13,11 +13,11 @@ SoundManager::~SoundManager(void)
 
 SoundManager *SoundManager::GetInstance()
 {
-	if(Instance == NULL)
+	if(_Instance == NULL)
 	{
-		Instance = new SoundManager();
+		_Instance = new SoundManager();
 	}
-	return Instance;
+	return _Instance;
 }
 
 void SoundManager::LoadSounds(LPDIRECTSOUND8 lpDSound)

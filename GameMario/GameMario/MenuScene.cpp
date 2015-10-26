@@ -1,7 +1,5 @@
 #include "MenuScene.h"
 
-MenuScene *MenuScene::Instance = NULL;
-
 MenuScene::MenuScene(void)
 {
 	_SceneID = eSceneID::eMenu;
@@ -11,15 +9,6 @@ MenuScene::MenuScene(void)
 
 MenuScene::~MenuScene(void)
 {
-}
-
-MenuScene *MenuScene::GetInstance()
-{
-	if(Instance == NULL)
-	{
-		Instance = new MenuScene();
-	}
-	return Instance;
 }
 
 void MenuScene::Initialize()
@@ -46,6 +35,7 @@ void MenuScene::Release()
 
 void MenuScene::Load()
 {
+	_SpriteBanner = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMenuBanner);
 	try
 	{
 		ifstream infile(L"resources\\TopScore.txt");
@@ -54,10 +44,11 @@ void MenuScene::Load()
 		{
 			_TopScore = Unility::IntToFixedLengthString(atoi(line.c_str()), 6);
 		}
+		infile.close();
 	}
 	catch(exception e)
 	{
-		
+		//handle sth here
 	}
 }
 	
@@ -66,5 +57,6 @@ void MenuScene::HandlingInput()
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
 		GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);
+		GameStatistics::GetInstance()->Reset();
 	}
 }

@@ -1,6 +1,6 @@
 #include "SpriteManager.h"
 
-SpriteManager *SpriteManager::Instance = NULL;
+SpriteManager *SpriteManager::_Instance = NULL;
 
 SpriteManager::SpriteManager(void)
 {
@@ -12,11 +12,11 @@ SpriteManager::~SpriteManager(void)
 
 SpriteManager *SpriteManager::GetInstance()
 {
-	if(Instance == NULL)
+	if(_Instance == NULL)
 	{
-		Instance = new SpriteManager();
+		_Instance = new SpriteManager();
 	}
-	return Instance;
+	return _Instance;
 }
 
 void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
@@ -32,7 +32,7 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eTallPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\TallPipe.png", 64, 256, 1, 1, D3DCOLOR_XRGB(255, 255, 255));
 	_ListSprite[eSpriteID::eTallerPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\TallerPipe.png", 64, 352, 1, 1, D3DCOLOR_XRGB(255, 255, 255));
 	_ListSprite[eSpriteID::eCoin] = new Sprite(SpriteHandler, L"resources\\Sprites\\coin.png", 32, 32, 8, 4,D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eObjectTitle] = new Sprite(SpriteHandler, L"resources\\Sprites\\ObjectTitle.png", 32, 32, 11, 11,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eObjectTitle] = new Sprite(SpriteHandler, L"resources\\Sprites\\ObjectTitle.png", 32, 32, 12, 12,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eBrickDebris] = new Sprite(SpriteHandler, L"resources\\Sprites\\BrickDebris.png", 16, 16, 8, 8,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eItems] = new Sprite(SpriteHandler, L"resources\\Sprites\\Items.png", 32, 32, 35, 8,D3DCOLOR_XRGB(255, 0, 255));
 }

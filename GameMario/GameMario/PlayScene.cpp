@@ -1,7 +1,5 @@
 #include "PlayScene.h"
 
-PlayScene *PlayScene::Instance = NULL;
-
 PlayScene::PlayScene(void)
 {
 	_SceneID = eSceneID::ePlay;
@@ -9,15 +7,6 @@ PlayScene::PlayScene(void)
 
 PlayScene::~PlayScene(void)
 {
-}
-
-PlayScene *PlayScene::GetInstance()
-{
-	if(Instance == NULL)
-	{
-		Instance = new PlayScene();
-	}
-	return Instance;
 }
 
 void PlayScene::Initialize()
@@ -70,6 +59,7 @@ void PlayScene::Update()
 		}
 		else	//change to startscene
 		{
+			GameStatistics::GetInstance()->ChangeCheckpointStatus(false);
 			GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);
 		}
 	}

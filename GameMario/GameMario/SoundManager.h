@@ -9,7 +9,7 @@ class SoundManager
 {
 private:
 	std::map<eSoundID, Sound*> _ListSound;
-	static SoundManager *Instance;
+	static SoundManager *_Instance;
 public:
 	SoundManager(void);
 	~SoundManager(void);

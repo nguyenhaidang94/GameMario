@@ -1,15 +1,22 @@
 #pragma once
+#include <fstream>
+#include <string>
+#include <sstream>
 #include "gamescene.h"
+#include "Keyboard.h"
+#include "TextManager.h"
+
 
 class GameOverScene :
 	public GameScene
 {
 private:
-	static GameOverScene *Instance;
+	DWORD _StartTime;
+	bool _Is1stUpdate;		//show screen 1st and then save score
 public:
 	GameOverScene(void);
 	~GameOverScene(void);
-	static GameOverScene *GetInstance();
+
 	//Initialize scene
 	void Initialize();
 	//Free menory use

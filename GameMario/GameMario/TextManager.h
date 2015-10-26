@@ -9,12 +9,12 @@ class TextManager
 {
 private:
 	Sprite *_Sprite;
-	static TextManager *Instance;
+	static TextManager *_Instance;
 	int GetFrameNumberFromChar(char c);
 	//variable to manage coin at top score
 	int _CurrentFrame;		
-	DWORD count_per_frame;
-	DWORD frame_start;
+	DWORD _CountPerFrame;
+	DWORD _FrameStart;
 public:
 	TextManager(void);
 	~TextManager(void);

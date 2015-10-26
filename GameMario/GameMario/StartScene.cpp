@@ -1,7 +1,5 @@
 #include "StartScene.h"
-#define WAIT_TIME 1000		//wait 1s
-
-StartScene *StartScene::Instance = NULL;
+#define WAIT_TIME 1000		//wait 1s plus load time
 
 StartScene::StartScene(void)
 {
@@ -11,15 +9,6 @@ StartScene::StartScene(void)
 
 StartScene::~StartScene(void)
 {
-}
-
-StartScene *StartScene::GetInstance()
-{
-	if(Instance == NULL)
-	{
-		Instance = new StartScene();
-	}
-	return Instance;
 }
 
 void StartScene::Initialize()
@@ -47,4 +36,17 @@ void StartScene::Release()
 void StartScene::Load()
 {
 	_StartTime = GetTickCount();
+	Mario::GetInstance()->SetPosition(GetMarioStartPosition());
+}
+
+D3DXVECTOR2 StartScene::GetMarioStartPosition()
+{
+	if(GameStatistics::GetInstance()->IsMarioReachCheckpoint())
+	{
+		GameStatistics::GetInstance()->GetCheckpoint();
+	}
+	else
+	{
+		return D3DXVECTOR2(48, 80);	//normal start world position, hard code maybe need fix
+	}
 }
