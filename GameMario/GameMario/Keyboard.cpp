@@ -82,6 +82,8 @@ void Keyboard::InitKeyboard(HINSTANCE hInstance, HWND hWnd)
 
 void Keyboard::ProcessKeyBoard()
 {
+	//store previous keyboard states
+	memcpy(_PreviousKeyStates, _KeyStates, 256);
 	// Collect all key states first
 	_Keyboard->GetDeviceState(sizeof(_KeyStates), _KeyStates);
 
@@ -114,6 +116,15 @@ void Keyboard::ProcessKeyBoard()
 int Keyboard::IsKeyDown(int KeyCode)
 {
 	return (_KeyStates[KeyCode] & 0x80) > 0;
+}
+
+int Keyboard::IsKeyPress(int keyCode)
+{
+	if((_KeyStates[keyCode] & 0x00000080) && !(_PreviousKeyStates[keyCode] & 0x00000080))
+	{
+		return true;
+	}
+	return false;
 }
 
 //void Keyboard::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta) { }

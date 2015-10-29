@@ -27,6 +27,7 @@ void SceneManager::Initialize()
 	_ListScene[eSceneID::eStartMap] = new StartScene();
 	_ListScene[eSceneID::ePlay] = new PlayScene();
 	_ListScene[eSceneID::eGameOver] = new GameOverScene();
+	_ListScene[eSceneID::eTimeUp] = new TimeUpScene();
 	_ListScene[_CurrentSceneID]->Load();
 }
 
@@ -35,6 +36,7 @@ void SceneManager::SwitchScene(eSceneID sceneID)
 	_CurrentSceneID = sceneID;
 	GameStatistics::GetInstance()->PauseTime();
 	_ListScene[_CurrentSceneID]->Load();
+	Camera::GetInstance()->Reset();
 }
 
 void SceneManager::Update()

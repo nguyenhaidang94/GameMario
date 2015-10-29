@@ -39,11 +39,19 @@ void Background::ReadMapData(eWorldID mapID)
 		fileName = "1_2";
 		break;
 	case e1_3:
+		fileName = "1_3";
 		break;
 	case e1_4:
+		fileName = "1_4";
 		break;
 	case eUnderground1_1:
 		fileName = "u1_1";
+		break;
+	case eUnderground1_2:
+		fileName = "u1_2";
+		break;
+	case eRight1_2:
+		fileName = "r1_2";
 		break;
 	default:
 		break;

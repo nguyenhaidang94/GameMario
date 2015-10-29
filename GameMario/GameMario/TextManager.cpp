@@ -1,5 +1,5 @@
 #include "TextManager.h"
-#define TEXT_SIZE 20		//each text sprite is 20x20
+#define TEXT_SIZE 16		//each text sprite is 20x20
 #define COIN_FRAME_RATE 8	//coin at top score swap 8 time per sec
 
 TextManager *TextManager::_Instance = NULL;
@@ -41,7 +41,19 @@ int TextManager::GetFrameNumberFromChar(char c)
 	{
 		return value - 97 + 10;
 	}
-	return -1;
+	if(c == '-')
+	{
+		return 37;
+	}
+	if(c == '*')
+	{
+		return 38;
+	}
+	if(c == '!')
+	{
+		return 39;
+	}
+	return 40;	//blank
 }
 
 void TextManager::Render(string text, int x, int y)
@@ -65,15 +77,15 @@ void TextManager::FixedRender(string text, int x, int y)
 
 void TextManager::RenderScoreOnTop()
 {
-	FixedRender("mario", 92, 32);
-	FixedRender(Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetScore(), 6), 102, 55);
+	FixedRender("mario", 92, 27);
+	FixedRender(Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetScore(), 6), 102, 50);
 	//Render coin effer at score on top
-	SpriteManager::GetInstance()->GetSprite(eSpriteID::eCoin)->FixedRenderAtFrame(180, 55, _CurrentFrame);
-	FixedRender("x" + Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetCoinCount(), 2), 230, 55);
-	FixedRender("world", 332, 32);
-	FixedRender(GameStatistics::GetInstance()->GetCurrentWorldName(), 338, 55);
-	FixedRender("time", 450, 32);
-	FixedRender(Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetTime(), 3), 450, 55);
+	SpriteManager::GetInstance()->GetSprite(eSpriteID::eCoin)->FixedRenderAtFrame(180, 50, _CurrentFrame);
+	FixedRender("*" + Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetCoinCount(), 2), 230, 50);
+	FixedRender("world", 332, 27);
+	FixedRender(GameStatistics::GetInstance()->GetCurrentWorldName(), 338, 50);
+	FixedRender("time", 450, 27);
+	FixedRender(Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetTime(), 3), 450, 50);
 
 
 	//control coin rate

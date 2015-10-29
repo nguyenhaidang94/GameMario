@@ -15,6 +15,7 @@ protected:
 	HINSTANCE _hInstance;
 	HWND _hWnd;
 	BYTE  _KeyStates[256];			// DirectInput keyboard state buffer 
+	BYTE _PreviousKeyStates[256];	// DirectInput keyboard previous state buffer 
 	static Keyboard *_Instance;
 	// Buffered keyboard data
 	DIDEVICEOBJECTDATA _KeyEvents[KEYBOARD_BUFFER_SIZE];
@@ -25,6 +26,7 @@ public:
 	void InitKeyboard(HINSTANCE hInstance, HWND hWnd);
 	void ProcessKeyBoard();
 	int IsKeyDown(int KeyCode);
+	int IsKeyPress(int KeyCode);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
 	//virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta);

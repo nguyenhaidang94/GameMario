@@ -4,6 +4,7 @@
 #include "MenuScene.h"
 #include "StartScene.h"
 #include "GameOverScene.h"
+#include "TimeUpScene.h"
 
 class SceneManager
 {

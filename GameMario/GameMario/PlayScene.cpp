@@ -27,6 +27,14 @@ void PlayScene::Load()
 		break;
 	case e1_2:
 		_ListMap[eWorldID::e1_2] = new PlayMap(e1_2);
+		_ListMap[eWorldID::eUnderground1_2] = new PlayMap(eUnderground1_2);
+		_ListMap[eWorldID::eRight1_2] = new PlayMap(eRight1_2);
+		break;
+	case e1_3:
+		_ListMap[eWorldID::e1_3] = new PlayMap(e1_3);
+		break;
+	case e1_4:
+		_ListMap[eWorldID::e1_3] = new PlayMap(e1_4);
 		break;
 	default:
 		break;
@@ -48,6 +56,11 @@ void PlayScene::Update()
 		listObjectToAdd->pop_back();
 	}
 
+	if(GameStatistics::GetInstance()->GetTime() <= 0)
+	{
+		//Play mario death animation here and move to timeup scene
+	}
+
 	//If game world change somewhere, switch map
 	eWorldID targetWorldID = GameStatistics::GetInstance()->GetWorldID();
 	if(_WorldID != targetWorldID)
@@ -56,6 +69,7 @@ void PlayScene::Update()
 		{
 			_WorldID = targetWorldID;
 			_ListMap[_WorldID]->Load();
+			Camera::GetInstance()->Reset();
 		}
 		else	//change to startscene
 		{

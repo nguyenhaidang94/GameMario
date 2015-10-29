@@ -6,7 +6,7 @@ Camera::Camera(void)
 {
 	_ViewPortX = 0;
 	_ViewPortY = SCREEN_HEIGHT;
-	_IsAllowBack = true;
+	_IsAllowBack = false;
 }
 
 Camera::~Camera(void)
@@ -112,4 +112,12 @@ D3DXVECTOR2 Camera::GetWorldSize()
 Box Camera::GetBoundaryBox()
 {
 	return Box(_ViewPortX, _ViewPortY, SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+void Camera::Reset()
+{
+	_ViewPortX = 0;
+	_ViewPortY = SCREEN_HEIGHT;
+	_OldX = 0;
+	_OldY = 0;
 }

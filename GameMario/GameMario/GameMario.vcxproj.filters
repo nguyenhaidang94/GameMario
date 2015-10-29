@@ -204,6 +204,15 @@
     <ClCompile Include="Starman.cpp">
       <Filter>GameObject\Item</Filter>
     </ClCompile>
+    <ClCompile Include="FloatingBar.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Flagpole.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeUpScene.cpp">
+      <Filter>GameManager\GameScene\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -331,6 +340,15 @@
     </ClInclude>
     <ClInclude Include="Starman.h">
       <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingBar.h">
+      <Filter>GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Flagpole.h">
+      <Filter>GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeUpScene.h">
+      <Filter>GameManager\GameScene\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

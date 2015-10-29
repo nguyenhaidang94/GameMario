@@ -20,6 +20,8 @@ enum eObjectTypeID
 	eFireFlower,
 	e1upMushroom,
 	eStarMan,
+	eFloatingBar,
+	eFlagpole,
 };
 
 enum eSpriteID
@@ -28,6 +30,7 @@ enum eSpriteID
 	eMapTile = 1,
 	eFont,
 	eMenuBanner,
+	eMenuMushroom,
 	eSmallPipe,
 	eMediumPipe,
 	eBigPipe,
@@ -38,6 +41,9 @@ enum eSpriteID
 	eObjectTitle,
 	eBrickDebris,
 	eItems,
+	eBarSprite,
+	eFlagpoleSprite,
+	eFlagSprite,
 };
 
 enum eMarioState
@@ -55,6 +61,8 @@ enum eWorldID
 	e1_3,
 	e1_4,
 	eUnderground1_1,
+	eUnderground1_2,
+	eRight1_2,
 };
 
 enum eSceneID
@@ -63,6 +71,7 @@ enum eSceneID
 	eStartMap = 1,
 	ePlay,
 	eGameOver,
+	eTimeUp,
 };
 
 enum eCollisionDirection
@@ -85,7 +94,7 @@ enum eSoundID
 	eBrickSmash,
 	eBump,
 	eCoinAppear,
-	eDownTheLlagpole,
+	eDownTheFlagpole,
 	eJumpSmall,
 	eJumpSuper,
 	ePipeTravel,

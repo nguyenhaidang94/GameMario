@@ -1,5 +1,5 @@
 #include "GameOverScene.h"
-#define WAIT_TIME 1000		//wait 1s plus load time
+#define WAIT_TIME 5000		//wait 5s
 
 GameOverScene::GameOverScene(void)
 {
@@ -18,12 +18,7 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Update()
 {
-	if((GetTickCount() - _StartTime) > WAIT_TIME)
-	{
-		GameStatistics::GetInstance()->ChangeScene(eSceneID::eMenu);
-	}
-
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_SPACE))
+	if((GetTickCount() - _StartTime) > WAIT_TIME || Keyboard::GetInstance()->IsKeyDown(DIK_SPACE));
 	{
 		GameStatistics::GetInstance()->ChangeScene(eSceneID::eMenu);
 	}

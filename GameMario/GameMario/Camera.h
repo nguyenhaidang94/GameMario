@@ -20,5 +20,7 @@ public:
 	D3DXVECTOR2 GetViewPort();
 	D3DXVECTOR2 GetWorldSize();
 	Box GetBoundaryBox();
+	//reset camera back to beginging position
+	void Reset();
 };
 

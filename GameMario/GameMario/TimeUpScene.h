@@ -1,20 +1,15 @@
 #pragma once
-#include <fstream>
-#include <string>
-#include <sstream>
 #include "gamescene.h"
 #include "Keyboard.h"
 #include "TextManager.h"
-
-
-class GameOverScene :
+class TimeUpScene :
 	public GameScene
 {
 private:
 	DWORD _StartTime;
 public:
-	GameOverScene(void);
-	~GameOverScene(void);
+	TimeUpScene(void);
+	~TimeUpScene(void);
 
 	//Initialize scene
 	void Initialize();

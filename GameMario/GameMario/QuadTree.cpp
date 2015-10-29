@@ -21,11 +21,19 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 		fileName = "1_2_quadtree";
 		break;
 	case e1_3:
+		fileName = "1_3_quadtree";
 		break;
 	case e1_4:
+		fileName = "1_4_quadtree";
 		break;
 	case eUnderground1_1:
 		fileName = "u1_1_quadtree";
+		break;
+	case eUnderground1_2:
+		fileName = "u1_2_quadtree";
+		break;
+	case eRight1_2:
+		fileName = "r1_2_quadtree";
 		break;
 	default:
 		break;
@@ -104,6 +112,11 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					//case coin
 					case 15: //coin
 						node->_ListObjects.push_back(new Coin(x, y));
+						break;
+
+					//case floating bar
+					case 8:
+						node->_ListObjects.push_back(new FloatingBar(x, y, tag));
 						break;
 					default:
 						break;

@@ -11,7 +11,7 @@ private:
 	int _Life;
 	int _Time;
 	int _CoinCount;
-	eWorldID _WolrdID;
+	eWorldID _WorldID;
 	eSceneID _CurrentSceneID;
 	static GameStatistics *_Instance;
 	bool _IsTimePause;
@@ -34,6 +34,8 @@ public:
 	void ChangeScore(int amount);
 	//Get current life
 	int GetLife();
+	//Set current life
+	void SetLife(int life);
 	//Increase/decrease life by 1, true if increase, false if decrease
 	void ChangeLife(bool isIncrease);
 	//Increase/decrease life by 1, true if increase, false if decrease
@@ -56,6 +58,8 @@ public:
 	eWorldID GetWorldID();
 	//Get current SceneID
 	eSceneID GetSceneID();
+	//Change current worldID to next world
+	void GoToNextWorld();
 	//Change current worldID
 	void ChangeWorld(eWorldID worldID);
 	//Change current sceneID

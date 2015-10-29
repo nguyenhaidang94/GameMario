@@ -23,7 +23,7 @@ GameStatistics* GameStatistics::GetInstance()
 
 void GameStatistics::Initialize()
 {
-	_WolrdID = eWorldID::e1_1;
+	_WorldID = eWorldID::e1_1;
 	_CurrentSceneID = eSceneID::eMenu;
 	_Score = 0;
 	_Life = 3;
@@ -37,16 +37,23 @@ void GameStatistics::Initialize()
 #pragma region Game stats
 void GameStatistics::Reset()
 {
-	_WolrdID = eWorldID::e1_1;
+	_WorldID = eWorldID::e1_1;
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
 	_Time = GAME_TIME;
 	_IsReachCheckpoint = false;
+
+	//clear list object add
+	for(int i = _ListObjectAddToScene->size() - 1; i >= 0; i--)
+	{
+		delete _ListObjectAddToScene->at(i);
+		_ListObjectAddToScene->pop_back();
+	}
 }
 eWorldID GameStatistics::GetWorldID()
 {
-	return _WolrdID;
+	return _WorldID;
 }
 
 int GameStatistics::GetScore()
@@ -57,6 +64,11 @@ int GameStatistics::GetScore()
 int GameStatistics::GetLife()
 {
 	return _Life;
+}
+
+void GameStatistics::SetLife(int life)
+{
+	_Life = life;
 }
 
 int GameStatistics::GetCoinCount()
@@ -107,20 +119,22 @@ void GameStatistics::PauseTime()
 #pragma region World, Scene and Objects
 std::string GameStatistics::GetCurrentWorldName()
 {
-	switch (_WolrdID)
+	switch (_WorldID)
 	{
 	case e1_1:
 	case eUnderground1_1:
-		return "1_1";
+		return "1-1";
 		break;
 	case e1_2:
-		return "1_2";
+	case eUnderground1_2:
+	case eRight1_2:
+		return "1-2";
 		break;
 	case e1_3:
-		return "1_3";
+		return "1-3";
 		break;
 	case e1_4:
-		return "1_4";
+		return "1-4";
 		break;
 	default:
 		break;
@@ -129,9 +143,17 @@ std::string GameStatistics::GetCurrentWorldName()
 
 void GameStatistics::ChangeWorld(eWorldID worldID)
 {
-	_WolrdID = worldID;
+	_WorldID = worldID;
 }
 
+void GameStatistics::GoToNextWorld()
+{
+	int index = _WorldID;
+	if(_WorldID == eWorldID::e1_4)	//if not the last world
+	{
+		_WorldID = static_cast<eWorldID>(index);
+	}
+}
 
 eSceneID GameStatistics::GetSceneID()
 {
@@ -156,11 +178,13 @@ std::vector<GameObject*>* GameStatistics::GetListObjectAddToScene()
 D3DXVECTOR2 GameStatistics::GetCheckpoint()
 {
 	//hard code...
-	switch (_WolrdID)
+	switch (_WorldID)
 	{
 	case e1_1:
 		return D3DXVECTOR2(2640, 80);
 		break;
+	case e1_3:
+		return D3DXVECTOR2(2160, 80);
 	default:
 		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint
 		break;

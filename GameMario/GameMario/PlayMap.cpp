@@ -61,6 +61,13 @@ void PlayMap::Load()
 	Camera::GetInstance()->SetWorldSize(_Background->GetWorldSize());		//set camera boundary
 }
 
+void PlayMap::Reload()
+{
+	Camera::GetInstance()->SetWorldSize(_Background->GetWorldSize());		//set camera boundary
+	_QuadTree->Release();
+	_QuadTree->BuildQuadTree(_WorldID);
+}
+
 void PlayMap::AddObjectToMap(GameObject *object)
 {
 	_QuadTree->InsertObject(object, object->GetBoundaryBox());

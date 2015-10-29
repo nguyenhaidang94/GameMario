@@ -6,6 +6,7 @@
 #include "Keyboard.h"
 #include "SpriteManager.h"
 #include "TextManager.h"
+#include "PlayMap.h"
 using namespace std;
 
 class MenuScene :
@@ -13,7 +14,12 @@ class MenuScene :
 {
 private:
 	Sprite *_SpriteBanner;
+	Sprite *_SpriteMushroom;
 	string _TopScore;
+	PlayMap *_DemoMap;
+	int _MushroomPositionY;
+	DWORD _StartTime;
+	bool _IsAutoRun;	//mario will start auto run
 public:
 	MenuScene(void);
 	~MenuScene(void);
