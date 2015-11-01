@@ -40,7 +40,7 @@ namespace Map_Editor.Objects
         GREEN_TURTLE,
         DARK_GREEN_TURTLE,
         RED_TURTLE,
-        RED_FLY_TURTLE
+        RED_FLY_TURTLE,
     }
 
     public class TileObject

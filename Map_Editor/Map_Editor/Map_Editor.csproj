@@ -88,9 +88,9 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\Tiles\flag.png" />
     <Content Include="Yellowicon-Game-Stars-Mario.ico" />
     <None Include="Resources\Tiles\lift.png" />
-    <None Include="Resources\Tiles\flag.png" />
     <None Include="Resources\Items\box_star2.png" />
     <None Include="Resources\Items\box_star1.png" />
     <None Include="Resources\Items\box_coin2.png" />
