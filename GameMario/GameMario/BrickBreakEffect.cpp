@@ -1,5 +1,5 @@
 #include "BrickBreakEffect.h"
-#define DEFAULT_VELOCITY_LOW_X 0.9
+#define DEFAULT_VELOCITY_LOW_X 0.8
 #define DEFAULT_VELOCITY_HIGH_X 1
 #define DEFAULT_VELOCITY_HIGH_Y 6
 #define DEFAULT_VELOCITY_LOW_Y 4

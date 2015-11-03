@@ -14,45 +14,47 @@ ItemBrick::ItemBrick(int objectID, int x, int y, string tag)
 {
 	Initialize(x, y);
 	_IsHitted = false;
+	_SpawmItem = nullptr;
+	_SpawmItemTag = eGameTag::eEmpty;
 	//setup current sprite for brick
 	switch (objectID)
 	{
 	case 17:	//brown brick contain 1up
 		_Color = eColorID::eBrown;
 		_CurrentFrame = 0;
-		_Tag = eGameTag::eStore1Up;
+		_SpawmItemTag = eGameTag::eStore1Up;
 		break;
 	case 18:	//blue brick contain mushroom
 		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
-		_Tag = eGameTag::eStoreMushroom;
+		_SpawmItemTag = eGameTag::eStoreMushroom;
 		break;
 	case 19:	//blue brick with 1up
 		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
-		_Tag = eGameTag::eStore1Up;
+		_SpawmItemTag = eGameTag::eStore1Up;
 		break;
 	case 20:	//brown brick contain coin
 		_Color = eColorID::eBrown;
 		_CurrentFrame = 0;
 		_CointLeft = 7;
-		_Tag = eGameTag::eStoreCoin;
+		_SpawmItemTag = eGameTag::eStoreCoin;
 		break;
 	case 21:	//blue brick contain coin
 		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
 		_CointLeft = 7;
-		_Tag = eGameTag::eStoreCoin;
+		_SpawmItemTag = eGameTag::eStoreCoin;
 		break;
 	case 22:	//brown brick contain star
 		_Color = eColorID::eBrown;
 		_CurrentFrame = 0;
-		_Tag = eGameTag::eStoreStar;
+		_SpawmItemTag = eGameTag::eStoreStar;
 		break;
 	case 23:	//blue brick contain star
 		_Color = eColorID::eBlue;
 		_CurrentFrame = 6;
-		_Tag = eGameTag::eStoreStar;
+		_SpawmItemTag = eGameTag::eStoreStar;
 		break;
 	default:
 		break;
@@ -69,34 +71,27 @@ ItemBrick::ItemBrick(int objectID, int x, int y, string tag)
 
 void ItemBrick::Update()
 {
-	if(!_IsHitted)
+	if(_IsBounce)
 	{
-		if(_IsBounce)
-		{
-			_Position.y += _Velocity.y;
-			_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
-			if(_Position.y <= _DefaultY)
-			{
-				_Velocity.y = 0;
-				_Position.y = _DefaultY;
-				_IsBounce = false;
-				//turn brick into hard block if no coin left or not coin brick
-				if(_CointLeft <= 0 || _Tag != eGameTag::eStoreCoin)
-				{
-					_IsHitted = true;
+		_Position.y += _Velocity.y;
+		_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
 
-					if(_Color == eColorID::eBrown)
-					{
-						_CurrentFrame = 5;
-					}
-					else
-					{
-						if(_Color == eColorID::eBlue)
-						{
-							_CurrentFrame = 11;
-						}
-					}
-				}
+		//set tag to empty when brick no longer bounce up
+		if(_Velocity.y < 0 && _Tag != eGameTag::eEmpty)
+		{
+			_Tag = eGameTag::eEmpty;
+		}
+
+		if(_Position.y <= _DefaultY)
+		{
+			_Velocity.y = 0;
+			_Position.y = _DefaultY;
+			_IsBounce = false;
+
+			//Spawm item after finished bounce
+			if(_SpawmItem != nullptr)
+			{
+				GameStatistics::GetInstance()->AddObjectToScene(_SpawmItem);
 			}
 		}
 	}
@@ -104,12 +99,9 @@ void ItemBrick::Update()
 
 void ItemBrick::Render()
 {
-	if(_Tag != eGameTag::eDestroyed)
+	if(!_IsInvisible)
 	{
-		if(!_IsInvisible)
-		{
-			_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
-		}
+		_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
 	}
 }
 
@@ -126,15 +118,33 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 		{
 		case eMario:
 			switch (collisionDirection)
-			{
+			{	
 			case eBottom:
+				//turn brick into hard block if no coin left or not coin brick
+				if(_SpawmItemTag != eStoreCoin || _CointLeft <= 1)
+				{
+					_IsHitted = true;
+					if(_Color == eColorID::eBrown)
+					{
+						_CurrentFrame = 5;
+					}
+					else
+					{
+						if(_Color == eColorID::eBlue)
+						{
+							_CurrentFrame = 11;
+						}
+					}
+				}
+
 				//bounce
 				_Velocity.y = BOUNCE_VELOCITY;
 				_IsBounce = true;	
 				_IsInvisible = false;
+				_Tag = eGameTag::eBrickBounceUp;	//kill enemy if bounce up(?)
 
 				//handle item in brick
-				switch (_Tag)
+				switch (_SpawmItemTag)
 				{
 				//Coin brick
 				case eStoreCoin:
@@ -155,20 +165,12 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 					case eMarioIsSmall:
 					case eMarioIsSmallInvincible:
 						//Spawn a mushroom here
-						//PlayScene::GetInstance()->AddObjectToScene(new Mushroom(_Position.x, _Position.y, _Tag));
-						{
-							DynamicGameObject *mushroom = new Mushroom(_Position.x, _Position.y, _Tag);
-							GameStatistics::GetInstance()->AddObjectToScene(mushroom);
-						}
+						_SpawmItem = new Mushroom(_Position.x, _Position.y, _SpawmItemTag);
 						break;
 					case eMarioIsBig:
 					case eMarioIsBigInvincible:
 						//Spawn a fire flower here
-						//PlayScene::GetInstance()->AddObjectToScene(new FireFlower(_Color ,_Position.x, _Position.y));
-						{
-							GameObject *fireflower = new FireFlower(_Color, _Position.x, _Position.y);
-							GameStatistics::GetInstance()->AddObjectToScene(fireflower);
-						}
+						_SpawmItem = new FireFlower(_Color, _Position.x, _Position.y);
 						break;
 					default:
 						break;
@@ -178,16 +180,13 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 					//case 1up
 				case eStore1Up:
 					//Spawn a 1up mushroom here
-					{
-						DynamicGameObject *mushroom = new Mushroom(_Position.x, _Position.y, _Tag);
-						GameStatistics::GetInstance()->AddObjectToScene(mushroom);
-					}
+					_SpawmItem = new Mushroom(_Position.x, _Position.y, _SpawmItemTag);
 					break;
 
 				//case star
 				case eStoreStar:
 				//Spawn a star here
-					GameStatistics::GetInstance()->AddObjectToScene(new Starman(_Color, _Position.x, _Position.y));
+					_SpawmItem = new Starman(_Color, _Position.x, _Position.y);
 				break;
 
 				default:	//default switch _Tag

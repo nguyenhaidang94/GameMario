@@ -82,6 +82,16 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 4:
 						node->_ListObjects.push_back(new HardBlock(objectID, x, y));
 						break;
+					
+					//case flagpole
+					case 7:
+						node->_ListObjects.push_back(new Flagpole(x, y));
+						break;
+
+					//case floating bar
+					case 8:
+						node->_ListObjects.push_back(new FloatingBar(x, y, tag));
+						break;
 					//Case pipe
 					case 9:		//small
 					case 10:	//medium
@@ -112,11 +122,6 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					//case coin
 					case 15: //coin
 						node->_ListObjects.push_back(new Coin(x, y));
-						break;
-
-					//case floating bar
-					case 8:
-						node->_ListObjects.push_back(new FloatingBar(x, y, tag));
 						break;
 					default:
 						break;

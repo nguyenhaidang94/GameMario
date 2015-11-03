@@ -96,7 +96,7 @@ void Background::Render()
 	int maxRange = minRange + SCREEN_HEIGHT/TITLE_SIZE + 2;
 	for(int i = 0; i < _TotalVerticalTitle; i++)
 	{
-		//only render background on sight
+		//only render background in sight
 		for(int j = minRange; j < maxRange; j++)
 		{
 			_Sprite->RenderAtFrame((float)j * TITLE_SIZE + TITLE_SIZE/2, SCREEN_HEIGHT - (float)i * TITLE_SIZE - TITLE_SIZE/2, _BackgroundData[i][j], 0.4);

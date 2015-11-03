@@ -13,21 +13,29 @@ FloatingBar::FloatingBar(void)
 
 FloatingBar::FloatingBar(int x, int y, std::string tag)
 {
-	if(tag == "down")
+	//go down
+	if(tag == "down")			
 	{
 		_ObjectID = 0;
+		_Velocity = D3DXVECTOR2(0, -DEFAULT_VELOCITY);
 	}
-	if(tag == "up")
+	//go up
+	if(tag == "up")				
 	{
 		_ObjectID = 1;
+		_Velocity = D3DXVECTOR2(0, DEFAULT_VELOCITY);
 	}
-	if(tag == "horizontal")
+	//horizontal rotation
+	if(tag == "horizontal")		
 	{
 		_ObjectID = 2;
+		_Acceleration = ACCELERARION_X;
 	}
-	if(tag == "vertical")
+	//vertical rotation
+	if(tag == "vertical")		
 	{
 		_ObjectID = 3;
+		_Acceleration = ACCELERARION_Y;
 	}
 	_Position = D3DXVECTOR2(x, y);
 	_Size = D3DXVECTOR2(BAR_WIDTH, BAR_HEIGHT);
@@ -36,24 +44,6 @@ FloatingBar::FloatingBar(int x, int y, std::string tag)
 	_ObjectTypeID = eObjectTypeID::eFloatingBar;
 	_Acceleration = 0;
 	_Direction = true;
-	//temporary case
-	switch (_ObjectID)
-	{
-	case 0:	//go down
-		_Velocity = D3DXVECTOR2(0, -DEFAULT_VELOCITY);
-		break;
-	case 1:	//go up
-		_Velocity = D3DXVECTOR2(0, DEFAULT_VELOCITY);
-		break;
-	case 2:	//horizontal rotation
-		_Acceleration = ACCELERARION_X;
-		break;
-	case 3:	//vertical rotation
-		_Acceleration = ACCELERARION_Y;
-		break;
-	default:
-		break;
-	}
 }
 
 

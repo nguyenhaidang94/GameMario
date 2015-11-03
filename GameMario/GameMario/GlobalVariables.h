@@ -109,7 +109,7 @@ enum eGameTag
 	//object state
 	eDestroyed = 1,		//object is destroyed
 	eIgnoreCollision,	//stop checking collison
-
+	eBrickBounceUp,		//brick to kill enemy when it bounce up(?)
 
 	//world tag
 	eToUnderground1_1,	//underground of world 1_1

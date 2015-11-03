@@ -10,6 +10,8 @@ class ItemBrick :
 {
 	bool _IsHitted;		//if item alreadt released, turn to hard block
 	bool _IsInvisible;	//true block is invisible
+	GameObject *_SpawmItem;
+	eGameTag _SpawmItemTag;
 	//attribute for coin block	
 	int _CointLeft;		//store how many coint left
 public:

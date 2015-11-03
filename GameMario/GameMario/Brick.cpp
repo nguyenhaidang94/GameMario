@@ -34,6 +34,14 @@ void Brick::Update()
 	{
 		_Position.y += _Velocity.y;
 		_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
+		
+		//set tag to empty when brick no longer bounce up
+		if(_Velocity.y < 0 && _Tag != eGameTag::eEmpty)
+		{
+			_Tag = eGameTag::eEmpty;
+		}
+
+		//brick return to default position
 		if(_Position.y <= _DefaultY)
 		{
 			_Velocity.y = 0;
@@ -76,6 +84,7 @@ void Brick::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				//small mario make brick bounce
 				case eMarioIsSmall:
 				case eMarioIsSmallInvincible:
+					_Tag = eGameTag::eBrickBounceUp;	//kill enemy if bounce up(?)
 					_Velocity.y = BOUNCE_VELOCITY;
 					_IsBounce = true;
 					break;

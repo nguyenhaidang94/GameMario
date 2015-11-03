@@ -40,7 +40,7 @@ void FireFlower::Update()
 		{
 			_Position.y = _BeginningPositionY + TITLE_SIZE;
 			_IsSpawnDone = true;
-			_Size = D3DXVECTOR2(FLOWER_WIDTH, FLOWER_HEIGHT);
+			_Tag = eGameTag::eEmpty;	//stop ignore collison
 		}
 	}
 
@@ -73,7 +73,7 @@ void FireFlower::Update()
 
 void FireFlower::Render()
 {
-	_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
+	_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame, 0.4);
 }
 
 void FireFlower::Release()

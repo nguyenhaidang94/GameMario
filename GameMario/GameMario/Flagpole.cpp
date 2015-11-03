@@ -7,7 +7,8 @@
 #define SCORE3 800
 #define SCORE4 2000
 #define SCORE5 4000
-#define FLAG_DROP_DOWN_VELOCITY 3
+#define SCORE6 5000
+#define FLAG_DROP_DOWN_VELOCITY 4
 
 Flagpole::Flagpole(void)
 {
@@ -20,7 +21,7 @@ Flagpole::Flagpole(int x, int y)
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eFlagpoleSprite);
 	_FlagSprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eFlagSprite);
 	_ObjectTypeID = eObjectTypeID::eFlagpole;
-	_FlagPosition = D3DXVECTOR2(x + POLE_HEIGHT/2 - 32, y - 14);
+	_FlagPosition = D3DXVECTOR2(x - 16, y + POLE_HEIGHT/2 - 32);
 	_IsFlagHittedGround = false;
 	_IsHitted = false;
 }
@@ -95,8 +96,8 @@ void Flagpole::OnCollision(GameObject *object, eCollisionDirection collisionDire
 			}
 			if(height > 306)
 			{
-				GameStatistics::GetInstance()->ChangeLife(true);		//inscrease life by 1
-				EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eFloatingText, -2);	//show 1up text
+				GameStatistics::GetInstance()->ChangeScore(SCORE5);		//inscrease score
+				EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eFloatingText, SCORE6);
 			}
 			_IsHitted = true;
 			break;

@@ -9,6 +9,8 @@ class QuestionBlock :
 	public Block
 {
 	bool _IsHitted;		//if item alreadt released, turn to hard block
+	GameObject *_SpawmItem;
+	eGameTag _SpawmItemTag;
 
 	//manage frame rate
 	DWORD count_per_frame;
