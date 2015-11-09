@@ -39,6 +39,10 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eBarSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\FloatingBar.png", 96, 16, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eFlagpoleSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flagpole.png", 16, 304, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eFlagSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flag.png", 32, 32, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eSmallMario]= new Sprite(SpriteHandler,L"resources\\Sprites\\SmallMario.png",(double)810/14,32,14,14, D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eMarioTransform] = new Sprite(SpriteHandler,L"resources\\Sprites\\MarioTransform.png",32,64,6,6,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eBigMarioStar]= new Sprite(SpriteHandler,L"resources\\Sprites\\StarBigMario.png",32,64,36,24,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eSmallMarioStar] = new Sprite(SpriteHandler,L"resources\\Sprites\\StarSmallMario.png",32,32,30,18,D3DCOLOR_XRGB(255,0,255));
 }
 
 Sprite *SpriteManager::GetSprite(eSpriteID objectID)
