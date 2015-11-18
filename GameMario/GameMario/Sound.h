@@ -11,10 +11,10 @@ public:
 	~Sound();
 
 	bool LoadSound(LPDIRECTSOUND8 lpDSound, LPWSTR Path);
-	LPDIRECTSOUNDBUFFER GetSoundBuffer();
-	void Play();
-	void Repeat();
-	void Stop();
-	void Release();
+	LPDIRECTSOUNDBUFFER GetSoundBuffer() const;
+	void Play() const;
+	void Repeat() const;
+	void Stop() const;
+	void Release() const;
 };
 

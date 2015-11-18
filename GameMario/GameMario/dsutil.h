@@ -94,7 +94,7 @@ public:
     HRESULT Play( DWORD dwPriority = 0, DWORD dwFlags = 0, LONG lVolume = 0, LONG lFrequency = -1, LONG lPan = 0 );
     HRESULT Play3D( LPDS3DBUFFER p3DBuffer, DWORD dwPriority = 0, DWORD dwFlags = 0, LONG lFrequency = 0 );
     HRESULT Stop();
-    HRESULT Reset();
+	virtual HRESULT Reset();
     BOOL    IsSoundPlaying();
 };
 
@@ -165,7 +165,8 @@ public:
 
     DWORD   GetSize();
     HRESULT ResetFile();
-    WAVEFORMATEX* GetFormat() { return m_pwfx; };
+    WAVEFORMATEX* GetFormat() const
+    { return m_pwfx; };
 };
 
 

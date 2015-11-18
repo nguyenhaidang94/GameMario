@@ -28,13 +28,13 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 	//fill the struct with info
 	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = (WNDPROC)WinProc;
+	wc.lpfnWndProc = WNDPROC(WinProc);
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInstance;
 	wc.hIcon = NULL;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wc.hbrBackground = HBRUSH(GetStockObject(BLACK_BRUSH));
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = APPTITLE;
 	wc.hIconSm = NULL;

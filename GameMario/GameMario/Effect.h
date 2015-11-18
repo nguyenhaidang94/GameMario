@@ -1,6 +1,6 @@
 #pragma once
 #include "SpriteManager.h"
-#include <d3dx9.h>
+
 class Effect
 {
 protected:
@@ -8,9 +8,9 @@ protected:
 	Sprite *_Sprite;
 public:
 	Effect(void);
-	~Effect(void);
+	virtual ~Effect(void);
 	//Check if effect is still alive
-	bool CheckAlive();
+	bool CheckAlive() const;
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 	virtual void Release() = 0;

@@ -54,7 +54,7 @@ Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPWSTR Path, double Width, double Hei
 	}
 }
 
-void Sprite::RenderAtFrame(float x, float y, int frameNo, float priority)
+void Sprite::RenderAtFrame(float x, float y, int frameNo, float priority) const
 {
 	RECT srect;
 
@@ -77,7 +77,7 @@ void Sprite::RenderAtFrame(float x, float y, int frameNo, float priority)
 	D3DXVec3Transform(&vp_pos, &position, &mt);
 
 	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, priority);
-	D3DXVECTOR3 center((float)_Width / 2, (float)_Height / 2, 0);
+	D3DXVECTOR3 center(float(_Width) / 2, float(_Height) / 2, 0);
 
 	_SpriteHandler->Draw(
 		_Image,
@@ -88,7 +88,7 @@ void Sprite::RenderAtFrame(float x, float y, int frameNo, float priority)
 		);
 }
 
-void Sprite::RenderFirstFrame(float x, float y, float priority)
+void Sprite::RenderFirstFrame(float x, float y, float priority) const
 {
 	RECT srect;
 
@@ -111,7 +111,7 @@ void Sprite::RenderFirstFrame(float x, float y, float priority)
 	D3DXVec3Transform(&vp_pos, &position, &mt);
 
 	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, priority);
-	D3DXVECTOR3 center((float)_Width / 2, (float)_Height / 2, 0);
+	D3DXVECTOR3 center(float(_Width) / 2, float(_Height) / 2, 0);
 
 	_SpriteHandler->Draw(
 		_Image,
@@ -122,7 +122,7 @@ void Sprite::RenderFirstFrame(float x, float y, float priority)
 		);
 }
 
-void Sprite::FixedRenderAtFrame(float x, float y, int frameNo, float priority)
+void Sprite::FixedRenderAtFrame(float x, float y, int frameNo, float priority) const
 {
 	RECT srect;
 
@@ -133,7 +133,7 @@ void Sprite::FixedRenderAtFrame(float x, float y, int frameNo, float priority)
 
 	D3DXVECTOR3 position(x, y, priority);
 
-	D3DXVECTOR3 center((float)_Width / 2, (float)_Height / 2, 0);
+	D3DXVECTOR3 center(float(_Width) / 2, float(_Height) / 2, 0);
 	_SpriteHandler->Draw(
 		_Image,
 		&srect,
@@ -143,7 +143,7 @@ void Sprite::FixedRenderAtFrame(float x, float y, int frameNo, float priority)
 		);
 }
  
-void Sprite::Release()
+void Sprite::Release() const
 {
 	if (_Image != NULL)
 		_Image->Release();
