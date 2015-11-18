@@ -1,6 +1,5 @@
 #pragma once
 #include <dsound.h>
-#include <iostream>
 #include <map>
 #include "GlobalVariables.h"
 #include "Sound.h"

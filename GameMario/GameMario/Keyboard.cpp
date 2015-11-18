@@ -51,9 +51,9 @@ void Keyboard::InitKeyboard(HINSTANCE hInstance, HWND hWnd)
 	// This tells DirectInput that we will be passing an array
 	// of 256 bytes to IDirectInputDevice::GetDeviceState.
 
-	hr = _Keyboard->SetDataFormat(&c_dfDIKeyboard);
+	_Keyboard->SetDataFormat(&c_dfDIKeyboard);
 
-	hr = _Keyboard->SetCooperativeLevel(_hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	_Keyboard->SetCooperativeLevel(_hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 	// IMPORTANT STEP TO USE BUFFERED DEVICE DATA!
 	//
@@ -113,12 +113,12 @@ void Keyboard::ProcessKeyBoard()
 	}
 }
 
-int Keyboard::IsKeyDown(int KeyCode)
+int Keyboard::IsKeyDown(int KeyCode) const
 {
 	return (_KeyStates[KeyCode] & 0x80) > 0;
 }
 
-int Keyboard::IsKeyPress(int keyCode)
+int Keyboard::IsKeyPress(int keyCode) const
 {
 	if((_KeyStates[keyCode] & 0x00000080) && !(_PreviousKeyStates[keyCode] & 0x00000080))
 	{
@@ -132,7 +132,7 @@ void Keyboard::ProcessInput() { }
 void Keyboard::OnKeyUp(int KeyCode) { }
 void Keyboard::OnKeyDown(int KeyCode) { }
 
-void Keyboard::Release()
+void Keyboard::Release() const
 {
 	if (_di == NULL)
 		_di->Release();

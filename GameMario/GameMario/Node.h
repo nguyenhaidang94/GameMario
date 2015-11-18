@@ -23,11 +23,11 @@ public:
 	//constructor
 	Node(int nodeId, int x, int y, int w, int h);
 	//check if node is empty or not
-	bool IsEmpty();
+	bool IsEmpty() const;
 	//get nodeid
-	int GetNodeId();
+	int GetNodeId() const;
 	//get boundarybox
-	Box GetBoundaryBox();
+	Box GetBoundaryBox() const;
 	//insert object to node
 	void InsertObject(std::map<int, Node*> mapQuadTree, GameObject* object, Box objectBox);
 	//release node

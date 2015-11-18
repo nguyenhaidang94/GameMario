@@ -159,7 +159,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 	file.close();
 }
 
-void QuadTree::InsertObject(GameObject* object, Box objBox)
+void QuadTree::InsertObject(GameObject* object, Box objBox) const
 {
 	_RootNode->InsertObject(_MapQuadTree, object, objBox);
 }
@@ -231,7 +231,7 @@ void QuadTree::UpdateObjectsOnScreen()
 	RetrieveObjectsInNode(_RootNode, cameraBox);
 }
 
-std::vector<GameObject*> QuadTree::GetObjectsOnScreen()
+std::vector<GameObject*> QuadTree::GetObjectsOnScreen() const
 {
 	return _ObjectsOnScreen;
 }

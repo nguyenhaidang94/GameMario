@@ -16,19 +16,19 @@ Node::Node(int nodeId, int x, int y, int w, int h)
 	_Br = NULL;
 }
 
-bool Node::IsEmpty()
+bool Node::IsEmpty() const
 {
 	if (_Tl != NULL || _Tr != NULL || _Bl != NULL || _Br != NULL)
 		return false;
 	return true;
 }
 
-int Node::GetNodeId()
+int Node::GetNodeId() const
 {
 	return _NodeId;
 }
 
-Box Node::GetBoundaryBox()
+Box Node::GetBoundaryBox() const
 {
 	return _BoundaryBox;
 }
