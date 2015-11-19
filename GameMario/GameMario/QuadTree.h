@@ -11,6 +11,7 @@
 #include "Coin.h"
 #include "FloatingBar.h"
 #include "Flagpole.h"
+#include "Goomba.h"
 
 class QuadTree
 {

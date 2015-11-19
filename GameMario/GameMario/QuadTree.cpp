@@ -15,7 +15,8 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 	switch (mapID)
 	{
 	case e1_1:
-		fileName = "1_1_quadtree";
+		//fileName = "1_1_quadtree";
+		fileName = "12_quadtree";
 		break;
 	case e1_2:
 		fileName = "1_2_quadtree";
@@ -122,6 +123,11 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					//case coin
 					case 15: //coin
 						node->_ListObjects.push_back(new Coin(x, y));
+						break;
+
+					//case test enymies
+					case 24:
+						node->_ListObjects.push_back(new Goomba(objectID, x, y));
 						break;
 					default:
 						break;

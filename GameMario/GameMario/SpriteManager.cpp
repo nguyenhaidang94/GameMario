@@ -39,6 +39,7 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eBarSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\FloatingBar.png", 96, 16, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eFlagpoleSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flagpole.png", 16, 304, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eFlagSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flag.png", 32, 32, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eGoomba] = new Sprite(SpriteHandler, L"resources\\Sprites\\Goomba.png", 32, 32, 12, 4, D3DCOLOR_XRGB(255, 0, 255));
 }
 
 Sprite *SpriteManager::GetSprite(eSpriteID objectID)

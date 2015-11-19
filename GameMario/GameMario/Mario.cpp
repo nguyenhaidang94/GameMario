@@ -16,7 +16,7 @@ Mario::Mario(void)
 	SetVelocity(D3DXVECTOR2(0, DEFAULT_VELOCITY));
 	_CurrentFrame = 0;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
-	SetPosition(D3DXVECTOR2(48,118));
+	SetPosition(D3DXVECTOR2(2460,118));
 	_IsCollide = false;
 	SetSize(D3DXVECTOR2(32, 64));
 }

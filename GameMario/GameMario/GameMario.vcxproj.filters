@@ -213,6 +213,9 @@
     <ClCompile Include="TimeUpScene.cpp">
       <Filter>GameManager\GameScene\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="TimeUpScene.h">
       <Filter>GameManager\GameScene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

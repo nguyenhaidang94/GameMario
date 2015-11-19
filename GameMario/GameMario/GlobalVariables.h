@@ -10,7 +10,7 @@
 enum eObjectTypeID
 {
 	eUndefined = 0, 
-	eMario = 1,
+	eMario,
 	eGround,
 	ePipe,
 	ePipeHorizontal,
@@ -22,6 +22,7 @@ enum eObjectTypeID
 	eStarMan,
 	eFloatingBar,
 	eFlagpole,
+	eMonster = 13,
 };
 
 enum eSpriteID
@@ -44,6 +45,7 @@ enum eSpriteID
 	eBarSprite,
 	eFlagpoleSprite,
 	eFlagSprite,
+	eGoomba
 };
 
 enum eMarioState
