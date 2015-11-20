@@ -1,5 +1,4 @@
 #pragma once
-#include "GlobalVariables.h"
 #include <d3dx9.h>
 #include "SwepAABB.h"
 
@@ -17,9 +16,9 @@ public:
 	~Camera(void);
 	void SetWorldSize(D3DXVECTOR2 worldSize);
 	void Update(D3DXVECTOR2 characterPosition);
-	D3DXVECTOR2 GetViewPort();
-	D3DXVECTOR2 GetWorldSize();
-	Box GetBoundaryBox();
+	D3DXVECTOR2 GetViewPort() const;
+	D3DXVECTOR2 GetWorldSize() const;
+	Box GetBoundaryBox() const;
 	//reset camera back to beginging position
 	void Reset();
 };

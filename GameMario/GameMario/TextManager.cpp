@@ -56,7 +56,7 @@ int TextManager::GetFrameNumberFromChar(char c)
 	return 40;	//blank
 }
 
-void TextManager::Render(string text, int x, int y)
+void TextManager::Render(string text, int x, int y) const
 {
 	int startPosition = x - text.length() * TEXT_SIZE / 2;	//allign center for text
 	for(int i = 0; i < text.size(); i++)
@@ -65,7 +65,7 @@ void TextManager::Render(string text, int x, int y)
 	}
 }
 
-void TextManager::FixedRender(string text, int x, int y)
+void TextManager::FixedRender(string text, int x, int y) const
 {
 	int startPosition = x - text.length() * TEXT_SIZE / 2;	//allign center for text
 	for(int i = 0; i < text.size(); i++)

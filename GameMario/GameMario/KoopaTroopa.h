@@ -1,0 +1,44 @@
+#pragma once
+#include "Monster.h"
+#define KOOPATROOPA_WIDTH 32
+#define KOOPATROOPA_HEIGHT 64
+#define KOOPATROOPA_VELOCITY_X 1.5f
+#define KOOPATROOPA_VELOCITY_Y 3.5f
+#define TIMES_TURN 50
+#define TIMES_REVIVED_VELOCITY 3000
+
+class KoopaTroopa: public Monster
+{
+	bool _KoopaTroopaRevived;
+	bool _KoopaTroopaStop;
+	//frame type
+	DWORD _FrameStartType;
+	DWORD _FrameEndType;
+public:
+	KoopaTroopa();
+	~KoopaTroopa();
+
+	//Contructor
+	KoopaTroopa(int ObjectTypeID, int PossitionX, int PossitionY);
+
+	//Update object
+	void Update();
+
+	//Draw object to screen
+	void Render();
+
+	//Removes a gameobject, component or asset.
+	void Release();
+	//turn frame
+	void DirectionsFrame(GameObject *object, eCollisionDirection collisionDirect);
+	//Handling object when colision happened
+	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
+
+	//Dead
+	void KoopaTroopaDead();
+	//
+	void SetFrameStartDead();
+	//set start and end frame
+	void SetFrame(int KoopaTroopaType);
+};
+

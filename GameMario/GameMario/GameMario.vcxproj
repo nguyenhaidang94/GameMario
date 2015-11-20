@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Microsoft DirectX SDK %28June 2010%29\Include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\Microsoft DirectX SDK %28June 2010%29\Lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,6 +83,8 @@
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="HardBlock.cpp" />
     <ClCompile Include="ItemBrick.cpp" />
+    <ClCompile Include="KoopaTroopa.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObtainCoinEffect.cpp" />
@@ -131,6 +133,8 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="HardBlock.h" />
     <ClInclude Include="ItemBrick.h" />
+    <ClInclude Include="KoopaTroopa.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObtainCoinEffect.h" />

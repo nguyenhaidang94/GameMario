@@ -216,6 +216,12 @@
     <ClCompile Include="Goomba.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="KoopaTroopa.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -354,6 +360,12 @@
       <Filter>GameManager\GameScene\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopaTroopa.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>

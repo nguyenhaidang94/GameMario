@@ -21,15 +21,15 @@ protected:
 	DIDEVICEOBJECTDATA _KeyEvents[KEYBOARD_BUFFER_SIZE];
 public:
 	Keyboard(void);
-	~Keyboard(void);
+	virtual ~Keyboard(void);
 	static Keyboard *GetInstance();
 	void InitKeyboard(HINSTANCE hInstance, HWND hWnd);
 	void ProcessKeyBoard();
-	int IsKeyDown(int KeyCode);
-	int IsKeyPress(int KeyCode);
+	int IsKeyDown(int KeyCode) const;
+	int IsKeyPress(int KeyCode) const;
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
 	//virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta);
 	virtual void ProcessInput();
-	void Release();
+	void Release() const;
 };

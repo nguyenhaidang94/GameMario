@@ -20,11 +20,11 @@ public:
 	Sprite::Sprite(void);
 	~Sprite(void);
 	//Render at frameNo, priority from 0 to 1, higher priority will render on top of lower priority one
-	void RenderAtFrame(float x, float y, int frameNo, float priority = 0.5);
+	void RenderAtFrame(float x, float y, int frameNo, float priority = 0.5) const;
 	//Render at 1st frame, priority from 0 to 1, higher priority will render on top of lower priority one
-	void RenderFirstFrame(float x, float y, float priority = 0.5);
+	void RenderFirstFrame(float x, float y, float priority = 0.5) const;
 	//Render at fixed location on screen, y axis from top, priority from 0 to 1, higher priority will render on top of lower priority one
-	void FixedRenderAtFrame(float x, float y, int frameNo, float priority = 0.5);
-	void Release();
+	void FixedRenderAtFrame(float x, float y, int frameNo, float priority = 0.5) const;
+	void Release() const;
 };
 

@@ -125,9 +125,12 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 						node->_ListObjects.push_back(new Coin(x, y));
 						break;
 
-					//case test enymies
-					case 24:
+					//case enymies
+					case 24:	//Goomba
 						node->_ListObjects.push_back(new Goomba(objectID, x, y));
+						break;
+					case 28:	//KoopaTroopa
+						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
 						break;
 					default:
 						break;
@@ -165,7 +168,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 	file.close();
 }
 
-void QuadTree::InsertObject(GameObject* object, Box objBox)
+void QuadTree::InsertObject(GameObject* object, Box objBox) const
 {
 	_RootNode->InsertObject(_MapQuadTree, object, objBox);
 }
@@ -237,7 +240,7 @@ void QuadTree::UpdateObjectsOnScreen()
 	RetrieveObjectsInNode(_RootNode, cameraBox);
 }
 
-std::vector<GameObject*> QuadTree::GetObjectsOnScreen()
+std::vector<GameObject*> QuadTree::GetObjectsOnScreen() const
 {
 	return _ObjectsOnScreen;
 }

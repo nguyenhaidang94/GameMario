@@ -52,7 +52,7 @@ void Camera::Update(D3DXVECTOR2 characterPosition)
 				//Normal case
 				else
 				{
-					_ViewPortX = (LONG)characterPosition.x - SCREEN_WIDTH / 2;
+					_ViewPortX = LONG(characterPosition.x) - SCREEN_WIDTH / 2;
 				}
 			}
 		}
@@ -74,7 +74,7 @@ void Camera::Update(D3DXVECTOR2 characterPosition)
 			//Normal case
 			else
 			{
-				_ViewPortX = (LONG)characterPosition.x - SCREEN_WIDTH / 2;
+				_ViewPortX = LONG(characterPosition.x) - SCREEN_WIDTH / 2;
 			}
 		}
 	}
@@ -99,17 +99,17 @@ void Camera::Update(D3DXVECTOR2 characterPosition)
 	//}
 }
 
-D3DXVECTOR2 Camera::GetViewPort()
+D3DXVECTOR2 Camera::GetViewPort() const
 {
-	return D3DXVECTOR2((float)_ViewPortX, (float)_ViewPortY);
+	return D3DXVECTOR2(float(_ViewPortX), float(_ViewPortY));
 }
 
-D3DXVECTOR2 Camera::GetWorldSize()
+D3DXVECTOR2 Camera::GetWorldSize() const
 {
-	return D3DXVECTOR2((float)_WorldWidth,(float) _WorldHeight);
+	return D3DXVECTOR2(float(_WorldWidth),float(_WorldHeight));
 }
 
-Box Camera::GetBoundaryBox()
+Box Camera::GetBoundaryBox() const
 {
 	return Box(_ViewPortX, _ViewPortY, SCREEN_WIDTH, SCREEN_HEIGHT);
 }

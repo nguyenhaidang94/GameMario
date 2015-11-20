@@ -1,4 +1,4 @@
-#include "Goomba.h"
+﻿#include "Goomba.h"
 
 
 Goomba::Goomba()
@@ -12,53 +12,19 @@ Goomba::~Goomba()
 
 Goomba::Goomba(int objectTypeID, int positionX, int positionY)
 {
-	//Object
-	SetObjectType(eMonster);												//set id
+	//Object											//set id
 	_Position = D3DXVECTOR2(positionX, positionY);							//set position
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eGoomba);	//set sprite
 	_Size = D3DXVECTOR2(GOOMBA_WIDTH, GOOMBA_HEIGHT);						//set size
-	_Velocity = D3DXVECTOR2(-GOOMBA_SPEED, -GOOMBA_SPEED);			//set position
+	_Velocity = D3DXVECTOR2(-GOOMBA_VELOCITY_X, -GOOMBA_VELOCITY_Y);			//set position
 	
 	// Goomba
 	 _TimeStartFrame= GetTickCount();										//set time now
 	_TimePerFrame = TIMES_TURN;												//set time the turn
 	_TimeStartVelocity = GetTickCount();									//set time now
 	_TimePerVelocity = TIMES_TURN_VELOCITY;									//set time the turn
-	SetFrame(1);
-	_GoobaVelocity = -GOOMBA_SPEED;
-	_GoombaAlive = true;													//set alive
-}
-
-void Goomba::SetFrame(int GoombaType)
-{
-	switch (GoombaType)
-	{
-		case 1:
-			_FrameCurrent = 0;
-			_FrameStart = 0;
-			_FrameEnd = 1;
-			break;
-		case 2:
-			_FrameCurrent = 3;
-			_FrameStart = 3;
-			_FrameEnd = 4;
-			break;
-		case 3:
-			_FrameCurrent = 6;
-			_FrameStart = 6;
-			_FrameEnd = 7;
-			break;
-		case 4:
-			_FrameCurrent = 9;
-			_FrameStart = 9;
-			_FrameEnd = 10;
-			break;
-		default:
-			_FrameCurrent = 0;
-			_FrameStart = 0;
-			_FrameEnd = 1;
-			break;
-	};
+	SetFrame(objectTypeID);
+	_MonsterVelocity = -GOOMBA_VELOCITY_X;
 }
 
 void Goomba::Update()
@@ -87,7 +53,8 @@ void Goomba::Render()
 
 void Goomba::Release()
 {
-
+	if (_Sprite != NULL)
+		delete _Sprite;
 }
 
 void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
@@ -95,62 +62,46 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 	//Handling collision by object type here
 	switch (object->GetObjectTypeID())
 	{
+		#pragma region va chạm ngược
 		case eGround:
-			_Velocity.x = _GoobaVelocity;
-			switch (collisionDirection)
-			{
-			case eBottom:
-				_Velocity.y = 0.0f;
-				break;
-			case eRight:
-				_GoobaVelocity = -_GoobaVelocity;
-				_Velocity.x = _GoobaVelocity;
-				break;
-			case eLeft:
-				_GoobaVelocity = -_GoobaVelocity;
-				_Velocity.x = _GoobaVelocity;
-				break;
-			default:
-				break;
-			}
+			DirectionsCollision(object, collisionDirection);
+			break;
+		case ePipe:
+			DirectionsCollision(object, collisionDirection);
+			break;
+		case ePipeHorizontal:
+			DirectionsCollision(object, collisionDirection);
 			break;
 		case eBrick:
-			_Velocity.x = _GoobaVelocity;
-			switch (collisionDirection)
-			{
-			case eBottom:
-				_Velocity.y = 0.0f;
-				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
-				break;
-			case eRight:
-				_GoobaVelocity = -_GoobaVelocity;
-				_Velocity.x = _GoobaVelocity;
-				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2;
-				break;
-			case eLeft:
-				_GoobaVelocity = -_GoobaVelocity;
-				_Velocity.x = _GoobaVelocity;
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2;
-				break;
-			default:
-				break;
-			}
+			DirectionsCollision(object, collisionDirection);
 			break;
+		case eHardBrick:
+			DirectionsCollision(object, collisionDirection);
+			break;
+		#pragma endregion
+		case eMonster:
+			DirectionsCollision(object, collisionDirection);
+			break;
+		
 		case eMario:
 			switch (collisionDirection)
 			{
 				case eTop:
-				//	GoombaDead();
+					GoombaDead();
 					break;
 				default:
 					break;
 			}
 			break;
-		default:
-			_Velocity.x = 0.0f;
-			//_Velocity.y = -GOOMBA_SPEED;
+		case eMagicMushroom://nấm
 			break;
-			//object->SetObjectType(eUndefined);
+		case eFireFlower:	//đạn
+			break;
+		case e1upMushroom:	//nấm mạng
+			break;
+		case eStarMan:		//sao
+		default:
+			break;
 	}
 
 	//switch (tag)
@@ -165,8 +116,42 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 	//return D3DXVECTOR2();
 }
 
+void Goomba::SetFrame(int GoombaType)
+{
+	switch (GoombaType)
+	{
+	case 24:
+		_FrameCurrent = 0;
+		_FrameStart = 0;
+		_FrameEnd = 1;
+		break;
+	case 2:
+		_FrameCurrent = 3;
+		_FrameStart = 3;
+		_FrameEnd = 4;
+		break;
+	case 3:
+		_FrameCurrent = 6;
+		_FrameStart = 6;
+		_FrameEnd = 7;
+		break;
+	case 4:
+		_FrameCurrent = 9;
+		_FrameStart = 9;
+		_FrameEnd = 10;
+		break;
+	default:
+		_FrameCurrent = 0;
+		_FrameStart = 0;
+		_FrameEnd = 1;
+		break;
+	};
+}
+
 void Goomba::GoombaDead()
 {
 	_FrameCurrent = _FrameEnd + 1;
 	_Velocity.x = 0;
+	_MonsterVelocity = 0;
+	//_Tag = eGameTag::eDestroyed;
 }

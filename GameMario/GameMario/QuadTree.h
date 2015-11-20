@@ -12,6 +12,7 @@
 #include "FloatingBar.h"
 #include "Flagpole.h"
 #include "Goomba.h"
+#include "KoopaTroopa.h"
 
 class QuadTree
 {
@@ -28,13 +29,13 @@ public:
 	//read file and build quadtree
 	void BuildQuadTree(eWorldID mapID);
 	//insert object to quadtree
-	void InsertObject(GameObject* object, Box objBox);
+	void InsertObject(GameObject* object, Box objBox) const;
 	//retrieve objects in node
 	void RetrieveObjectsInNode(Node* node, Box sightBox);
 	//update object on screen
 	void UpdateObjectsOnScreen();
 	//return objects on screen
-	std::vector<GameObject*> GetObjectsOnScreen();
+	std::vector<GameObject*> GetObjectsOnScreen() const;
 	//delete subnode
 	void DeleteSubnode(Node *node);
 	//delete node

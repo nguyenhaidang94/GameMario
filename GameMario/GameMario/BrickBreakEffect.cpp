@@ -27,7 +27,7 @@ BrickBreakEffect::BrickBreakEffect(D3DXVECTOR2 position, int type)
 
 BrickBreakEffect::~BrickBreakEffect(void)
 {
-	Release();
+	BrickBreakEffect::Release();
 }
 
 

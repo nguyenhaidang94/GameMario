@@ -1,4 +1,5 @@
 #include "EffectManager.h"
+#include "BrickBreakEffect.h"
 
 EffectManager *EffectManager::_Instance = NULL;
 

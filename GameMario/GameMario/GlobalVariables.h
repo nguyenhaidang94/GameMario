@@ -45,7 +45,12 @@ enum eSpriteID
 	eBarSprite,
 	eFlagpoleSprite,
 	eFlagSprite,
-	eGoomba
+	eGoomba,
+	eKoopaTroopa,
+	eSmallMario,
+	eMarioTransform,
+	eSmallMarioStar,
+	eBigMarioStar,
 };
 
 enum eMarioState
@@ -53,6 +58,11 @@ enum eMarioState
 	eIdle = 0,
 	eRunLeft = 1,
 	eRunRight = 2,
+	eFall = 3,
+	ePreStandRight = 4,
+	ePreStandLeft = 5,
+	eSitting = 6,
+	eDead,
 	eJump
 };
 
@@ -100,7 +110,8 @@ enum eSoundID
 	eJumpSmall,
 	eJumpSuper,
 	ePipeTravel,
-	ePowerUp
+	ePowerUp,
+	eVine
 };
 
 //game tag use in game
