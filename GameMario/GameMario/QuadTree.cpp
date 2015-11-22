@@ -190,46 +190,53 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box sightBox)
 	if (node->_Br != NULL)
 		RetrieveObjectsInNode(node->_Br, sightBox);
 
+	//check if node intersect with sightbox
 	if (AABBCheck(node->GetBoundaryBox(), sightBox))
 	{
-		for (int i = 0; i < node->_ListObjects.size(); )
+		//browse objects in node
+		for (int i = 0; i < node->_ListObjects.size(); i++)
 		{
-			if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed)
+			//if object in the sight area
+			if (AABBCheck(sightBox, node->_ListObjects[i]->GetBoundaryBox()))
 			{
-				node->_ListObjects[i]->Update();
-				//if object is dynamic and object moves out of node
-				if (node->_ListObjects[i]->IsDynamic() && !AABBCheck(node->GetBoundaryBox(), node->_ListObjects[i]->GetBoundaryBox()))
+				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed)
 				{
-					//this if is used for a special situation, but actually it doesn't have to used
-					//if (node != _RootNode)
+					node->_ListObjects[i]->Update();
+					GameObject * currentObj = node->_ListObjects[i];
+					//if object is dynamic and object moves out of node
+					if (currentObj->IsDynamic() && !AABBCheck(node->GetBoundaryBox(), currentObj->GetBoundaryBox()))
 					{
+						//this if is used for a special situation, but actually it doesn't have to used
+						//if (node != _RootNode)
 						//add object to root node
 						//then root node will add object to suitable subnode
-						_RootNode->InsertObject(_MapQuadTree, node->_ListObjects[i], node->_ListObjects[i]->GetBoundaryBox());
+						_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox());
 						node->_ListObjects.erase(node->_ListObjects.begin() + i);
 						//delete node if it is empty
 						if (node->IsEmpty())
 							DeleteSubnode(node);
 					}
+					_ObjectsOnScreen.push_back(currentObj);
 				}
 				else
 				{
-					//check if object intersects with sightBox
-					if (AABBCheck(sightBox, node->_ListObjects[i]->GetBoundaryBox()))
-						_ObjectsOnScreen.push_back(node->_ListObjects[i]);
-					i++;
+					//remomve object if it's destroyed
+					node->_ListObjects[i]->Release();
+					delete node->_ListObjects[i];
+					node->_ListObjects[i] = NULL;
+					node->_ListObjects.erase(node->_ListObjects.begin() + i);
+					//delete node if it is empty
+					if (node->IsEmpty())
+						DeleteSubnode(node);
 				}
 			}
 			else
 			{
-				//remomve object if it's destroyed
-				node->_ListObjects[i]->Release();
-				delete node->_ListObjects[i];
-				node->_ListObjects[i] = NULL;
-				node->_ListObjects.erase(node->_ListObjects.begin() + i);
-				//delete node if it is empty
-				if (node->IsEmpty())
-					DeleteSubnode(node);
+				//destroy objects in the left of the sight area
+				if (node->_ListObjects[i]->GetBoundaryBox().fX < sightBox.fX)
+				{
+					node->_ListObjects[i]->SetTag(eGameTag::eDestroyed);
+				}
 			}
 		}
 	}
