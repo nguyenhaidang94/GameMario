@@ -27,7 +27,7 @@ enum eObjectTypeID
 
 enum eSpriteID
 { 
-	eBigMario = 0, 
+	eBigMario = 0,
 	eMapTile = 1,
 	eFont,
 	eMenuBanner,
@@ -47,6 +47,7 @@ enum eSpriteID
 	eFlagSprite,
 	eGoomba,
 	eKoopaTroopa,
+	eKoopaParatroopa,
 	eSmallMario,
 	eMarioTransform,
 	eSmallMarioStar,

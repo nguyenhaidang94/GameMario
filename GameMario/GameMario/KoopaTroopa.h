@@ -9,6 +9,7 @@
 
 class KoopaTroopa: public Monster
 {
+protected:
 	bool _KoopaTroopaRevived;
 	bool _KoopaTroopaStop;
 	//frame type
@@ -29,15 +30,13 @@ public:
 
 	//Removes a gameobject, component or asset.
 	void Release();
-	//turn frame
-	void DirectionsFrame(GameObject *object, eCollisionDirection collisionDirect);
+	
 	//Handling object when colision happened
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
 
 	//Dead
 	void KoopaTroopaDead();
-	//
-	void SetFrameStartDead();
+	
 	//set start and end frame
 	void SetFrame(int KoopaTroopaType);
 };

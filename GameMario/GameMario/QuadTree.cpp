@@ -132,6 +132,9 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 28:	//KoopaTroopa
 						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
 						break;
+					case 31:	//KoopaParatroopa
+						node->_ListObjects.push_back(new KoopaParatroopa(objectID, x, y));
+						break;
 					default:
 						break;
 					}

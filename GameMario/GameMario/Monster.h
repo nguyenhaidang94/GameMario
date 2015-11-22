@@ -17,7 +17,8 @@ protected:
 	DWORD _FrameStart;
 	DWORD _FrameEnd;
 	//direction: left right
-	FLOAT _MonsterVelocity;
+	FLOAT _MonsterVelocityX;
+	FLOAT _MonsterVelocityY;
 	bool _MonsterAlive;
 public:
 	Monster();

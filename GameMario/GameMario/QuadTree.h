@@ -13,6 +13,7 @@
 #include "Flagpole.h"
 #include "Goomba.h"
 #include "KoopaTroopa.h"
+#include "KoopaParatroopa.h"
 
 class QuadTree
 {

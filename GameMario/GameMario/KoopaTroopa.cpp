@@ -24,7 +24,7 @@ KoopaTroopa::KoopaTroopa(int objectTypeID, int positionX, int positionY)
 	_TimeStartVelocity = GetTickCount();									//set time now
 	_TimePerVelocity = TIMES_REVIVED_VELOCITY;								//set time the turn
 	SetFrame(objectTypeID);													//set frame
-	_MonsterVelocity = -KOOPATROOPA_VELOCITY_X;	
+	_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
 	_KoopaTroopaRevived = true;
 	_KoopaTroopaStop = false;
 }
@@ -37,7 +37,7 @@ void KoopaTroopa::Update()
 	{
 		if (!_KoopaTroopaStop)
 		{
-			if (_MonsterVelocity > 0.0f)
+			if (_MonsterVelocityX > 0.0f)
 			{
 				_FrameStart = _FrameStartType + 2;
 				_FrameCurrent = _FrameStart;
@@ -81,12 +81,12 @@ void KoopaTroopa::Update()
 		{
 			_FrameStart = _FrameStartType + 4;
 			_FrameEnd = _FrameStart;
-			Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
+			/*Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
 			if (_Position.x < cameraBox.fX - KOOPATROOPA_WIDTH || _Position.x > cameraBox.fX + cameraBox.fWidth + KOOPATROOPA_WIDTH ||
 				_Position.y > cameraBox.fY + KOOPATROOPA_WIDTH || _Position.y < cameraBox.fY - cameraBox.fHeight - KOOPATROOPA_WIDTH)
 			{
 				_Tag = eGameTag::eDestroyed;
-			}
+			}*/
 		}
 	}
 
@@ -118,6 +118,7 @@ void KoopaTroopa::Release()
 
 void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
+	Box objectBox = object->GetBoundaryBox();
 	//Handling collision by object type here
 	switch (object->GetObjectTypeID())
 	{
@@ -147,37 +148,43 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 		DirectionsCollision(object, collisionDirection);
 		//DirectionsFrame();
 		break;
-
 	case eMario:
 		switch (collisionDirection)
 		{
-		case eTop:
-			if (_KoopaTroopaStop == false)//chưa chết
-			{
-				_Velocity.x = 0.0f;
-				_KoopaTroopaStop = true;
-				_KoopaTroopaRevived = false;
-				_TimeStartVelocity = GetTickCount();		//set time now: will revive
-			}
-			break;
-		case eRight:
-			if (_KoopaTroopaRevived == false && _KoopaTroopaStop == true)
-			{
-				_MonsterVelocity = -_MonsterVelocity + 6.5;
-				_Velocity.x = _MonsterVelocity;
-				_KoopaTroopaStop = false;
-			}
-			break;
-		case eLeft:
-			if (_KoopaTroopaRevived == false && _KoopaTroopaStop == true)
-			{
-				_MonsterVelocity = -_MonsterVelocity + 6.5;
-				_Velocity.x = _MonsterVelocity;
-				_KoopaTroopaStop = false;
-			}
-			break;
-		default:
-			break;
+			case eTop:
+				if (_KoopaTroopaStop == false)//chưa đứng yên
+				{
+					_Velocity.x = 0.0f;
+					_KoopaTroopaStop = true;
+					_KoopaTroopaRevived = false;
+					_TimeStartVelocity = GetTickCount();		//set time now: will revive
+					_Position.y = objectBox.fY - _Size.y / 2;
+					if (_KoopaTroopaRevived == false)
+					{
+						_MonsterVelocityX = _MonsterVelocityX / _MonsterVelocityX * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
+					}
+				}
+				break;
+			case eRight:
+				if (_KoopaTroopaRevived == false && _KoopaTroopaStop == true)//chết và đứng yên
+				{
+					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 6.5;
+					_Velocity.x = _MonsterVelocityX;
+					_KoopaTroopaStop = false;
+					_Position.x = objectBox.fX - _Size.y / 2 - 1;
+				}
+				break;
+			case eLeft:
+				if (_KoopaTroopaRevived == false && _KoopaTroopaStop == true)
+				{
+					_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 6.5;
+					_Velocity.x = _MonsterVelocityX;
+					_KoopaTroopaStop = false;
+					_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
+				}
+				break;
+			default:
+				break;
 		}
 		break;
 	case eMagicMushroom://nấm
@@ -201,31 +208,26 @@ void KoopaTroopa::SetFrame(int KoopaTroopaType)
 		_FrameStartType = 0;
 		_FrameCurrent = _FrameStartType;
 		_FrameEndType = 5;
-	//	DirectionsFrame();
 		break;
-	case 2:
+	case 29:
 		_FrameStartType = 6;
 		_FrameCurrent = _FrameStartType;
 		_FrameEndType = 11;
-	//	DirectionsFrame();
 		break;
-	case 3:
+	case 30:
 		_FrameStartType = 12;
 		_FrameCurrent = _FrameStartType;
 		_FrameEndType = 17;
-	//	DirectionsFrame();
 		break;
 	case 4:
 		_FrameStartType = 18;
 		_FrameCurrent = _FrameStartType;
 		_FrameEndType = 23;
-	//	DirectionsFrame();
 		break;
 	default:
 		_FrameStartType = 0;
 		_FrameCurrent = _FrameStartType;
 		_FrameEndType = 5;
-	//	DirectionsFrame();
 		break;
 	};
 }

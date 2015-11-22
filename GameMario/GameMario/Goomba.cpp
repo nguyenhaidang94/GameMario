@@ -24,7 +24,7 @@ Goomba::Goomba(int objectTypeID, int positionX, int positionY)
 	_TimeStartVelocity = GetTickCount();									//set time now
 	_TimePerVelocity = TIMES_TURN_VELOCITY;									//set time the turn
 	SetFrame(objectTypeID);
-	_MonsterVelocity = -GOOMBA_VELOCITY_X;
+	_MonsterVelocityX = -GOOMBA_VELOCITY_X;
 }
 
 void Goomba::Update()
@@ -152,6 +152,6 @@ void Goomba::GoombaDead()
 {
 	_FrameCurrent = _FrameEnd + 1;
 	_Velocity.x = 0;
-	_MonsterVelocity = 0;
+	_MonsterVelocityX = 0;
 	//_Tag = eGameTag::eDestroyed;
 }

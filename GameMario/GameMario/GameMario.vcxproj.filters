@@ -222,6 +222,9 @@
     <ClCompile Include="KoopaTroopa.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="KoopaParatroopa.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -366,6 +369,9 @@
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="KoopaTroopa.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopaParatroopa.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>
