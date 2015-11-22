@@ -123,10 +123,10 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 				case eTop:
 					_KoopaParatroopaRevived = false;
 					_Position.y = objectBox.fY - _Size.y / 2;
+					
 					//set to KoopaParatroopa
-					KoopaTroopa::KoopaTroopa(30, _Position.x, _Position.y);
+					KoopaTroopa::SetKoopaTroopa(30, _Position.x, _Position.y);
 					_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);
-					_KoopaTroopaRevived = true;
 					break;
 				case eRight:
 

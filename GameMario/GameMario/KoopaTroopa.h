@@ -18,10 +18,9 @@ protected:
 public:
 	KoopaTroopa();
 	~KoopaTroopa();
-
 	//Contructor
 	KoopaTroopa(int ObjectTypeID, int PossitionX, int PossitionY);
-
+	void SetKoopaTroopa(int objectTypeID, int positionX, int positionY);
 	//Update object
 	void Update();
 

@@ -11,16 +11,12 @@
 class KoopaParatroopa: public KoopaTroopa
 {
 	bool _KoopaParatroopaRevived;
-	//frame type
-	DWORD _FrameStartType;
-	DWORD _FrameEndType;
 public:
 	KoopaParatroopa();
 	~KoopaParatroopa();
 
 	//Contructor
 	KoopaParatroopa(int ObjectTypeID, int PossitionX, int PossitionY);
-
 	//Update object
 	void Update();
 

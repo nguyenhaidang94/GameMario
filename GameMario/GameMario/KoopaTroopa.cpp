@@ -29,6 +29,25 @@ KoopaTroopa::KoopaTroopa(int objectTypeID, int positionX, int positionY)
 	_KoopaTroopaStop = false;
 }
 
+void KoopaTroopa::SetKoopaTroopa(int objectTypeID, int positionX, int positionY)
+{
+	//Object											//set id
+	_Position = D3DXVECTOR2(positionX, positionY);							//set position
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);	//set sprite
+	_Size = D3DXVECTOR2(KOOPATROOPA_WIDTH, KOOPATROOPA_HEIGHT);						//set size
+	_Velocity = D3DXVECTOR2(-KOOPATROOPA_VELOCITY_X, -KOOPATROOPA_VELOCITY_Y);			//set position
+
+	// KoopaTroopa
+	_TimeStartFrame = GetTickCount();										//set time now
+	_TimePerFrame = TIMES_TURN;												//set time the turn
+	_TimeStartVelocity = GetTickCount();									//set time now
+	_TimePerVelocity = TIMES_REVIVED_VELOCITY;								//set time the turn
+	SetFrame(objectTypeID);													//set frame
+	_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
+	_KoopaTroopaRevived = true;
+	_KoopaTroopaStop = false;
+}
+
 void KoopaTroopa::Update()
 {
 	DWORD timeNow = GetTickCount();
@@ -158,7 +177,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 					_KoopaTroopaStop = true;
 					_KoopaTroopaRevived = false;
 					_TimeStartVelocity = GetTickCount();		//set time now: will revive
-					_Position.y = objectBox.fY - _Size.y / 2;
+				//	_Position.y = objectBox.fY - _Size.y / 2;
 					if (_KoopaTroopaRevived == false)
 					{
 						_MonsterVelocityX = _MonsterVelocityX / _MonsterVelocityX * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
@@ -171,7 +190,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 6.5;
 					_Velocity.x = _MonsterVelocityX;
 					_KoopaTroopaStop = false;
-					_Position.x = objectBox.fX - _Size.y / 2 - 1;
+				//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
 				}
 				break;
 			case eLeft:
@@ -180,7 +199,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 					_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 6.5;
 					_Velocity.x = _MonsterVelocityX;
 					_KoopaTroopaStop = false;
-					_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
+					//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
 				}
 				break;
 			default:
