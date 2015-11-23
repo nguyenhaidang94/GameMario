@@ -125,11 +125,26 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 						node->_ListObjects.push_back(new Coin(x, y));
 						break;
 
-					//case enymies
+					//case Monster
 					case 24:	//Goomba
 						node->_ListObjects.push_back(new Goomba(objectID, x, y));
 						break;
+					case 25:	//Goomba
+						node->_ListObjects.push_back(new Goomba(objectID, x, y));
+						break;
+					case 26:
+						node->_ListObjects.push_back(new PiranhaPlant(objectID, x, y));
+						break;
+					case 27:
+						node->_ListObjects.push_back(new PiranhaPlant(objectID, x, y));
+						break;
 					case 28:	//KoopaTroopa
+						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
+						break;
+					case 29:	//KoopaTroopa
+						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
+						break;
+					case 30:	//KoopaTroopa
 						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
 						break;
 					case 31:	//KoopaParatroopa

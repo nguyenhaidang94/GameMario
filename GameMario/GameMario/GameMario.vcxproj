@@ -92,6 +92,7 @@
     <ClCompile Include="FloatingTextEffect.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="PlayMap.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="FloatingTextEffect.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="PlayMap.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="QuestionBlock.h" />

@@ -14,6 +14,7 @@
 #include "Goomba.h"
 #include "KoopaTroopa.h"
 #include "KoopaParatroopa.h"
+#include "PiranhaPlant.h"
 
 class QuadTree
 {

@@ -52,27 +52,25 @@ void KoopaTroopa::Update()
 {
 	DWORD timeNow = GetTickCount();
 
-	if (_KoopaTroopaRevived)
+	if (_KoopaTroopaRevived)//còn sống
 	{
-		if (!_KoopaTroopaStop)
+		if (!_KoopaTroopaStop)//và đi
 		{
-			if (_MonsterVelocityX > 0.0f)
+			if (_MonsterVelocityX > 0.0f)//bên phải
 			{
 				_FrameStart = _FrameStartType + 2;
-				_FrameCurrent = _FrameStart;
 				_FrameEnd = _FrameStart + 1;
 			}
-			else
+			else//bên trái
 			{
 				_FrameStart = _FrameStartType;
-				_FrameCurrent = _FrameStart;
 				_FrameEnd = _FrameStart + 1;
 			}
 		}
 		else
 		{
 			_Velocity.x = 0.0f;
-			// REVIVED
+			// REVIVED: cựa cậy sau 1 khoản tg sẽ hồi sinh: trước đó nó sẽ cựa cậy
 			if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
 			{
 				_KoopaTroopaStop = false;
@@ -83,7 +81,7 @@ void KoopaTroopa::Update()
 	{
 		if (_KoopaTroopaStop)
 		{
-			_FrameStart = _FrameStartType + 4;
+			_FrameStart = _FrameStartType + 4;//set về frame đứng yên
 			_FrameEnd = _FrameCurrent = _FrameStart;
 			_Velocity.x = 0.0f;
 
@@ -92,8 +90,7 @@ void KoopaTroopa::Update()
 			{
 				_TimeStartVelocity = timeNow;
 				_KoopaTroopaRevived = true;
-				_FrameStart = _FrameStartType + 4;
-				_FrameEnd = _FrameStart + 1;
+				_FrameEnd = _FrameStart + 1;// sau 1 khoảng tg nó có hiện tượng sống lại bằng cách cựa cậy
 			}
 		}
 		else//chạy với mai rùa
@@ -164,7 +161,8 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 		break;
 #pragma endregion
 	case eMonster:
-		DirectionsCollision(object, collisionDirection);
+		if (_KoopaTroopaRevived)
+			DirectionsCollision(object, collisionDirection);
 		//DirectionsFrame();
 		break;
 	case eMario:
@@ -173,32 +171,34 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 			case eTop:
 				if (_KoopaTroopaStop == false)//chưa đứng yên
 				{
+					if (_KoopaTroopaRevived == false)//nếu đã chết và bị đá nhưng lại bị dậm lần nữa sẽ set lai tốc độ
+					{
+						_MonsterVelocityX = _MonsterVelocityX / (KOOPATROOPA_VELOCITY_X + 7.0) * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
+					}
 					_Velocity.x = 0.0f;
 					_KoopaTroopaStop = true;
 					_KoopaTroopaRevived = false;
 					_TimeStartVelocity = GetTickCount();		//set time now: will revive
-				//	_Position.y = objectBox.fY - _Size.y / 2;
-					if (_KoopaTroopaRevived == false)
-					{
-						_MonsterVelocityX = _MonsterVelocityX / _MonsterVelocityX * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
-					}
+					
 				}
 				break;
 			case eRight:
-				if (_KoopaTroopaRevived == false && _KoopaTroopaStop == true)//chết và đứng yên
+				if (_KoopaTroopaStop == true)//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
 				{
-					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 6.5;
+					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 7.0;//tăng tốc khi bị đá
 					_Velocity.x = _MonsterVelocityX;
 					_KoopaTroopaStop = false;
+					_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
 				//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
 				}
 				break;
 			case eLeft:
-				if (_KoopaTroopaRevived == false && _KoopaTroopaStop == true)
+				if (_KoopaTroopaStop == true)
 				{
-					_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 6.5;
+					_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 7.0;
 					_Velocity.x = _MonsterVelocityX;
 					_KoopaTroopaStop = false;
+					_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
 					//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
 				}
 				break;

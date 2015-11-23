@@ -26,12 +26,14 @@ void Monster::DirectionsCollision(GameObject *object, eCollisionDirection collis
 		break;
 	case eRight:
 		_Position.x = objectBox.fX - _Size.y / 2 - 1;
-		_MonsterVelocityX = -_MonsterVelocityX;
+		if (_MonsterVelocityX > 0.0f)
+			_MonsterVelocityX = -_MonsterVelocityX;
 		_Velocity.x = 0.0f;
 		break;
 	case eLeft:
 		_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
-		_MonsterVelocityX = -_MonsterVelocityX;
+		if (_MonsterVelocityX < 0.0f)
+			_MonsterVelocityX = -_MonsterVelocityX;
 		_Velocity.x = 0.0f;
 		break;
 	default:

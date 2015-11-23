@@ -37,13 +37,11 @@ void KoopaParatroopa::Update()
 		if (_MonsterVelocityX > 0.0f)
 		{
 			_FrameStart = _FrameStartType + 2;
-			_FrameCurrent = _FrameStart;
 			_FrameEnd = _FrameStart + 1;
 		}
 		else
 		{
 			_FrameStart = _FrameStartType;
-			_FrameCurrent = _FrameStart;
 			_FrameEnd = _FrameStart + 1;
 		}
 		if (_Velocity.y == 0.0f)

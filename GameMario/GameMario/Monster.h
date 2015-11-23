@@ -6,7 +6,6 @@
 class Monster : public DynamicGameObject
 {
 protected:
-	DWORD _FrameCurrent;
 	//location
 	DWORD _TimeStartFrame;
 	DWORD _TimePerFrame;
@@ -14,6 +13,7 @@ protected:
 	DWORD _TimeStartVelocity;
 	DWORD _TimePerVelocity;
 	//frame
+	DWORD _FrameCurrent;
 	DWORD _FrameStart;
 	DWORD _FrameEnd;
 	//direction: left right

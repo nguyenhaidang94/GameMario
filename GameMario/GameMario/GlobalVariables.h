@@ -48,6 +48,7 @@ enum eSpriteID
 	eGoomba,
 	eKoopaTroopa,
 	eKoopaParatroopa,
+	ePiranhaPlant,
 	eSmallMario,
 	eMarioTransform,
 	eSmallMarioStar,

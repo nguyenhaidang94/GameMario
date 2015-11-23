@@ -103,17 +103,6 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		default:
 			break;
 	}
-
-	//switch (tag)
-	//{
-	//case eToUnderground1_1:
-	//	return D3DXVECTOR2(48, 448);
-	//case eToMiddleOnGround1_1:
-	//	return D3DXVECTOR2(5250, 128);
-	//default:
-	//	break;
-	//}
-	//return D3DXVECTOR2();
 }
 
 void Goomba::SetFrame(int GoombaType)
@@ -125,7 +114,7 @@ void Goomba::SetFrame(int GoombaType)
 		_FrameStart = 0;
 		_FrameEnd = 1;
 		break;
-	case 2:
+	case 25:
 		_FrameCurrent = 3;
 		_FrameStart = 3;
 		_FrameEnd = 4;
