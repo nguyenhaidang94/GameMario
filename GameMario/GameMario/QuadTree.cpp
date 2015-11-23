@@ -176,32 +176,36 @@ void QuadTree::InsertObject(GameObject* object, Box objBox) const
 	_RootNode->InsertObject(_MapQuadTree, object, objBox);
 }
 
-void QuadTree::RetrieveObjectsInNode(Node* node, Box sightBox)
+void QuadTree::RetrieveObjectsInNode(Node* node, Box activeSite)
 {
 	if (node == NULL)
 		return;
 
 	if (node->_Tl != NULL)
-		RetrieveObjectsInNode(node->_Tl, sightBox);
+		RetrieveObjectsInNode(node->_Tl, activeSite);
 	if (node->_Tr != NULL)
-		RetrieveObjectsInNode(node->_Tr, sightBox);
+		RetrieveObjectsInNode(node->_Tr, activeSite);
 	if (node->_Bl != NULL)
-		RetrieveObjectsInNode(node->_Bl, sightBox);
+		RetrieveObjectsInNode(node->_Bl, activeSite);
 	if (node->_Br != NULL)
-		RetrieveObjectsInNode(node->_Br, sightBox);
+		RetrieveObjectsInNode(node->_Br, activeSite);
 
-	//check if node intersect with sightbox
-	if (AABBCheck(node->GetBoundaryBox(), sightBox))
+	//check if node intersect with active site
+	if (AABBCheck(node->GetBoundaryBox(), activeSite))
 	{
 		//browse objects in node
 		for (int i = 0; i < node->_ListObjects.size(); i++)
 		{
 			//if object in the sight area
-			if (AABBCheck(sightBox, node->_ListObjects[i]->GetBoundaryBox()))
+			if (AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
 			{
 				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed)
 				{
 					node->_ListObjects[i]->Update();
+					//after updating, if object is out of active site, set state destroy for it
+					if (!AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
+						node->_ListObjects[i]->SetTag(eGameTag::eDestroyed);
+
 					GameObject * currentObj = node->_ListObjects[i];
 					//if object is dynamic and object moves out of node
 					if (currentObj->IsDynamic() && !AABBCheck(node->GetBoundaryBox(), currentObj->GetBoundaryBox()))
@@ -232,11 +236,9 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box sightBox)
 			}
 			else
 			{
-				//destroy objects in the left of the sight area
-				if (node->_ListObjects[i]->GetBoundaryBox().fX < sightBox.fX)
-				{
+				//destroy objects in the left of the active site
+				if (node->_ListObjects[i]->GetBoundaryBox().fX < activeSite.fX)
 					node->_ListObjects[i]->SetTag(eGameTag::eDestroyed);
-				}
 			}
 		}
 	}
@@ -246,8 +248,8 @@ void QuadTree::UpdateObjectsOnScreen()
 {
 	if (_ObjectsOnScreen.size() > 0)
 		_ObjectsOnScreen.clear();
-	Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
-	RetrieveObjectsInNode(_RootNode, cameraBox);
+	Box activeSite = Camera::GetInstance()->GetActiveSite();
+	RetrieveObjectsInNode(_RootNode, activeSite);
 }
 
 std::vector<GameObject*> QuadTree::GetObjectsOnScreen() const
