@@ -25,6 +25,7 @@ Goomba::Goomba(int objectTypeID, int positionX, int positionY)
 	_TimePerVelocity = TIMES_TURN_VELOCITY;									//set time the turn
 	SetFrame(objectTypeID);
 	_MonsterVelocityX = -GOOMBA_VELOCITY_X;
+	positionx = positionX;
 }
 
 void Goomba::Update()
@@ -53,8 +54,8 @@ void Goomba::Render()
 
 void Goomba::Release()
 {
-	if (_Sprite != NULL)
-		delete _Sprite;
+	/*if (_Sprite != NULL)
+		delete _Sprite;*/
 }
 
 void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirection)

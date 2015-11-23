@@ -10,6 +10,7 @@
 
 class Goomba: public Monster
 {
+	FLOAT positionx;
 public:
 	Goomba();
 	~Goomba();
