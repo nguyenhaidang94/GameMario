@@ -3,11 +3,11 @@
 #define PIRANHAPLANT_WIDTH 32
 #define PIRANHAPLANT_HEIGHT 64
 #define PIRANHAPLANT_VELOCITY_X 1.5f
-#define PIRANHAPLANT_VELOCITY_Y 6.0f
+#define PIRANHAPLANT_VELOCITY_Y 1.4f
 #define PIRANHAPLANT_ACCELERATION 0.3f//chú ý: gia tốc được trừ ra, nhưng vẫn đảm bảo vật vẫn tới trên miệng ống
 #define TIMES_TURN 100
-#define TIMES_TURN_VELOCITY 50
-#define TIMES_TURN_STOP 3000
+#define TIMES_TURN_VELOCITY 100
+#define TIMES_TURN_STOP 2000
 
 class PiranhaPlant : public Monster
 {

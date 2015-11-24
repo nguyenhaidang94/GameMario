@@ -29,6 +29,7 @@ PiranhaPlant::PiranhaPlant(int objectTypeID, int positionX, int positionY)
 	_PositionY = positionY;
 	_TimeStartStop = GetTickCount();
 	_TimePerStop = TIMES_TURN_STOP;
+	_PiranhaPlantStop = false;
 }
 
 void PiranhaPlant::Update()
@@ -40,42 +41,39 @@ void PiranhaPlant::Update()
 		_FrameCurrent = SpriteManager::GetInstance()->NextFrame(_FrameCurrent, _FrameStart, _FrameEnd);
 	}
 
-	//
-	//if (_Velocity.y <= -6.0f && _MonsterVelocityY < 0)//trường hợp xuống đáy
-	//{
-	//	_PiranhaPlantStop = true;
-	//	if (timeNow - _TimeStartStop >= _TimePerStop)
-	//	{
-	//		_TimeStartStop = timeNow;
-	//		_MonsterVelocityY = -_MonsterVelocityY;
-	//		_Velocity.y = 6.0f;
-	//		_PiranhaPlantStop = false;
-	//	}
-	//}
-
-	/*if (_Velocity.y <= 0.0f && _MonsterVelocityY > 0)
+	if (_Position.y >= _PositionY)
 	{
-		_PiranhaPlantStop = true;*/
-		/*if (timeNow - _TimeStartStop >= _TimePerStop)
+		_Position.y = _PositionY;
+		_MonsterVelocityY = -PIRANHAPLANT_VELOCITY_Y;
+		_PiranhaPlantStop = true;
+	}
+	if (_Position.y <= _PositionY - 1.4 * 30)//_MonsterVelocityY<0
+	{
+		_Position.y = _PositionY - 1.4 * 30;
+		_MonsterVelocityY = PIRANHAPLANT_VELOCITY_Y;
+		_PiranhaPlantStop = true;
+	}
+
+	if (_PiranhaPlantStop)
+	{
+		if (timeNow - _TimeStartStop >= _TimePerStop)
 		{
 			_TimeStartStop = timeNow;
-			_MonsterVelocityY = -_MonsterVelocityY;
-			_Velocity.y = 0.0f;
+			_Velocity.y = _MonsterVelocityY;
+			_Position.y += _Velocity.y;
 			_PiranhaPlantStop = false;
 		}
-	}*/
-
-	//location
-	//if (!_PiranhaPlantStop)
+	}
+	else
 	{
-		if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
+		//if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
 		{
-			_TimeStartVelocity = timeNow;
+			//_TimeStartVelocity = timeNow;
 			_Position.y += _Velocity.y;
-			_Velocity.y -= PIRANHAPLANT_ACCELERATION;//Trừ gia tốc
 		}
 	}
 
+	//cach 2------------------------------------------------
 	//if (_Velocity.y <= -6.0f && _MonsterVelocityY < 0)//trường hợp xuống đáy
 	//{
 	//	_PiranhaPlantStop = true;
@@ -88,19 +86,19 @@ void PiranhaPlant::Update()
 	//	}
 	//}
 
-	/*if (_Velocity.y <= 0.0f && _MonsterVelocityY > 0)
-	{
-		_PiranhaPlantStop = true;*/
-		/*if (timeNow - _TimeStartStop >= _TimePerStop)
-		{
-			_TimeStartStop = timeNow;
-			_MonsterVelocityY = -_MonsterVelocityY;
-			_Velocity.y = 0.0f;
-			_PiranhaPlantStop = false;
-		}
-	}*/
+	//if (_Velocity.y <= 0.0f && _MonsterVelocityY > 0)
+	//{
+	//	_PiranhaPlantStop = true;
+	//	if (timeNow - _TimeStartStop >= _TimePerStop)
+	//	{
+	//		_TimeStartStop = timeNow;
+	//		_MonsterVelocityY = -_MonsterVelocityY;
+	//		_Velocity.y = 0.0f;
+	//		_PiranhaPlantStop = false;
+	//	}
+	//}
 
-	//location
+	////location
 	//if (!_PiranhaPlantStop)
 	//{
 	//	if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
@@ -110,53 +108,15 @@ void PiranhaPlant::Update()
 	//		_Velocity.y -= PIRANHAPLANT_ACCELERATION;//Trừ gia tốc
 	//	}
 	//}
-
-	//cach 2------------------------------------------------
-	if (_Velocity.y <= -6.0f && _MonsterVelocityY < 0)//trường hợp xuống đáy
-	{
-		_PiranhaPlantStop = true;
-		if (timeNow - _TimeStartStop >= _TimePerStop)
-		{
-			_TimeStartStop = timeNow;
-			_MonsterVelocityY = -_MonsterVelocityY;
-			_Velocity.y = 6.0f;
-			_PiranhaPlantStop = false;
-		}
-	}
-
-	if (_Velocity.y <= 0.0f && _MonsterVelocityY > 0)
-	{
-		_PiranhaPlantStop = true;
-		if (timeNow - _TimeStartStop >= _TimePerStop)
-		{
-			_TimeStartStop = timeNow;
-			_MonsterVelocityY = -_MonsterVelocityY;
-			_Velocity.y = 0.0f;
-			_PiranhaPlantStop = false;
-		}
-	}
-
-	//location
-	if (!_PiranhaPlantStop)
-	{
-		if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
-		{
-			_TimeStartVelocity = timeNow;
-			_Position.y += _Velocity.y;
-			_Velocity.y -= PIRANHAPLANT_ACCELERATION;//Trừ gia tốc
-		}
-	}
 }
 
 void PiranhaPlant::Render()
 {
-	_Sprite->RenderAtFrame(_Position.x, _Position.y, _FrameCurrent, 1.0f);
+	_Sprite->RenderAtFrame(_Position.x, _Position.y, _FrameCurrent);
 }
 
 void PiranhaPlant::Release()
-{/*
-	if (_Sprite != NULL)
-		delete _Sprite;*/
+{
 }
 
 void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collisionDirection)

@@ -233,9 +233,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>Framework\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Framework\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalVariables.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -379,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="PiranhaPlant.h">
       <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework\Physic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
