@@ -154,9 +154,7 @@ void PiranhaPlant::Render()
 }
 
 void PiranhaPlant::Release()
-{/*
-	if (_Sprite != NULL)
-		delete _Sprite;*/
+{
 }
 
 void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collisionDirection)

@@ -209,7 +209,7 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box activeSite)
 	if (AABBCheck(node->GetBoundaryBox(), activeSite))
 	{
 		//browse objects in nodes
-		for (int i = 0; i < node->_ListObjects.size(); i++)
+		for (int i = 0; i < node->_ListObjects.size(); )
 		{
 			//if object in the active site
 			if (AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
