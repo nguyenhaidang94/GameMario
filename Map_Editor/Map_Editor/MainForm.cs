@@ -152,7 +152,7 @@ namespace Map_Editor
 
             try
             {
-                sw = new System.IO.StreamWriter(path);
+                sw = new System.IO.StreamWriter(path, false);
             }
             catch
             {
