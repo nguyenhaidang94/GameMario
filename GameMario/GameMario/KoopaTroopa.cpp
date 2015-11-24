@@ -128,8 +128,6 @@ void KoopaTroopa::Render()
 
 void KoopaTroopa::Release()
 {
-	/*if (_Sprite != NULL)
-		delete _Sprite;*/
 }
 
 void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionDirection)

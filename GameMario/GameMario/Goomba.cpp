@@ -54,8 +54,6 @@ void Goomba::Render()
 
 void Goomba::Release()
 {
-	/*if (_Sprite != NULL)
-		delete _Sprite;*/
 }
 
 void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirection)

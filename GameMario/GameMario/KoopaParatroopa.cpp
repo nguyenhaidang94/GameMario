@@ -76,8 +76,6 @@ void KoopaParatroopa::Render()
 
 void KoopaParatroopa::Release()
 {
-	/*if (_Sprite != NULL)
-		delete _Sprite;*/
 }
 
 void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collisionDirection)

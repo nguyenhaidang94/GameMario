@@ -208,34 +208,46 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box activeSite)
 	//check if node intersect with active site
 	if (AABBCheck(node->GetBoundaryBox(), activeSite))
 	{
-		//browse objects in node
-		for (int i = 0; i < node->_ListObjects.size(); i++)
+		//browse objects in nodes
+		for (int i = 0; i < node->_ListObjects.size(); )
 		{
-			//if object in the sight area
+			//if object in the active site
 			if (AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
 			{
 				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed)
 				{
 					node->_ListObjects[i]->Update();
-					//after updating, if object is out of active site, set state destroy for it
+					//after updating, if object is out of active site, release it
 					if (!AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
-						node->_ListObjects[i]->SetTag(eGameTag::eDestroyed);
-
-					GameObject * currentObj = node->_ListObjects[i];
-					//if object is dynamic and object moves out of node
-					if (currentObj->IsDynamic() && !AABBCheck(node->GetBoundaryBox(), currentObj->GetBoundaryBox()))
 					{
-						//this if is used for a special situation, but actually it doesn't have to used
-						//if (node != _RootNode)
-						//add object to root node
-						//then root node will add object to suitable subnode
-						_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox());
+						node->_ListObjects[i]->Release();
+						delete node->_ListObjects[i];
+						node->_ListObjects[i] = NULL;
 						node->_ListObjects.erase(node->_ListObjects.begin() + i);
 						//delete node if it is empty
 						if (node->IsEmpty())
 							DeleteSubnode(node);
 					}
-					_ObjectsOnScreen.push_back(currentObj);
+					else
+					{
+						GameObject* currentObj = node->_ListObjects[i];
+						//if object is dynamic and object moves out of node
+						if (currentObj->IsDynamic() && !AABBCheck(node->GetBoundaryBox(), currentObj->GetBoundaryBox()))
+						{
+							//this if is used for a special situation, but actually it doesn't have to used
+							//if (node != _RootNode)
+							//add object to root node
+							//then root node will add object to suitable subnode
+							_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox());
+							node->_ListObjects.erase(node->_ListObjects.begin() + i);
+							//delete node if it is empty
+							if (node->IsEmpty())
+								DeleteSubnode(node);
+						}
+						else
+							i++;
+						_ObjectsOnScreen.push_back(currentObj);
+					}
 				}
 				else
 				{
@@ -253,7 +265,17 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box activeSite)
 			{
 				//destroy objects in the left of the active site
 				if (node->_ListObjects[i]->GetBoundaryBox().fX < activeSite.fX)
-					node->_ListObjects[i]->SetTag(eGameTag::eDestroyed);
+				{
+					node->_ListObjects[i]->Release();
+					delete node->_ListObjects[i];
+					node->_ListObjects[i] = NULL;
+					node->_ListObjects.erase(node->_ListObjects.begin() + i);
+					//delete node if it is empty
+					if (node->IsEmpty())
+						DeleteSubnode(node);
+				}
+				else
+					i++;
 			}
 		}
 	}
