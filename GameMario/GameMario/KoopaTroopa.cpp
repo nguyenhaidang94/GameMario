@@ -139,29 +139,23 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 #pragma region va chạm ngược
 	case eGround:
 		DirectionsCollision(object, collisionDirection);
-	//	DirectionsFrame();
 		break;
 	case ePipe:
 		DirectionsCollision(object, collisionDirection);
-	//	DirectionsFrame();
 		break;
 	case ePipeHorizontal:
 		DirectionsCollision(object, collisionDirection);
-	//	DirectionsFrame();
 		break;
 	case eBrick:
 		DirectionsCollision(object, collisionDirection);
-	//	DirectionsFrame();
 		break;
 	case eHardBrick:
 		DirectionsCollision(object, collisionDirection);
-	//	DirectionsFrame();
 		break;
 #pragma endregion
 	case eMonster:
 		if (_KoopaTroopaRevived)
 			DirectionsCollision(object, collisionDirection);
-		//DirectionsFrame();
 		break;
 	case eMario:
 		switch (collisionDirection)

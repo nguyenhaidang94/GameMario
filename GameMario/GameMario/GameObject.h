@@ -42,7 +42,6 @@ public:
 	//Get colision box of object
 	Box GetBoundaryBox();
 
-
 	//
 	bool IsDynamic();
 

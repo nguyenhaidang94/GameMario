@@ -13,16 +13,16 @@ PiranhaPlant::~PiranhaPlant()
 PiranhaPlant::PiranhaPlant(int objectTypeID, int positionX, int positionY)
 {
 	//Object											//set id
-	_Position = D3DXVECTOR2(positionX, positionY);							//set position
+	_Position = D3DXVECTOR2(positionX, positionY - 1.4 * 35);						//set position: positionY - 1.4 * 32 mục đích cho đi từ dưới lên lúc bắt đầu
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::ePiranhaPlant);	//set sprite
-	_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);						//set size
-	_Velocity = D3DXVECTOR2(-PIRANHAPLANT_VELOCITY_X, -PIRANHAPLANT_VELOCITY_Y);			//set position
+	_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);					//set size
+	_Velocity = D3DXVECTOR2(-PIRANHAPLANT_VELOCITY_X, -PIRANHAPLANT_VELOCITY_Y);	//set position
 
 	// PiranhaPlant
-	_TimeStartFrame = GetTickCount();										//set time now
-	_TimePerFrame = TIMES_TURN;												//set time the turn
-	_TimeStartVelocity = GetTickCount();									//set time now
-	_TimePerVelocity = TIMES_TURN_VELOCITY;								//set time the turn position+velocity
+	_TimeStartFrame = GetTickCount();												//set time now
+	_TimePerFrame = TIMES_TURN;														//set time the turn
+	_TimeStartVelocity = GetTickCount();											//set time now
+	_TimePerVelocity = TIMES_TURN_VELOCITY;											//set time the turn position+velocity
 	SetFrame(objectTypeID);
 	_MonsterVelocityX = -PIRANHAPLANT_VELOCITY_X;
 	_MonsterVelocityY = -PIRANHAPLANT_VELOCITY_Y;
@@ -30,6 +30,7 @@ PiranhaPlant::PiranhaPlant(int objectTypeID, int positionX, int positionY)
 	_TimeStartStop = GetTickCount();
 	_TimePerStop = TIMES_TURN_STOP;
 	_PiranhaPlantStop = false;
+	_PiranhaPlantDanger = true;
 }
 
 void PiranhaPlant::Update()
@@ -41,73 +42,38 @@ void PiranhaPlant::Update()
 		_FrameCurrent = SpriteManager::GetInstance()->NextFrame(_FrameCurrent, _FrameStart, _FrameEnd);
 	}
 
-	if (_Position.y >= _PositionY)
+	if (_Position.y >= _PositionY)//ở trên
 	{
 		_Position.y = _PositionY;
 		_MonsterVelocityY = -PIRANHAPLANT_VELOCITY_Y;
 		_PiranhaPlantStop = true;
 	}
-	if (_Position.y <= _PositionY - 1.4 * 30)//_MonsterVelocityY<0
+	if (_Position.y <= _PositionY - 1.4 * 35)//_MonsterVelocityY<0: ở dưới
 	{
-		_Position.y = _PositionY - 1.4 * 30;
+		_Position.y = _PositionY - 1.4 * 35;
 		_MonsterVelocityY = PIRANHAPLANT_VELOCITY_Y;
 		_PiranhaPlantStop = true;
+		_Size.x = 90;
+		_Size.y = 170;
+		_PiranhaPlantDanger = false;//hết nguy hiểm
 	}
 
 	if (_PiranhaPlantStop)
 	{
-		if (timeNow - _TimeStartStop >= _TimePerStop)
+		if (timeNow - _TimeStartStop >= _TimePerStop)// dừng 1 khoảng tg sẽ hoạt động tiếp
 		{
 			_TimeStartStop = timeNow;
 			_Velocity.y = _MonsterVelocityY;
 			_Position.y += _Velocity.y;
 			_PiranhaPlantStop = false;
+			_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);
+			_PiranhaPlantDanger = true;
 		}
 	}
 	else
 	{
-		//if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
-		{
-			//_TimeStartVelocity = timeNow;
-			_Position.y += _Velocity.y;
-		}
+		_Position.y += _Velocity.y;
 	}
-
-	//cach 2------------------------------------------------
-	//if (_Velocity.y <= -6.0f && _MonsterVelocityY < 0)//trường hợp xuống đáy
-	//{
-	//	_PiranhaPlantStop = true;
-	//	if (timeNow - _TimeStartStop >= _TimePerStop)
-	//	{
-	//		_TimeStartStop = timeNow;
-	//		_MonsterVelocityY = -_MonsterVelocityY;
-	//		_Velocity.y = 6.0f;
-	//		_PiranhaPlantStop = false;
-	//	}
-	//}
-
-	//if (_Velocity.y <= 0.0f && _MonsterVelocityY > 0)
-	//{
-	//	_PiranhaPlantStop = true;
-	//	if (timeNow - _TimeStartStop >= _TimePerStop)
-	//	{
-	//		_TimeStartStop = timeNow;
-	//		_MonsterVelocityY = -_MonsterVelocityY;
-	//		_Velocity.y = 0.0f;
-	//		_PiranhaPlantStop = false;
-	//	}
-	//}
-
-	////location
-	//if (!_PiranhaPlantStop)
-	//{
-	//	if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
-	//	{
-	//		_TimeStartVelocity = timeNow;
-	//		_Position.y += _Velocity.y;
-	//		_Velocity.y -= PIRANHAPLANT_ACCELERATION;//Trừ gia tốc
-	//	}
-	//}
 }
 
 void PiranhaPlant::Render()
@@ -149,7 +115,25 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 		switch (collisionDirection)
 		{
 		case eTop:
-		//	PiranhaPlantDead();
+			if (!_PiranhaPlantDanger)// k còn nguy hiểm
+			{
+				_PiranhaPlantStop = true;
+				_TimeStartStop = GetTickCount();
+			}
+			break;
+		case eRight:
+			if (!_PiranhaPlantDanger)// k còn nguy hiểm
+			{
+				_PiranhaPlantStop = true;
+				_TimeStartStop = GetTickCount();
+			}
+			break;
+		case eLeft:
+			if (!_PiranhaPlantDanger)
+			{
+				_PiranhaPlantStop = true;
+				_TimeStartStop = GetTickCount();
+			}
 			break;
 		default:
 			break;
@@ -205,4 +189,9 @@ void PiranhaPlant::PiranhaPlantDead()
 	_Velocity.x = 0;
 	_MonsterVelocityX = 0;
 	//_Tag = eGameTag::eDestroyed;
+}
+
+bool PiranhaPlant::GetPiranhaPlantDanger()
+{
+	return _PiranhaPlantDanger;
 }
