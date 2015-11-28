@@ -41,8 +41,9 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eFlagSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flag.png", 32, 32, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	//Monster
 	_ListSprite[eSpriteID::eGoomba] = new Sprite(SpriteHandler, L"resources\\Sprites\\Goomba.png", 32, 32, 12, 3, D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eGoombaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\GoombaDead.png", 32, 32, 12, 3, D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eGoombaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\GoombaDead.png", 32, 32, 4, 1, D3DCOLOR_XRGB(55, 0, 255));
 	_ListSprite[eSpriteID::eKoopaTroopa] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaTroopa.png", 32, 64, 24, 6, D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eKoopaTroopaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaTroopaDead.png", 32, 32, 4, 1, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eKoopaParatroopa] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaParatroopa.png", 32, 64, 16, 4, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::ePiranhaPlant] = new Sprite(SpriteHandler, L"resources\\Sprites\\PiranhaPlant.png", 32, 48, 8, 2, D3DCOLOR_XRGB(255, 0, 255));
 	//
