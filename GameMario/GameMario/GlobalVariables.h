@@ -6,6 +6,7 @@
 #define FRAME_RATE 60		//60 FPS
 #define FULLSCREEN 0		//Not full screen
 #define TITLE_SIZE 32		//a title is 32x32
+#define BUFFER_FOR_SCREEN 50
 //Enum
 enum eObjectTypeID
 {

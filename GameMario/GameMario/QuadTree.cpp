@@ -186,24 +186,24 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 	file.close();
 }
 
-void QuadTree::InsertObject(GameObject* object, Box objBox) const
+void QuadTree::InsertObject(GameObject* object, Box objBox, int &returnNodeId)
 {
-	_RootNode->InsertObject(_MapQuadTree, object, objBox);
+	_RootNode->InsertObject(_MapQuadTree, object, objBox, returnNodeId);
 }
 
-void QuadTree::RetrieveObjectsInNode(Node* node, Box activeSite)
+void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 {
 	if (node == NULL)
 		return;
 
 	if (node->_Tl != NULL)
-		RetrieveObjectsInNode(node->_Tl, activeSite);
+		UpdateObjectsInNode(node->_Tl, activeSite);
 	if (node->_Tr != NULL)
-		RetrieveObjectsInNode(node->_Tr, activeSite);
+		UpdateObjectsInNode(node->_Tr, activeSite);
 	if (node->_Bl != NULL)
-		RetrieveObjectsInNode(node->_Bl, activeSite);
+		UpdateObjectsInNode(node->_Bl, activeSite);
 	if (node->_Br != NULL)
-		RetrieveObjectsInNode(node->_Br, activeSite);
+		UpdateObjectsInNode(node->_Br, activeSite);
 
 	//check if node intersect with active site
 	if (AABBCheck(node->GetBoundaryBox(), activeSite))
@@ -238,15 +238,24 @@ void QuadTree::RetrieveObjectsInNode(Node* node, Box activeSite)
 							//if (node != _RootNode)
 							//add object to root node
 							//then root node will add object to suitable subnode
-							_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox());
+							int returnNodeId;
+							_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox(), returnNodeId);
+							//khi chuyen tu node con(hoac node sau) sang node cha(hoac node truoc)
+							//thi object khong duoc add vao _ObjectsOnScreen
+							//do node cha(hoac node truoc) da duoc duyet roi
+							//do do can add object vao _ObjectsOnScreen ngay tai node nay
+							if (returnNodeId < node->GetNodeId())
+								_ObjectsOnScreen.push_back(currentObj);
 							node->_ListObjects.erase(node->_ListObjects.begin() + i);
 							//delete node if it is empty
 							if (node->IsEmpty())
 								DeleteSubnode(node);
 						}
 						else
+						{
+							_ObjectsOnScreen.push_back(currentObj);
 							i++;
-						_ObjectsOnScreen.push_back(currentObj);
+						}
 					}
 				}
 				else
@@ -286,7 +295,7 @@ void QuadTree::UpdateObjectsOnScreen()
 	if (_ObjectsOnScreen.size() > 0)
 		_ObjectsOnScreen.clear();
 	Box activeSite = Camera::GetInstance()->GetActiveSite();
-	RetrieveObjectsInNode(_RootNode, activeSite);
+	UpdateObjectsInNode(_RootNode, activeSite);
 }
 
 std::vector<GameObject*> QuadTree::GetObjectsOnScreen() const

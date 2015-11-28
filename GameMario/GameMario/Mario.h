@@ -37,7 +37,6 @@ public:
 	Mario(void);
 	~Mario(void);
 	//Inherited function
-	Box GetMovementRangeBox();
 	void Update();
 	void Render();
 	void Release();
