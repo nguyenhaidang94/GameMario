@@ -378,7 +378,7 @@
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Framework\Physic</Filter>
+      <Filter>Framework\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

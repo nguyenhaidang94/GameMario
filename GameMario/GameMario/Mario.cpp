@@ -159,11 +159,6 @@ void Mario::HandlingInput()
 	
 }
 
-Box Mario::GetMovementRangeBox()
-{
-	return GetBoundaryBox();
-}
-
 void Mario::Jump()
 {
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_D))

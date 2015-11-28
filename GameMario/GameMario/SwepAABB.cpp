@@ -20,7 +20,7 @@ Box getSweptBroadphaseBox(Box box)
 
 //----------------------------------------------------------
 // returns true if the boxes are colliding (velocities are not used)
-// dung trong truong hop xet va cham voi viewport
+// dung trong truong hop xet va cham voi camera
 //----------------------------------------------------------
 bool AABBCheck(Box box1, Box box2)
 {

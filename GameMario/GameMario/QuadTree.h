@@ -31,9 +31,9 @@ public:
 	//read file and build quadtree
 	void BuildQuadTree(eWorldID mapID);
 	//insert object to quadtree
-	void InsertObject(GameObject* object, Box objBox) const;
+	void InsertObject(GameObject* object, Box objBox, int &returnNodeId);
 	//retrieve objects in node
-	void RetrieveObjectsInNode(Node* node, Box sightBox);
+	void UpdateObjectsInNode(Node* node, Box sightBox);
 	//update object on screen
 	void UpdateObjectsOnScreen();
 	//return objects on screen

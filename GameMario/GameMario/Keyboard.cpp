@@ -82,7 +82,7 @@ void Keyboard::InitKeyboard(HINSTANCE hInstance, HWND hWnd)
 
 void Keyboard::ProcessKeyBoard()
 {
-	//store previous keyboard states
+	//store previous keyboard states, use for key press event
 	memcpy(_PreviousKeyStates, _KeyStates, 256);
 	// Collect all key states first
 	_Keyboard->GetDeviceState(sizeof(_KeyStates), _KeyStates);
