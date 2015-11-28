@@ -64,3 +64,8 @@ bool GameObject::IsDynamic()
 {
 	return !_IsStatic;
 }
+
+eSpriteID GameObject::GetSpriteID()
+{
+	return _TypeSpriteID;
+}

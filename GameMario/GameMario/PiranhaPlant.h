@@ -36,10 +36,10 @@ public:
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
 
 	//Dead
-	void PiranhaPlantDead();
+	void MonsterDead(int MonsterTypeDead);
 
 	//set start and end frame
-	void SetFrame(int PiranhaPlantType);
+	void SetFrame(int MonsterType);
 
 	//get _PiranhaPlantDanger have kill mario: if danger is true, it will do kill mario
 	bool GetPiranhaPlantDanger();

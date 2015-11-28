@@ -20,6 +20,8 @@ protected:
 	FLOAT _MonsterVelocityX;
 	FLOAT _MonsterVelocityY;
 	bool _MonsterAlive;
+	//type monster
+	int _MonsterTypeID;
 public:
 	Monster();
 	~Monster();

@@ -13,17 +13,19 @@ KoopaTroopa::~KoopaTroopa()
 KoopaTroopa::KoopaTroopa(int objectTypeID, int positionX, int positionY)
 {
 	//Object											//set id
-	_Position = D3DXVECTOR2(positionX, positionY);							//set position
-	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);	//set sprite
+	_Position = D3DXVECTOR2(positionX, positionY);									//set position
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);		//set sprite
 	_Size = D3DXVECTOR2(KOOPATROOPA_WIDTH, KOOPATROOPA_HEIGHT);						//set size
-	_Velocity = D3DXVECTOR2(-KOOPATROOPA_VELOCITY_X, -KOOPATROOPA_VELOCITY_Y);			//set position
+	_Velocity = D3DXVECTOR2(-KOOPATROOPA_VELOCITY_X, -KOOPATROOPA_VELOCITY_Y);		//set position
+	_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
+	_MonsterTypeID = objectTypeID;													//set type id of object
 
 	// KoopaTroopa
-	_TimeStartFrame = GetTickCount();										//set time now
-	_TimePerFrame = TIMES_TURN;												//set time the turn
-	_TimeStartVelocity = GetTickCount();									//set time now
-	_TimePerVelocity = TIMES_REVIVED_VELOCITY;								//set time the turn
-	SetFrame(objectTypeID);													//set frame
+	_TimeStartFrame = GetTickCount();												//set time now
+	_TimePerFrame = TIMES_TURN;														//set time the turn
+	_TimeStartVelocity = GetTickCount();											//set time now
+	_TimePerVelocity = TIMES_REVIVED_VELOCITY;										//set time the turn
+	SetFrame(objectTypeID);															//set frame
 	_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
 	_KoopaTroopaRevived = true;
 	_KoopaTroopaStop = false;
@@ -32,17 +34,19 @@ KoopaTroopa::KoopaTroopa(int objectTypeID, int positionX, int positionY)
 void KoopaTroopa::SetKoopaTroopa(int objectTypeID, int positionX, int positionY)
 {
 	//Object											//set id
-	_Position = D3DXVECTOR2(positionX, positionY);							//set position
-	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);	//set sprite
+	_Position = D3DXVECTOR2(positionX, positionY);									//set position
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);		//set sprite
 	_Size = D3DXVECTOR2(KOOPATROOPA_WIDTH, KOOPATROOPA_HEIGHT);						//set size
-	_Velocity = D3DXVECTOR2(-KOOPATROOPA_VELOCITY_X, -KOOPATROOPA_VELOCITY_Y);			//set position
+	_Velocity = D3DXVECTOR2(-KOOPATROOPA_VELOCITY_X, -KOOPATROOPA_VELOCITY_Y);		//set position
+	_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
+	_MonsterTypeID = objectTypeID;													//set type id of object
 
 	// KoopaTroopa
-	_TimeStartFrame = GetTickCount();										//set time now
-	_TimePerFrame = TIMES_TURN;												//set time the turn
-	_TimeStartVelocity = GetTickCount();									//set time now
-	_TimePerVelocity = TIMES_REVIVED_VELOCITY;								//set time the turn
-	SetFrame(objectTypeID);													//set frame
+	_TimeStartFrame = GetTickCount();												//set time now
+	_TimePerFrame = TIMES_TURN;														//set time the turn
+	_TimeStartVelocity = GetTickCount();											//set time now
+	_TimePerVelocity = TIMES_REVIVED_VELOCITY;										//set time the turn
+	SetFrame(objectTypeID);															//set frame
 	_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
 	_KoopaTroopaRevived = true;
 	_KoopaTroopaStop = false;
@@ -97,13 +101,17 @@ void KoopaTroopa::Update()
 		{
 			_FrameStart = _FrameStartType + 4;
 			_FrameEnd = _FrameStart;
-			/*Box cameraBox = Camera::GetInstance()->GetBoundaryBox();
-			if (_Position.x < cameraBox.fX - KOOPATROOPA_WIDTH || _Position.x > cameraBox.fX + cameraBox.fWidth + KOOPATROOPA_WIDTH ||
-				_Position.y > cameraBox.fY + KOOPATROOPA_WIDTH || _Position.y < cameraBox.fY - cameraBox.fHeight - KOOPATROOPA_WIDTH)
-			{
-				_Tag = eGameTag::eDestroyed;
-			}*/
+			_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;
 		}
+	}
+
+	//rơi tự do cộng với quận tốc quán tính
+	if (_Velocity.y != 0.0f)//rơi tự do
+	{
+		if (_MonsterVelocityX > 0.0f)
+			_Velocity.x = 0.4f;
+		else
+			_Velocity.x = -0.4f;
 	}
 
 	if (timeNow - _TimeStartFrame >= _TimePerFrame)
@@ -166,6 +174,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 					if (_KoopaTroopaRevived == false)//nếu đã chết và bị đá nhưng lại bị dậm lần nữa sẽ set lai tốc độ
 					{
 						_MonsterVelocityX = _MonsterVelocityX / (KOOPATROOPA_VELOCITY_X + 7.0) * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
+						_TypeSpriteID = eSpriteID::eKoopaTroopa;//set type stripeID don't dead
 					}
 					_Velocity.x = 0.0f;
 					_KoopaTroopaStop = true;
@@ -211,9 +220,9 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 }
 
 //set frame loại
-void KoopaTroopa::SetFrame(int KoopaTroopaType)
+void KoopaTroopa::SetFrame(int MonsterType)
 {
-	switch (KoopaTroopaType)
+	switch (MonsterType)
 	{
 	case 28:
 		_FrameStartType = 0;
@@ -241,4 +250,10 @@ void KoopaTroopa::SetFrame(int KoopaTroopaType)
 		_FrameEndType = 5;
 		break;
 	};
+}
+
+//Dead
+void KoopaTroopa::MonsterDead(int MonsterTypeDead)
+{
+
 }

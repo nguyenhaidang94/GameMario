@@ -34,9 +34,9 @@ public:
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
 
 	//Dead
-	void KoopaTroopaDead();
-	
+	void MonsterDead(int MonsterTypeDead);
+
 	//set start and end frame
-	void SetFrame(int KoopaTroopaType);
+	void SetFrame(int MonsterType);
 };
 

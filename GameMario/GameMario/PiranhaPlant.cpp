@@ -17,6 +17,8 @@ PiranhaPlant::PiranhaPlant(int objectTypeID, int positionX, int positionY)
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::ePiranhaPlant);	//set sprite
 	_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);					//set size
 	_Velocity = D3DXVECTOR2(-PIRANHAPLANT_VELOCITY_X, -PIRANHAPLANT_VELOCITY_Y);	//set position
+	_TypeSpriteID = eSpriteID::ePiranhaPlant;										//set type spriteID
+	_MonsterTypeID = objectTypeID;
 
 	// PiranhaPlant
 	_TimeStartFrame = GetTickCount();												//set time now
@@ -183,7 +185,7 @@ void PiranhaPlant::SetFrame(int PiranhaPlantType)
 	};
 }
 
-void PiranhaPlant::PiranhaPlantDead()
+void PiranhaPlant::MonsterDead(int MonsterTypeDead)
 {
 	_FrameCurrent = _FrameEnd;
 	_Velocity.x = 0;

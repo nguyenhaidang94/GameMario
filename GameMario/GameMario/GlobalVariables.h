@@ -23,6 +23,7 @@ enum eObjectTypeID
 	eFloatingBar,
 	eFlagpole,
 	eMonster = 13,
+	eMonsterDead,
 };
 
 enum eSpriteID
@@ -46,9 +47,14 @@ enum eSpriteID
 	eFlagpoleSprite,
 	eFlagSprite,
 	eGoomba,
+	eGoombaDead,
 	eKoopaTroopa,
+	eKoopaTroopaDanger,
+	eKoopaTroopaDead,
 	eKoopaParatroopa,
+	eKoopaParatroopaDead,
 	ePiranhaPlant,
+	ePiranhaPlantDead,
 	eSmallMario,
 	eMarioTransform,
 	eSmallMarioStar,

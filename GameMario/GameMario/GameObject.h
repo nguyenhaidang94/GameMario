@@ -13,6 +13,7 @@ protected:
 	eGameTag _Tag;					//Custom tag for use if needed
 	D3DXVECTOR2 _Size;				//Store object size
 	bool _IsStatic;
+	eSpriteID _TypeSpriteID;		//type SpriteID
 public:
 	GameObject(void);
 	GameObject(eObjectTypeID objectTypeID, D3DXVECTOR2 pos);
@@ -44,6 +45,9 @@ public:
 
 	//
 	bool IsDynamic();
+
+	//get SpriteID
+	eSpriteID GetSpriteID();
 
 	//Update object
 	virtual void Update() = 0;
