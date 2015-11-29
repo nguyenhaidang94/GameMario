@@ -33,6 +33,7 @@ void PlayMap::Update()
 	//update objects
 	_Mario->Update();
 	_QuadTree->UpdateObjectsOnScreen();
+	std::vector<GameObject*> listObjects = _QuadTree->GetObjectsOnScreen();
 
 	//Update camera
 	Camera::GetInstance()->Update(_Mario->GetPosition());
@@ -69,13 +70,13 @@ void PlayMap::Reload()
 
 void PlayMap::AddObjectToMap(GameObject *object)
 {
-	int returnNodeId;
-	_QuadTree->InsertObject(object, object->GetBoundaryBox(), returnNodeId);
+	_QuadTree->InsertObject(object, object->GetBoundaryBox());
 }
 
 void PlayMap::HandlingCollision()
 {
 	vector<GameObject*> objectOnScreen = _QuadTree->GetObjectsOnScreen();
+	float moveX, moveY;
 
 	//remove all object have ignore collision tag
 	for (int i = objectOnScreen.size() - 1; i >= 0; i--)

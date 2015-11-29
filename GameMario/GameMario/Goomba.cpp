@@ -122,7 +122,7 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		case eMonster:
 			switch (object->GetSpriteID())
 			{
-			case ePiranhaPlant://k xét va chạm với con Piranha
+			case ePiranhaPlant:
 				break;
 			case eKoopaTroopaDanger:
 				switch (collisionDirection)
@@ -151,8 +151,8 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 			case eTop:
 				MonsterDead(1);
 				break;
-
-				//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
+				
+	//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
 			case eRight:
 				_MonsterVelocityX = -GOOMBA_VELOCITY_X;
 				MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x

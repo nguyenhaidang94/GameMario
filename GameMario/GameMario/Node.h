@@ -29,7 +29,7 @@ public:
 	//get boundarybox
 	Box GetBoundaryBox() const;
 	//insert object to node
-	void InsertObject(std::map<int, Node*> mapQuadTree, GameObject* object, Box objectBox, int &returnNodeId);
+	void InsertObject(std::map<int, Node*> mapQuadTree, GameObject* object, Box objectBox);
 	//release node
 	void Release();
 	//destructor

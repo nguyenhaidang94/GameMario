@@ -26,7 +26,7 @@ void EffectManager::ShowEffect(D3DXVECTOR2 position ,eEffectID effectID, int tag
 	switch (effectID)
 	{
 	case eBreakBrick:
-		if(tag >= 0 && tag <= 1)	//this effect currently only have 2 effect at 0 and 1, zero is brown and 1 is blue
+		if(tag >= 0 && tag <= 1)	//this effect currently only have 2 effect at 0 and 1
 		{
 			_ListEffect.push_back(new BrickBreakEffect(position, tag));
 		}

@@ -33,14 +33,14 @@ Box Node::GetBoundaryBox() const
 	return _BoundaryBox;
 }
 
-void Node::InsertObject(std::map<int, Node*> mapQuadTree, GameObject* object, Box objectBox, int &returnNodeId)
+void Node::InsertObject(std::map<int, Node*> mapQuadTree, GameObject* object, Box objectBox)
 {
 	//if object doesn't belong to node, then return
 	if (!AABBCheck(_BoundaryBox, objectBox))
 		return;
 
 	//if node covers all screenhight and screenwidth, then divide it into 4 subnodes
-	if (_BoundaryBox.fWidth > SCREEN_WIDTH || _BoundaryBox.fHeight > SCREEN_HEIGHT)
+	if (_BoundaryBox.fWidth >= SCREEN_WIDTH + 6 && _BoundaryBox.fHeight >= SCREEN_HEIGHT + 6)
 	{
 		if (_Tl == NULL)
 		{
@@ -93,27 +93,23 @@ void Node::InsertObject(std::map<int, Node*> mapQuadTree, GameObject* object, Bo
 		top = objectBox.fY;
 		bot = objectBox.fY - objectBox.fHeight;
 		//if object places in two diagonals, then add it to node
-		if ((left < _X && right > _X)
-			|| (bot < _Y && top > _Y))
+		if ((left <= _X && right >= _X)
+			|| (bot <= _Y && top >= _Y))
 		{
 			_ListObjects.push_back(object);
-			returnNodeId = this->_NodeId;
 		}
 		else
 		{
 			//insert each subnode to node
-			_Tl->InsertObject(mapQuadTree, object, objectBox, returnNodeId);
-			_Tr->InsertObject(mapQuadTree, object, objectBox, returnNodeId);
-			_Bl->InsertObject(mapQuadTree, object, objectBox, returnNodeId);
-			_Br->InsertObject(mapQuadTree, object, objectBox, returnNodeId);
+			_Tl->InsertObject(mapQuadTree, object, objectBox);
+			_Tr->InsertObject(mapQuadTree, object, objectBox);
+			_Bl->InsertObject(mapQuadTree, object, objectBox);
+			_Br->InsertObject(mapQuadTree, object, objectBox);
 		}
 	}
 	//else if node just covers enough screenwidth or screenheight, then add obj to node
 	else
-	{
 		_ListObjects.push_back(object);
-		returnNodeId = this->_NodeId;
-	}
 }
 
 void Node::Release()

@@ -33,7 +33,6 @@ void ObtainCoinEffect::Update()
 		_CoinPosition.y += _CoinVelocity.y;
 		_CoinVelocity.y -= FALLDOWN_VELOCITY_DECREASE;
 		//check one of high debris, if it fall out of screen, kill effect and show score 
-		//y axis goes up
 		if(_CoinPosition.y < _BeginingY + 48 && _CoinVelocity.y < 0)	//belown begining position plus 48 and when coin goes down
 		{
 			_IsAlive = false;

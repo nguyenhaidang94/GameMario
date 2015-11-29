@@ -228,6 +228,12 @@
     <ClCompile Include="PiranhaPlant.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObject\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="Gun.cpp">
+      <Filter>GameObject\Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -378,7 +384,13 @@
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Framework\Camera</Filter>
+      <Filter>Framework\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameObject\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>GameObject\Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

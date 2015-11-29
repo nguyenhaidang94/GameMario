@@ -41,7 +41,7 @@ public:
 	eGameTag GetTag();
 
 	//Get colision box of object
-	virtual Box GetBoundaryBox();
+	Box GetBoundaryBox();
 
 	//
 	bool IsDynamic();

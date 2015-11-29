@@ -110,12 +110,7 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 		break;
 #pragma endregion
 	case eMonster:
-		switch (object->GetSpriteID())
-		{
-			case eKoopaTroopaDanger:
-				MonsterDead(2);
-				break;
-		}
+		//DirectionsCollision(object, collisionDirection);
 		break;
 
 	case eMario:
@@ -127,10 +122,6 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 				_PiranhaPlantStop = true;
 				_TimeStartStop = GetTickCount();
 			}
-			else
-			{
-				MonsterDead(1);
-			}
 			break;
 		case eRight:
 			if (!_PiranhaPlantDanger)// k còn nguy hiểm
@@ -138,20 +129,12 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 				_PiranhaPlantStop = true;
 				_TimeStartStop = GetTickCount();
 			}
-			else
-			{
-				MonsterDead(1);
-			}
 			break;
 		case eLeft:
 			if (!_PiranhaPlantDanger)
 			{
 				_PiranhaPlantStop = true;
 				_TimeStartStop = GetTickCount();
-			}
-			else
-			{
-				MonsterDead(1);
 			}
 			break;
 		default:
@@ -204,8 +187,10 @@ void PiranhaPlant::SetFrame(int PiranhaPlantType)
 
 void PiranhaPlant::MonsterDead(int MonsterTypeDead)
 {
-	SetObjectType(eMonsterDead);//k cần lắm
-	_Tag = eGameTag::eDestroyed;
+	_FrameCurrent = _FrameEnd;
+	_Velocity.x = 0;
+	_MonsterVelocityX = 0;
+	//_Tag = eGameTag::eDestroyed;
 }
 
 bool PiranhaPlant::GetPiranhaPlantDanger()

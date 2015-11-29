@@ -111,41 +111,27 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 				break;
 		#pragma endregion
 			case eMonster:				//quái
-				switch (object->GetSpriteID())
-				{
-				case ePiranhaPlant://k xét va chạm với con Piranha
-					break;
-				case eKoopaTroopaDanger:
-					switch (collisionDirection)
-					{
-					case eRight:
-						MonsterDead(2);
-						break;
-					case eLeft:
-						MonsterDead(2);
-						break;
-					default:
-						break;
-					}
-					break;
-				default:
-					DirectionsCollision(object, collisionDirection);
-					break;
-				}
+				DirectionsCollision(object, collisionDirection);
+				//DirectionsFrame();
 				break;
 
 			case eMario:
 				switch (collisionDirection)
 				{
 				case eTop:
+					_KoopaParatroopaRevived = false;
 					_Position.y = objectBox.fY - _Size.y / 2;
-					MonsterDead(1);
+					
+					//set to KoopaParatroopa
+					_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
+					_MonsterTypeID = 30;														//set type id of object
+					KoopaTroopa::SetKoopaTroopa(30, _Position.x, _Position.y);
 					break;
 				case eRight:
-					MonsterDead(2);
+
 					break;
 				case eLeft:
-					MonsterDead(2);
+
 					break;
 				default:
 					break;
@@ -201,13 +187,7 @@ void KoopaParatroopa::SetFrame(int MonsterType)
 	};
 }
 
-//hạ cấp nó xuống thành con KoopaTroopa
 void KoopaParatroopa::MonsterDead(int MonsterTypeDead)
 {
-	_KoopaParatroopaRevived = false;
 
-	//set to KoopaParatroopa
-	_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
-	_MonsterTypeID = 30;														//set type id of object
-	KoopaTroopa::SetKoopaTroopa(30, _Position.x, _Position.y);
 }

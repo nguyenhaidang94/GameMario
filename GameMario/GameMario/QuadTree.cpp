@@ -186,24 +186,24 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 	file.close();
 }
 
-void QuadTree::InsertObject(GameObject* object, Box objBox, int &returnNodeId)
+void QuadTree::InsertObject(GameObject* object, Box objBox) const
 {
-	_RootNode->InsertObject(_MapQuadTree, object, objBox, returnNodeId);
+	_RootNode->InsertObject(_MapQuadTree, object, objBox);
 }
 
-void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
+void QuadTree::RetrieveObjectsInNode(Node* node, Box activeSite)
 {
 	if (node == NULL)
 		return;
 
 	if (node->_Tl != NULL)
-		UpdateObjectsInNode(node->_Tl, activeSite);
+		RetrieveObjectsInNode(node->_Tl, activeSite);
 	if (node->_Tr != NULL)
-		UpdateObjectsInNode(node->_Tr, activeSite);
+		RetrieveObjectsInNode(node->_Tr, activeSite);
 	if (node->_Bl != NULL)
-		UpdateObjectsInNode(node->_Bl, activeSite);
+		RetrieveObjectsInNode(node->_Bl, activeSite);
 	if (node->_Br != NULL)
-		UpdateObjectsInNode(node->_Br, activeSite);
+		RetrieveObjectsInNode(node->_Br, activeSite);
 
 	//check if node intersect with active site
 	if (AABBCheck(node->GetBoundaryBox(), activeSite))
@@ -214,7 +214,7 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 			//if object in the active site
 			if (AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
 			{
-				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed)
+				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed && node->_ListObjects[i]->GetTag() != eGameTag::eRemove)
 				{
 					node->_ListObjects[i]->Update();
 					//after updating, if object is out of active site, release it
@@ -238,25 +238,24 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 							//if (node != _RootNode)
 							//add object to root node
 							//then root node will add object to suitable subnode
-							int returnNodeId;
-							_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox(), returnNodeId);
-							//khi chuyen tu node con(hoac node sau) sang node cha(hoac node truoc)
-							//thi object khong duoc add vao _ObjectsOnScreen
-							//do node cha(hoac node truoc) da duoc duyet roi
-							//do do can add object vao _ObjectsOnScreen ngay tai node nay
-							if (returnNodeId < node->GetNodeId())
-								_ObjectsOnScreen.push_back(currentObj);
+							_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox());
 							node->_ListObjects.erase(node->_ListObjects.begin() + i);
 							//delete node if it is empty
 							if (node->IsEmpty())
 								DeleteSubnode(node);
 						}
 						else
-						{
-							_ObjectsOnScreen.push_back(currentObj);
 							i++;
-						}
+						_ObjectsOnScreen.push_back(currentObj);
 					}
+				}
+				else if (node->_ListObjects[i]->GetTag() == eGameTag::eRemove)
+				{
+					node->_ListObjects.erase(node->_ListObjects.begin() + i);
+							//delete node if it is empty
+					if (node->IsEmpty())
+							DeleteSubnode(node);
+					
 				}
 				else
 				{
@@ -273,7 +272,7 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 			else
 			{
 				//destroy objects in the left of the active site
-				if (node->_ListObjects[i]->GetBoundaryBox().fX < activeSite.fX)
+				if (node->_ListObjects[i]->GetBoundaryBox().fX < activeSite.fX && node->_ListObjects[i]->GetTag() != eGameTag::eRemove)
 				{
 					node->_ListObjects[i]->Release();
 					delete node->_ListObjects[i];
@@ -295,7 +294,7 @@ void QuadTree::UpdateObjectsOnScreen()
 	if (_ObjectsOnScreen.size() > 0)
 		_ObjectsOnScreen.clear();
 	Box activeSite = Camera::GetInstance()->GetActiveSite();
-	UpdateObjectsInNode(_RootNode, activeSite);
+	RetrieveObjectsInNode(_RootNode, activeSite);
 }
 
 std::vector<GameObject*> QuadTree::GetObjectsOnScreen() const

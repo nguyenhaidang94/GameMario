@@ -41,16 +41,19 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eFlagSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flag.png", 32, 32, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	//Monster
 	_ListSprite[eSpriteID::eGoomba] = new Sprite(SpriteHandler, L"resources\\Sprites\\Goomba.png", 32, 32, 12, 3, D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eGoombaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\GoombaDead.png", 32, 32, 4, 1, D3DCOLOR_XRGB(55, 0, 255));
+	_ListSprite[eSpriteID::eGoombaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\GoombaDead.png", 32, 32, 12, 3, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eKoopaTroopa] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaTroopa.png", 32, 64, 24, 6, D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eKoopaTroopaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaTroopaDead.png", 32, 32, 4, 1, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eKoopaParatroopa] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaParatroopa.png", 32, 64, 16, 4, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::ePiranhaPlant] = new Sprite(SpriteHandler, L"resources\\Sprites\\PiranhaPlant.png", 32, 48, 8, 2, D3DCOLOR_XRGB(255, 0, 255));
 	//
-	_ListSprite[eSpriteID::eSmallMario]= new Sprite(SpriteHandler,L"resources\\Sprites\\SmallMario.png",double(810)/14,32,14,14, D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eSmallMario]= new Sprite(SpriteHandler,L"resources\\Sprites\\SmallMario.png",32,32,14,14, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eMarioTransform] = new Sprite(SpriteHandler,L"resources\\Sprites\\MarioTransform.png",32,64,6,6,D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eBigMarioStar]= new Sprite(SpriteHandler,L"resources\\Sprites\\StarBigMario.png",32,64,36,24,D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eSmallMarioStar] = new Sprite(SpriteHandler,L"resources\\Sprites\\StarSmallMario.png",32,32,30,18,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eBulletSprite] = new Sprite(SpriteHandler,L"resources\\Sprites\\Bullet.png",16,16,4,4,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eBulletEF] = new Sprite(SpriteHandler,L"resources\\Sprites\\BulletEF.png",32,32,3,3,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eMarioFire] =  new Sprite(SpriteHandler,L"resources\\Sprites\\MarioFire.png",32,64,24,24,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eMarioTransformFlower] = new Sprite(SpriteHandler,L"resources\\Sprites\\MarioTransformFlower.png",32,64,36,24,D3DCOLOR_XRGB(255,0,255));
 }
 
 Sprite *SpriteManager::GetSprite(eSpriteID objectID)

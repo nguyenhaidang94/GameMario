@@ -29,7 +29,6 @@ void FloatingTextEffect::Update()
 {
 	if(_IsAlive)
 	{
-		//y axis goes down
 		if(_ScorePosition.y < _BeginingY - DISAPPEAR_RANGE)
 		{
 			_IsAlive = false;
