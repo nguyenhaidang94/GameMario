@@ -44,7 +44,7 @@ void PiranhaPlant::Update()
 		_FrameCurrent = SpriteManager::GetInstance()->NextFrame(_FrameCurrent, _FrameStart, _FrameEnd);
 	}
 
-	if (_Position.y >= _PositionY)//ở trên
+	if (_Position.y >= _PositionY)//ở trên nguy hiểm
 	{
 		_Position.y = _PositionY;
 		_MonsterVelocityY = -PIRANHAPLANT_VELOCITY_Y;
@@ -58,6 +58,7 @@ void PiranhaPlant::Update()
 		_Size.x = 90;
 		_Size.y = 170;
 		_PiranhaPlantDanger = false;//hết nguy hiểm
+		SetObjectType(eMonsterDead);//trạng thái chết tạm thời
 	}
 
 	if (_PiranhaPlantStop)
@@ -70,6 +71,7 @@ void PiranhaPlant::Update()
 			_PiranhaPlantStop = false;
 			_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);
 			_PiranhaPlantDanger = true;
+			SetObjectType(eMonster);//sống lại
 		}
 	}
 	else
@@ -129,7 +131,10 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 			}
 			else
 			{
-				MonsterDead(1);
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				{
+					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+				}
 			}
 			break;
 		case eRight:
@@ -140,7 +145,10 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 			}
 			else
 			{
-				MonsterDead(1);
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				{
+					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+				}
 			}
 			break;
 		case eLeft:
@@ -151,11 +159,31 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 			}
 			else
 			{
-				MonsterDead(1);
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				{
+					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+				}
 			}
 			break;
 		default:
 			break;
+		}
+		break;
+	case eBullet:
+		if (_PiranhaPlantDanger)
+		{
+			switch (collisionDirection)
+			{
+			case eTop:
+				MonsterDead(2);
+				break;
+			case eRight:
+				MonsterDead(2);
+				break;
+			case eLeft:
+				MonsterDead(2);
+				break;
+			}
 		}
 		break;
 	case eMagicMushroom://nấm

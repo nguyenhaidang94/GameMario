@@ -142,12 +142,29 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 					MonsterDead(1);
 					break;
 				case eRight:
+					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+					{
+						MonsterDead(2);
+					}
+					break;
+				case eLeft:
+					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+					{
+						MonsterDead(2);
+					}
+					break;
+				}
+				break;
+
+				//------------- Monster dead -----------------------
+			case eBullet:
+				switch (collisionDirection)
+				{
+				case eRight:
 					MonsterDead(2);
 					break;
 				case eLeft:
 					MonsterDead(2);
-					break;
-				default:
 					break;
 				}
 				break;

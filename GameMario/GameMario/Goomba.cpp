@@ -148,11 +148,31 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		case eMario:
 			switch (collisionDirection)
 			{
-			case eTop:
-				MonsterDead(1);
-				break;
+				case eTop:
+					MonsterDead(1);
+					break;
+					//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
+				case eRight:
+					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+					{
+						_MonsterVelocityX = -GOOMBA_VELOCITY_X;
+						MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+					}
+					break;
+				case eLeft:
+					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+					{
+						_MonsterVelocityX = GOOMBA_VELOCITY_X;
+						MonsterDead(2);
+					}
+					break;
+			}
+			break;
 
-				//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
+		//------------- Monster dead -----------------------
+		case eBullet:
+			switch (collisionDirection)
+			{
 			case eRight:
 				_MonsterVelocityX = -GOOMBA_VELOCITY_X;
 				MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x

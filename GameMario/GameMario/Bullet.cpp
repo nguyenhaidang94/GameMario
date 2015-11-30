@@ -16,6 +16,7 @@ Bullet::Bullet(void)
 	_IsCollide =false;
 	SetSize(D3DXVECTOR2(16,16));
    _Tick_per_frame = 1000 / BULLET_FRAME_RATE;
+   SetObjectType(eBullet);
 
    ////_ObjectTypeID= eObjectTypeID::eBullet;
 

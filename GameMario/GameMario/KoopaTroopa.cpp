@@ -218,6 +218,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 				}
 			}
 			break;
+#pragma region Mario
 		case eMario:
 			switch (collisionDirection)
 			{
@@ -237,34 +238,56 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 				}
 				break;
 			case eRight:
-				if (_KoopaTroopaStop == true)//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
 				{
-					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 7.0;//tăng tốc khi bị đá
-					_Velocity.x = _MonsterVelocityX;
-					_KoopaTroopaStop = false;
-					_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
-					//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
+					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
+					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
 				}
-
-				//------------------Sửa chổ này lại khi ăn ngôi sao---------------
-				MonsterDead(2);
-				_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
+				else
+				{
+					if (_KoopaTroopaStop == true)//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
+					{
+						_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 7.0;//tăng tốc khi bị đá
+						_Velocity.x = _MonsterVelocityX;
+						_KoopaTroopaStop = false;
+						_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
+						//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
+					}
+				}
 				break;
 			case eLeft:
-				if (_KoopaTroopaStop == true)
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
 				{
-					_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 7.0;
-					_Velocity.x = _MonsterVelocityX;
-					_KoopaTroopaStop = false;
-					_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
-					//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
+					_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
+					MonsterDead(2);
 				}
-
-				//------------------Sửa chổ này lại khi ăn ngôi sao------------------------------
-				MonsterDead(2);
-				_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
+				else
+				{
+					if (_KoopaTroopaStop == true)
+					{
+						_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 7.0;
+						_Velocity.x = _MonsterVelocityX;
+						_KoopaTroopaStop = false;
+						_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
+						//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
+					}
+				}				
 				break;
 			default:
+				break;
+			}
+			break;
+#pragma endregion
+		case eBullet:
+			switch (collisionDirection)
+			{
+			case eRight:
+				_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
+				MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+				break;
+			case eLeft:
+				_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
+				MonsterDead(2);
 				break;
 			}
 			break;
