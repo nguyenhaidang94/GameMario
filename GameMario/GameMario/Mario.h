@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DynamicGameObject.h"
 #include "GlobalVariables.h"
 #include "SpriteManager.h"
@@ -25,18 +25,18 @@ private:
 	int _CountTimeJump;
 	bool _IsRight;
 	DWORD _Frame_start;	
-	DWORD _Tick_per_frame;
-	DWORD _Tick_per_frame_animation;
-	bool _IsGetMushroom;
-	bool _IsGetStar;
-	bool _IsTranferToSmall;
-	bool _IsGetFlowerToTranform;
-	bool _IsFlower;
-	int _CountStar;
-	int _currentFrameBeforeTransformToFlower;
-	bool _IsAnimationPipe;
-	bool _IsAnimationFlag;
-	bool _IsCollisionMonster;
+	DWORD _Tick_per_frame; //FPS của mario
+	DWORD _Tick_per_frame_animation; //FPS lúc auto aniamtion
+	bool _IsGetMushroom;		//Lấy nấm
+	bool _IsGetStar;			//Lấy ngôi sao
+	bool _IsTranferToSmall;		//Xác định biến mario to thành mario nhỏ
+	bool _IsGetFlowerToTranform;//Xác định chuyển đổi từ bình thường qua mario bất tử
+	bool _IsFlower;				//Xác định mario ăn hoa để bắn súng
+	int _CountStar;            //Xác định thời gian bất tử
+	int _currentFrameBeforeTransformToFlower;// Xác định frame trước khi ăn sao để xét sprite sau khi ăn sao
+	bool _IsAnimationPipe; // Xác định mario bắt đầu thực hiện animation lúc rớt xuống cống
+	bool _IsAnimationFlag; //Xác định mario bắt đầu thực hiện animation lúc lấy lá cờ
+	bool _IsCollisionMonster; // Xác định mario va chạm với quái sẽ nhảy lên
 	bool _IsDead;
 	int _TimeBeforeTranferToSmall;
 

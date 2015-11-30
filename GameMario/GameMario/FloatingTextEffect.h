@@ -2,6 +2,8 @@
 #include "effect.h"
 #include "TextManager.h"
 #include "Camera.h"
+
+//class display score when mario obtain item
 class FloatingTextEffect :
 	public Effect
 {

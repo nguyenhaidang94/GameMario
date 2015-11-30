@@ -9,7 +9,7 @@
 #define SPRITE_SMALL_R 2
 #define SPRITE_SMALL_L 3
 #define MAX_VELOCITY 10
-#define VELOCITY_COLLISION_MONSTER_X 3
+#define VELOCITY_COLLISION_MONSTER_X 4
 #define VELOCITY_COLLISION_MONSTER_Y 3
 #define MAX_VELOCITY2 15
 #define MAX_VELOCITYDEAD 15
@@ -252,7 +252,7 @@ void Mario::Jump()
 	 if( _CountTimeJump >=MAX_VELOCITY2) _Velocity.y =  DEFAULT_VELOCITY;
 
 	//shoot
-	 if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsCollisionMonster ==false)
+	 if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsCollisionMonster ==false && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 
@@ -275,6 +275,7 @@ void Mario::Fall()
 	//chết nếu mario rớt ra ngoài màn hình
 	if(_Position.y <= 10)
 	{
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
 		_IsDead=true;
 		_Tag = eGameTag::eMarioIsDead;
 		_State = eMarioState::eDead;
@@ -323,7 +324,7 @@ void Mario::Fall()
 	if(_IsAnimationFlag==true) _State= eMarioState::eIdle;
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L)&& _IsFlower==true)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_L)&& _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -433,7 +434,7 @@ void Mario::Stand()
 			}
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -483,10 +484,10 @@ void Mario::RunToRight()
 		_State = eMarioState::ePreStandRight;
 	}
 
-	
+	if(_IsCollisionMonster==true) _IsCollisionMonster = false;//ko va chạm với quái
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -536,8 +537,10 @@ void Mario::RunToLeft()
 			_State = eMarioState::ePreStandLeft;
 	}
 
+	if(_IsCollisionMonster==true) _IsCollisionMonster = false;//ko va chạm với quái
+
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -570,7 +573,7 @@ void Mario::PreStandRight()
 	 _IsCollide =false;
 	
 	 //shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -604,7 +607,7 @@ void Mario::PreStandLeft()
 	 _IsCollide =false;
 
 	 //shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -887,8 +890,6 @@ void Mario::Update()
 		_Position.y += _Velocity.y;
 	}
 	
-
-
 	if(_Velocity.y == 0 && _IsGetMushroom == false && _IsTranferToSmall == false && _IsGetFlowerToTranform == false)
 	{
 		_Velocity.y = DEFAULT_VELOCITY;
@@ -1190,7 +1191,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				}
 				else if(collisionDirection!= eCollisionDirection::eBottom && collisionDirection!= eCollisionDirection::eNone)
 				{
-					if(_Tag==eGameTag::eMarioIsBig) 
+					/*if(_Tag==eGameTag::eMarioIsBig) 
 					{
 						_Tag = eGameTag::eMarioIsSmall;
 						_IsTranferToSmall = true;
@@ -1208,7 +1209,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 						_Tag=eGameTag::eMarioIsDead;
 						_Velocity.y =  MAX_VELOCITYDEAD ;  
 						_State = eMarioState::eDead;
-					}
+					}*/
 				}
 			}
 		break;

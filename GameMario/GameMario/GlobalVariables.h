@@ -6,6 +6,7 @@
 #define FRAME_RATE 60		//60 FPS
 #define FULLSCREEN 0		//Not full screen
 #define TITLE_SIZE 32		//a title is 32x32
+#define BUFFER_FOR_SCREEN 50
 //Enum
 enum eObjectTypeID
 {
@@ -24,7 +25,7 @@ enum eObjectTypeID
 	eFlagpole,
 	eMonster = 13,
 	eMonsterDead,
-	eBullet ,
+	eBullet,
 };
 
 enum eSpriteID
@@ -134,7 +135,7 @@ enum eGameTag
 	eEmpty = 0,	//no tag
 
 	//object state
-	eDestroyed = 1,	//object is destroyed
+	eDestroyed = 1,		//object is destroyed
 	eRemove,	//object is remove in quatree
 	eIgnoreCollision,	//stop checking collison
 	eBrickBounceUp,		//brick to kill enemy when it bounce up(?)
@@ -154,7 +155,7 @@ enum eGameTag
 	eMarioIsSmallInvincible,	//mario is in small state and invincible
 	eMarioIsBig,				//mario is in big state only
 	eMarioIsBigInvincible,	//mario is in big state and invincible
-	eMarioIsDead
+	eMarioIsDead,
 			
 };
 
