@@ -41,12 +41,12 @@ void PlayMap::Update()
 void PlayMap::Render()
 {
 	_Background->Render();
-	_Mario->Render();
 	vector<GameObject*> listObj = _QuadTree->GetObjectsOnScreen();
 	for (int i = 0; i < listObj.size(); i++)
 	{
 		listObj[i]->Render();
 	}
+	_Mario->Render();
 }
 
 void PlayMap::Release()

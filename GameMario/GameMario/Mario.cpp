@@ -184,6 +184,10 @@ void Mario::HandlingInput()
 	
 }
 
+Box Mario::GetBoundaryBox()
+{
+	return Box(_Position.x - _Size.x/2 + 8 , _Position.y + _Size.y/2, _Size.x - 16, _Size.y, _Velocity.x, _Velocity.y);
+}
 
 void Mario::Dead()
 {
@@ -895,14 +899,14 @@ void Mario::Update()
 		_Velocity.y = DEFAULT_VELOCITY;
 	}
 
-	if(_IsFlower == true )
+	if(_IsFlower == true ) // nếu ăn hoa rồi mới update đạn
 	{
 		Gun::GetInstance()->Shoot(_Position,_IsRight);
 	}
 
-	if(_IsGetStar == true ) _CountStar++;
+	if(_IsGetStar == true ) _CountStar++; //Đếm thời gian bất tử
 
-	if(_CountStar >=TIME_STAR )
+	if(_CountStar >=TIME_STAR ) // Nếu thời gian lâu hơn thời gian bất tử thì set lại sprite trc khi ăn
 		{
 			_IsGetStar = false;
 			if(_Tag ==eGameTag::eMarioIsBigInvincible && _IsFlower ==false) 
@@ -922,6 +926,20 @@ void Mario::Update()
 			}
 	}
 
+	if(_IsDead==true && _Position.y <= 0)
+	{
+		_IsDead=false;
+		if(GameStatistics::GetInstance()->GetLife() <0)	GameStatistics::GetInstance()->ChangeScene(eSceneID::eGameOver);
+		else 
+		{
+			GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);
+			if(_Position.x >GameStatistics::GetInstance()->GetCheckpoint().x)
+			{
+				GameStatistics::GetInstance()->ChangeCheckpointStatus(true);
+			}
+			_Tag=eGameTag::eMarioIsSmall;
+		}
+	}
 	//if _PipeTag != empty mean switch scene, set mario posion in new world and reset _PipeTag
 	if(_PipeTag != eGameTag::eEmpty)
 	{
@@ -1177,6 +1195,13 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			_State = eMarioState::eIdle;
 		}
 		break;
+	case e1upMushroom:
+		{
+			if(collisionDirection!=eCollisionDirection::eNone && _IsDead==false)
+			{
+				GameStatistics::GetInstance()->ChangeLife(true);
+			}
+		}
 	case eMonster:
 		{
 			if(_IsDead==false && _IsTranferToSmall==false && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioIsSmallInvincible )
@@ -1191,7 +1216,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				}
 				else if(collisionDirection!= eCollisionDirection::eBottom && collisionDirection!= eCollisionDirection::eNone)
 				{
-					/*if(_Tag==eGameTag::eMarioIsBig) 
+					if(_Tag==eGameTag::eMarioIsBig) 
 					{
 						_Tag = eGameTag::eMarioIsSmall;
 						_IsTranferToSmall = true;
@@ -1209,7 +1234,9 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 						_Tag=eGameTag::eMarioIsDead;
 						_Velocity.y =  MAX_VELOCITYDEAD ;  
 						_State = eMarioState::eDead;
-					}*/
+						GameStatistics::GetInstance()->ChangeLife(false);
+
+					}
 				}
 			}
 		break;

@@ -48,6 +48,7 @@ public:
 	~Mario(void);
 	//Inherited function
 	Box GetMovementRangeBox();
+	Box GetBoundaryBox();
 	void Update();
 	void Render();
 	void Release();

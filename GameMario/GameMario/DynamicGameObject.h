@@ -9,7 +9,7 @@ public:
 	DynamicGameObject(void);
 	~DynamicGameObject(void);
 	//Overide get colision box of object
-	Box GetBoundaryBox();
+	virtual	Box GetBoundaryBox();
 	//Set velocity for object
 	void SetVelocity(D3DXVECTOR2 velocity);
 };
