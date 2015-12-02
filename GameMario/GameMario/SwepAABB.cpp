@@ -9,7 +9,7 @@ Box getSweptBroadphaseBox(Box box)
 	Box broadphasebox;
 
 	broadphasebox.fX = box.fVx > 0 ? box.fX : box.fX + box.fVx;
-	broadphasebox.fY = box.fVy > 0 ? box.fY : box.fY + box.fVy;
+	broadphasebox.fY = box.fVy > 0 ? box.fY + box.fVy : box.fY;
 	broadphasebox.fWidth = box.fVx > 0 ? box.fVx + box.fWidth : box.fWidth - box.fVx;
 	broadphasebox.fHeight = box.fVy > 0 ? box.fVy + box.fHeight : box.fHeight - box.fVy;
 	broadphasebox.fVx = 0;
@@ -24,7 +24,7 @@ Box getSweptBroadphaseBox(Box box)
 //----------------------------------------------------------
 bool AABBCheck(Box box1, Box box2)
 {
-	return !(box1.fX + box1.fWidth <= box2.fX || box1.fX >= box2.fX + box2.fWidth || box1.fY - box1.fHeight >= box2.fY || box1.fY <= box2.fY - box2.fHeight);
+	return !(box1.fX + box1.fWidth < box2.fX || box1.fX > box2.fX + box2.fWidth || box1.fY - box1.fHeight > box2.fY || box1.fY < box2.fY - box2.fHeight);
 }
 
 //--------------------------------------------------------------------------
@@ -143,7 +143,7 @@ float sweptAABB(Box box1, Box box2, float &normalx, float &normaly)
 	//truong hop xay ra va cham
 	else
 	{
-		if (xEntry > yEntry && (box1.fY - box1.fHeight != box2.fY))
+		if (xEntry > yEntry)
 		{
 			if (xInvEntry < 0.0f)
 			{
