@@ -164,9 +164,9 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 			unknownBox.fVy = 0.0f;
 		}
 
-		//lay box o fram ke tiep
+		//lay vung khong gian cua vat 1
 		Box broadphasebox = getSweptBroadphaseBox(dynamicBox);
-		//neu o frame ke tiep vat se va cham
+		//neu vat 2 nam trong vung khong gian cua vat 1
 		if (AABB(broadphasebox, unknownBox, moveX, moveY) == true)
 		{
 			//su dung thuat toan sweptAABB de xac dinh va cham
@@ -222,7 +222,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 				return eCollisionDirection::eTop;
 			}
 			//bot
-			else if (moveY < 0.0f)
+			else
 			{
 				//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
 				return eCollisionDirection::eBottom;
@@ -238,7 +238,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 				return eCollisionDirection::eLeft;
 			}
 			//right
-			else if (moveX > 0.0f)
+			else
 			{
 				//MessageBox(_hWnd, L"right", L"collision", MB_OK);
 				return eCollisionDirection::eRight;
@@ -248,8 +248,15 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 		else
 		{
 			//truong hop goc cham goc thi khong xac dinh duoc huong va cham
-			if (dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY && dynamicBox.fX + dynamicBox.fWidth == unknownBox.fX
-				|| dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY && dynamicBox.fX == unknownBox.fX + unknownBox.fWidth)
+					//top left dynamicbox collide with bot right unknownbox
+			if ((dynamicBox.fY == unknownBox.fY - unknownBox.fHeight && dynamicBox.fX == unknownBox.fX + unknownBox.fWidth)
+					//top right dynamicbox collide with bot left unknownbox
+				|| (dynamicBox.fY == unknownBox.fY - unknownBox.fHeight && dynamicBox.fX + dynamicBox.fWidth == unknownBox.fX)
+					//bot right dynamicbox collide with top left unknowbox
+				|| (dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY && dynamicBox.fX + dynamicBox.fWidth == unknownBox.fX)
+					//bot left dynamicbox collide with top right unknowbox
+				|| (dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY && dynamicBox.fX == unknownBox.fX + unknownBox.fWidth)
+				)
 				return eCollisionDirection::eNone;
 
 			//tiep xuc voi mat tren cua vat unknown
