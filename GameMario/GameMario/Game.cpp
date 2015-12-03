@@ -117,7 +117,7 @@ void Game::Game_Run(HWND hWnd)
 		return;
 
 	_d3ddev->Clear(1, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, NULL);
-	if (_d3ddev->BeginScene())
+	if (_d3ddev->BeginScene() == S_OK)
 	{
 		_spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_BACKTOFRONT);
 
