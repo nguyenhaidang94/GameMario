@@ -7,6 +7,7 @@ Brick::Brick(void)
 Brick::Brick(int objectID, int x, int y)
 {
 	Initialize(x, y);
+	_IsAboutToDestroy = -1;
 	//setup current sprite for brick
 	switch (objectID)
 	{
@@ -49,6 +50,21 @@ void Brick::Update()
 			_IsBounce = false;
 		}
 	}
+	if(_IsAboutToDestroy >= 0)
+	{
+		if(_IsAboutToDestroy == 0)
+		{
+			_IsAboutToDestroy = 1;
+		}
+		else
+		{
+			if(_IsAboutToDestroy == 1)
+			{
+				_Tag = eGameTag::eDestroyed;
+				EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eBreakBrick, _Color);
+			}
+		}
+	}
 }
 
 void Brick::Render()
@@ -77,8 +93,7 @@ void Brick::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				//big mario destroy brick
 				case eMarioIsBig:
 				case eMarioIsBigInvincible:
-					_Tag = eGameTag::eDestroyed;
-					EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eBreakBrick, _Color);
+					_IsAboutToDestroy = 0;	//hold 1 tick for check collision before destroy
 					break;
 
 				//small mario make brick bounce

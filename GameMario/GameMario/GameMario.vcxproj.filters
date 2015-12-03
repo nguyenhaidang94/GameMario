@@ -64,9 +64,6 @@
     <Filter Include="Main">
       <UniqueIdentifier>{7496afc3-c5b3-4631-be02-4ffa23846890}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Effect">
-      <UniqueIdentifier>{b4d1605d-b3d3-47a9-8e0b-3ae438d8cd04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Text">
       <UniqueIdentifier>{ba477043-6bf5-47d3-9798-dce0bbca468e}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="Framework\QuadTree">
       <UniqueIdentifier>{6cb3c8a9-204d-4b8b-b2e6-69a5e8113730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Effect">
+      <UniqueIdentifier>{b4d1605d-b3d3-47a9-8e0b-3ae438d8cd04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,16 +154,16 @@
       <Filter>GameObject\Object</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="BrickBreakEffect.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="ObtainCoinEffect.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="ItemBrick.cpp">
       <Filter>GameObject\Object\Brick</Filter>
@@ -187,7 +187,7 @@
       <Filter>GameObject\Object\Brick</Filter>
     </ClCompile>
     <ClCompile Include="FloatingTextEffect.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Node.cpp">
       <Filter>Framework\QuadTree</Filter>
@@ -309,16 +309,16 @@
       <Filter>GameObject\Object</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClInclude>
     <ClInclude Include="BrickBreakEffect.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClInclude>
     <ClInclude Include="ObtainCoinEffect.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClInclude>
     <ClInclude Include="ItemBrick.h">
       <Filter>GameObject\Object\Brick</Filter>
@@ -342,7 +342,7 @@
       <Filter>GameObject\Object\Brick</Filter>
     </ClInclude>
     <ClInclude Include="FloatingTextEffect.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>GameObject\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
       <Filter>Framework\QuadTree</Filter>

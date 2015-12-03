@@ -13,6 +13,14 @@ FloatingBar::FloatingBar(void)
 
 FloatingBar::FloatingBar(int x, int y, std::string tag)
 {
+	_Velocity = D3DXVECTOR2(0, 0);
+	_Acceleration = 0;
+	_Position = D3DXVECTOR2(x, y);
+	_Size = D3DXVECTOR2(BAR_WIDTH, BAR_HEIGHT);
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBarSprite);
+	_ObjectTypeID = eObjectTypeID::eFloatingBar;
+	_Direction = true;
+
 	//go down
 	if(tag == "down")			
 	{
@@ -37,13 +45,6 @@ FloatingBar::FloatingBar(int x, int y, std::string tag)
 		_ObjectID = 3;
 		_Acceleration = ACCELERARION_Y;
 	}
-	_Position = D3DXVECTOR2(x, y);
-	_Size = D3DXVECTOR2(BAR_WIDTH, BAR_HEIGHT);
-	_Velocity = D3DXVECTOR2(0, 0);
-	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBarSprite);
-	_ObjectTypeID = eObjectTypeID::eFloatingBar;
-	_Acceleration = 0;
-	_Direction = true;
 }
 
 

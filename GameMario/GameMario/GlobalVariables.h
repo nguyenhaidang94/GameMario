@@ -23,7 +23,7 @@ enum eObjectTypeID
 	eStarMan,
 	eFloatingBar,
 	eFlagpole,
-	eMonster = 13,
+	eMonster,
 	eMonsterDead,
 	eBullet,
 };
@@ -139,7 +139,7 @@ enum eGameTag
 	eDestroyed = 1,		//object is destroyed
 	eRemove,	//object is remove in quatree
 	eIgnoreCollision,	//stop checking collison
-	eBrickBounceUp,		//brick to kill enemy when it bounce up(?)
+	eBrickBounceUp,		//brick kill enemy when it bounce up(?)
 
 	//world tag
 	eToUnderground1_1,	//underground of world 1_1

@@ -1230,12 +1230,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		}
 		break;
 	case e1upMushroom:
-		{
-			if(collisionDirection!=eCollisionDirection::eNone && _IsDead==false)
-			{
-				GameStatistics::GetInstance()->ChangeLife(true);
-			}
-		}
+		break;
 	case eMonster:
 		{
 			if(_IsDead==false && _IsTranferToSmall==false && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall ==0 )

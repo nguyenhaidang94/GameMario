@@ -92,32 +92,35 @@ void PlayMap::HandlingCollision()
 	//--Handle collision with all object on screen
 	for (int i = 0; i < objectOnScreen.size(); i++)
 	{
-		//check colision with mario...
-		eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i]);
-		if(direction != eCollisionDirection::eNone)
+		//check colision with mario if it's not has eIgnoreCollision Tag
+		if(_Mario->GetTag() != eGameTag::eIgnoreCollision)
 		{
-			//if collide with brick on top, store and handle later
-			if (objectOnScreen[i]->GetObjectTypeID() == eObjectTypeID::eBrick && direction == eCollisionDirection::eBottom)
+			eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i]);
+			if(direction != eCollisionDirection::eNone)
 			{
-				//if 1st brick
-				if(indexClosestBrickCollide == -1)
+				//if collide with brick on top, store and handle later
+				if (objectOnScreen[i]->GetObjectTypeID() == eObjectTypeID::eBrick && direction == eCollisionDirection::eBottom)
 				{
-					indexClosestBrickCollide = i;
-				}
-				else
-				{
-					//check if it closer than the closest
-					if (abs(_Mario->GetPosition().x - objectOnScreen[i]->GetPosition().x) <
-						abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
+					//if 1st brick
+					if(indexClosestBrickCollide == -1)
 					{
 						indexClosestBrickCollide = i;
 					}
+					else
+					{
+						//check if it closer than the closest
+						if (abs(_Mario->GetPosition().x - objectOnScreen[i]->GetPosition().x) <
+							abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
+						{
+							indexClosestBrickCollide = i;
+						}
+					}
 				}
-			}
-			else	//send collision
-			{
-				_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
-				objectOnScreen[i]->OnCollision(_Mario, direction);
+				else	//send collision
+				{
+					_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
+					objectOnScreen[i]->OnCollision(_Mario, direction);
+				}
 			}
 		}
 
