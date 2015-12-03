@@ -15,8 +15,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 	switch (mapID)
 	{
 	case e1_1:
-		//fileName = "1_1_quadtree";
-		fileName = "12_quadtree";
+		fileName = "1_1_quadtree";
 		break;
 	case e1_2:
 		fileName = "1_2_quadtree";

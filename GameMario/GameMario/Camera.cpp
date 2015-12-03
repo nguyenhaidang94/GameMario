@@ -116,7 +116,7 @@ Box Camera::GetBoundaryBox() const
 
 Box Camera::GetActiveSite() const
 {
-	return Box(_ViewPortX - BUFFER_FOR_SCREEN, _ViewPortY + BUFFER_FOR_SCREEN, SCREEN_WIDTH + BUFFER_FOR_SCREEN, SCREEN_HEIGHT + BUFFER_FOR_SCREEN);
+	return Box(_ViewPortX - BUFFER_FOR_SCREEN, _ViewPortY + BUFFER_FOR_SCREEN, SCREEN_WIDTH + 2*BUFFER_FOR_SCREEN, SCREEN_HEIGHT + 2*BUFFER_FOR_SCREEN);
 }
 
 void Camera::Reset()
