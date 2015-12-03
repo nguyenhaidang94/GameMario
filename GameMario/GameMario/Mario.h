@@ -38,7 +38,7 @@ private:
 	bool _IsAnimationFlag; //Xác định mario bắt đầu thực hiện animation lúc lấy lá cờ
 	bool _IsCollisionMonster; // Xác định mario va chạm với quái sẽ nhảy lên
 	bool _IsDead;
-	int _TimeBeforeTranferToSmall;
+	float _TimeBeforeTranferToSmall;
 
 	//Get new position for mario in new world base on tag
 	D3DXVECTOR2 GetNewMarioPosition(eGameTag tag);

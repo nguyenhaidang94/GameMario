@@ -48,7 +48,8 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	//
 	_ListSprite[eSpriteID::eBigMario] = new Sprite(SpriteHandler, L"resources\\Sprites\\BigMario.png", 32, 64, 14, 14, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eSmallMario]= new Sprite(SpriteHandler,L"resources\\Sprites\\SmallMario.png",32,32,14,14, D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eMarioTransform] = new Sprite(SpriteHandler,L"resources\\Sprites\\MarioTransform.png",32,64,6,6,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eMarioTransformBigToSmall] = new Sprite(SpriteHandler,L"resources\\Sprites\\MarioTranformBigToSmall.png",32,64,14,14,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eMarioTransformSmallToBig] = new Sprite(SpriteHandler,L"resources\\Sprites\\MarioTranformSmallToBig.png",32,64,14,14,D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eBigMarioStar]= new Sprite(SpriteHandler,L"resources\\Sprites\\StarBigMario.png",32,64,36,24,D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eSmallMarioStar] = new Sprite(SpriteHandler,L"resources\\Sprites\\StarSmallMario.png",32,32,30,18,D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eBulletSprite] = new Sprite(SpriteHandler,L"resources\\Sprites\\Bullet.png",16,16,4,4,D3DCOLOR_XRGB(255,0,255));

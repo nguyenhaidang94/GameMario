@@ -25,6 +25,8 @@ public:
 	void RenderFirstFrame(float x, float y, float priority = 0.5) const;
 	//Render at fixed location on screen, y axis from top, priority from 0 to 1, higher priority will render on top of lower priority one
 	void FixedRenderAtFrame(float x, float y, int frameNo, float priority = 0.5) const;
+	//Render at frameNo, priority from 0 to 1, higher priority will render on top of lower priority one with alpha
+	void RenderAtFrameWithAlpha(float x, float y, int frameNo,int alpha, float priority = 0.5) const;
 	void Release() const;
 };
 
