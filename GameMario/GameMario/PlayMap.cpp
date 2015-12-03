@@ -96,7 +96,7 @@ void PlayMap::HandlingCollision()
 		if(_Mario->GetTag() != eGameTag::eIgnoreCollision)
 		{
 			eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i]);
-			if(direction != eCollisionDirection::eNone)
+			if(direction != eCollisionDirection::eNone && _Mario->GetTag()!=eGameTag::eMarioIsDead)
 			{
 				//if collide with brick on top, store and handle later
 				if (objectOnScreen[i]->GetObjectTypeID() == eObjectTypeID::eBrick && direction == eCollisionDirection::eBottom)

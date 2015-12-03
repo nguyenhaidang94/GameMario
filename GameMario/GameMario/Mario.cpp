@@ -15,7 +15,7 @@
 #define MAX_VELOCITYDEAD 15
 #define MAX_VELOCITYX 4.0f
 #define MAX_VELOCITYSHOOT 10
-#define ANIMATION_FRAME_RATE 5
+#define ANIMATION_FRAME_RATE 15
 #define MARIO_FRAME_RATE 10
 #define MARIO_FRAME_RATE_SLOW 5
 #define TIME_STAR 200
@@ -286,6 +286,7 @@ void Mario::Fall()
 		_Tag = eGameTag::eMarioIsDead;
 		_State = eMarioState::eDead;
 		_Velocity.y = MAX_VELOCITYDEAD;
+		GameStatistics::GetInstance()->ChangeLife(false);
 	}
 
 
@@ -916,7 +917,7 @@ void Mario::Update()
 	if (_IsTranferToSmall == true|| _TimeBeforeTranferToSmall > 0)
 	{
 		_TimeBeforeTranferToSmall += 0.5;
-		_Tag=eGameTag::eMarioIsDead;
+		_Tag=eGameTag::eMarioNotCollision;
 	}
 
 	if(_TimeBeforeTranferToSmall >=TIME_BEFORE_BIG_TO_SMALL)
@@ -960,6 +961,8 @@ void Mario::Update()
 				GameStatistics::GetInstance()->ChangeCheckpointStatus(true);
 			}
 			_Tag=eGameTag::eMarioIsSmall;
+			SetSize(D3DXVECTOR2(32,32));
+		
 		}
 	}
 	//if _PipeTag != empty mean switch scene, set mario posion in new world and reset _PipeTag
@@ -1176,7 +1179,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		}
 		break;
 	case eMagicMushroom:
-		if(collisionDirection!=eCollisionDirection::eNone && _IsDead==false)
+		if(collisionDirection!=eCollisionDirection::eNone && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible)
 		{
 			_IsGetMushroom=true;
 			_Tag = eGameTag::eMarioIsBig;
@@ -1226,11 +1229,17 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	case eFlagpole:
 		{
 			_IsAnimationFlag = true;
-			_State = eMarioState::eIdle;
+			
 		}
 		break;
 	case e1upMushroom:
-		break;
+		{
+			if(collisionDirection!=eCollisionDirection::eNone && _IsDead==false)
+			{
+				GameStatistics::GetInstance()->SetLife(GameStatistics::GetInstance()->GetLife() + 1);
+			}
+			break;
+		}
 	case eMonster:
 		{
 			if(_IsDead==false && _IsTranferToSmall==false && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall ==0 )
@@ -1262,8 +1271,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 						_Tag=eGameTag::eMarioIsDead;
 						_Velocity.y =  MAX_VELOCITYDEAD ;  
 						_State = eMarioState::eDead;
-						GameStatistics::GetInstance()->ChangeLife(false);
-
+			
 					}
 				}
 			}

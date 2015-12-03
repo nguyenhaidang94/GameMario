@@ -248,7 +248,6 @@ void Bullet::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 			_IsAlive=false;
 			_Velocity.x =0;
 			_Velocity.y =0;
-			
 		}
 		break;
 	}
