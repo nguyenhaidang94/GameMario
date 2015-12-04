@@ -16,7 +16,7 @@ KoopaParatroopa::KoopaParatroopa(int objectTypeID, int positionX, int positionY)
 	_Position = D3DXVECTOR2(positionX, positionY);										//set position
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaParatroopa);		//set sprite
 	_Size = D3DXVECTOR2(KOOPAPARATROOPA_WIDTH, KOOPAPARATROOPA_HEIGHT);					//set size
-	_Velocity = D3DXVECTOR2(-KOOPAPARATROOPA_VELOCITY_X, -KOOPAPARATROOPA_VELOCITY_Y);	//set position
+	_Velocity = D3DXVECTOR2(0, 0);	//set position
 	_TypeSpriteID = eSpriteID::eKoopaParatroopa;										//set type Id of sprite
 	_MonsterTypeID = objectTypeID;														//set type id of object
 

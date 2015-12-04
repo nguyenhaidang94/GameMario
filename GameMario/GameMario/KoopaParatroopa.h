@@ -1,11 +1,11 @@
 #pragma once
 #include "KoopaTroopa.h"
 #define KOOPAPARATROOPA_WIDTH 32
-#define KOOPAPARATROOPA_HEIGHT 64
+#define KOOPAPARATROOPA_HEIGHT 48
 #define KOOPAPARATROOPA_VELOCITY_X 1.5f
 #define KOOPAPARATROOPA_VELOCITY_Y 6.0f
 #define KOOPAPARATROOPA_ACCELERATION 0.3f
-#define TIMES_TURN 50
+#define TIMES_TURN 100
 #define TIMES_REVIVED_VELOCITY 3000
 
 class KoopaParatroopa: public KoopaTroopa

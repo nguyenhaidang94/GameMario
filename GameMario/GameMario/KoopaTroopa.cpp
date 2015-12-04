@@ -16,7 +16,7 @@ KoopaTroopa::KoopaTroopa(int objectTypeID, int positionX, int positionY)
 	_Position = D3DXVECTOR2(positionX, positionY);									//set position
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);		//set sprite
 	_Size = D3DXVECTOR2(KOOPATROOPA_WIDTH, KOOPATROOPA_HEIGHT);						//set size
-	_Velocity = D3DXVECTOR2(-KOOPATROOPA_VELOCITY_X, -KOOPATROOPA_VELOCITY_Y);		//set position
+	_Velocity = D3DXVECTOR2(0, 0);		//set position
 	_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
 	_MonsterTypeID = objectTypeID;													//set type id of object
 
@@ -25,10 +25,10 @@ KoopaTroopa::KoopaTroopa(int objectTypeID, int positionX, int positionY)
 	_TimePerFrame = TIMES_TURN;														//set time the turn
 	_TimeStartVelocity = GetTickCount();											//set time now
 	_TimePerVelocity = TIMES_REVIVED_VELOCITY;										//set time the turn
-	SetFrame(objectTypeID);															//set frame
 	_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
 	_KoopaTroopaRevived = true;
 	_KoopaTroopaStop = false;
+	SetFrame(objectTypeID);															//set frame
 }
 
 void KoopaTroopa::SetKoopaTroopa(int objectTypeID, int positionX, int positionY)
@@ -37,7 +37,7 @@ void KoopaTroopa::SetKoopaTroopa(int objectTypeID, int positionX, int positionY)
 	_Position = D3DXVECTOR2(positionX, positionY);									//set position
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);		//set sprite
 	_Size = D3DXVECTOR2(KOOPATROOPA_WIDTH, KOOPATROOPA_HEIGHT);						//set size
-	_Velocity = D3DXVECTOR2(-KOOPATROOPA_VELOCITY_X, -KOOPATROOPA_VELOCITY_Y);		//set position
+	_Velocity = D3DXVECTOR2(0, 0);		//set position
 	_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
 	_MonsterTypeID = objectTypeID;													//set type id of object
 
@@ -46,10 +46,10 @@ void KoopaTroopa::SetKoopaTroopa(int objectTypeID, int positionX, int positionY)
 	_TimePerFrame = TIMES_TURN;														//set time the turn
 	_TimeStartVelocity = GetTickCount();											//set time now
 	_TimePerVelocity = TIMES_REVIVED_VELOCITY;										//set time the turn
-	SetFrame(objectTypeID);															//set frame
 	_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
 	_KoopaTroopaRevived = true;
 	_KoopaTroopaStop = false;
+	SetFrame(objectTypeID);															//set frame
 }
 
 void KoopaTroopa::Update()
@@ -58,7 +58,7 @@ void KoopaTroopa::Update()
 	{
 		DWORD timeNow = GetTickCount();
 
-		if (_KoopaTroopaRevived)//còn sống
+		if (_KoopaTroopaRevived)//còn sống chưa hồi sinh
 		{
 			if (!_KoopaTroopaStop)//và đi
 			{
@@ -79,7 +79,11 @@ void KoopaTroopa::Update()
 				// REVIVED: cựa cậy sau 1 khoản tg sẽ hồi sinh: trước đó nó sẽ cựa cậy
 				if (timeNow - _TimeStartVelocity >= _TimePerVelocity)
 				{
-					_KoopaTroopaStop = false;
+					_KoopaTroopaStop = false; 
+					_TypeSpriteID = eSpriteID::eKoopaTroopa;	//trạng thái di chuyển
+					_Size.y = KOOPATROOPA_HEIGHT;				//set lại kích thước
+					_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopa);		//set sprite
+					SetFrame(_MonsterTypeID);
 				}
 			}
 		}
@@ -87,7 +91,7 @@ void KoopaTroopa::Update()
 		{
 			if (_KoopaTroopaStop)
 			{
-				_FrameStart = _FrameStartType + 4;//set về frame đứng yên
+				_FrameStart = _FrameStartType;//set về frame đứng yên
 				_FrameEnd = _FrameCurrent = _FrameStart;
 				_Velocity.x = 0.0f;
 
@@ -101,7 +105,7 @@ void KoopaTroopa::Update()
 			}
 			else//chạy với mai rùa
 			{
-				_FrameStart = _FrameStartType + 4;
+				_FrameStart = _FrameStartType;
 				_FrameEnd = _FrameStart;
 				_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;
 			}
@@ -130,7 +134,7 @@ void KoopaTroopa::Update()
 		_Velocity.x = 0.0f;
 		_Velocity.y = -KOOPATROOPA_VELOCITY_Y;
 	}
-	else
+	else//chết
 	{
 		if (_Velocity.y == 0.0f)
 		{
@@ -190,7 +194,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 					case ePiranhaPlant:
 						break;
 					case eKoopaTroopaDanger:
-						if (_TypeSpriteID == eSpriteID::eKoopaTroopaDanger)//2 con nguy hiểm sẽ dậu ra
+						if (_TypeSpriteID == eSpriteID::eKoopaTroopaDanger)//2 con nguy hiểm sẽ vội ra
 						{
 							DirectionsCollision(object, collisionDirection);
 							break;
@@ -212,6 +216,8 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 							}
 						}
 						break;
+					case eKoopaTroopa:
+						DirectionsCollisionNoBox(object, collisionDirection);
 					default:
 						DirectionsCollision(object, collisionDirection);
 						break;
@@ -228,29 +234,34 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 					if (_KoopaTroopaRevived == false)//nếu đã chết và bị đá nhưng lại bị dậm lần nữa sẽ set lai tốc độ
 					{
 						_MonsterVelocityX = _MonsterVelocityX / (KOOPATROOPA_VELOCITY_X + 7.0) * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
-						_TypeSpriteID = eSpriteID::eKoopaTroopa;//set type stripeID don't dead
 					}
 					_Velocity.x = 0.0f;
 					_KoopaTroopaStop = true;
 					_KoopaTroopaRevived = false;
-					_TimeStartVelocity = GetTickCount();		//set time now: will revive
+					_TypeSpriteID = eSpriteID::eKoopaTroopaStop;	//trạng thái đứng yên
+					_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopaStop);		//set sprite
+					SetFrame(_MonsterTypeID);
+					_Size.y = KOOPATROOPASTOP_HEIGHT;
+					_TimeStartVelocity = GetTickCount();			//set time now: will revive
 
 				}
 				break;
 			case eRight:
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)//mario ăn ngôi sao
 				{
 					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
-					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+					MonsterDead(2);									//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
 				}
 				else
 				{
-					if (_KoopaTroopaStop == true)//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
+					if (_KoopaTroopaStop == true)					//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
 					{
 						_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 7.0;//tăng tốc khi bị đá
 						_Velocity.x = _MonsterVelocityX;
 						_KoopaTroopaStop = false;
-						_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
+						_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
+						_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
+						_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopaStop);		//set sprite
 						//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
 					}
 				}
@@ -268,7 +279,8 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 						_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 7.0;
 						_Velocity.x = _MonsterVelocityX;
 						_KoopaTroopaStop = false;
-						_KoopaTroopaRevived = false;// nếu đá có sống lại cũng chết
+						_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
+						_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
 						//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
 					}
 				}				
@@ -309,38 +321,72 @@ void KoopaTroopa::SetFrame(int MonsterType)
 {
 	if (_MonsterAlive)
 	{
-		switch (MonsterType)
+		if (_KoopaTroopaRevived)//đi bình thường
 		{
-		case 28:
-			_FrameStartType = 0;
-			_FrameCurrent = _FrameStartType;
-			_FrameEndType = 5;
-			break;
-		case 29:
-			_FrameStartType = 6;
-			_FrameCurrent = _FrameStartType;
-			_FrameEndType = 11;
-			break;
-		case 30:
-			_FrameStartType = 12;
-			_FrameCurrent = _FrameStartType;
-			_FrameEndType = 17;
-			break;
-		case 4:
-			_FrameStartType = 18;
-			_FrameCurrent = _FrameStartType;
-			_FrameEndType = 23;
-			break;
-		default:
-			_FrameStartType = 0;
-			_FrameCurrent = _FrameStartType;
-			_FrameEndType = 5;
-			break;
-		};
+			switch (MonsterType)
+			{
+			case 28:
+				_FrameStartType = 0;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 3;
+				break;
+			case 29:
+				_FrameStartType = 4;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 7;
+				break;
+			case 30:
+				_FrameStartType = 8;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 11;
+				break;
+			case 4:
+				_FrameStartType = 12;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 15;
+				break;
+			default:
+				_FrameStartType = 0;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 3;
+				break;
+			};
+		}
+		else
+		{
+			switch (MonsterType)//mai rùa stop
+			{
+			case 28:
+				_FrameStartType = 0;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 1;
+				break;
+			case 29:
+				_FrameStartType = 2;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 3;
+				break;
+			case 30:
+				_FrameStartType = 4;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 5;
+				break;
+			case 4:
+				_FrameStartType = 6;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 7;
+				break;
+			default:
+				_FrameStartType = 0;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 1;
+				break;
+			};
+		}
 	}
 	else
 	{
-		switch (MonsterType)
+		switch (MonsterType)//chết
 		{
 		case 28:
 			_FrameCurrent = 0;

@@ -40,3 +40,26 @@ void Monster::DirectionsCollision(GameObject *object, eCollisionDirection collis
 		break;
 	}
 }
+
+void Monster::DirectionsCollisionNoBox(GameObject *object, eCollisionDirection collisionDirection)
+{
+	switch (collisionDirection)
+	{
+	case eBottom:
+		_Velocity.y = 0.0f;
+		_Velocity.x = _MonsterVelocityX;
+		break;
+	case eRight:
+		if (_MonsterVelocityX > 0.0f)
+			_MonsterVelocityX = -_MonsterVelocityX;
+		_Velocity.x = 0.0f;
+		break;
+	case eLeft:
+		if (_MonsterVelocityX < 0.0f)
+			_MonsterVelocityX = -_MonsterVelocityX;
+		_Velocity.x = 0.0f;
+		break;
+	default:
+		break;
+	}
+}

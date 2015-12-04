@@ -27,4 +27,5 @@ public:
 	~Monster();
 	//directions Collision
 	void DirectionsCollision(GameObject *object, eCollisionDirection collisionDirection);
+	void DirectionsCollisionNoBox(GameObject *object, eCollisionDirection collisionDirection);
 };

@@ -51,6 +51,7 @@ enum eSpriteID
 	eGoomba,
 	eGoombaDead,
 	eKoopaTroopa,
+	eKoopaTroopaStop,
 	eKoopaTroopaDanger,
 	eKoopaTroopaDead,
 	eKoopaParatroopa,

@@ -16,7 +16,7 @@ Goomba::Goomba(int objectTypeID, int positionX, int positionY)
 	_Position = D3DXVECTOR2(positionX, positionY);							//set position
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eGoomba);	//set sprite
 	_Size = D3DXVECTOR2(GOOMBA_WIDTH, GOOMBA_HEIGHT);						//set size
-	_Velocity = D3DXVECTOR2(-GOOMBA_VELOCITY_X, -GOOMBA_VELOCITY_Y);		//set position
+	_Velocity = D3DXVECTOR2(0, 0);		//set position
 	_TypeSpriteID = eSpriteID::eGoomba;										//set type Id of sprite
 	_MonsterTypeID = objectTypeID;											//set type id of object
 	

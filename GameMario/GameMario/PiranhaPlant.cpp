@@ -13,12 +13,13 @@ PiranhaPlant::~PiranhaPlant()
 PiranhaPlant::PiranhaPlant(int objectTypeID, int positionX, int positionY)
 {
 	//Object											//set id
-	_Position = D3DXVECTOR2(positionX, positionY - 1.4 * 35);						//set position: positionY - 1.4 * 32 mục đích cho đi từ dưới lên lúc bắt đầu
+	_Position = D3DXVECTOR2(positionX, positionY - 1.4 * 32);						//set position: positionY - 1.4 * 32 mục đích cho đi từ trên xuống lúc bắt đầu
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::ePiranhaPlant);	//set sprite
 	_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);					//set size
-	_Velocity = D3DXVECTOR2(-PIRANHAPLANT_VELOCITY_X, -PIRANHAPLANT_VELOCITY_Y);	//set position
+	_Velocity = D3DXVECTOR2(0, 0);	//set position
 	_TypeSpriteID = eSpriteID::ePiranhaPlant;										//set type spriteID
 	_MonsterTypeID = objectTypeID;
+	SetObjectType(eMonsterDead);													//trạng thái chết tạm thời: để không bị va chạm khi mới vào: do đang ở dưới
 
 	// PiranhaPlant
 	_TimeStartFrame = GetTickCount();												//set time now
@@ -28,11 +29,11 @@ PiranhaPlant::PiranhaPlant(int objectTypeID, int positionX, int positionY)
 	SetFrame(objectTypeID);
 	_MonsterVelocityX = -PIRANHAPLANT_VELOCITY_X;
 	_MonsterVelocityY = -PIRANHAPLANT_VELOCITY_Y;
-	_PositionY = positionY;
+	_PositionY = positionY;															//set position turn away
 	_TimeStartStop = GetTickCount();
 	_TimePerStop = TIMES_TURN_STOP;
 	_PiranhaPlantStop = false;
-	_PiranhaPlantDanger = true;
+	_PiranhaPlantDanger = false;
 }
 
 void PiranhaPlant::Update()
@@ -50,15 +51,18 @@ void PiranhaPlant::Update()
 		_MonsterVelocityY = -PIRANHAPLANT_VELOCITY_Y;
 		_PiranhaPlantStop = true;
 	}
-	if (_Position.y <= _PositionY - 1.4 * 35)//_MonsterVelocityY<0: ở dưới
+	else
 	{
-		_Position.y = _PositionY - 1.4 * 35;
-		_MonsterVelocityY = PIRANHAPLANT_VELOCITY_Y;
-		_PiranhaPlantStop = true;
-		_Size.x = 90;
-		_Size.y = 170;
-		_PiranhaPlantDanger = false;//hết nguy hiểm
-		SetObjectType(eMonsterDead);//trạng thái chết tạm thời
+		if (_Position.y <= _PositionY - 1.4 * 35)//_MonsterVelocityY<0: ở dưới
+		{
+			_Position.y = _PositionY - 1.4 * 35;
+			_MonsterVelocityY = PIRANHAPLANT_VELOCITY_Y;
+			_PiranhaPlantStop = true;
+			_Size.x = 90;
+			_Size.y = 170;
+			_PiranhaPlantDanger = false;//hết nguy hiểm
+			SetObjectType(eMonsterDead);//trạng thái chết tạm thời
+		}
 	}
 
 	if (_PiranhaPlantStop)
@@ -232,7 +236,7 @@ void PiranhaPlant::SetFrame(int PiranhaPlantType)
 
 void PiranhaPlant::MonsterDead(int MonsterTypeDead)
 {
-	SetObjectType(eMonsterDead);//k cần lắm
+	SetObjectType(eMonsterDead);//k cần lắm do đã gán destroyed
 	_Tag = eGameTag::eDestroyed;
 }
 
