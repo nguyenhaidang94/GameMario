@@ -74,6 +74,8 @@ public:
 
 	//Get checkpoint in current world
 	D3DXVECTOR2 GetCheckpoint();
+	//Get Position end game
+	D3DXVECTOR2 GetPositionEndGame();
 	//Change status of mario reach checkpoint or not, true if yes, false if no
 	void ChangeCheckpointStatus(bool isReachCheckpoint);
 	//Check if mario reach checkpoint or not

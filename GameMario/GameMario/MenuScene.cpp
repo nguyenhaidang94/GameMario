@@ -34,8 +34,9 @@ void MenuScene::Update()
 	}
 	else	//testing, delete this after mario have auto run state
 	{
-		D3DXVECTOR2 marioPosition = Mario::GetInstance()->GetPosition();
-		Mario::GetInstance()->SetPosition(D3DXVECTOR2(marioPosition.x + 3, marioPosition.y));
+		/*D3DXVECTOR2 marioPosition = Mario::GetInstance()->GetPosition();
+		Mario::GetInstance()->SetPosition(D3DXVECTOR2(marioPosition.x + 3, marioPosition.y));*/
+		Mario::GetInstance()->AutoAnimationFlag();
 	}
 	HandlingInput();
 	_DemoMap->Update();
