@@ -36,6 +36,7 @@ private:
 	int _currentFrameBeforeTransformToFlower;// Xác định frame trước khi ăn sao để xét sprite sau khi ăn sao
 	bool _IsAnimationPipe; // Xác định mario bắt đầu thực hiện animation lúc rớt xuống cống
 	bool _IsAnimationFlag; //Xác định mario bắt đầu thực hiện animation lúc lấy lá cờ
+	bool _IsAnimationRight;
 	bool _IsCollisionMonster; // Xác định mario va chạm với quái sẽ nhảy lên
 	bool _IsDead;
 	float _TimeBeforeTranferToSmall;
@@ -71,9 +72,11 @@ public:
 	void TranferBigToFlower();
 	void SetSpriteBeforeTransfromFlower();
 	void SetSpriteShoot();
-	void AutoAnimationPipe();
-	void AutoAnimationFlag();
-	
+	void AutoAnimationBottom();
+	void AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation);
+	void AutoAnimationEndGame();
+	bool SetFlagAutoAnimationRight(bool flag);
+	bool GetFlagAutoAnimationRight();
 
 	//New
 	//Get an instance of class mario

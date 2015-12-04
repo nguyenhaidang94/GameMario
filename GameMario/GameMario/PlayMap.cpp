@@ -42,11 +42,22 @@ void PlayMap::Render()
 {
 	_Background->Render();
 	vector<GameObject*> listObj = _QuadTree->GetObjectsOnScreen();
-	for (int i = 0; i < listObj.size(); i++)
+	if(_Mario->GetFlagAutoAnimationRight()==false)
 	{
-		listObj[i]->Render();
+		for (int i = 0; i < listObj.size(); i++)
+		{
+			listObj[i]->Render();
+		}
+		_Mario->Render();
 	}
-	_Mario->Render();
+	else
+	{
+		_Mario->Render();
+		for (int i = 0; i < listObj.size(); i++)
+		{
+			listObj[i]->Render();
+		}
+	}
 }
 
 void PlayMap::Release()

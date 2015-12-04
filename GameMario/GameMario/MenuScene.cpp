@@ -24,19 +24,18 @@ void MenuScene::Initialize()
 
 void MenuScene::Update()
 {
-	if(!_IsAutoRun)
+	if((GetTickCount() - _StartTime) > WAIT_TIME) _IsAutoRun=true;
+
+	if(_IsAutoRun==true)
 	{
-		if((GetTickCount() - _StartTime) > WAIT_TIME)
-		{
-			_IsAutoRun = true;
-			//Set mario state to auto run here
-		}
+		//Set mario state to auto run here
+		Mario::GetInstance()->SetFlagAutoAnimationRight(true);
+		Mario::GetInstance()->AutoAnimationRight(D3DXVECTOR2(896,96));
 	}
 	else	//testing, delete this after mario have auto run state
 	{
-		/*D3DXVECTOR2 marioPosition = Mario::GetInstance()->GetPosition();
-		Mario::GetInstance()->SetPosition(D3DXVECTOR2(marioPosition.x + 3, marioPosition.y));*/
-		Mario::GetInstance()->AutoAnimationFlag();
+			Mario::GetInstance()->SetFlagAutoAnimationRight(false);
+		
 	}
 	HandlingInput();
 	_DemoMap->Update();

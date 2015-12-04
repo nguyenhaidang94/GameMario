@@ -24,7 +24,7 @@ GameStatistics* GameStatistics::GetInstance()
 void GameStatistics::Initialize()
 {
 	_WorldID = eWorldID::e1_1;
-	_CurrentSceneID = eSceneID::ePlay;
+	_CurrentSceneID = eSceneID::eMenu;
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
@@ -201,6 +201,23 @@ D3DXVECTOR2 GameStatistics::GetPositionEndGame()
 		break;
 	case e1_3:
 		return D3DXVECTOR2(2160, 80);
+		break;
+	default:
+		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint
+		break;
+	}
+}
+
+D3DXVECTOR2 GameStatistics::GetPositionEndAutoAnimation()
+{
+	switch (_WorldID)
+	{
+	case eUnderground1_1:
+		return D3DXVECTOR2(480, 96);
+		break;
+	case eUnderground1_2:
+		return D3DXVECTOR2(480, 96);
+		break;
 	default:
 		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint
 		break;
