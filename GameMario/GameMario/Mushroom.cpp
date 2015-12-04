@@ -14,12 +14,13 @@ Mushroom::Mushroom(void)
 Mushroom::Mushroom(int x, int y, eGameTag mushroomType)
 {
 	_Position = D3DXVECTOR2(x, y);
-	_Velocity = D3DXVECTOR2(DEFAULT_VELOCITY_X, DEFAULT_VELOCITY_Y);
+	_Velocity = D3DXVECTOR2(DEFAULT_VELOCITY_X, 0);
 	_Size = D3DXVECTOR2(MUSHROOM_WIDTH, MUSHROOM_HEIGHT);
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eItems);
 	_IsSpawnDone = false;
 	_BeginningPositionY = y;
 	_IsGoingRight = true;
+	_IsStandOnObject = false;
 	_Tag = eGameTag::eIgnoreCollision;	//ignore collision when on spawn animation
 	_ObjectTypeID = eObjectTypeID::eMagicMushroom;
 	switch (mushroomType)
@@ -57,8 +58,10 @@ void Mushroom::Update()
 			_Tag = eGameTag::eDestroyed;
 		}
 
-		//setup velocity again
-		_Velocity.y = DEFAULT_VELOCITY_Y;
+		if (!_IsStandOnObject)
+		{
+			_Velocity.y = DEFAULT_VELOCITY_Y;
+		}
 		if(_IsGoingRight)
 		{
 			_Velocity.x = DEFAULT_VELOCITY_X;
@@ -78,6 +81,7 @@ void Mushroom::Update()
 			_Tag = eGameTag::eEmpty;	//stop ignore collison
 		}
 	}
+	_IsStandOnObject = false;
 }
 
 void Mushroom::Render()
@@ -104,7 +108,8 @@ void Mushroom::OnCollision(GameObject *object, eCollisionDirection collisionDire
 		{
 		case eBottom:
 			_Position.y = objectBox.fY + _Size.y/2;
-			_Velocity.y = 0;
+			_Velocity.y = 0.3;
+			_IsStandOnObject = true;
 			break;
 		case eLeft:
 			_Position.x = objectBox.fX + objectBox.fWidth + _Size.y/2 + 1;

@@ -187,7 +187,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 						return eCollisionDirection::eTop;
 					}
 					//va cham bot
-					else if (normalY == -1.0f)
+					else
 					{
 						//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
 						return eCollisionDirection::eBottom;
@@ -203,7 +203,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 						return eCollisionDirection::eRight;
 					}
 					//va cham left
-					else if (normalX == -1.0f)
+					else
 					{
 						//MessageBox(_hWnd, L"left", L"collision", MB_OK);
 						return eCollisionDirection::eLeft;
