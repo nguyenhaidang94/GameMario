@@ -215,7 +215,6 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 			{
 				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed && node->_ListObjects[i]->GetTag() != eGameTag::eRemove)
 				{
-					node->_ListObjects[i]->Update();
 					//after updating, if object is out of active site, release it
 					if (!AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
 					{
@@ -249,6 +248,8 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 							//delete node if it is empty
 							if (node->IsEmpty())
 								DeleteSubnode(node);
+							//truong hop nay khong add object vao _ObjectsOnScreen
+							//nen khong update object
 						}
 						else
 						{
@@ -303,6 +304,10 @@ void QuadTree::UpdateObjectsOnScreen()
 		_ObjectsOnScreen.clear();
 	Box activeSite = Camera::GetInstance()->GetActiveSite();
 	UpdateObjectsInNode(_RootNode, activeSite);
+	for (std::vector<GameObject*>::iterator itr = _ObjectsOnScreen.begin(); itr != _ObjectsOnScreen.end(); itr++)
+	{
+		(*itr)->Update();
+	}
 }
 
 std::vector<GameObject*> QuadTree::GetObjectsOnScreen() const

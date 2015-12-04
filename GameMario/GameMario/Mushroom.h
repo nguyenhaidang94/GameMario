@@ -10,6 +10,7 @@ private:
 	bool _IsSpawnDone;	//Mushroom has finished spawn animation or not
 	int _BeginningPositionY;
 	bool _IsGoingRight;	//to add velocity y when not stand on any object
+	bool _IsStandOnObject;
 public:
 	Mushroom(void);
 	Mushroom(int x, int y, eGameTag tag);
