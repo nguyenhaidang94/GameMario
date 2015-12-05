@@ -24,7 +24,7 @@ Box getSweptBroadphaseBox(Box box)
 //----------------------------------------------------------
 bool AABBCheck(Box box1, Box box2)
 {
-	return !(box1.fX + box1.fWidth < box2.fX || box1.fX > box2.fX + box2.fWidth || box1.fY - box1.fHeight > box2.fY || box1.fY < box2.fY - box2.fHeight);
+	return !(box1.fX + box1.fWidth <= box2.fX || box1.fX >= box2.fX + box2.fWidth || box1.fY - box1.fHeight >= box2.fY || box1.fY <= box2.fY - box2.fHeight);
 }
 
 //--------------------------------------------------------------------------
@@ -50,10 +50,10 @@ bool AABB(Box b1, Box b2, float& moveX, float& moveY)
 	moveY = abs(b) < t ? b : t;
 
 	// sử dụng biến move nào nhỏ hơn, biến còn lại cho bằng 0, 
-	if (abs(moveX) < abs(moveY))
-		moveY = 0.0f;
-	else
+	if (abs(moveY) < abs(moveX))
 		moveX = 0.0f;
+	else
+		moveY = 0.0f;
 	return true;
 }
 
