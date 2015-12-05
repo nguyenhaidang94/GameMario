@@ -191,14 +191,14 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 				//normalY != 0.0f va moveY != 0 tuc va cham theo phuong doc
 				if (normalY != 0.0f && moveY != 0)
 				{
-					//va cham top
-					if (normalY == 1.0f)
+					//va cham top, truong hop moveY <= 0 thi khong tinh va cham
+					if (normalY == 1.0f && moveY > 0)
 					{
 						//MessageBox(_hWnd, L"top", L"collision", MB_OK);
 						return eCollisionDirection::eTop;
 					}
-					//va cham bot
-					else
+					//va cham bot, truong hop moveY >= 0 thi khong tinh va cham
+					else if (normalY == -1.0f && moveY < 0)
 					{
 						//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
 						return eCollisionDirection::eBottom;
@@ -207,14 +207,14 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *
 				//normalX != 0.0f va moveX != 0 tuc va cham theo phuong ngang
 				else if (normalX != 0.0f && moveX != 0.0f)
 				{
-					//va cham right
-					if (normalX == 1.0f)
+					//va cham right, truong hop moveX >= 0 thi khong tinh va cham
+					if (normalX == 1.0f && moveX < 0)
 					{
 						//MessageBox(_hWnd, L"right", L"collision", MB_OK);
 						return eCollisionDirection::eRight;
 					}
-					//va cham left
-					else
+					//va cham left, truong hop moveX <= 0 thi khong tinh va cham
+					else if (normalX == -1.0f && moveX > 0)
 					{
 						//MessageBox(_hWnd, L"left", L"collision", MB_OK);
 						return eCollisionDirection::eLeft;
