@@ -46,13 +46,29 @@ eGameTag Unility::GetGameTag(string tag)
 		return eGameTag::eEmpty;
 	}
 	//world tag
-	if(tag == "u1_1")		//underground of world 1_1
+	if(tag == "h1_1")		//hidden map of world 1_1
 	{
-		return eGameTag::eToUnderground1_1;
+		return eGameTag::eToHidden1_1;
 	}
-	if(tag == "m1_1")
+	if(tag == "m1_1")	//middle of ground of world 1_1
 	{
 		return eGameTag::eToMiddleOnGround1_1;
+	}
+	if(tag == "1_2")		//to main map of world 1_2
+	{
+		return eGameTag::eTo1_2;
+	}
+	if(tag == "h1_2")	//hidden map of world 1_2
+	{
+		return eGameTag::eToHidden1_2;
+	}
+	if(tag == "r1_2")	//right map of world 1_2
+	{
+		return eGameTag::eToRight1_2;
+	}
+	if(tag == "m1_2")	//middle of main map  of world 1_2
+	{
+		return eGameTag::eToMiddle1_2;
 	}
 
 	//item tag
@@ -82,21 +98,46 @@ eGameTag Unility::GetGameTag(string tag)
 
 eWorldID Unility::GetWorldIDFromTag(eGameTag tag)
 {
-	if(tag == eGameTag::eToUnderground1_1)
+	if(tag == eGameTag::eToHidden1_1)
 	{
-		return eWorldID::eUnderground1_1;
+		return eWorldID::eHidden1_1;
 	}
 
 	if(tag == eGameTag::eToMiddleOnGround1_1)
 	{
 		return eWorldID::e1_1;
 	}
+
+	if(tag == eGameTag::eTo1_2 || tag == eGameTag::eToMiddle1_2)
+	{
+		return eWorldID::e1_2;
+	}
+
+	if(tag == eGameTag::eToHidden1_2)
+	{
+		return eWorldID::eHidden1_2;
+	}
+
+	if(tag == eGameTag::eToRight1_2)
+	{
+		return eWorldID::eRight1_2;
+	}
 }
 
 bool Unility::IsInSameMap(eWorldID world1, eWorldID world2)
 {
-	if(world1 == eWorldID::e1_1 && world2 == eWorldID::eUnderground1_1 || 
-		world1 == eWorldID::eUnderground1_1 && world2 == eWorldID::e1_1 )
+	if(world1 == eWorldID::e1_1 && world2 == eWorldID::eHidden1_1 || 
+		world1 == eWorldID::eHidden1_1 && world2 == eWorldID::e1_1 )
+	{
+		return true;
+	}
+
+	if(world1 == eWorldID::e1_2 && world2 == eWorldID::eHidden1_2 || 
+		world1 == eWorldID::eHidden1_2 && world2 == eWorldID::e1_2 ||
+		world1 == eWorldID::e1_2 && world2 == eWorldID::eLeft1_2 ||
+		world1 == eWorldID::eLeft1_2 && world2 == eWorldID::e1_2 ||
+		world1 == eWorldID::e1_2 && world2 == eWorldID::eRight1_2 ||
+		world1 == eWorldID::eRight1_2 && world2 == eWorldID::e1_2)
 	{
 		return true;
 	}

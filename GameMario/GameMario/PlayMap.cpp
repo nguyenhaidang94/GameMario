@@ -68,10 +68,7 @@ void PlayMap::Release()
 
 void PlayMap::Load()
 {
-	if (_WorldID == eWorldID::e1_2)
-		Camera::GetInstance()->SetWorldSize(D3DXVECTOR2(6144, 480));
-	else
-		Camera::GetInstance()->SetWorldSize(_Background->GetWorldSize());		//set camera boundary
+	Camera::GetInstance()->SetWorldSize(_Background->GetWorldSize());		//set camera boundary
 }
 
 void PlayMap::Reload()

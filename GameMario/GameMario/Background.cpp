@@ -44,14 +44,17 @@ void Background::ReadMapData(eWorldID mapID)
 	case e1_4:
 		fileName = "1_4";
 		break;
-	case eUnderground1_1:
-		fileName = "u1_1";
+	case eHidden1_1:
+		fileName = "1_1_hidden";
 		break;
-	case eUnderground1_2:
-		fileName = "u1_2";
+	case eLeft1_2:
+		fileName = "1_2_left";
 		break;
 	case eRight1_2:
-		fileName = "r1_2";
+		fileName = "1_2_right";
+		break;
+	case eHidden1_2:
+		fileName = "1_2_hidden";
 		break;
 	default:
 		break;

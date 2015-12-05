@@ -71,7 +71,9 @@ public:
 	void AddObjectToScene(GameObject *object);
 	//Get list object add to scene
 	std::vector<GameObject*> *GetListObjectAddToScene();
+	//----------------------------
 
+	//------control switch world, checkpoint----
 	//Get checkpoint in current world
 	D3DXVECTOR2 GetCheckpoint();
 	//Get Position end game
@@ -82,6 +84,8 @@ public:
 	void ChangeCheckpointStatus(bool isReachCheckpoint);
 	//Check if mario reach checkpoint or not
 	bool IsMarioReachCheckpoint();
+	//Get new position for mario in new world base on tag
+	D3DXVECTOR2 GetNewMarioPosition(eGameTag tag);
 	//----------------------------
 };
 

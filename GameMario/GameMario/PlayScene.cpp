@@ -21,14 +21,18 @@ void PlayScene::Load()
 	switch (_WorldID)
 	{
 	case e1_1:
-	case eUnderground1_1:
+	case eHidden1_1:
 		_ListMap[eWorldID::e1_1] = new PlayMap(e1_1);
-		_ListMap[eWorldID::eUnderground1_1] = new PlayMap(eUnderground1_1);
+		_ListMap[eWorldID::eHidden1_1] = new PlayMap(eHidden1_1);
 		break;
 	case e1_2:
+	case eLeft1_2:
+	case eRight1_2:
+	case eHidden1_2:
 		_ListMap[eWorldID::e1_2] = new PlayMap(e1_2);
-		_ListMap[eWorldID::eUnderground1_2] = new PlayMap(eUnderground1_2);
+		_ListMap[eWorldID::eLeft1_2] = new PlayMap(eLeft1_2);
 		_ListMap[eWorldID::eRight1_2] = new PlayMap(eRight1_2);
+		_ListMap[eWorldID::eHidden1_2] = new PlayMap(eHidden1_2);
 		break;
 	case e1_3:
 		_ListMap[eWorldID::e1_3] = new PlayMap(e1_3);

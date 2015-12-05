@@ -88,9 +88,10 @@ enum eWorldID
 	e1_2 = 1,
 	e1_3,
 	e1_4,
-	eUnderground1_1,
-	eUnderground1_2,
+	eHidden1_1,
+	eLeft1_2,
 	eRight1_2,
+	eHidden1_2,
 };
 
 enum eSceneID
@@ -143,8 +144,12 @@ enum eGameTag
 	eBrickBounceUp,		//brick kill enemy when it bounce up(?)
 
 	//world tag
-	eToUnderground1_1,	//underground of world 1_1
+	eToHidden1_1,	//hidden map of world 1_1
 	eToMiddleOnGround1_1,	//middle on ground of world 1_1
+	eTo1_2,	//main map of world 1_2
+	eToHidden1_2,	//hidden map of world 1_2
+	eToRight1_2,	//right map of world 1_2
+	eToMiddle1_2,	//middle of main map of world 1_2
 	
 	//item store by object tag
 	eStoreMushroom,

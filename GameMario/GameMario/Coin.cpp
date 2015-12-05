@@ -49,6 +49,7 @@ void Coin::OnCollision(GameObject *object, eCollisionDirection collisionDirectio
 	{
 	//case mario
 	case eMario:
+	case eBrick:
 		_Tag = eGameTag::eDestroyed;
 		GameStatistics::GetInstance()->ChangeScore(COIN_SCORE);		//inscrease score
 		GameStatistics::GetInstance()->IncreaseCoin();		//inscrease score

@@ -41,9 +41,6 @@ private:
 	bool _IsDead;
 	float _TimeBeforeTranferToSmall;
 
-	//Get new position for mario in new world base on tag
-	D3DXVECTOR2 GetNewMarioPosition(eGameTag tag);
-
 public:
 	Mario(void);
 	~Mario(void);

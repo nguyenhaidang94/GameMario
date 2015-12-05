@@ -16,6 +16,10 @@ HardBlock::HardBlock(int objectID, int x, int y)
 		_Color = eColorID::eBrown;
 		_CurrentFrame = 1;
 		break;
+	case 5:	
+		_Color = eColorID::eBlue;
+		_CurrentFrame = 12;
+		break;
 	default:
 		break;
 	}

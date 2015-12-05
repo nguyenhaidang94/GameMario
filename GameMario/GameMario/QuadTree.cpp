@@ -26,14 +26,17 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 	case e1_4:
 		fileName = "1_4_quadtree";
 		break;
-	case eUnderground1_1:
-		fileName = "u1_1_quadtree";
+	case eHidden1_1:
+		fileName = "1_1_hidden_quadtree";
 		break;
-	case eUnderground1_2:
-		fileName = "u1_2_quadtree";
+	case eLeft1_2:
+		fileName = "1_2_left_quadtree";
 		break;
 	case eRight1_2:
-		fileName = "r1_2_quadtree";
+		fileName = "1_2_right_quadtree";
+		break;
+	case eHidden1_2:
+		fileName = "1_2_hidden_quadtree";
 		break;
 	default:
 		break;
@@ -80,6 +83,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 						break;
 					//Case hard block
 					case 4:
+					case 5:
 						node->_ListObjects.push_back(new HardBlock(objectID, x, y));
 						break;
 					

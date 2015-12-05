@@ -36,6 +36,17 @@ void StartScene::Release()
 void StartScene::Load()
 {
 	_StartTime = GetTickCount();
+	//always return to main map if die in other map
+	if(GameStatistics::GetInstance()->GetWorldID() == eWorldID::e1_1 || GameStatistics::GetInstance()->GetWorldID() == eWorldID::eHidden1_1)
+	{
+		GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_1);
+	}
+	if(GameStatistics::GetInstance()->GetWorldID() == eWorldID::e1_2 || GameStatistics::GetInstance()->GetWorldID() == eWorldID::eHidden1_2 ||
+		GameStatistics::GetInstance()->GetWorldID() == eWorldID::eLeft1_2 || GameStatistics::GetInstance()->GetWorldID() == eWorldID::eRight1_2)
+	{
+		GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_2);
+	}
+	//set mario position
 	Mario::GetInstance()->SetPosition(GetMarioStartPosition());
 }
 

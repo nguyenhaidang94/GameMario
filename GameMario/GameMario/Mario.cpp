@@ -849,12 +849,12 @@ void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 	{
 		_IsAnimationRight = false;
 
-		if(GameStatistics::GetInstance()->GetWorldID()==eWorldID::eUnderground1_1)
+		if(GameStatistics::GetInstance()->GetWorldID()==eWorldID::eHidden1_1)
 		{
 			if(_PipeTag != eGameTag::eEmpty) 
 			{
 				GameStatistics::GetInstance()->ChangeWorld(Unility::GetWorldIDFromTag(_PipeTag));
-			   SetPosition(GetNewMarioPosition(_PipeTag));
+				SetPosition(GameStatistics::GetInstance()->GetNewMarioPosition(_PipeTag));
 			}
 		}
 	}
@@ -1042,7 +1042,7 @@ void Mario::Update()
 	if(_IsAnimationPipe==true && _Position.y <=POSITION_Y_ANIMATION && _PipeTag != eGameTag::eEmpty )
 	{
 		GameStatistics::GetInstance()->ChangeWorld(Unility::GetWorldIDFromTag(_PipeTag));	
-		SetPosition(GetNewMarioPosition(_PipeTag));
+		SetPosition(GameStatistics::GetInstance()->GetNewMarioPosition(_PipeTag));
 		_PipeTag = eGameTag::eEmpty;
 	}
 
@@ -1427,18 +1427,4 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	default:
 		break;
 	}
-}
-
-D3DXVECTOR2 Mario::GetNewMarioPosition(eGameTag tag)
-{
-	switch (tag)
-	{
-	case eToUnderground1_1:
-		return D3DXVECTOR2(48, 448);
-	case eToMiddleOnGround1_1:
-		return D3DXVECTOR2(5250, 128);
-	default:
-		break;
-	}
-	return D3DXVECTOR2();
 }

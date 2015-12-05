@@ -23,7 +23,7 @@ GameStatistics* GameStatistics::GetInstance()
 
 void GameStatistics::Initialize()
 {
-	_WorldID = eWorldID::e1_2;
+	_WorldID = eWorldID::eHidden1_1;
 	_CurrentSceneID = eSceneID::ePlay;
 	_Score = 0;
 	_Life = 3;
@@ -122,11 +122,12 @@ std::string GameStatistics::GetCurrentWorldName()
 	switch (_WorldID)
 	{
 	case e1_1:
-	case eUnderground1_1:
+	case eHidden1_1:
 		return "1-1";
 		break;
 	case e1_2:
-	case eUnderground1_2:
+	case eHidden1_2:
+	case eLeft1_2:
 	case eRight1_2:
 		return "1-2";
 		break;
@@ -175,6 +176,19 @@ std::vector<GameObject*>* GameStatistics::GetListObjectAddToScene()
 {
 	return _ListObjectAddToScene;
 }
+#pragma endregion
+
+#pragma region control switch world
+
+void GameStatistics::ChangeCheckpointStatus(bool isReachCheckpoint)
+{
+	_IsReachCheckpoint = isReachCheckpoint;
+}
+
+bool GameStatistics::IsMarioReachCheckpoint()
+{
+	return _IsReachCheckpoint;
+}
 
 D3DXVECTOR2 GameStatistics::GetCheckpoint()
 {
@@ -183,6 +197,9 @@ D3DXVECTOR2 GameStatistics::GetCheckpoint()
 	{
 	case e1_1:
 		return D3DXVECTOR2(2640, 80);
+		break;
+	case e1_2:
+		return D3DXVECTOR2(3792, 80);
 		break;
 	case e1_3:
 		return D3DXVECTOR2(2160, 80);
@@ -212,10 +229,9 @@ D3DXVECTOR2 GameStatistics::GetPositionEndAutoAnimation()
 {
 	switch (_WorldID)
 	{
-	case eUnderground1_1:
-		return D3DXVECTOR2(480, 96);
-		break;
-	case eUnderground1_2:
+	case eHidden1_1:
+	case e1_2:
+	case eHidden1_2:
 		return D3DXVECTOR2(480, 96);
 		break;
 	default:
@@ -223,13 +239,25 @@ D3DXVECTOR2 GameStatistics::GetPositionEndAutoAnimation()
 		break;
 	}
 }
-void GameStatistics::ChangeCheckpointStatus(bool isReachCheckpoint)
+
+D3DXVECTOR2 GameStatistics::GetNewMarioPosition(eGameTag tag)
 {
-	_IsReachCheckpoint = isReachCheckpoint;
+	switch (tag)
+	{
+	case eToHidden1_1:
+	case eTo1_2:
+	case eToHidden1_2:
+		return D3DXVECTOR2(48, 448);
+	case eToMiddleOnGround1_1:
+		return D3DXVECTOR2(5250, 128);
+	case eToMiddle1_2:
+		return D3DXVECTOR2(3712, 128);
+	case eToRight1_2:
+		return D3DXVECTOR2(128, 128);
+	default:
+		break;
+	}
+	return D3DXVECTOR2();
 }
 
-bool GameStatistics::IsMarioReachCheckpoint()
-{
-	return _IsReachCheckpoint;
-}
 #pragma endregion
