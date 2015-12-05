@@ -1259,11 +1259,11 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				_IsCollide = true;
 				break;
 			case eRight:
-				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 - 4;
+				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 + 4;
 				_Velocity.x = 0;
 				break;
 			case eLeft:
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 +4;
+				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -4;
 				_Velocity.x = 0;
 				break;
 			case eTop:
@@ -1284,11 +1284,11 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				_IsCollide = true;
 				break;
 			case eRight:
-				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 - 4;
+				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 + 4;
 				_Velocity.x = 0;
 				break;
 			case eLeft:
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 +4;
+				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -4;
 				_Velocity.x = 0;
 				break;
 			case eTop:

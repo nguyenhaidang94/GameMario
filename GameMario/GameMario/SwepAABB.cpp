@@ -50,7 +50,7 @@ bool AABB(Box b1, Box b2, float& moveX, float& moveY)
 	moveY = abs(b) < t ? b : t;
 
 	// sử dụng biến move nào nhỏ hơn, biến còn lại cho bằng 0, 
-	if (abs(moveY) < abs(moveX))
+	if (abs(moveY) <= abs(moveX))
 		moveX = 0.0f;
 	else
 		moveY = 0.0f;
