@@ -46,6 +46,7 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eKoopaTroopaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaTroopaDead.png", 32, 32, 4, 1, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eKoopaParatroopa] = new Sprite(SpriteHandler, L"resources\\Sprites\\KoopaParatroopa.png", 32, 48, 16, 4, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::ePiranhaPlant] = new Sprite(SpriteHandler, L"resources\\Sprites\\PiranhaPlant.png", 32, 48, 8, 2, D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eKingBoo] = new Sprite(SpriteHandler, L"resources\\Sprites\\KingBoo.png", 64, 64, 8, 8, D3DCOLOR_XRGB(255, 0, 255));
 	//
 	_ListSprite[eSpriteID::eBigMario] = new Sprite(SpriteHandler, L"resources\\Sprites\\BigMario.png", 32, 64, 14, 14, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eSmallMario]= new Sprite(SpriteHandler,L"resources\\Sprites\\SmallMario.png",32,32,14,14, D3DCOLOR_XRGB(255, 0, 255));

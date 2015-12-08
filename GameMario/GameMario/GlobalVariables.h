@@ -58,6 +58,8 @@ enum eSpriteID
 	eKoopaParatroopaDead,
 	ePiranhaPlant,
 	ePiranhaPlantDead,
+	eKingBoo,
+	eKingBooDead,
 	eSmallMario,
 	eMarioTransformBigToSmall,
 	eMarioTransformSmallToBig,

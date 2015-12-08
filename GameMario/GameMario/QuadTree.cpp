@@ -144,8 +144,8 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 28:	//KoopaTroopa
 						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
 						break;
-					case 29:	//KoopaTroopa
-						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
+					case 29:	//---------KoopaTroopa--------Test KingGooba
+						node->_ListObjects.push_back(new KingBoo(objectID, x, y));
 						break;
 					case 30:	//KoopaTroopa
 						node->_ListObjects.push_back(new KoopaTroopa(objectID, x, y));
