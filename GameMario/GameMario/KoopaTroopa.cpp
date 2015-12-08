@@ -165,11 +165,9 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 {
 	if (_MonsterAlive)
 	{
-		//Box objectBox = object->GetBoundaryBox();
-		//Handling collision by object type here
 		switch (object->GetObjectTypeID())
 		{
-#pragma region va chạm ngược
+		#pragma region va chạm ngược
 		case eGround:
 			DirectionsCollision(object, collisionDirection);
 			break;
@@ -185,7 +183,8 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 		case eHardBrick:
 			DirectionsCollision(object, collisionDirection);
 			break;
-#pragma endregion
+		#pragma endregion
+		#pragma region Monster
 		case eMonster:
 			if (_KoopaTroopaRevived)//nếu nó di chuyển: Khi đứng yên thì tốc độ và hướng sẽ k thay đổi
 			{
@@ -224,72 +223,79 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 				}
 			}
 			break;
-#pragma region Mario
+		#pragma endregion
+		#pragma region Mario
 		case eMario:
-			switch (collisionDirection)
+			if (object->GetTag() == eMarioIsSmall || object->GetTag() == eMarioIsBig)//bình thường
 			{
-			case eTop:
-				if (_KoopaTroopaStop == false)//chưa đứng yên
+				switch (collisionDirection)
 				{
-					if (_KoopaTroopaRevived == false)//nếu đã chết và bị đá nhưng lại bị dậm lần nữa sẽ set lai tốc độ
+				case eTop:
+					if (_KoopaTroopaStop == false)//chưa đứng yên
 					{
-						_MonsterVelocityX = _MonsterVelocityX / (KOOPATROOPA_VELOCITY_X + 7.0) * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
-					}
-					_Velocity.x = 0.0f;
-					_KoopaTroopaStop = true;
-					_KoopaTroopaRevived = false;
-					_TypeSpriteID = eSpriteID::eKoopaTroopaStop;	//trạng thái đứng yên
-					_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopaStop);		//set sprite
-					SetFrame(_MonsterTypeID);
-					_Size.y = KOOPATROOPASTOP_HEIGHT;
-					_TimeStartVelocity = GetTickCount();			//set time now: will revive
-
-				}
-				break;
-			case eRight:
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)//mario ăn ngôi sao
-				{
-					_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
-					MonsterDead(2);									//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
-				}
-				else
-				{
-					if (_KoopaTroopaStop == true)					//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
-					{
-						_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 7.0;//tăng tốc khi bị đá
-						_Velocity.x = _MonsterVelocityX;
-						_KoopaTroopaStop = false;
-						_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
-						_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
+						if (_KoopaTroopaRevived == false)//nếu đã chết và bị đá nhưng lại bị dậm lần nữa sẽ set lai tốc độ
+						{
+							_MonsterVelocityX = _MonsterVelocityX / (KOOPATROOPA_VELOCITY_X + 7.0) * KOOPATROOPA_VELOCITY_X;	//set velocity trở về vận tốc mặt định nhưng hướng vẫn giữ nguyên
+						}
+						_Velocity.x = 0.0f;
+						_KoopaTroopaStop = true;
+						_KoopaTroopaRevived = false;
+						_TypeSpriteID = eSpriteID::eKoopaTroopaStop;	//trạng thái đứng yên
 						_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopaStop);		//set sprite
-						//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
+						SetFrame(_MonsterTypeID);
+						_Size.y = KOOPATROOPASTOP_HEIGHT;
+						_TimeStartVelocity = GetTickCount();			//set time now: will revive
 					}
+					break;
+				case eRight:
+						if (_KoopaTroopaStop == true)					//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
+						{
+							_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 7.0;//tăng tốc khi bị đá
+							_Velocity.x = _MonsterVelocityX;
+							_KoopaTroopaStop = false;
+							_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
+							_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
+							_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopaStop);		//set sprite
+							//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
+						}
+					break;
+				case eLeft:
+						if (_KoopaTroopaStop == true)
+						{
+							_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 7.0;
+							_Velocity.x = _MonsterVelocityX;
+							_KoopaTroopaStop = false;
+							_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
+							_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
+							//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
+						}
+					break;
+				default:
+					break;
 				}
-				break;
-			case eLeft:
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+			}
+			else
+			{
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)//ngôi sao
 				{
-					_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
-					MonsterDead(2);
-				}
-				else
-				{
-					if (_KoopaTroopaStop == true)
+					switch (collisionDirection)
 					{
-						_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 7.0;
-						_Velocity.x = _MonsterVelocityX;
-						_KoopaTroopaStop = false;
-						_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
-						_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
-						//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
+					case eRight:
+						_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
+						MonsterDead(2);									//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+						break;
+					case eLeft:
+						_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
+						MonsterDead(2);
+						break;
+					default:
+						break;
 					}
-				}				
-				break;
-			default:
-				break;
+				}
 			}
 			break;
-#pragma endregion
+		#pragma endregion
+		#pragma region bullet
 		case eBullet:
 			switch (collisionDirection)
 			{
@@ -303,6 +309,8 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 				break;
 			}
 			break;
+		#pragma endregion
+		#pragma region Not Collision
 		case eMagicMushroom://nấm
 			break;
 		case eFireFlower:	//đạn
@@ -312,6 +320,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 		case eStarMan:		//sao
 		default:
 			break;
+		#pragma endregion
 		}
 	}
 }

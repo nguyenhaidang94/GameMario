@@ -28,6 +28,7 @@ KingBoo::KingBoo(int objectTypeID, int positionX, int positionY)
 	SetFrame(1);
 	_MonsterVelocityX = KINGBOO_VELOCITY_X;
 	_MonsterVelocityY = -KINGBOO_VELOCITY_Y;
+	_KingBooALive = 7;
 }
 
 void KingBoo::Update()
@@ -87,7 +88,7 @@ void KingBoo::OnCollision(GameObject *object, eCollisionDirection collisionDirec
 	if (_MonsterAlive){
 		switch (object->GetObjectTypeID())
 		{
-#pragma region va chạm ngược
+		#pragma region va chạm ngược
 		case eGround:
 			DirectionsCollision(object, collisionDirection);
 			break;
@@ -103,7 +104,8 @@ void KingBoo::OnCollision(GameObject *object, eCollisionDirection collisionDirec
 		case eHardBrick:
 			DirectionsCollision(object, collisionDirection);
 			break;
-#pragma endregion
+		#pragma endregion
+		#pragma region Monster
 		case eMonster:
 			switch (object->GetSpriteID())
 			{
@@ -129,32 +131,33 @@ void KingBoo::OnCollision(GameObject *object, eCollisionDirection collisionDirec
 				break;
 			}
 			break;
-
+		#pragma endregion
+		#pragma region Mario
 		case eMario:
-			switch (collisionDirection)
+			if (object->GetTag() == eMarioIsSmall || object->GetTag() == eMarioIsBig)//bình thường
 			{
-			case eTop:
-				MonsterDead(1);
-				break;
-				//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
-			case eRight:
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				
+			}
+			else
+			{
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)//ngôi sao
 				{
-					_MonsterVelocityX = -KINGBOO_VELOCITY_X;
-					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+					switch (collisionDirection)
+					{
+					case eRight:
+						_MonsterVelocityX = -KINGBOO_VELOCITY_X;
+						MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+						break;
+					case eLeft:
+						_MonsterVelocityX = KINGBOO_VELOCITY_X;
+						MonsterDead(2);
+						break;
+					}
 				}
-				break;
-			case eLeft:
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
-				{
-					_MonsterVelocityX = KINGBOO_VELOCITY_X;
-					MonsterDead(2);
-				}
-				break;
 			}
 			break;
-
-			//------------- Monster dead -----------------------
+		#pragma endregion
+		#pragma region bullet
 		case eBullet:
 			switch (collisionDirection)
 			{
@@ -168,6 +171,8 @@ void KingBoo::OnCollision(GameObject *object, eCollisionDirection collisionDirec
 				break;
 			}
 			break;
+		#pragma endregion
+		#pragma region Not Collision
 		case eMagicMushroom://nấm
 			break;
 		case eFireFlower:	//đạn
@@ -177,6 +182,7 @@ void KingBoo::OnCollision(GameObject *object, eCollisionDirection collisionDirec
 		case eStarMan:		//sao
 		default:
 			break;
+		#pragma endregion
 		}
 	}
 }

@@ -102,7 +102,7 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 	if (_MonsterAlive){
 		switch (object->GetObjectTypeID())
 		{
-#pragma region va chạm ngược
+		#pragma region va chạm ngược
 		case eGround:
 			DirectionsCollision(object, collisionDirection);
 			break;
@@ -118,7 +118,8 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		case eHardBrick:
 			DirectionsCollision(object, collisionDirection);
 			break;
-#pragma endregion
+		#pragma endregion
+		#pragma region Monster
 		case eMonster:
 			switch (object->GetSpriteID())
 			{
@@ -144,32 +145,40 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 				break;
 			}
 			break;
-
+		#pragma endregion
+		#pragma region Mario
 		case eMario:
-			switch (collisionDirection)
+			if (object->GetTag() == eMarioIsSmall || object->GetTag() == eMarioIsBig)//bình thường
 			{
+				switch (collisionDirection)
+				{
 				case eTop:
 					MonsterDead(1);
 					break;
-					//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
-				case eRight:
-					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				}
+			}
+			else
+			{
+				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)//ngôi sao
+				{
+					switch (collisionDirection)
 					{
-						_MonsterVelocityX = -GOOMBA_VELOCITY_X;
-						MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+							//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
+						case eRight:
+							_MonsterVelocityX = -GOOMBA_VELOCITY_X;
+							MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+							break;
+						case eLeft:
+							_MonsterVelocityX = GOOMBA_VELOCITY_X;
+							MonsterDead(2);
+							break;
 					}
-					break;
-				case eLeft:
-					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
-					{
-						_MonsterVelocityX = GOOMBA_VELOCITY_X;
-						MonsterDead(2);
-					}
-					break;
+				}
 			}
 			break;
 
-		//------------- Monster dead -----------------------
+		#pragma endregion
+		#pragma region bullet
 		case eBullet:
 			switch (collisionDirection)
 			{
@@ -183,6 +192,8 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 				break;
 			}
 			break;
+		#pragma endregion
+		#pragma region Not Collision
 		case eMagicMushroom://nấm
 			break;
 		case eFireFlower:	//đạn
@@ -192,6 +203,7 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		case eStarMan:		//sao
 		default:
 			break;
+		#pragma endregion
 		}
 	}
 }

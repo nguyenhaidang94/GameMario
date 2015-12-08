@@ -110,6 +110,7 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 				//	DirectionsFrame();
 				break;
 		#pragma endregion
+		#pragma region Monster
 			case eMonster:				//quái
 				switch (object->GetSpriteID())
 				{
@@ -133,30 +134,37 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 					break;
 				}
 				break;
-
+		#pragma endregion
+		#pragma region Mario
 			case eMario:
-				switch (collisionDirection)
+				if (object->GetTag() == eMarioIsSmall || object->GetTag() == eMarioIsBig)//bình thường
 				{
-				case eTop:
-					_Position.y = objectBox.fY - _Size.y / 2;
-					MonsterDead(1);
-					break;
-				case eRight:
-					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+					switch (collisionDirection)
 					{
-						MonsterDead(2);
+					case eTop:
+						_Position.y = objectBox.fY - _Size.y / 2;
+						MonsterDead(1);
+						break;
 					}
-					break;
-				case eLeft:
-					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				}
+				else
+				{
+					if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)//ngôi sao
 					{
-						MonsterDead(2);
+						switch (collisionDirection)
+						{
+						case eRight:
+							MonsterDead(2);
+							break;
+						case eLeft:
+							MonsterDead(2);
+							break;
+						}
 					}
-					break;
 				}
 				break;
-
-				//------------- Monster dead -----------------------
+		#pragma endregion
+		#pragma region bullet
 			case eBullet:
 				switch (collisionDirection)
 				{
@@ -168,6 +176,8 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 					break;
 				}
 				break;
+		#pragma endregion
+		#pragma region Not Collision
 			case eMagicMushroom://nấm
 				break;
 			case eFireFlower:	//đạn
@@ -177,6 +187,7 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 			case eStarMan:		//sao
 			default:
 				break;
+		#pragma endregion
 		}
 	}
 	else

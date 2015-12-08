@@ -98,7 +98,7 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 	//Handling collision by object type here
 	switch (object->GetObjectTypeID())
 	{
-#pragma region va chạm ngược
+	#pragma region va chạm ngược
 	case eGround:
 		//DirectionsCollision(object, collisionDirection);
 		break;
@@ -114,7 +114,8 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 	case eHardBrick:
 	//	DirectionsCollision(object, collisionDirection);
 		break;
-#pragma endregion
+	#pragma endregion
+	#pragma region Monster
 	case eMonster:
 		switch (object->GetSpriteID())
 		{
@@ -123,56 +124,58 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 				break;
 		}
 		break;
-
+	#pragma endregion
+	#pragma region Mario
 	case eMario:
-		switch (collisionDirection)
+		if (object->GetTag() == eMarioIsSmall || object->GetTag() == eMarioIsBig)//bình thường
 		{
-		case eTop:
-			if (!_PiranhaPlantDanger)// k còn nguy hiểm
+			if (!_PiranhaPlantDanger)// k còn nguy hiểm--sẽ đứng yên
 			{
-				_PiranhaPlantStop = true;
-				_TimeStartStop = GetTickCount();
-			}
-			else
-			{
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				switch (collisionDirection)
 				{
-					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+				case eTop://để các dòng giống nhau từng case mà k gom hoạt động chung ý nghĩa: Phát triển sau này, không gây lỗi khi quên thêm code dùng chung
+					_PiranhaPlantStop = true;
+					_TimeStartStop = GetTickCount();
+					break;
+				case eRight:
+					_PiranhaPlantStop = true;
+					_TimeStartStop = GetTickCount();
+					break;
+				case eLeft:
+					_PiranhaPlantStop = true;
+					_TimeStartStop = GetTickCount();
+					break;
+				default:
+					break;
 				}
 			}
-			break;
-		case eRight:
-			if (!_PiranhaPlantDanger)// k còn nguy hiểm
+		}
+		else
+		{
+			if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)//ngôi sao
 			{
-				_PiranhaPlantStop = true;
-				_TimeStartStop = GetTickCount();
-			}
-			else
-			{
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
+				if (_PiranhaPlantDanger)//ở trên có thể chết
 				{
-					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+					switch (collisionDirection)
+					{
+					case eTop:
+						MonsterDead(2);
+						break;
+					case eRight:
+						MonsterDead(2);
+						break;
+					case eLeft:
+						MonsterDead(2);
+						break;
+					default:
+						break;
+					}
 				}
 			}
-			break;
-		case eLeft:
-			if (!_PiranhaPlantDanger)
-			{
-				_PiranhaPlantStop = true;
-				_TimeStartStop = GetTickCount();
-			}
-			else
-			{
-				if (object->GetTag() == eMarioIsSmallInvincible || object->GetTag() == eMarioIsBigInvincible)
-				{
-					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
-				}
-			}
-			break;
-		default:
-			break;
 		}
 		break;
+	#pragma endregion
+	#pragma region bullet
 	case eBullet:
 		if (_PiranhaPlantDanger)
 		{
@@ -190,6 +193,8 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 			}
 		}
 		break;
+	#pragma endregion
+	#pragma region Not Collision
 	case eMagicMushroom://nấm
 		break;
 	case eFireFlower:	//đạn
@@ -199,6 +204,7 @@ void PiranhaPlant::OnCollision(GameObject *object, eCollisionDirection collision
 	case eStarMan:		//sao
 	default:
 		break;
+	#pragma endregion
 	}
 }
 

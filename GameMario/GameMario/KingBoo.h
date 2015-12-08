@@ -11,6 +11,8 @@
 
 class KingBoo: public Monster
 {
+protected:
+	int _KingBooALive;
 public:
 	KingBoo();
 	~KingBoo();
