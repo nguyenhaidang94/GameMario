@@ -7,43 +7,52 @@ using System.Threading.Tasks;
 
 namespace Map_Editor.Objects
 {
-    public enum eOBJECT
+    public enum eOBJECTID
     { 
-        ERASER,
-        GROUND,
-        BROWN_BRICK,
-        BLUE_BRICK,
-        BROWN_BLOCK,
-        BLUE_BLOCK,
-        QUEST_BLOCK,
-        FLAG,
-        LADDER,
-        PIPE64x64,
-        PIPE64x96,
-        PIPE64x128,
-        PIPE96x64,
-        PIPE64x256,
-        PIPE64x352,
-        COIN,
-        BLOCK_GROW_UP_MUSHROOM,
-        BLOCK_LEVEL_UP_MUSHROOM,
-        BLUE_BRICK_GROW_UP_MUSHROOM,
-        BLUE_BRICK_LEVEL_UP_MUSHROOM,
-        BROWN_BRICK_COIN,
-        BLUE_BRICK_COIN,
-        BROWN_BRICK_STAR,
-        BLUE_BRICK_STAR,
-        BROWN_GOOMPA,
-        BLUE_GOOMPA,
-        GREEN_PLANT,
-        DARK_GREEN_PLANT,
-        GREEN_TURTLE,
-        DARK_GREEN_TURTLE,
-        RED_TURTLE,
-        RED_FLY_TURTLE,
+        ERASER,         //0
+        GROUND,         //1
+        BROWN_BRICK,    //2
+        BLUE_BRICK,     //3
+        BROWN_BLOCK,    //4
+        BLUE_BLOCK,     //5
+        QUEST_BLOCK,    //6
+        FLAG,           //7
+        LADDER,         //8
+        PIPE64x64,      //9
+        PIPE64x96,      //10
+        PIPE64x128,     //11
+        PIPE96x64,      //12
+        PIPE64x256,     //13
+        PIPE64x352,     //14
+        COIN,           //15
+        BLOCK_GROW_UP_MUSHROOM,//16
+        BLOCK_LEVEL_UP_MUSHROOM,//17
+        BLUE_BRICK_GROW_UP_MUSHROOM,//18
+        BLUE_BRICK_LEVEL_UP_MUSHROOM,//19
+        BROWN_BRICK_COIN,//20
+        BLUE_BRICK_COIN,//21
+        BROWN_BRICK_STAR,//22
+        BLUE_BRICK_STAR,//23
+        BROWN_GOOMPA,   //24
+        BLUE_GOOMPA,    //25
+        GREEN_PLANT,//26
+        DARK_GREEN_PLANT,//27
+        GREEN_TURTLE,//28
+        DARK_GREEN_TURTLE,//29
+        RED_TURTLE,//30
+        RED_FLY_TURTLE,//31
+        CONTAIN_BLOCK,  //32
+        SMALL_LIFT,     //33
+        GRAY_MONEY_BLOCK,//34
+        AXE,            //35
+        FIRE,           //36
+        BOSS,           //37
+        LAVA,           //38
+        LINE,           //39
+        BRIDGE          //40
     }
 
-    public class TileObject
+    public class TileObject: IComparable<TileObject>
     {
         private int _Id;
         public int Id
@@ -114,6 +123,106 @@ namespace Map_Editor.Objects
             if (x >= left && x <= right && y <= top && y >= bot)
                 return true;
             return false;
+        }
+
+        /// <summary>
+        /// get priority of tileobject
+        /// which object will be in the front of list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int GetPriority(int id)
+        {
+            int result = 0;
+            switch (id)
+            { 
+                case (int)eOBJECTID.GROUND:
+                case (int)eOBJECTID.LAVA:
+                    result = 0;
+                    break;
+                case (int)eOBJECTID.BROWN_BRICK:
+                case (int)eOBJECTID.BLUE_BRICK:
+                case (int)eOBJECTID.BROWN_BLOCK:
+                case (int)eOBJECTID.BLUE_BLOCK:
+                case (int)eOBJECTID.QUEST_BLOCK:
+                case (int)eOBJECTID.FLAG:
+                case (int)eOBJECTID.BLOCK_GROW_UP_MUSHROOM:
+                case (int)eOBJECTID.BLOCK_LEVEL_UP_MUSHROOM:
+                case (int)eOBJECTID.BLUE_BRICK_GROW_UP_MUSHROOM:
+                case (int)eOBJECTID.BROWN_BRICK_COIN:
+                case (int)eOBJECTID.BLUE_BRICK_COIN:
+                case (int)eOBJECTID.BROWN_BRICK_STAR:
+                case (int)eOBJECTID.BLUE_BRICK_STAR:
+                case (int)eOBJECTID.CONTAIN_BLOCK:
+                case (int)eOBJECTID.GRAY_MONEY_BLOCK:
+                    result = 1;
+                    break;
+                default:
+                    result = 2;
+                    break;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// override function CompareTo in IComparable
+        /// </summary>
+        /// <returns></returns>
+        public int CompareTo(TileObject other)
+        {
+            if (other == null)
+                return -1;
+            else
+            {
+                //conpare priority
+                int priority = GetPriority(this._Id);
+                int otherPriority = GetPriority(other._Id);
+                if (priority < otherPriority)
+                    return -1;
+                else if (priority > otherPriority)
+                    return 1;
+                else
+                { 
+                    //compare position
+                    int x1 = 0;
+                    int y1 = 0;
+                    int x2 = 0;
+                    int y2 = 0;
+                    switch (priority)
+                    { 
+                            //group GROUND, LAVA
+                            //compare botleft
+                        case 0:
+                            x1 = this._BoundaryBox.X - this._BoundaryBox.Width/2;
+                            y1 = this._BoundaryBox.Y - this._BoundaryBox.Height/2;
+                            x2 = other._BoundaryBox.X - other._BoundaryBox.Width/2;
+                            y2 = other._BoundaryBox.Y - other._BoundaryBox.Height / 2;
+                            break;
+                            //others
+                            //compare middle point
+                        default:
+                            x1 = this._BoundaryBox.X;
+                            y1 = this._BoundaryBox.Y;
+                            x2 = other._BoundaryBox.X;
+                            y2 = other._BoundaryBox.Y;
+                            break;
+                    }
+                    if (x1 < x2)
+                        return -1;
+                    else if (x1 > x2)
+                        return 1;
+                    else
+                    {
+                        if (y1 < y2)
+                            return -1;
+                        else if (y1 == y2)
+                            return 0;
+                        else
+                            return 1;
+                    }
+                }
+            }
         }
     }
 }
