@@ -89,6 +89,14 @@
   <ItemGroup>
     <Content Include="icon.ico" />
     <None Include="Resources\Tiles\flag.png" />
+    <Content Include="Resources\Enemies\Boss.png" />
+    <Content Include="Resources\Enemies\fire.png" />
+    <None Include="Resources\Ground\lava.png" />
+    <Content Include="Resources\Items\axe.png" />
+    <Content Include="Resources\Items\gray-money-block.png" />
+    <None Include="Resources\Tiles\line.png" />
+    <None Include="Resources\Tiles\bridge.png" />
+    <Content Include="Resources\Tiles\small-lift.png" />
     <Content Include="Yellowicon-Game-Stars-Mario.ico" />
     <None Include="Resources\Tiles\lift.png" />
     <None Include="Resources\Items\box_star2.png" />

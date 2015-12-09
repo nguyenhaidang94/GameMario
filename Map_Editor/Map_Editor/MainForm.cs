@@ -123,6 +123,15 @@ namespace Map_Editor
             _ListPicbox.Add(_pbEnemy6);//29
             _ListPicbox.Add(_pbEnemy7);//30
             _ListPicbox.Add(_pbEnemy8);//31
+            _ListPicbox.Add(_pbTile14);//32
+            _ListPicbox.Add(_pbTile15);//33
+            _ListPicbox.Add(_pbItem10);//34
+            _ListPicbox.Add(_pbItem11);//35
+            _ListPicbox.Add(_pbEnemy9);//36
+            _ListPicbox.Add(_pbEnemy10);//37
+            _ListPicbox.Add(_pbLava);   //38
+            _ListPicbox.Add(_pbTile16); //39
+            _ListPicbox.Add(_pbTile17); //40
 
             foreach (PictureBox pb in _ListPicbox)
                 pb.Click += pictureBox_Click;
@@ -166,7 +175,9 @@ namespace Map_Editor
                         tileObj.Id.ToString() + " "
                          + tileObj.BoundaryBox.X.ToString() + " "
                          + tileObj.BoundaryBox.Y.ToString() + " "
-                         + tileObj.BoundaryBox.Width.ToString()
+                         + tileObj.BoundaryBox.Width.ToString() + " "
+                         + tileObj.BoundaryBox.Height.ToString() + " "
+                         + "-1"
                          );
 
                 foreach (TileObject tileObj in _MapObj.ListObject)
@@ -176,6 +187,8 @@ namespace Map_Editor
                             tileObj.Id.ToString() + " "
                              + tileObj.BoundaryBox.X.ToString() + " "
                              + tileObj.BoundaryBox.Y.ToString() + " "
+                             + tileObj.BoundaryBox.Width.ToString() + " "
+                             + tileObj.BoundaryBox.Height.ToString() + " "
                              + "-1"
                              );
                     else
@@ -183,6 +196,8 @@ namespace Map_Editor
                             tileObj.Id.ToString() + " "
                              + tileObj.BoundaryBox.X.ToString() + " "
                              + tileObj.BoundaryBox.Y.ToString() + " "
+                             + tileObj.BoundaryBox.Width.ToString() + " "
+                             + tileObj.BoundaryBox.Height.ToString() + " "
                              + tileObj.Note
                              );
                 }
@@ -210,6 +225,7 @@ namespace Map_Editor
                 //write objects in node
                 if (node.ListObject.Count > 0)
                 {
+                    node.ListObject.Sort();
                     foreach (TileObject obj in node.ListObject)
                     {
                         if (string.IsNullOrEmpty(obj.Note))
@@ -279,6 +295,8 @@ namespace Map_Editor
             int id = 0;
             int x = 0;
             int y = 0;
+            int w = 0;
+            int h = 0;
 
             try
             {
@@ -392,6 +410,68 @@ namespace Map_Editor
                 } while (!sr.EndOfStream && !valid);
                 #endregion         
 
+                #region Width
+                do
+                {
+                    w = 0;
+                    valid = false;
+                    try
+                    {
+                        temp = sr.Read();
+                    }
+                    catch
+                    {
+                        sr.Close();
+                        return;
+                    }
+                    while (temp > 47 && temp < 58)
+                    {
+                        w = w * 10 + (temp - 48);
+                        valid = true;
+                        try
+                        {
+                            temp = sr.Read();
+                        }
+                        catch
+                        {
+                            sr.Close();
+                            return;
+                        }
+                    }
+                } while (!sr.EndOfStream && !valid);
+                #endregion         
+
+                #region Height
+                do
+                {
+                    h = 0;
+                    valid = false;
+                    try
+                    {
+                        temp = sr.Read();
+                    }
+                    catch
+                    {
+                        sr.Close();
+                        return;
+                    }
+                    while (temp > 47 && temp < 58)
+                    {
+                        h = h * 10 + (temp - 48);
+                        valid = true;
+                        try
+                        {
+                            temp = sr.Read();
+                        }
+                        catch
+                        {
+                            sr.Close();
+                            return;
+                        }
+                    }
+                } while (!sr.EndOfStream && !valid);
+                #endregion         
+
                 #region NOTE
                 string note = null;
                 try
@@ -410,22 +490,18 @@ namespace Map_Editor
                     
                     if (id < 1)
                     { }
-                    else if (id == (int)eOBJECT.GROUND)
+                    else if (id == (int)eOBJECTID.GROUND || id == (int)eOBJECTID.LAVA)
                     {
-                        int width;
-                        if (int.TryParse(note.Trim(), out width))
-                        {
-                            TileObject tileObj = new TileObject(id, x, y, width, MapObject.MINIMUM_HEIGHT);
-                            if (note != null)
-                                tileObj.Note = note;
-                            _MapObj.ListGround.Add(tileObj);
-                        }
-                    }
+                        TileObject tileObj = new TileObject(id, x, y, w, h);
+                        if (note != null)
+                            tileObj.Note = note;
+                        _MapObj.ListGround.Add(tileObj);
+                    }                    
                     else
                     {
                         if (id < _ListPicbox.Count)
                         {
-                            TileObject tileObj = new TileObject(id, x, y, _ListPicbox[id].Image.Width*2, _ListPicbox[id].Image.Height*2);
+                            TileObject tileObj = new TileObject(id, x, y, w, h);
                             if (!string.IsNullOrEmpty(note) && note != "-1")
                                 tileObj.Note = note;
                             _MapObj.ListObject.Add(tileObj);
@@ -517,7 +593,8 @@ namespace Map_Editor
                 { }
             }
 
-            Pen pen = new Pen(Color.Red, 3.0f);
+            Pen browmPen = new Pen(Color.Yellow, 3.0f);
+            Pen redPen = new Pen(Color.Red, 3.0f);
             foreach (TileObject tileObj in _MapObj.ListGround)
             {
                 Rectangle r = new Rectangle();
@@ -528,7 +605,15 @@ namespace Map_Editor
                 r.Size = new Size(tileObj.BoundaryBox.Width, tileObj.BoundaryBox.Height);
                 try
                 {
-                    g.DrawRectangle(pen, r);
+                    switch(tileObj.Id)
+                    {
+                        case (int)eOBJECTID.GROUND:
+                            g.DrawRectangle(browmPen, r);
+                            break;
+                        case (int)eOBJECTID.LAVA:
+                            g.DrawRectangle(redPen, r);
+                            break;
+                    }
                 }
                 catch
                 { }
@@ -551,7 +636,7 @@ namespace Map_Editor
                     if (groundObj != null)
                         _MapObj.ListGround.Remove(groundObj);
             }
-            else if (_SelectedPicbox == _pbLand)
+            else if (_SelectedPicbox == _pbLand || _SelectedPicbox == _pbLava)
             {
                 _startPoint = new Point(e.X / MapObject.MINIMUM_WIDTH * MapObject.MINIMUM_WIDTH,
                     e.Y / MapObject.MINIMUM_HEIGHT * MapObject.MINIMUM_HEIGHT);
@@ -665,7 +750,7 @@ namespace Map_Editor
             {
                 if (_SelectedPicbox == _pbEraser)
                 { }
-                else if (_SelectedPicbox == _pbLand)
+                else if (_SelectedPicbox == _pbLand || _SelectedPicbox == _pbLava)
                 {
                     _endPoint = e.Location;
                 }
@@ -699,6 +784,23 @@ namespace Map_Editor
                         _ListPicbox.IndexOf(_pbLand),
                         rect.Location.X + rect.Size.Width/2,
                         _MapObj.MapHeight - (rect.Location.Y + rect.Size.Height/2),
+                        rect.Size.Width,
+                        rect.Size.Height
+                        );
+                    _MapObj.ListGround.Add(tileObj);
+                }
+            }
+            else if (_SelectedPicbox == _pbLava)
+            {
+                _endPoint = new Point(e.X / MapObject.MINIMUM_WIDTH * MapObject.MINIMUM_WIDTH,
+                                        e.Y / MapObject.MINIMUM_HEIGHT * MapObject.MINIMUM_HEIGHT);
+                Rectangle rect = GetRectBetweenPoints(_startPoint, _endPoint);
+                if (rect.Size.Height > 0 && rect.Size.Width > 0)
+                {
+                    TileObject tileObj = new TileObject(
+                        _ListPicbox.IndexOf(_pbLava),
+                        rect.Location.X + rect.Size.Width / 2,
+                        _MapObj.MapHeight - (rect.Location.Y + rect.Size.Height / 2),
                         rect.Size.Width,
                         MapObject.MINIMUM_HEIGHT
                         );
@@ -771,7 +873,7 @@ namespace Map_Editor
         {
             if (_SelectedObj != null)
             {
-                if (_SelectedObj.Id == (int)eOBJECT.GROUND)
+                if (_SelectedObj.Id == (int)eOBJECTID.GROUND)
                     MessageBox.Show("Can not set note for object Ground");
                 else
                 {
@@ -812,7 +914,6 @@ namespace Map_Editor
             if (_pbBackground != null)
                 _pbBackground.Invalidate();
         }
-
         
     }
 }
