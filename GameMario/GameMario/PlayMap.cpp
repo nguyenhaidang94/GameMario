@@ -159,65 +159,81 @@ void PlayMap::HandlingCollision()
 //check collision of an dynamic object with another object
 //return CollisionDirection of 2nd object
 //-------------------------------------------------------------
-eCollisionDirection PlayMap::CheckCollision(GameObject *dynamicObj, GameObject *unknownObj)
+eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *unknownObj)
 {
 	float normalX, normalY;
 	float moveX, moveY;
-	Box dynamicBox = dynamicObj->GetBoundaryBox();
+	Box dynamicBox = targetObj->GetBoundaryBox();
 	Box unknownBox = unknownObj->GetBoundaryBox();
 
 	//neu chua va cham
 	if (AABB(dynamicBox, unknownBox, moveX, moveY) == false)
 	{
-		//neu unknownObj co van toc thi tru van toc 2 vat
-		if (unknownBox.fVx != 0.0f || unknownBox.fVy != 0.0f)
+		if (targetObj->IsDynamic())
 		{
-			dynamicBox.fVx -= unknownBox.fVx;
-			dynamicBox.fVy -= unknownBox.fVy;
-			unknownBox.fVx = 0.0f;
-			unknownBox.fVy = 0.0f;
-		}
-
-		//lay vung khong gian cua vat 1
-		Box broadphasebox = getSweptBroadphaseBox(dynamicBox);
-		//neu vat 2 nam trong vung khong gian cua vat 1
-		if (AABB(broadphasebox, unknownBox, moveX, moveY) == true)
-		{
-			//su dung thuat toan sweptAABB de xac dinh va cham
-			float collisiontime = sweptAABB(dynamicBox, unknownBox, normalX, normalY);
-			//truong hop co xay ra va cham
-			if (collisiontime > 0.0f && collisiontime < 1.0f)
+			DynamicGameObject* dynamicObj = (DynamicGameObject*)targetObj;
+			//neu unknownObj co van toc thi tru van toc 2 vat
+			if (unknownObj->IsDynamic())
 			{
-				//normalY != 0.0f va moveY != 0 tuc va cham theo phuong doc
-				if (normalY != 0.0f && moveY != 0)
+				dynamicBox.fVx -= unknownBox.fVx;
+				dynamicBox.fVy -= unknownBox.fVy;
+				unknownBox.fVx = 0.0f;
+				unknownBox.fVy = 0.0f;
+			}
+
+			//lay vung khong gian cua vat 1
+			Box broadphasebox = getSweptBroadphaseBox(dynamicBox);
+			//neu vat 2 nam trong vung khong gian cua vat 1
+			if (AABB(broadphasebox, unknownBox, moveX, moveY) == true)
+			{
+				//su dung thuat toan sweptAABB de xac dinh va cham
+				float collisiontime = sweptAABB(dynamicBox, unknownBox, normalX, normalY);
+				//truong hop co xay ra va cham
+				if (collisiontime > 0.0f && collisiontime < 1.0f)
 				{
-					//va cham top, truong hop moveY <= 0 thi khong tinh va cham
-					if (normalY == 1.0f && moveY > 0)
+					//normalY != 0.0f va moveY != 0 tuc va cham theo phuong doc
+					if (normalY != 0.0f && moveY != 0)
 					{
-						//MessageBox(_hWnd, L"top", L"collision", MB_OK);
-						return eCollisionDirection::eTop;
+						//va cham top, truong hop moveY <= 0 thi khong tinh va cham
+						if (normalY == 1.0f && moveY > 0)
+						{
+							//update velocity
+							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
+							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x, oldVelocity.y + oldVelocity.y*collisiontime);
+							dynamicObj->SetVelocity(newVelocity);
+							return eCollisionDirection::eTop;
+						}
+						//va cham bot, truong hop moveY >= 0 thi khong tinh va cham
+						else if (normalY == -1.0f && moveY < 0)
+						{
+							//update velocity
+							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
+							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x, oldVelocity.y + oldVelocity.y*collisiontime);
+							dynamicObj->SetVelocity(newVelocity);
+							return eCollisionDirection::eBottom;
+						}
 					}
-					//va cham bot, truong hop moveY >= 0 thi khong tinh va cham
-					else if (normalY == -1.0f && moveY < 0)
+					//normalX != 0.0f va moveX != 0 tuc va cham theo phuong ngang
+					else if (normalX != 0.0f && moveX != 0.0f)
 					{
-						//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
-						return eCollisionDirection::eBottom;
-					}
-				}
-				//normalX != 0.0f va moveX != 0 tuc va cham theo phuong ngang
-				else if (normalX != 0.0f && moveX != 0.0f)
-				{
-					//va cham right, truong hop moveX >= 0 thi khong tinh va cham
-					if (normalX == 1.0f && moveX < 0)
-					{
-						//MessageBox(_hWnd, L"right", L"collision", MB_OK);
-						return eCollisionDirection::eRight;
-					}
-					//va cham left, truong hop moveX <= 0 thi khong tinh va cham
-					else if (normalX == -1.0f && moveX > 0)
-					{
-						//MessageBox(_hWnd, L"left", L"collision", MB_OK);
-						return eCollisionDirection::eLeft;
+						//va cham right, truong hop moveX >= 0 thi khong tinh va cham
+						if (normalX == 1.0f && moveX < 0)
+						{
+							//update velocity
+							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
+							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x + oldVelocity.x*collisiontime, oldVelocity.y);
+							dynamicObj->SetVelocity(newVelocity);
+							return eCollisionDirection::eRight;
+						}
+						//va cham left, truong hop moveX <= 0 thi khong tinh va cham
+						else if (normalX == -1.0f && moveX > 0)
+						{
+							//update velocity
+							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
+							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x + oldVelocity.x*collisiontime, oldVelocity.y);
+							dynamicObj->SetVelocity(newVelocity);
+							return eCollisionDirection::eLeft;
+						}
 					}
 				}
 			}
