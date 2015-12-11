@@ -13,7 +13,7 @@ private:
 	Mario *_Mario;
 
 	//get direction of colision between a dynamic and a static object
-	eCollisionDirection CheckCollision(GameObject *dynamicObj, GameObject *unknownObj);
+	eCollisionDirection CheckCollision(GameObject *targetObj, GameObject *unknownObj, float &offsetX, float &offsetY);
 public:
 	PlayMap(void);
 	PlayMap(eWorldID worldID);
