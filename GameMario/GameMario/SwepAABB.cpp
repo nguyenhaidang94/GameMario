@@ -32,7 +32,7 @@ bool AABBCheck(Box box1, Box box2)
 //tra ve true neu va cham
 //movex va movey la khoang cach ma b1 phai di chuyen de tranh va cham
 //--------------------------------------------------------------------------
-bool AABB(Box b1, Box b2, float& moveX, float& moveY)
+bool AABB(Box b1, Box b2, float& moveX, float& moveY, float& offsetX, float& offsetY)
 {
 	moveX = moveY = 0.0f;
 
@@ -48,7 +48,9 @@ bool AABB(Box b1, Box b2, float& moveX, float& moveY)
 	// tính dentry của x và y với mọi vx, vy
 	moveX = abs(l) < r ? l : r;
 	moveY = abs(b) < t ? b : t;
-
+	//offset để dùng khi xử lý va chạm ở từng đối tượng
+	offsetX = abs(moveX);
+	offsetY = abs(moveY);
 	// sử dụng biến move nào nhỏ hơn, biến còn lại cho bằng 0, 
 	if (abs(moveY) <= abs(moveX))
 		moveX = 0.0f;

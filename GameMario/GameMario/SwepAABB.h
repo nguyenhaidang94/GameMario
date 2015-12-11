@@ -55,4 +55,4 @@ Box getSweptBroadphaseBox(Box box);
 bool AABBCheck(Box box1, Box box2);
 
 //
-bool AABB(Box box1, Box box2, float &moveX, float &moveY);
+bool AABB(Box box1, Box box2, float &moveX, float &moveY, float &offsetX, float &offsetY);

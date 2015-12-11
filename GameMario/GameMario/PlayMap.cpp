@@ -100,14 +100,20 @@ void PlayMap::HandlingCollision()
 	//--Variable to handle collide with multiple brick--
 	int indexClosestBrickCollide = -1;	//mario only collide on top with 1 brick at the time, this store the closest one
 
+	float offsetX;
+	float offsetY;
+
+	//used when mario's head collides with brick's bottom point
+	float mario_brick_offsetX;
+	float mario_brick_offsetY;
 	//--Handle collision with all object on screen
 	for (int i = 0; i < objectOnScreen.size(); i++)
 	{
 		//check colision with mario if it's not has eIgnoreCollision Tag
 		if(_Mario->GetTag() != eGameTag::eIgnoreCollision)
 		{
-			eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i]);
-			if(direction != eCollisionDirection::eNone && _Mario->GetTag()!=eGameTag::eMarioIsDead)
+			eCollisionDirection direction = CheckCollision(_Mario, objectOnScreen[i], offsetX, offsetY);
+			if(direction != eCollisionDirection::eNone && _Mario->GetTag()!= eGameTag::eMarioIsDead)
 			{
 				//if collide with brick on top, store and handle later
 				if (objectOnScreen[i]->GetObjectTypeID() == eObjectTypeID::eBrick && direction == eCollisionDirection::eBottom)
@@ -116,6 +122,8 @@ void PlayMap::HandlingCollision()
 					if(indexClosestBrickCollide == -1)
 					{
 						indexClosestBrickCollide = i;
+						mario_brick_offsetX = offsetX;
+						mario_brick_offsetY = offsetY;
 					}
 					else
 					{
@@ -124,12 +132,14 @@ void PlayMap::HandlingCollision()
 							abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
 						{
 							indexClosestBrickCollide = i;
+							mario_brick_offsetX = offsetX;
+							mario_brick_offsetY = offsetY;
 						}
 					}
 				}
 				else	//send collision
 				{
-					_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
+					_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction), offsetX, offsetY);
 					objectOnScreen[i]->OnCollision(_Mario, direction);
 				}
 			}
@@ -139,7 +149,7 @@ void PlayMap::HandlingCollision()
 		for (int j = i + 1; j < objectOnScreen.size(); j++)
 		{
 			
-			eCollisionDirection direction = CheckCollision(objectOnScreen[i], objectOnScreen[j]);
+			eCollisionDirection direction = CheckCollision(objectOnScreen[i], objectOnScreen[j], offsetX, offsetY);
 			if(direction != eCollisionDirection::eNone)
 			{
 				objectOnScreen[i]->OnCollision(objectOnScreen[j], Unility::GetOppositeDirection(direction));
@@ -150,7 +160,8 @@ void PlayMap::HandlingCollision()
 	//Handle collide with brick if have any
 	if(indexClosestBrickCollide != -1)
 	{
-		_Mario->OnCollision(objectOnScreen[indexClosestBrickCollide], Unility::GetOppositeDirection(eCollisionDirection::eBottom));
+		_Mario->OnCollision(objectOnScreen[indexClosestBrickCollide], Unility::GetOppositeDirection(eCollisionDirection::eBottom)
+			, mario_brick_offsetX, mario_brick_offsetY);
 		objectOnScreen[indexClosestBrickCollide]->OnCollision(_Mario, eCollisionDirection::eBottom);
 	}
 }
@@ -159,7 +170,7 @@ void PlayMap::HandlingCollision()
 //check collision of an dynamic object with another object
 //return CollisionDirection of 2nd object
 //-------------------------------------------------------------
-eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *unknownObj)
+eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *unknownObj, float &offsetX, float &offsetY)
 {
 	float normalX, normalY;
 	float moveX, moveY;
@@ -167,7 +178,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 	Box unknownBox = unknownObj->GetBoundaryBox();
 
 	//neu chua va cham
-	if (AABB(dynamicBox, unknownBox, moveX, moveY) == false)
+	if (AABB(dynamicBox, unknownBox, moveX, moveY, offsetX, offsetY) == false)
 	{
 		if (targetObj->IsDynamic())
 		{
@@ -184,7 +195,7 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 			//lay vung khong gian cua vat 1
 			Box broadphasebox = getSweptBroadphaseBox(dynamicBox);
 			//neu vat 2 nam trong vung khong gian cua vat 1
-			if (AABB(broadphasebox, unknownBox, moveX, moveY) == true)
+			if (AABB(broadphasebox, unknownBox, moveX, moveY, offsetX, offsetY) == true)
 			{
 				//su dung thuat toan sweptAABB de xac dinh va cham
 				float collisiontime = sweptAABB(dynamicBox, unknownBox, normalX, normalY);
@@ -315,6 +326,5 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 			}
 		}
 	}
-
 	return eCollisionDirection::eNone;
 }

@@ -51,6 +51,8 @@ public:
 	void Render();
 	void Release();
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
+	//handle collision using offset
+	void OnCollision(GameObject *object, eCollisionDirection collisionDirection, float offsetX, float offsetY);
 
 	//Mario state
 	void Jump();
