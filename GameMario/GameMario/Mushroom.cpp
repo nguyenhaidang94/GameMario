@@ -108,7 +108,7 @@ void Mushroom::OnCollision(GameObject *object, eCollisionDirection collisionDire
 		{
 		case eBottom:
 			_Position.y = objectBox.fY + _Size.y/2;
-			_Velocity.y = 0.3;
+			_Velocity.y = 0.0f;
 			_IsStandOnObject = true;
 			break;
 		case eLeft:

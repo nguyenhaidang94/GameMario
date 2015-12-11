@@ -12,5 +12,6 @@ public:
 	virtual	Box GetBoundaryBox();
 	//Set velocity for object
 	void SetVelocity(D3DXVECTOR2 velocity);
+	D3DXVECTOR2 GetVelocity(){ return _Velocity; }
 };
 
