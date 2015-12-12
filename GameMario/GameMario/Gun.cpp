@@ -47,6 +47,7 @@ void Gun::Shoot(D3DXVECTOR2 MarioPosition, bool IsRight)
 			ListBullet[ListBullet.size()-1]->SetTag(eEmpty);	
 
 			GameStatistics::GetInstance()->AddObjectToScene(ListBullet[ListBullet.size()-1]);
+		
 		}
 	}
 

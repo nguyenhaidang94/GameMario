@@ -26,6 +26,16 @@ void SoundManager::LoadSounds(LPDIRECTSOUND8 lpDSound)
 	_ListSound[eSoundID::ePowerUp] = new Sound(lpDSound, L"resources\\Sounds\\smb_powerup.wav");
 	_ListSound[eSoundID::eVine] = new Sound(lpDSound, L"resources\\Sounds\\smb_vine.wav");
 	_ListSound[eSoundID::ePowerUpAppears] = new Sound(lpDSound, L"resources\\Sounds\\smb_powerup_appears.wav");
+	_ListSound[eSoundID::e1Up] =  new Sound(lpDSound, L"resources\\Sounds\\smb_1-up.wav");
+	_ListSound[eSoundID::eBrickSmash] =  new Sound(lpDSound, L"resources\\Sounds\\smb_breakblock.wav");
+	_ListSound[eSoundID::eBump] = new Sound(lpDSound, L"resources\\Sounds\\smb_bump.wav");
+	_ListSound[eSoundID::eCoinAppear] = new Sound(lpDSound, L"resources\\Sounds\\smb_coin.wav");
+	_ListSound[eSoundID::eDownTheFlagpole] = new Sound(lpDSound, L"resources\\Sounds\\smb_flagpole.wav");
+	_ListSound[eSoundID::eMarioDie] = new Sound(lpDSound, L"resources\\Sounds\\smb_mariodie.wav"); 
+	_ListSound[eSoundID::ePipeTravel] = new Sound(lpDSound, L"resources\\Sounds\\smb_pipe.wav"); 
+	_ListSound[eSoundID::eSoundGameOver] = new Sound(lpDSound, L"resources\\Sounds\\smb_gameover.wav"); 
+	_ListSound[eSoundID::eStageClear] =  new Sound(lpDSound, L"resources\\Sounds\\smb_stage_clear.wav"); 
+	_ListSound[eSoundID::eWorldClear] = new Sound(lpDSound, L"resources\\Sounds\\smb_world_clear.wav"); 
 }
 
 Sound *SoundManager::GetSound(eSoundID soundID)

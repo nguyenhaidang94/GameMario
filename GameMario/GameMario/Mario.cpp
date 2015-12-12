@@ -11,8 +11,8 @@
 #define MAX_VELOCITY 10
 #define VELOCITY_COLLISION_MONSTER_X 0
 #define VELOCITY_COLLISION_MONSTER_Y 5
-#define MAX_VELOCITY2 14.5
-#define MAX_VELOCITYDEAD 10
+#define MAX_VELOCITY2 15
+#define MAX_VELOCITYDEAD 13
 #define MAX_VELOCITYX 4.0f
 #define MAX_VELOCITYSHOOT 10
 #define ANIMATION_FRAME_RATE 15
@@ -115,7 +115,6 @@ void Mario::HandlingInput()
 				_IsCollide = false;
 				_State = eMarioState::eJump;
 				SoundManager::GetInstance()->GetSound(eSoundID::eJumpSmall)->Play();
-				
 		       _Velocity.y = MAX_VELOCITY;  
 			 }
 		}
@@ -314,6 +313,7 @@ void Mario::Fall()
 		_State = eMarioState::eDead;
 		_Velocity.y = MAX_VELOCITYDEAD;
 		GameStatistics::GetInstance()->ChangeLife(false);
+		SoundManager::GetInstance()->GetSound(eSoundID::eMarioDie)->Play();
 	}
 
 
@@ -847,6 +847,8 @@ void Mario::AutoAnimationEndGame()
 
 	if(_Position.x >=GameStatistics::GetInstance()->GetPositionEndGame().x) 
 		{
+			SoundManager::GetInstance()->GetSound(eSoundID::eStageClear)->Play();
+
 			if( GameStatistics::GetInstance()->GetWorldID()==eWorldID::e1_1)
 			{
 				GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_2);
@@ -1233,14 +1235,13 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				_Velocity.y = 0;
 				_IsCollide = true;
 				_IsAnimationPipe=false;
-				
 				break;
 			case eLeft:
 				_Velocity.x = 0;
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -DECREASE_BOX_X;
+				/*_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -DECREASE_BOX_X;*/
 				break;
 			case eRight:
-				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 +DECREASE_BOX_X;
+				/*_Position.x = object->GetBoundaryBox().fX - _Size.x/2 +DECREASE_BOX_X;*/
 				_Velocity.x = 0;
 				break;
 			case eTop:
@@ -1510,12 +1511,15 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				break;
 			case eLeft:
 				_Velocity.x = 0;
+				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
 				break;
 			case eRight:
 				_Velocity.x = 0;
+				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
 				break;
 			case eTop:
 				_Velocity.y = -_Velocity.y;
+				break;
 			default:
 				break;
 			}
@@ -1532,7 +1536,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				if (object->GetTag() != eGameTag::eEmpty && Keyboard::GetInstance()->IsKeyDown(DIK_S))
 				{
 					_PipeTag = object->GetTag();
-
+					SoundManager::GetInstance()->GetSound(eSoundID::ePipeTravel)->Play();
 				}
 				_IsCollide = true;
 				break;
@@ -1565,6 +1569,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				if (_PipeTag != eGameTag::eEmpty)
 				{
 					_IsAnimationRight = true;
+					SoundManager::GetInstance()->GetSound(eSoundID::ePipeTravel)->Play();
 				}
 				_Velocity.x = 0;
 				break;
@@ -1602,6 +1607,12 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				if (offsetX > 2)
 				{
 					_Velocity.y = -_Velocity.y;
+					if(_Tag ==eGameTag::eMarioIsSmall|| _Tag==eGameTag::eMarioIsSmallInvincible)
+					{
+						SoundManager::GetInstance()->GetSound(eSoundID::eBump)->Play();
+					}
+					else
+						SoundManager::GetInstance()->GetSound(eSoundID::eBrickSmash)->Play();
 				}
 				break;
 			default:
@@ -1690,57 +1701,52 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		}
 		break;
 	case eFlagpole:
-	{
-		_IsAnimationFlag = true;
-
-	}
-	break;
-	case e1upMushroom:
-	{
-		if (collisionDirection != eCollisionDirection::eNone && _IsDead == false)
 		{
-			GameStatistics::GetInstance()->SetLife(GameStatistics::GetInstance()->GetLife() + 1);
+			_IsAnimationFlag = true;
+			SoundManager::GetInstance()->GetSound(eSoundID::eDownTheFlagpole)->Play();
 		}
 		break;
-	}
+
 	case eMonster:
 	{
-		//if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0)
-		//{
-		//	if (collisionDirection == eCollisionDirection::eBottom)
-		//	{
-		//		_IsCollisionMonster = true;
-		//		_State = eMarioState::eJump;
-		//		_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
-		//		break;
-		//	}
-		//	else if (collisionDirection != eCollisionDirection::eBottom && collisionDirection != eCollisionDirection::eNone)
-		//	{
-		//		if (_Tag == eGameTag::eMarioIsBig)
-		//		{
-		//			_Tag = eGameTag::eMarioIsSmall;
-		//			_IsTranferToSmall = true;
-		//			_PreState = _State;
-		//			_State = eMarioState::eIdle;
-		//			_IsFlower = false; //Khi va chạm quái sẽ mất trạng thái bắn chuyển về mario nhỏ
-		//			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
-		//			_Velocity.y = 0;
-		//			if (_IsRight == true) _CurrentFrame = SPRITE_BIG_R;
-		//			else _CurrentFrame = SPRITE_BIG_L;
-		//			SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
-		//		}
-		//		else if (_Tag == eGameTag::eMarioIsSmall)
-		//		{
-		//			_IsDead = true;
-		//			_IsFlower=false;
-		//			_Tag = eGameTag::eMarioIsDead;
-		//			_Velocity.y = MAX_VELOCITYDEAD;
-		//			_State = eMarioState::eDead;
-		//			GameStatistics::GetInstance()->ChangeLife(false);
+		if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0)
+		{
+			if (collisionDirection == eCollisionDirection::eBottom)
+			{
+				_IsCollisionMonster = true;
+				_State = eMarioState::eJump;
+				_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
+				break;
+			}
+			else if (collisionDirection != eCollisionDirection::eBottom && collisionDirection != eCollisionDirection::eNone)
+			{
+				if (_Tag == eGameTag::eMarioIsBig)
+				{
+					_Tag = eGameTag::eMarioIsSmall;
+					_IsTranferToSmall = true;
+					_PreState = _State;
+					_State = eMarioState::eIdle;
+					_IsFlower = false; //Khi va chạm quái sẽ mất trạng thái bắn chuyển về mario nhỏ
+					_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
+					_Velocity.y = 0;
+					if (_IsRight == true) _CurrentFrame = SPRITE_BIG_R;
+					else _CurrentFrame = SPRITE_BIG_L;
+					SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
+				}
+				else if (_Tag == eGameTag::eMarioIsSmall)
+				{
+					_IsDead = true;
+					_IsFlower=false;
+					_Tag = eGameTag::eMarioIsDead;
+					_Velocity.y = MAX_VELOCITYDEAD;
+					_State = eMarioState::eDead;
+					GameStatistics::GetInstance()->ChangeLife(false);
+					SoundManager::GetInstance()->GetSound(eSoundID::eMarioDie)->Play();
 
-		//		}
-		//	}
-		/*}*/
+				}
+			}
+		}
+	
 		break;
 	}
 	case eFloatingBar:
@@ -1757,9 +1763,11 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				break;
 			case eLeft:
 				_Velocity.x = 0;
+				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
 				break;
 			case eRight:
 				_Velocity.x = 0;
+				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
 				break;
 			case eTop:
 				_Velocity.y = -_Velocity.y;
