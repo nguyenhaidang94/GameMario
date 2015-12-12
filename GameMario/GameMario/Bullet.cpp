@@ -104,7 +104,6 @@ void Bullet::Update()
 	 	 _TimeAlive=100;
 	  }
 	 
-
 	if(_IsAlive ==true)
 	{ 
 		
@@ -243,14 +242,59 @@ void Bullet::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		break;
 	
 	case eMonster:
-		 if( collisionDirection!= eCollisionDirection::eNone)
+		switch (collisionDirection)
 		{
-			_IsAlive=false;
-			_Velocity.x =0;
-			_Velocity.y =0;
+			case eBottom:
+				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
+				_Velocity.y = 0;
+				_IsAlive=false;
+				break;
+			case eRight:
+				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
+				_Velocity.x = 0;
+				_IsAlive=false;
+				break;
+			case eLeft:
+				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
+				_Velocity.x = 0;
+				_IsAlive=false;
+				break;
+			case eTop:
+				_IsAlive=false;
+				_Velocity.y = 0;
+				break;
+			default:
+				break;
 		}
-		break;
+	case eMonsterDead:
+		switch (collisionDirection)
+		{
+			case eBottom:
+				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
+				_Velocity.y = 0;
+				_IsAlive=false;
+				break;
+			case eRight:
+				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
+				_Velocity.x = 0;
+				_IsAlive=false;
+				break;
+			case eLeft:
+				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
+				_Velocity.x = 0;
+				_IsAlive=false;
+				break;
+			case eTop:
+				_IsAlive=false;
+				_Velocity.y = 0;
+				break;
+			default:
+				break;
+		}
+		default:
+			break;
 	}
+		
 }
 
 Bullet::~Bullet(void)

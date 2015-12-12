@@ -23,7 +23,7 @@ GameStatistics* GameStatistics::GetInstance()
 
 void GameStatistics::Initialize()
 {
-	_WorldID = eWorldID::e1_1;
+	_WorldID = eWorldID::e1_2;
 	_CurrentSceneID = eSceneID::ePlay;
 	_Score = 0;
 	_Life = 3;
@@ -230,7 +230,11 @@ D3DXVECTOR2 GameStatistics::GetPositionEndAutoAnimation()
 	switch (_WorldID)
 	{
 	case eHidden1_1:
+		return D3DXVECTOR2(480, 96);
+		break;
 	case e1_2:
+		return D3DXVECTOR2(5375, 196);
+		break;
 	case eHidden1_2:
 		return D3DXVECTOR2(480, 96);
 		break;
@@ -253,7 +257,7 @@ D3DXVECTOR2 GameStatistics::GetNewMarioPosition(eGameTag tag)
 	case eToMiddle1_2:
 		return D3DXVECTOR2(3712, 128);
 	case eToRight1_2:
-		return D3DXVECTOR2(128, 128);
+		return D3DXVECTOR2(900, 128);
 	default:
 		break;
 	}

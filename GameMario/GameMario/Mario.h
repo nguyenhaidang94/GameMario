@@ -7,6 +7,7 @@
 #include "GameStatistics.h"
 #include "Unility.h"
 #include "Gun.h"
+#include "FloatingBar.h"
 
 class Mario : public DynamicGameObject
 {
@@ -38,6 +39,7 @@ private:
 	bool _IsAnimationFlag; //Xác định mario bắt đầu thực hiện animation lúc lấy lá cờ
 	bool _IsAnimationRight;
 	bool _IsCollisionMonster; // Xác định mario va chạm với quái sẽ nhảy lên
+	bool _IsFloatingBarCollision;
 	bool _IsDead;
 	float _TimeBeforeTranferToSmall;
 
