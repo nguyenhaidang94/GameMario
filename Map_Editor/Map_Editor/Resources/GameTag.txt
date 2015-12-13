@@ -1,0 +1,11 @@
+h1_1	//hidden map of world 1_1
+m1_1	//middle of ground of world 1_1
+1_2	//to main map of world 1_2
+h1_2	//hidden map of world 1_2
+r1_2	//right map of world 1_2
+m1_2	//middle of main map  of world 1_2
+invi	//item is invisible
+up	//Floating bar move up only
+down	//Floating bar move down only
+horizontal	//Floating bar rotate horizontally
+vertical	//Floating bar rotate vertically

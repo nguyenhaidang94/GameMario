@@ -1,15 +1,14 @@
 #include "Ground.h"
-#define GROUND_HEIGHT 16		//because of map editor...
 
 Ground::Ground(void)
 {
 }
 
-Ground::Ground(int x, int y, int width)
+Ground::Ground(int x, int y, int width, int height)
 {
 	SetPosition(D3DXVECTOR2(x, y));
 	_Size.x = width;
-	_Size.y = GROUND_HEIGHT;
+	_Size.y = height;
 	_ObjectTypeID = eObjectTypeID::eGround;
 }
 

@@ -73,7 +73,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					{
 					//Case ground
 					case 1:
-						node->_ListObjects.push_back(new Ground(x, y, w));
+						node->_ListObjects.push_back(new Ground(x, y, w, h));
 						break;
 
 					//Case brick

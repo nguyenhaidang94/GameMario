@@ -71,27 +71,6 @@ eGameTag Unility::GetGameTag(string tag)
 		return eGameTag::eToMiddle1_2;
 	}
 
-	//item tag
-	if(tag == "mushroom")
-	{
-		return eGameTag::eStoreMushroom;
-	}
-
-	if(tag == "coin")
-	{
-		return eGameTag::eStoreCoin;
-	}
-
-	if(tag == "1up")
-	{
-		return eGameTag::eStore1Up;
-	}
-
-	if(tag == "star")
-	{
-		return eGameTag::eStoreStar;
-	}
-
 	//no tag
 	return eGameTag::eEmpty;
 }

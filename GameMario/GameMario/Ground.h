@@ -4,7 +4,7 @@ class Ground : public GameObject
 {
 public:
 	Ground(void);
-	Ground(int x, int y, int width);
+	Ground(int x, int y, int width, int height);
 	~Ground(void);
 
 	//Inherited funtion
