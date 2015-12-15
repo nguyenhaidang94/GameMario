@@ -56,6 +56,8 @@ Mario::Mario(void)
 	_TimeBeforeTranferToSmall=0;
 	_IsAnimationRight = false;
 	_IsFloatingBarCollision = false;
+	_CanGoLeft = true;
+	_CanGoRight = true;
 
 	_Tick_per_frame = 1000 / MARIO_FRAME_RATE;
 	_Tick_per_frame_animation = 1000 / ANIMATION_FRAME_RATE;
@@ -530,15 +532,18 @@ void Mario::RunToRight()
 
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_D)) //Nếu đè phím di chuyển
 	{
-		_IsCollide = false;
-		_Velocity.x += INCREASE_VELOCITY;
-
-		if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+		if (_CanGoRight)
 		{
-			if(_Velocity.x >=MAX_VELOCITYSHOOT) _Velocity.x = MAX_VELOCITYSHOOT;
+			_IsCollide = false;
+			_Velocity.x += INCREASE_VELOCITY;
+
+			if (Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			{
+				if (_Velocity.x >= MAX_VELOCITYSHOOT) _Velocity.x = MAX_VELOCITYSHOOT;
+			}
+			else
+				if (_Velocity.x >= MAX_VELOCITYX) _Velocity.x = MAX_VELOCITYX;
 		}
-		else 
-			if(_Velocity.x >=MAX_VELOCITYX) _Velocity.x = MAX_VELOCITYX;
 	}
 	else //Thả phím sẽ dừng từ từ
 	{
@@ -597,14 +602,17 @@ void Mario::RunToLeft()
 	
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_A))
 	{
-		_IsCollide = false;
-		_Velocity.x -= INCREASE_VELOCITY;
-		if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+		if (_CanGoLeft)
 		{
-			if(_Velocity.x <=-MAX_VELOCITYSHOOT) _Velocity.x = -MAX_VELOCITYSHOOT;
+			_IsCollide = false;
+			_Velocity.x -= INCREASE_VELOCITY;
+			if (Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			{
+				if (_Velocity.x <= -MAX_VELOCITYSHOOT) _Velocity.x = -MAX_VELOCITYSHOOT;
+			}
+			else
+				if (_Velocity.x <= -MAX_VELOCITYX) _Velocity.x = -MAX_VELOCITYX;
 		}
-		else 
-			if(_Velocity.x <=-MAX_VELOCITYX) _Velocity.x = -MAX_VELOCITYX;
 	}
 	else
 		{
@@ -1148,7 +1156,8 @@ void Mario::Update()
 		
 		}
 	}
-	
+	_CanGoLeft = true;
+	_CanGoRight = true;
 }
 
 void Mario::SetSpriteBeforeTransfromFlower()
@@ -1321,10 +1330,12 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			case eRight:
 				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 + DECREASE_BOX_X;
 				_Velocity.x = 0;
+				_CanGoRight = false;
 				break;
 			case eLeft:
 				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -DECREASE_BOX_X;
 				_Velocity.x = 0;
+				_CanGoLeft = false;
 				break;
 			case eTop:
 				_Velocity.y = -_Velocity.y;
@@ -1349,11 +1360,13 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 + DECREASE_BOX_X;
 				_Velocity.x = 0;
 				_IsFloatingBarCollision = false;
+				_CanGoRight = false;
 				break;
 			case eLeft:
 				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -DECREASE_BOX_X;
 				_Velocity.x = 0;
 				_IsFloatingBarCollision = false;
+				_CanGoLeft = false;
 				break;
 			case eTop:
 				_Velocity.y = -_Velocity.y;
@@ -1420,43 +1433,43 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	
 	case eMonster:
 		{
-			//if(_IsDead==false && _IsTranferToSmall==false && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall ==0 
-			//	&& _SpriteMosterDead!=eKoopaTroopaStop && _SpriteMosterDead!=eKoopaTroopaDanger )
-			//{
-			//	if(collisionDirection== eCollisionDirection::eBottom )
-			//	{
-			//		_IsCollisionMonster = true;
-			//		_State = eMarioState::eJump;
-			//		_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;  
-			//		break;
-			//	}
-			//	else if(collisionDirection!= eCollisionDirection::eBottom && collisionDirection!= eCollisionDirection::eNone)
-			//	{
-			//		if(_Tag==eGameTag::eMarioIsBig) 
-			//		{
-			//			_Tag = eGameTag::eMarioIsSmall;
-			//			_IsTranferToSmall = true;
-			//			_PreState = _State;
-			//			_State = eMarioState::eIdle;
-			//			_IsFlower=false; //Khi va chạm quái sẽ mất trạng thái bắn chuyển về mario nhỏ
-			//			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
-			//			_Velocity.y = 0;
-			//			if(_IsRight==true) _CurrentFrame =  SPRITE_BIG_R;
-			//			else _CurrentFrame=  SPRITE_BIG_L;
-			//			SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
-			//		}
-			//		else if(_Tag==eGameTag::eMarioIsSmall)
-			//		{
-			//			_IsDead=true;
-			//			_IsFlower=false;
-			//			_Tag=eGameTag::eMarioIsDead;
-			//			_Velocity.y =  MAX_VELOCITYDEAD ;  
-			//			_State = eMarioState::eDead;
-			//			GameStatistics::GetInstance()->ChangeLife(false);
-			//            
-			//		}
-			//	}
-			
+			if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0
+				&& _SpriteMosterDead != eKoopaTroopaStop && _SpriteMosterDead != eKoopaTroopaDanger)
+			{
+				if (collisionDirection == eCollisionDirection::eBottom)
+				{
+					_IsCollisionMonster = true;
+					_State = eMarioState::eJump;
+					_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
+					break;
+				}
+				else if (collisionDirection != eCollisionDirection::eBottom && collisionDirection != eCollisionDirection::eNone)
+				{
+					if (_Tag == eGameTag::eMarioIsBig)
+					{
+						_Tag = eGameTag::eMarioIsSmall;
+						_IsTranferToSmall = true;
+						_PreState = _State;
+						_State = eMarioState::eIdle;
+						_IsFlower = false; //Khi va chạm quái sẽ mất trạng thái bắn chuyển về mario nhỏ
+						_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
+						_Velocity.y = 0;
+						if (_IsRight == true) _CurrentFrame = SPRITE_BIG_R;
+						else _CurrentFrame = SPRITE_BIG_L;
+						SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
+					}
+					else if (_Tag == eGameTag::eMarioIsSmall)
+					{
+						_IsDead = true;
+						_IsFlower = false;
+						_Tag = eGameTag::eMarioIsDead;
+						_Velocity.y = MAX_VELOCITYDEAD;
+						_State = eMarioState::eDead;
+						GameStatistics::GetInstance()->ChangeLife(false);
+
+					}
+				}
+			}
 		break;
 		}
 	case eFloatingBar:
@@ -1604,7 +1617,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				_Velocity.x = 0;
 				break;
 			case eTop:
-				if (offsetX > 2)
+				//if (offsetX > 2)
 				{
 					_Velocity.y = -_Velocity.y;
 					if(_Tag ==eGameTag::eMarioIsSmall|| _Tag==eGameTag::eMarioIsSmallInvincible)
@@ -1626,7 +1639,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			switch (collisionDirection)
 			{
 			case eBottom:
-				if (offsetX > 2)
+				//if (offsetX > 2)
 				{
 					_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
 					_Velocity.y = 0;

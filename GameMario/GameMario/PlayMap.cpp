@@ -128,8 +128,8 @@ void PlayMap::HandlingCollision()
 					else
 					{
 						//check if it closer than the closest
-						if (abs(_Mario->GetPosition().x - objectOnScreen[i]->GetPosition().x) <
-							abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
+						if (abs(_Mario->GetPosition().x - objectOnScreen[i]->GetPosition().x)
+							< abs(_Mario->GetPosition().x - objectOnScreen[indexClosestBrickCollide]->GetPosition().x))
 						{
 							indexClosestBrickCollide = i;
 							mario_brick_offsetX = offsetX;
@@ -139,7 +139,7 @@ void PlayMap::HandlingCollision()
 				}
 				else	//send collision
 				{
-					_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction), offsetX, offsetY);
+					_Mario->OnCollision(objectOnScreen[i], Unility::GetOppositeDirection(direction));
 					objectOnScreen[i]->OnCollision(_Mario, direction);
 				}
 			}
@@ -158,10 +158,10 @@ void PlayMap::HandlingCollision()
 		}
 	}
 	//Handle collide with brick if have any
-	if(indexClosestBrickCollide != -1)
+	//offset must be greater than a constant
+	if (indexClosestBrickCollide != -1 && mario_brick_offsetX > 8)
 	{
-		_Mario->OnCollision(objectOnScreen[indexClosestBrickCollide], Unility::GetOppositeDirection(eCollisionDirection::eBottom)
-			, mario_brick_offsetX, mario_brick_offsetY);
+		_Mario->OnCollision(objectOnScreen[indexClosestBrickCollide], Unility::GetOppositeDirection(eCollisionDirection::eBottom));
 		objectOnScreen[indexClosestBrickCollide]->OnCollision(_Mario, eCollisionDirection::eBottom);
 	}
 }
@@ -208,19 +208,11 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 						//va cham top, truong hop moveY <= 0 thi khong tinh va cham
 						if (normalY == 1.0f && moveY > 0)
 						{
-							//update velocity
-							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
-							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x, oldVelocity.y + oldVelocity.y*collisiontime);
-							dynamicObj->SetVelocity(newVelocity);
 							return eCollisionDirection::eTop;
 						}
 						//va cham bot, truong hop moveY >= 0 thi khong tinh va cham
 						else if (normalY == -1.0f && moveY < 0)
 						{
-							//update velocity
-							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
-							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x, oldVelocity.y + oldVelocity.y*collisiontime);
-							dynamicObj->SetVelocity(newVelocity);
 							return eCollisionDirection::eBottom;
 						}
 					}
@@ -230,19 +222,11 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 						//va cham right, truong hop moveX >= 0 thi khong tinh va cham
 						if (normalX == 1.0f && moveX < 0)
 						{
-							//update velocity
-							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
-							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x + oldVelocity.x*collisiontime, oldVelocity.y);
-							dynamicObj->SetVelocity(newVelocity);
 							return eCollisionDirection::eRight;
 						}
 						//va cham left, truong hop moveX <= 0 thi khong tinh va cham
 						else if (normalX == -1.0f && moveX > 0)
 						{
-							//update velocity
-							D3DXVECTOR2 oldVelocity = dynamicObj->GetVelocity();
-							D3DXVECTOR2 newVelocity = D3DXVECTOR2(oldVelocity.x + oldVelocity.x*collisiontime, oldVelocity.y);
-							dynamicObj->SetVelocity(newVelocity);
 							return eCollisionDirection::eLeft;
 						}
 					}

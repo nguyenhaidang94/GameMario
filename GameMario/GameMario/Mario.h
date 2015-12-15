@@ -41,6 +41,8 @@ private:
 	bool _IsCollisionMonster; // Xác định mario va chạm với quái sẽ nhảy lên
 	bool _IsFloatingBarCollision;
 	bool _IsDead;
+	bool _CanGoLeft;
+	bool _CanGoRight;
 	float _TimeBeforeTranferToSmall;
 
 public:
