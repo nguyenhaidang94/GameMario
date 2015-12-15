@@ -133,6 +133,11 @@ void KoopaTroopa::Update()
 		//set velocity
 		_Velocity.x = 0.0f;
 		_Velocity.y = -KOOPATROOPA_VELOCITY_Y;
+
+		if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
+		{
+			this->_Tag = eGameTag::eDestroyed;
+		}
 	}
 	else//chết
 	{

@@ -64,6 +64,11 @@ void KoopaParatroopa::Update()
 		//set velocity
 		_Velocity.x = _MonsterVelocityX;
 		_Velocity.y -= KOOPAPARATROOPA_ACCELERATION;
+		//delete object if it move out of active site
+		if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
+		{
+			this->_Tag = eGameTag::eDestroyed;
+		}
 	}
 	else
 	{

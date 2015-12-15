@@ -236,24 +236,41 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 						//if object is dynamic and object moves out of node
 						if (currentObj->IsDynamic() && !AABBCheck(node->GetBoundaryBox(), currentObj->GetBoundaryBox()))
 						{
-							//this if is used for a special situation, but actually it doesn't have to used
-							//if (node != _RootNode)
-							//add object to root node
-							//then root node will add object to suitable subnode
-							int returnNodeId;
-							_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox(), returnNodeId);
-							//khi chuyen tu node con(hoac node sau) sang node cha(hoac node truoc)
-							//thi object khong duoc add vao _ObjectsOnScreen
-							//do node cha(hoac node truoc) da duoc duyet roi
-							//do do can add object vao _ObjectsOnScreen ngay tai node nay
-							if (returnNodeId < node->GetNodeId())
-								_ObjectsOnScreen.push_back(currentObj);
-							node->_ListObjects.erase(node->_ListObjects.begin() + i);
-							//delete node if it is empty
-							if (node->IsEmpty())
-								DeleteSubnode(node);
-							//truong hop nay khong add object vao _ObjectsOnScreen
-							//nen khong update object
+							//if object is still in active site
+							//add object to a new node and remove object from current node
+							if (AABBCheck(activeSite, currentObj->GetBoundaryBox()))
+							{
+								//this if is used for a special situation, but actually it doesn't have to used
+								//if (node != _RootNode)
+								//add object to root node
+								//then root node will add object to suitable subnode
+								int returnNodeId = -1;
+								_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox(), returnNodeId);
+								//khi chuyen tu node con(hoac node sau) sang node cha(hoac node truoc)
+								//thi object khong duoc add vao _ObjectsOnScreen
+								//do node cha(hoac node truoc) da duoc duyet roi
+								//do do can add object vao _ObjectsOnScreen ngay tai node nay
+								if (returnNodeId != -1 && returnNodeId < node->GetNodeId())
+									_ObjectsOnScreen.push_back(currentObj);
+								node->_ListObjects.erase(node->_ListObjects.begin() + i);
+								//delete node if it is empty
+								if (node->IsEmpty())
+									DeleteSubnode(node);
+								//truong hop nay khong add object vao _ObjectsOnScreen
+								//nen khong update object
+							}
+							//object moves out of node and out of active site
+							//remove object
+							else
+							{
+								node->_ListObjects[i]->Release();
+								delete node->_ListObjects[i];
+								node->_ListObjects[i] = NULL;
+								node->_ListObjects.erase(node->_ListObjects.begin() + i);
+								//delete node if it is empty
+								if (node->IsEmpty())
+									DeleteSubnode(node);
+							}
 						}
 						else
 						{

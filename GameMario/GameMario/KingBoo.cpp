@@ -65,7 +65,11 @@ void KingBoo::Update()
 			_Velocity.y = -KINGBOO_VELOCITY_Y;
 			_Velocity.x = 0.0f;
 
-			
+			//delete object if it move out of active site
+			if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
+			{
+				this->_Tag = eGameTag::eDestroyed;
+			}
 		}
 	}
 	else//chết bị tác động

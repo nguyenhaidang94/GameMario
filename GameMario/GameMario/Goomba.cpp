@@ -60,6 +60,11 @@ void Goomba::Update()
 			}
 
 			_Velocity.y = -GOOMBA_VELOCITY_Y;
+			//delete object if it move out of active site
+			if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
+			{
+				this->_Tag = eGameTag::eDestroyed;
+			}
 		}
 		else//chết dậm
 		{
