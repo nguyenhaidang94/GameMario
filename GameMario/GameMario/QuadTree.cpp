@@ -153,6 +153,12 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 31:	//KoopaParatroopa
 						node->_ListObjects.push_back(new KoopaParatroopa(objectID, x, y));
 						break;
+					case 36:	//BulletFire
+
+						break;
+					case 37:	//KingBoo
+						node->_ListObjects.push_back(new KingBoo(objectID, x, y));
+						break;
 					default:
 						break;
 					}

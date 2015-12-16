@@ -26,7 +26,7 @@ KingBoo::KingBoo(int objectTypeID, int positionX, int positionY)
 	_TimeStartVelocity = GetTickCount();									//set time now
 	_TimePerVelocity = TIMES_TURN_VELOCITY;									//set time the turn
 	SetFrame(1);
-	_MonsterVelocityX = KINGBOO_VELOCITY_X;
+	_MonsterVelocityX = -KINGBOO_VELOCITY_X;
 	_MonsterVelocityY = -KINGBOO_VELOCITY_Y;
 	_KingBooALive = 7;
 }

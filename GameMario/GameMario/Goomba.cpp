@@ -108,19 +108,32 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		switch (object->GetObjectTypeID())
 		{
 		#pragma region va chạm ngược
-		case eGround:
+		case eGround:				//mặt đất
 			DirectionsCollision(object, collisionDirection);
 			break;
-		case ePipe:
+		case ePipe:					//ống dẫn nước
 			DirectionsCollision(object, collisionDirection);
 			break;
-		case ePipeHorizontal:
+		case ePipeHorizontal:		//nằm ngang
 			DirectionsCollision(object, collisionDirection);
 			break;
-		case eBrick:
-			DirectionsCollision(object, collisionDirection);
+		case eBrick:				//gạch
+			if (object->GetTag() == eGameTag::eBrickBounceUp)
+			{
+				switch (collisionDirection)
+				{
+					//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
+				case eBottom:
+					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+					break;
+				}
+			}
+			else
+			{
+				DirectionsCollision(object, collisionDirection);
+			}
 			break;
-		case eHardBrick:
+		case eHardBrick:			//gạch cứng
 			DirectionsCollision(object, collisionDirection);
 			break;
 		#pragma endregion

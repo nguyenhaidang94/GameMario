@@ -58,6 +58,27 @@ void KoopaTroopa::Update()
 	{
 		DWORD timeNow = GetTickCount();
 
+		//rơi tự do cộng với quận tốc quán tính
+		if (_Velocity.y != 0.0f)//rơi tự do
+		{
+			//Koopa red
+			if (_MonsterTypeID == 30)
+			{
+				_MonsterVelocityX = -_MonsterVelocityX;			//cho chạy ngược lại
+				_Velocity.x = _MonsterVelocityX;
+				_Velocity.y = 0.0f;								//set lại vận tốc
+				_Position.x += _Velocity.x * 12;				//chỉnh lại vị trí trước đó, tránh trường hợp đứng trên không sẽ đổi tiếp: bị xóa đối tượng nếu đứng trên 0 do trừ ra sẽ va chạm ra ngoài quatree
+				_TimeStartFrame = timeNow - _TimePerVelocity;	//mục đích chỉnh thời gian để set lại hình do quay ngược lại.
+			}
+			else
+			{
+				if (_MonsterVelocityX > 0.0f)
+					_Velocity.x = 0.4f;
+				else
+					_Velocity.x = -0.4f;
+			}
+		}
+
 		if (_KoopaTroopaRevived)//còn sống chưa hồi sinh
 		{
 			if (!_KoopaTroopaStop)//và đi
@@ -109,15 +130,6 @@ void KoopaTroopa::Update()
 				_FrameEnd = _FrameStart;
 				_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;
 			}
-		}
-
-		//rơi tự do cộng với quận tốc quán tính
-		if (_Velocity.y != 0.0f)//rơi tự do
-		{
-			if (_MonsterVelocityX > 0.0f)
-				_Velocity.x = 0.4f;
-			else
-				_Velocity.x = -0.4f;
 		}
 
 		if (timeNow - _TimeStartFrame >= _TimePerFrame)
@@ -183,7 +195,21 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 			DirectionsCollision(object, collisionDirection);
 			break;
 		case eBrick:
-			DirectionsCollision(object, collisionDirection);
+			if (object->GetTag() == eGameTag::eBrickBounceUp)
+			{
+				switch (collisionDirection)
+				{
+					//-------------Cái này sẽ dược cập nhật thay thế cho Mario ăn ngôi sao------------------------
+				case eBottom:
+					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+					break;
+				}
+			}
+			else
+			{
+				DirectionsCollision(object, collisionDirection);
+			}
+			break;
 			break;
 		case eHardBrick:
 			DirectionsCollision(object, collisionDirection);
