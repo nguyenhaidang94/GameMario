@@ -16,7 +16,7 @@ PiranhaPlant::PiranhaPlant(int objectTypeID, int positionX, int positionY)
 	_Position = D3DXVECTOR2(positionX, positionY - 1.4 * 32);						//set position: positionY - 1.4 * 32 mục đích cho đi từ trên xuống lúc bắt đầu
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::ePiranhaPlant);	//set sprite
 	_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);					//set size
-	_Velocity = D3DXVECTOR2(0, 0);	//set position
+	_Velocity = D3DXVECTOR2(0, PIRANHAPLANT_VELOCITY_Y);	//set position
 	_TypeSpriteID = eSpriteID::ePiranhaPlant;										//set type spriteID
 	_MonsterTypeID = objectTypeID;
 	SetObjectType(eMonsterDead);													//trạng thái chết tạm thời: để không bị va chạm khi mới vào: do đang ở dưới
@@ -71,7 +71,7 @@ void PiranhaPlant::Update()
 		{
 			_TimeStartStop = timeNow;
 			_Velocity.y = _MonsterVelocityY;
-			_Position.y += _Velocity.y;
+			_Position.y += _Velocity.y;				//thoát khỏi nị trí đứng yên
 			_PiranhaPlantStop = false;
 			_Size = D3DXVECTOR2(PIRANHAPLANT_WIDTH, PIRANHAPLANT_HEIGHT);
 			_PiranhaPlantDanger = true;
