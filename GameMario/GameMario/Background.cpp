@@ -1,4 +1,5 @@
 #include "Background.h"
+#define RENDER_PRIORITY 0.3	//default for all object is 0.5, this will make background always render behind
 
 Background::Background(void)
 {
@@ -102,7 +103,7 @@ void Background::Render()
 		//only render background in sight
 		for(int j = minRange; j < maxRange; j++)
 		{
-			_Sprite->RenderAtFrame((float)j * TITLE_SIZE + TITLE_SIZE/2, SCREEN_HEIGHT - (float)i * TITLE_SIZE - TITLE_SIZE/2, _BackgroundData[i][j], 0.4);
+			_Sprite->RenderAtFrame((float)j * TITLE_SIZE + TITLE_SIZE/2, SCREEN_HEIGHT - (float)i * TITLE_SIZE - TITLE_SIZE/2, _BackgroundData[i][j], RENDER_PRIORITY);
 		}
 	}
 }

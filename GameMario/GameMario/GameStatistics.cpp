@@ -32,6 +32,7 @@ void GameStatistics::Initialize()
 	_Time = GAME_TIME;
 	_IsTimePause = true;
 	_ListObjectAddToScene = new std::vector<GameObject*>();
+	_IsPerformWorldClearStatus = false;
 }
 
 #pragma region Game stats
@@ -50,6 +51,7 @@ void GameStatistics::Reset()
 		delete _ListObjectAddToScene->at(i);
 		_ListObjectAddToScene->pop_back();
 	}
+	_IsPerformWorldClearStatus = false;
 }
 eWorldID GameStatistics::GetWorldID()
 {
@@ -104,15 +106,16 @@ void GameStatistics::DecreaseTime()
 	}
 }
 
-void GameStatistics::ResetTime()
+void GameStatistics::ResetWorld()
 {
 	_IsTimePause = false;
 	_Time = GAME_TIME;
+	_IsPerformWorldClearStatus = false;
 }
 
-void GameStatistics::PauseTime()
+void GameStatistics::PauseTime(bool isPause)
 {
-	_IsTimePause = true;
+	_IsTimePause = isPause;
 }
 #pragma endregion
 
@@ -150,9 +153,13 @@ void GameStatistics::ChangeWorld(eWorldID worldID)
 void GameStatistics::GoToNextWorld()
 {
 	int index = _WorldID;
-	if(_WorldID == eWorldID::e1_4)	//if not the last world
+	if(_WorldID != eWorldID::e1_4)	//if not the last world
 	{
-		_WorldID = static_cast<eWorldID>(index);
+		_WorldID = static_cast<eWorldID>(index + 1);	//next world also next enum
+	}
+	else	//temporary
+	{
+		_WorldID == e1_1;
 	}
 }
 
@@ -165,6 +172,16 @@ eSceneID GameStatistics::GetSceneID()
 void GameStatistics::ChangeScene(eSceneID sceneID)
 {
 	_CurrentSceneID = sceneID;
+}
+
+void GameStatistics::PerformMarioReachFlagpoleStatus()
+{
+	_IsPerformWorldClearStatus = true;
+}
+
+bool GameStatistics::IsPerformMarioReachFlagpoleStatus()
+{
+	return _IsPerformWorldClearStatus;
 }
 
 void GameStatistics::AddObjectToScene(GameObject *object)

@@ -857,15 +857,12 @@ void Mario::AutoAnimationEndGame()
 		{
 			SoundManager::GetInstance()->GetSound(eSoundID::eStageClear)->Play();
 
-			if( GameStatistics::GetInstance()->GetWorldID()==eWorldID::e1_1)
-			{
-				GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_2);
-			}
-			else 
-				if( GameStatistics::GetInstance()->GetWorldID()==eWorldID::e1_2)
-				{
-					GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_3);
-				}
+			//---
+			//---stop render mario here, and enable it later in start scene
+			//----
+
+			//countdown time and inscrease time before change map
+			GameStatistics::GetInstance()->PerformMarioReachFlagpoleStatus();
 
 			_IsAnimationFlag = false;
 	}

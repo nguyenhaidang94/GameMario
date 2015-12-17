@@ -17,6 +17,7 @@ Coin::Coin(int x, int y)
 	_Size = D3DXVECTOR2(COIN_WIDTH, COIN_HEIGHT);
 	count_per_frame = 1000 / COIN_FRAME_RATE;
 	frame_start = GetTickCount();
+	_Color = eColorID::eBrown;	//map editor only have brown coin atm
 }
 
 Coin::~Coin(void)
@@ -49,10 +50,15 @@ void Coin::OnCollision(GameObject *object, eCollisionDirection collisionDirectio
 	{
 	//case mario
 	case eMario:
+		_Tag = eGameTag::eDestroyed;
+		GameStatistics::GetInstance()->ChangeScore(COIN_SCORE);		//inscrease score
+		GameStatistics::GetInstance()->IncreaseCoin();		//inscrease score
+		break;
 	case eBrick:
 		_Tag = eGameTag::eDestroyed;
 		GameStatistics::GetInstance()->ChangeScore(COIN_SCORE);		//inscrease score
 		GameStatistics::GetInstance()->IncreaseCoin();		//inscrease score
+		EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eObtainCoin, COIN_SCORE);
 		break;
 	default:
 		break;

@@ -26,7 +26,8 @@ void StartScene::Update()
 void StartScene::Render()
 {
 	TextManager::GetInstance()->FixedRender("world " + GameStatistics::GetInstance()->GetCurrentWorldName(), SCREEN_WIDTH/2, 160);
-	TextManager::GetInstance()->FixedRender("x " + to_string(GameStatistics::GetInstance()->GetLife()), SCREEN_WIDTH/2, 196);
+	SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario)->FixedRenderAtFrame(SCREEN_WIDTH/2 - 48, 196, 7);
+	TextManager::GetInstance()->FixedRender("x " + to_string(GameStatistics::GetInstance()->GetLife()), SCREEN_WIDTH/2 + 16, 196);
 }
 
 void StartScene::Release()
@@ -36,18 +37,27 @@ void StartScene::Release()
 void StartScene::Load()
 {
 	_StartTime = GetTickCount();
+
+	//set mario position
+	Mario::GetInstance()->SetPosition(GetMarioStartPosition());
+
 	//always return to main map if die in other map
 	if(GameStatistics::GetInstance()->GetWorldID() == eWorldID::e1_1 || GameStatistics::GetInstance()->GetWorldID() == eWorldID::eHidden1_1)
 	{
 		GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_1);
 	}
+
 	if(GameStatistics::GetInstance()->GetWorldID() == eWorldID::e1_2 || GameStatistics::GetInstance()->GetWorldID() == eWorldID::eHidden1_2 ||
-		GameStatistics::GetInstance()->GetWorldID() == eWorldID::eLeft1_2 || GameStatistics::GetInstance()->GetWorldID() == eWorldID::eRight1_2)
+		 GameStatistics::GetInstance()->GetWorldID() == eWorldID::eRight1_2)	//not include left 1_2
 	{
 		GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_2);
 	}
-	//set mario position
-	Mario::GetInstance()->SetPosition(GetMarioStartPosition());
+	
+	//mario will auto move in world left1_2
+	if(GameStatistics::GetInstance()->GetWorldID() == eWorldID::eLeft1_2)
+	{
+		Mario::GetInstance()->SetFlagAutoAnimationRight(true);
+	}
 }
 
 D3DXVECTOR2 StartScene::GetMarioStartPosition()
@@ -58,6 +68,10 @@ D3DXVECTOR2 StartScene::GetMarioStartPosition()
 	}
 	else
 	{
+		if(GameStatistics::GetInstance()->GetWorldID() == e1_4)
+		{
+			return D3DXVECTOR2(48, 288);
+		}
 		return D3DXVECTOR2(48, 80);	//normal start world position, hard code maybe need fix
 	}
 }

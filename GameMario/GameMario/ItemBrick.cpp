@@ -21,51 +21,68 @@ ItemBrick::ItemBrick(int objectID, int x, int y, string tag)
 	{
 	case 17:	//brown brick contain 1up
 		_Color = eColorID::eBrown;
-		_CurrentFrame = 0;
 		_SpawmItemTag = eGameTag::eStore1Up;
 		break;
 	case 18:	//blue brick contain mushroom
 		_Color = eColorID::eBlue;
-		_CurrentFrame = 6;
 		_SpawmItemTag = eGameTag::eStoreMushroom;
 		break;
 	case 19:	//blue brick with 1up
 		_Color = eColorID::eBlue;
-		_CurrentFrame = 6;
 		_SpawmItemTag = eGameTag::eStore1Up;
 		break;
 	case 20:	//brown brick contain coin
 		_Color = eColorID::eBrown;
-		_CurrentFrame = 0;
 		_CointLeft = 7;
 		_SpawmItemTag = eGameTag::eStoreCoin;
 		break;
 	case 21:	//blue brick contain coin
 		_Color = eColorID::eBlue;
-		_CurrentFrame = 6;
 		_CointLeft = 7;
 		_SpawmItemTag = eGameTag::eStoreCoin;
 		break;
 	case 22:	//brown brick contain star
 		_Color = eColorID::eBrown;
-		_CurrentFrame = 0;
 		_SpawmItemTag = eGameTag::eStoreStar;
 		break;
 	case 23:	//blue brick contain star
 		_Color = eColorID::eBlue;
-		_CurrentFrame = 6;
 		_SpawmItemTag = eGameTag::eStoreStar;
+		break;
+	case 34:	//invi gray block with 1 coin
+		_Color = eColorID::eGray;
+		_CointLeft = 1;
+		_SpawmItemTag = eGameTag::eStoreCoin;
+		_Tag = eGameTag::eInvisible;
 		break;
 	default:
 		break;
 	}
-	if(tag == "invi")
+
+	//setup frame for block base on color
+	if(_Color == eColorID::eBrown)
 	{
-		_IsInvisible = true;
+		_CurrentFrame = 0;
 	}
 	else
 	{
-		_IsInvisible = false;
+		if(_Color == eColorID::eBlue)
+		{
+			_CurrentFrame = 6;
+		}
+		else
+		{
+			if(_Color == eColorID::eGray)
+			{
+				_CurrentFrame = 13;
+			}
+		}
+	}
+
+	//block is invisible
+	if(tag == "invi")
+	{
+		_Tag = eGameTag::eInvisible;
 	}
 }
 
@@ -99,7 +116,7 @@ void ItemBrick::Update()
 
 void ItemBrick::Render()
 {
-	if(!_IsInvisible)
+	if(_Tag != eGameTag::eInvisible)
 	{
 		_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame);
 	}
@@ -134,13 +151,19 @@ void ItemBrick::OnCollision(GameObject *object, eCollisionDirection collisionDir
 						{
 							_CurrentFrame = 11;
 						}
+						else
+						{
+							if(_Color == eColorID::eGray)
+							{
+								_CurrentFrame = 14;
+							}
+						}
 					}
 				}
 
 				//bounce
 				_Velocity.y = BOUNCE_VELOCITY;
 				_IsBounce = true;	
-				_IsInvisible = false;
 				_Tag = eGameTag::eBrickBounceUp;	//kill enemy if bounce up(?)
 
 				//handle item in brick
