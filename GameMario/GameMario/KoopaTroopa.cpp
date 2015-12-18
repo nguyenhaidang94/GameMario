@@ -62,7 +62,7 @@ void KoopaTroopa::Update()
 		if (_Velocity.y != 0.0f)//rơi tự do
 		{
 			//Koopa red
-			if (_MonsterTypeID == 30)
+			if (_MonsterTypeID == 30 && _KoopaTroopaRevived)
 			{
 				_MonsterVelocityX = -_MonsterVelocityX;			//cho chạy ngược lại
 				_Velocity.x = _MonsterVelocityX;
