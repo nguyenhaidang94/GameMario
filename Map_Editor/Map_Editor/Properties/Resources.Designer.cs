@@ -353,6 +353,16 @@ namespace Map_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mushroom_retainer {
+            get {
+                object obj = ResourceManager.GetObject("mushroom-retainer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pipe1 {
             get {
                 object obj = ResourceManager.GetObject("pipe1", resourceCulture);
@@ -433,6 +443,16 @@ namespace Map_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap princess {
+            get {
+                object obj = ResourceManager.GetObject("princess", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap small_lift {
             get {
                 object obj = ResourceManager.GetObject("small-lift", resourceCulture);
@@ -476,6 +496,26 @@ namespace Map_Editor.Properties {
         internal static System.Drawing.Bitmap turtle4 {
             get {
                 object obj = ResourceManager.GetObject("turtle4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap turtle5 {
+            get {
+                object obj = ResourceManager.GetObject("turtle5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap vertical_fire {
+            get {
+                object obj = ResourceManager.GetObject("vertical-fire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

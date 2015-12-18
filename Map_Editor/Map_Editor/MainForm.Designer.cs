@@ -51,6 +51,7 @@
             this._tabTiles = new System.Windows.Forms.TabPage();
             this._tabItemsEnemies = new System.Windows.Forms.TabPage();
             this._pnlDrawMap = new System.Windows.Forms.Panel();
+            this._pbTile17 = new System.Windows.Forms.PictureBox();
             this._pbTile16 = new System.Windows.Forms.PictureBox();
             this._pbTile15 = new System.Windows.Forms.PictureBox();
             this._pbTile14 = new System.Windows.Forms.PictureBox();
@@ -67,6 +68,10 @@
             this._pbTile3 = new System.Windows.Forms.PictureBox();
             this._pbTile2 = new System.Windows.Forms.PictureBox();
             this._pbTile1 = new System.Windows.Forms.PictureBox();
+            this._pbPrincess = new System.Windows.Forms.PictureBox();
+            this._pbMushroomRetainer = new System.Windows.Forms.PictureBox();
+            this._pbEnemy11 = new System.Windows.Forms.PictureBox();
+            this._pbEnemy12 = new System.Windows.Forms.PictureBox();
             this._pbItem11 = new System.Windows.Forms.PictureBox();
             this._pbItem10 = new System.Windows.Forms.PictureBox();
             this._pbEnemy10 = new System.Windows.Forms.PictureBox();
@@ -91,11 +96,11 @@
             this._pbLava = new System.Windows.Forms.PictureBox();
             this._pbLand = new System.Windows.Forms.PictureBox();
             this._pbEraser = new System.Windows.Forms.PictureBox();
-            this._pbTile17 = new System.Windows.Forms.PictureBox();
             this._pnlButtonContent.SuspendLayout();
             this._tabMapContent.SuspendLayout();
             this._tabTiles.SuspendLayout();
             this._tabItemsEnemies.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._pbTile17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile14)).BeginInit();
@@ -112,6 +117,10 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbTile3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbPrincess)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbMushroomRetainer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbEnemy11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbEnemy12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy10)).BeginInit();
@@ -136,7 +145,6 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbLava)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbLand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEraser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbTile17)).BeginInit();
             this.SuspendLayout();
             // 
             // _pnlButtonContent
@@ -369,6 +377,10 @@
             // 
             // _tabItemsEnemies
             // 
+            this._tabItemsEnemies.Controls.Add(this._pbPrincess);
+            this._tabItemsEnemies.Controls.Add(this._pbMushroomRetainer);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy11);
+            this._tabItemsEnemies.Controls.Add(this._pbEnemy12);
             this._tabItemsEnemies.Controls.Add(this._pbItem11);
             this._tabItemsEnemies.Controls.Add(this._pbItem10);
             this._tabItemsEnemies.Controls.Add(this._pbEnemy10);
@@ -407,6 +419,17 @@
             this._pnlDrawMap.Name = "_pnlDrawMap";
             this._pnlDrawMap.Size = new System.Drawing.Size(664, 446);
             this._pnlDrawMap.TabIndex = 2;
+            // 
+            // _pbTile17
+            // 
+            this._pbTile17.BackColor = System.Drawing.Color.Transparent;
+            this._pbTile17.Image = global::Map_Editor.Properties.Resources.bridge;
+            this._pbTile17.Location = new System.Drawing.Point(351, 44);
+            this._pbTile17.Name = "_pbTile17";
+            this._pbTile17.Size = new System.Drawing.Size(210, 32);
+            this._pbTile17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._pbTile17.TabIndex = 10;
+            this._pbTile17.TabStop = false;
             // 
             // _pbTile16
             // 
@@ -584,6 +607,50 @@
             this._pbTile1.TabIndex = 7;
             this._pbTile1.TabStop = false;
             // 
+            // _pbPrincess
+            // 
+            this._pbPrincess.BackColor = System.Drawing.Color.Transparent;
+            this._pbPrincess.Image = global::Map_Editor.Properties.Resources.princess;
+            this._pbPrincess.Location = new System.Drawing.Point(462, 6);
+            this._pbPrincess.Name = "_pbPrincess";
+            this._pbPrincess.Size = new System.Drawing.Size(32, 32);
+            this._pbPrincess.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._pbPrincess.TabIndex = 13;
+            this._pbPrincess.TabStop = false;
+            // 
+            // _pbMushroomRetainer
+            // 
+            this._pbMushroomRetainer.BackColor = System.Drawing.Color.Transparent;
+            this._pbMushroomRetainer.Image = global::Map_Editor.Properties.Resources.mushroom_retainer;
+            this._pbMushroomRetainer.Location = new System.Drawing.Point(424, 6);
+            this._pbMushroomRetainer.Name = "_pbMushroomRetainer";
+            this._pbMushroomRetainer.Size = new System.Drawing.Size(32, 32);
+            this._pbMushroomRetainer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._pbMushroomRetainer.TabIndex = 12;
+            this._pbMushroomRetainer.TabStop = false;
+            // 
+            // _pbEnemy11
+            // 
+            this._pbEnemy11.BackColor = System.Drawing.Color.Transparent;
+            this._pbEnemy11.Image = global::Map_Editor.Properties.Resources.turtle4;
+            this._pbEnemy11.Location = new System.Drawing.Point(310, 44);
+            this._pbEnemy11.Name = "_pbEnemy11";
+            this._pbEnemy11.Size = new System.Drawing.Size(32, 32);
+            this._pbEnemy11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._pbEnemy11.TabIndex = 11;
+            this._pbEnemy11.TabStop = false;
+            // 
+            // _pbEnemy12
+            // 
+            this._pbEnemy12.BackColor = System.Drawing.Color.Transparent;
+            this._pbEnemy12.Image = global::Map_Editor.Properties.Resources.vertical_fire;
+            this._pbEnemy12.Location = new System.Drawing.Point(432, 44);
+            this._pbEnemy12.Name = "_pbEnemy12";
+            this._pbEnemy12.Size = new System.Drawing.Size(15, 60);
+            this._pbEnemy12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this._pbEnemy12.TabIndex = 10;
+            this._pbEnemy12.TabStop = false;
+            // 
             // _pbItem11
             // 
             this._pbItem11.BackColor = System.Drawing.Color.Transparent;
@@ -610,7 +677,7 @@
             // 
             this._pbEnemy10.BackColor = System.Drawing.Color.Transparent;
             this._pbEnemy10.Image = global::Map_Editor.Properties.Resources.Boss;
-            this._pbEnemy10.Location = new System.Drawing.Point(348, 43);
+            this._pbEnemy10.Location = new System.Drawing.Point(386, 44);
             this._pbEnemy10.Name = "_pbEnemy10";
             this._pbEnemy10.Size = new System.Drawing.Size(40, 40);
             this._pbEnemy10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -621,7 +688,7 @@
             // 
             this._pbEnemy9.BackColor = System.Drawing.Color.Transparent;
             this._pbEnemy9.Image = global::Map_Editor.Properties.Resources.fire;
-            this._pbEnemy9.Location = new System.Drawing.Point(310, 43);
+            this._pbEnemy9.Location = new System.Drawing.Point(348, 44);
             this._pbEnemy9.Name = "_pbEnemy9";
             this._pbEnemy9.Size = new System.Drawing.Size(32, 32);
             this._pbEnemy9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -631,7 +698,7 @@
             // _pbEnemy8
             // 
             this._pbEnemy8.BackColor = System.Drawing.Color.Transparent;
-            this._pbEnemy8.Image = global::Map_Editor.Properties.Resources.turtle4;
+            this._pbEnemy8.Image = global::Map_Editor.Properties.Resources.turtle5;
             this._pbEnemy8.Location = new System.Drawing.Point(272, 44);
             this._pbEnemy8.Name = "_pbEnemy8";
             this._pbEnemy8.Size = new System.Drawing.Size(32, 32);
@@ -852,17 +919,6 @@
             this._pbEraser.TabIndex = 12;
             this._pbEraser.TabStop = false;
             // 
-            // _pbTile17
-            // 
-            this._pbTile17.BackColor = System.Drawing.Color.Transparent;
-            this._pbTile17.Image = global::Map_Editor.Properties.Resources.bridge;
-            this._pbTile17.Location = new System.Drawing.Point(351, 44);
-            this._pbTile17.Name = "_pbTile17";
-            this._pbTile17.Size = new System.Drawing.Size(210, 32);
-            this._pbTile17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this._pbTile17.TabIndex = 10;
-            this._pbTile17.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -881,6 +937,7 @@
             this._tabMapContent.ResumeLayout(false);
             this._tabTiles.ResumeLayout(false);
             this._tabItemsEnemies.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._pbTile17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile14)).EndInit();
@@ -897,6 +954,10 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbTile3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbTile1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbPrincess)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbMushroomRetainer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbEnemy11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._pbEnemy12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEnemy10)).EndInit();
@@ -921,7 +982,6 @@
             ((System.ComponentModel.ISupportInitialize)(this._pbLava)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbLand)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbEraser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbTile17)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -991,5 +1051,9 @@
         private System.Windows.Forms.PictureBox _pbLava;
         private System.Windows.Forms.PictureBox _pbTile16;
         private System.Windows.Forms.PictureBox _pbTile17;
+        private System.Windows.Forms.PictureBox _pbEnemy12;
+        private System.Windows.Forms.PictureBox _pbEnemy11;
+        private System.Windows.Forms.PictureBox _pbMushroomRetainer;
+        private System.Windows.Forms.PictureBox _pbPrincess;
     }
 }
