@@ -21,7 +21,7 @@ SpriteManager *SpriteManager::GetInstance()
 
 void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 {
-	_ListSprite[eSpriteID::eMapTile] = new Sprite(SpriteHandler, L"resources\\Sprites\\MapTile.png", 32, 32, 29, 6, D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eMapTile] = new Sprite(SpriteHandler, L"resources\\Sprites\\MapTile.png", 32, 32, 32, 6, D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eFont] = new Sprite(SpriteHandler, L"resources\\Sprites\\font.png", 16, 16, 41, 16, D3DCOLOR_XRGB(92, 148, 252));
 	_ListSprite[eSpriteID::eMenuBanner] = new Sprite(SpriteHandler, L"resources\\Sprites\\MenuBanner.png", 355, 179, 1, 1, D3DCOLOR_XRGB(111, 133, 255));
 	_ListSprite[eSpriteID::eSmallPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\SmallPipe.png", 64, 64, 1, 1, D3DCOLOR_XRGB(255, 255, 255));
@@ -31,7 +31,7 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eTallPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\TallPipe.png", 64, 256, 1, 1, D3DCOLOR_XRGB(255, 255, 255));
 	_ListSprite[eSpriteID::eTallerPipe] = new Sprite(SpriteHandler, L"resources\\Sprites\\TallerPipe.png", 64, 352, 1, 1, D3DCOLOR_XRGB(255, 255, 255));
 	_ListSprite[eSpriteID::eCoin] = new Sprite(SpriteHandler, L"resources\\Sprites\\coin.png", 32, 32, 8, 4,D3DCOLOR_XRGB(255, 0, 255));
-	_ListSprite[eSpriteID::eObjectTitle] = new Sprite(SpriteHandler, L"resources\\Sprites\\ObjectTitle.png", 32, 32, 13, 13,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eObjectTitle] = new Sprite(SpriteHandler, L"resources\\Sprites\\ObjectTitle.png", 32, 32, 15, 15,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eBrickDebris] = new Sprite(SpriteHandler, L"resources\\Sprites\\BrickDebris.png", 16, 16, 8, 8,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eItems] = new Sprite(SpriteHandler, L"resources\\Sprites\\Items.png", 32, 32, 35, 8,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eMenuMushroom] = new Sprite(SpriteHandler, L"resources\\Sprites\\MenuMushroom.png", 22, 22, 1, 1,D3DCOLOR_XRGB(255, 0, 255));

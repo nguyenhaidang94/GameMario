@@ -19,6 +19,7 @@ ObtainCoinEffect::ObtainCoinEffect(D3DXVECTOR2 position, int scoreEarn)
 	_IsAlive = true;
 	_CountPerFrame = 1000 / COIN_FRAME_RATE;
 	_FrameStart = GetTickCount();
+	SoundManager::GetInstance()->GetSound(eSoundID::eCoinAppear)->Play();	//play sound once coin appear
 }
 
 ObtainCoinEffect::~ObtainCoinEffect(void)

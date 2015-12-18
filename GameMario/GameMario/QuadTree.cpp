@@ -84,6 +84,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					//Case hard block
 					case 4:
 					case 5:
+					case 32:	//plant block in map 1_4
 						node->_ListObjects.push_back(new HardBlock(objectID, x, y));
 						break;
 					
@@ -94,7 +95,8 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 
 					//case floating bar
 					case 8:
-						node->_ListObjects.push_back(new FloatingBar(x, y, tag));
+					case 33:	//small bar
+						node->_ListObjects.push_back(new FloatingBar(x, y, w, h,tag));
 						break;
 					//Case pipe
 					case 9:		//small
@@ -114,6 +116,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 21:	//blue brick with coin
 					case 22:	//brown brick with star
 					case 23:	//blue brick with star
+					case 34:	//invi gray block with 1 coin
 						node->_ListObjects.push_back(new ItemBrick(objectID, x, y, tag));
 						break;
 

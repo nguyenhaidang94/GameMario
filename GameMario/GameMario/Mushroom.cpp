@@ -1,7 +1,7 @@
 #include "Mushroom.h"
 
-#define DEFAULT_VELOCITY_X 2
-#define DEFAULT_VELOCITY_Y -7
+#define DEFAULT_VELOCITY_X 2.5
+#define DEFAULT_VELOCITY_Y -8.5
 #define MUSHROOM_SPAWM_VELOCITY_Y 0.5
 #define MUSHROOM_WIDTH 31
 #define MUSHROOM_HEIGHT 32

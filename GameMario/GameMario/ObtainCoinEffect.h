@@ -1,6 +1,8 @@
 #pragma once
 #include "effect.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
+
 class ObtainCoinEffect :
 	public Effect
 {

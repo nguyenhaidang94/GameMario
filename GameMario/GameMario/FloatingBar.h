@@ -11,7 +11,7 @@ private:
 	bool _Direction;	//true mean go right or up, false mean go left or down
 public:
 	FloatingBar(void);
-	FloatingBar(int x, int y, std::string tag);
+	FloatingBar(int x, int y, int width, int height, std::string tag);
 	~FloatingBar(void);
 
 	//Inherited function

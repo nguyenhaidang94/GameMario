@@ -1,6 +1,6 @@
 #include "QuestionBlock.h"
 
-#define FRAME_RATE 4	//coin at top score swap 8 time per sec
+#define FRAME_RATE 4	//coin at top score swap 4 time per sec
 #define COIN_SCORE 200	//each coin is 200 score
 
 QuestionBlock::QuestionBlock(void)
@@ -12,8 +12,8 @@ QuestionBlock::QuestionBlock(int objectID, int x, int y)
 	Initialize(x, y);
 	_IsHitted = false;
 	_SpawmItem = nullptr;
-	count_per_frame = 1000 / FRAME_RATE;
-	frame_start = GetTickCount();
+	_CountPerFrame = 1000 / FRAME_RATE;
+	_FrameStart = GetTickCount();
 	_SpawmItemTag = eGameTag::eEmpty;
 
 	//setup current sprite for brick
@@ -69,9 +69,9 @@ void QuestionBlock::Update()
 	{
 		//control question switch rate
 		DWORD now = GetTickCount();
-		if (now - frame_start >= count_per_frame) 
+		if (now - _FrameStart >= _CountPerFrame) 
 		{
-			frame_start = now;
+			_FrameStart = now;
 			if(_Color == eColorID::eBrown)
 			{
 				_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 2, 4);

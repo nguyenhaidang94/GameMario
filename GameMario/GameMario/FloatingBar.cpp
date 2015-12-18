@@ -1,7 +1,5 @@
 #include "FloatingBar.h"
 
-#define BAR_WIDTH 96
-#define BAR_HEIGHT 16
 #define DEFAULT_VELOCITY 2
 #define MAX_VELOCITY 3
 #define ACCELERARION_X 0.1
@@ -11,12 +9,12 @@ FloatingBar::FloatingBar(void)
 {
 }
 
-FloatingBar::FloatingBar(int x, int y, std::string tag)
+FloatingBar::FloatingBar(int x, int y, int width, int height,std::string tag)
 {
 	_Velocity = D3DXVECTOR2(0, 0);
 	_Acceleration = 0;
 	_Position = D3DXVECTOR2(x, y);
-	_Size = D3DXVECTOR2(BAR_WIDTH, BAR_HEIGHT);
+	_Size = D3DXVECTOR2(width, height);
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBarSprite);
 	_ObjectTypeID = eObjectTypeID::eFloatingBar;
 	_Direction = true;

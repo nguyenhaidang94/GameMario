@@ -9,7 +9,6 @@ class ItemBrick :
 	public Block
 {
 	bool _IsHitted;		//if item alreadt released, turn to hard block
-	bool _IsInvisible;	//true block is invisible
 	GameObject *_SpawmItem;
 	eGameTag _SpawmItemTag;
 	//attribute for coin block	

@@ -107,11 +107,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			frame_start = now;
 			game->Game_Run(hWnd);
-			if(now - game_time_start > 1000)
-			{
-				GameStatistics::GetInstance()->DecreaseTime();
-				game_time_start = now;
-			}
 		}
 	}
 

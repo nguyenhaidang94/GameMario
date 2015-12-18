@@ -87,11 +87,12 @@ enum eMarioState
 enum eWorldID
 {
 	e1_1 = 0,
-	e1_2 = 1,
+	eLeft1_2 = 1,
+	
 	e1_3,
 	e1_4,
 	eHidden1_1,
-	eLeft1_2,
+	e1_2,
 	eRight1_2,
 	eHidden1_2,
 };
@@ -144,6 +145,7 @@ enum eGameTag
 	eRemove,	//object is remove in quatree
 	eIgnoreCollision,	//stop checking collison
 	eBrickBounceUp,		//brick kill enemy when it bounce up(?)
+	eInvisible,			//object is invisible
 
 	//world tag
 	eToHidden1_1,	//hidden map of world 1_1
@@ -180,6 +182,7 @@ enum eColorID
 {
 	eBrown = 0,
 	eBlue = 1,
+	eGray,
 };
 
 enum eNodePosition

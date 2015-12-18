@@ -17,6 +17,7 @@ private:
 	bool _IsTimePause;
 	std::vector<GameObject*> *_ListObjectAddToScene;
 	bool _IsReachCheckpoint;	//if mario reach check point in the map
+	bool _IsPerformWorldClearStatus;	//mario reach FlagPole to perform count down time and increase score
 public:
 	GameStatistics(void);
 	~GameStatistics(void);
@@ -26,7 +27,7 @@ public:
 	
 
 	//------Game stats----
-	//Reset statistics
+	//Reset statistics, use after start new playthrought in menuscene
 	void Reset();
 	//Get current score
 	int GetScore();
@@ -47,10 +48,10 @@ public:
 	int GetTime();
 	//Decrease time by 1
 	void DecreaseTime();
-	//Reset time = 400s and unpause game
-	void ResetTime();
+	//Reset when start new world (set time = 400s and unpause game, stop perform mario reach flagpole status)
+	void ResetWorld();
 	//Pause game time
-	void PauseTime();
+	void PauseTime(bool isPause);
 	//----------------------------
 
 	//------world, scene and objects----
@@ -66,6 +67,10 @@ public:
 	void ChangeScene(eSceneID sceneID);
 	//Get current WorldName in string
 	std::string GetCurrentWorldName();
+	//Call this when mario reach FlagPole to Perform count down time and increase score
+	void PerformMarioReachFlagpoleStatus();
+	//Check if mario reach FlagPole to Perform count down time and increase score
+	bool IsPerformMarioReachFlagpoleStatus();
 
 	//Add a object to Scene
 	void AddObjectToScene(GameObject *object);

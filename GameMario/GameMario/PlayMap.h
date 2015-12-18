@@ -29,7 +29,7 @@ public:
 	void HandlingCollision();
 	//Load map
 	void Load();
-	//Reload map
+	//Reload map, only menuscene use this atm
 	void Reload();
 	//add object to map
 	void AddObjectToMap(GameObject *object);

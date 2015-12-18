@@ -16,7 +16,7 @@ public:
 	//Get instance of sprite manager
 	static EffectManager *GetInstance();
 
-	//Show a effect with effectID at position, tag for more option
+	//Show a effect with effectID at position, tag for more option(for coin effect: tag is score, for breakbrick: 0 is brown and 1 is blue, for floating text: -2 is tag for 1up text else is score)
 	void ShowEffect(D3DXVECTOR2 position ,eEffectID effectID, int tag = -1);
 	//Update all current effect
 	void Update();

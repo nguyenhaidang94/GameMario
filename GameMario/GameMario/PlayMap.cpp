@@ -1,6 +1,5 @@
 #include "PlayMap.h"
 
-
 PlayMap::PlayMap(void)
 {
 	_Background = new Background();

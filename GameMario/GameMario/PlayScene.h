@@ -13,6 +13,9 @@ private:
 
 	//Handling collision of map object
 	void HandlingCollision();
+
+	//manage ingame time
+	DWORD _FrameStart;
 public:
 	PlayScene(void);
 	~PlayScene(void);

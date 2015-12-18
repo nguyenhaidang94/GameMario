@@ -33,8 +33,8 @@ void SceneManager::Initialize()
 
 void SceneManager::SwitchScene(eSceneID sceneID)
 {
+	GameStatistics::GetInstance()->PauseTime(true);	//pause time for all scene, olny PlayScene stop this
 	_CurrentSceneID = sceneID;
-	GameStatistics::GetInstance()->PauseTime();
 	_ListScene[_CurrentSceneID]->Load();
 	Camera::GetInstance()->Reset();
 }
