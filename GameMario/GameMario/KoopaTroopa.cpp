@@ -207,7 +207,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 			}
 			else
 			{
-				DirectionsCollision(object, collisionDirection);
+				//DirectionsCollision(object, collisionDirection);
 			}
 			break;
 			break;
@@ -288,6 +288,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 							_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
 							_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKoopaTroopaStop);		//set sprite
 							//	_Position.x = objectBox.fX - _Size.y / 2 - 1;
+							_Position.x += _Velocity.x * 3;
 						}
 					break;
 				case eLeft:
@@ -299,6 +300,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 							_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
 							_TypeSpriteID = eSpriteID::eKoopaTroopaDanger;	//trạng thái di chuyển
 							//_Position.x = objectBox.fX + objectBox.fWidth + _Size.y / 2 + 1;
+							_Position.x += _Velocity.x * 3;
 						}
 					break;
 				default:
@@ -330,6 +332,10 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 		case eBullet:
 			switch (collisionDirection)
 			{
+			case eTop:
+				_MonsterVelocityX = -_MonsterVelocityX;
+				MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+				break;
 			case eRight:
 				_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
 				MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x

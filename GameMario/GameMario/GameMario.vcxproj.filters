@@ -234,7 +234,7 @@
     <ClCompile Include="Gun.cpp">
       <Filter>GameObject\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="KingBoo.cpp">
+    <ClCompile Include="KingBowser.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
@@ -395,7 +395,7 @@
     <ClInclude Include="Gun.h">
       <Filter>GameObject\Mario</Filter>
     </ClInclude>
-    <ClInclude Include="KingBoo.h">
+    <ClInclude Include="KingBowser.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>

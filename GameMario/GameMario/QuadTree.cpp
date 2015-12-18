@@ -157,7 +157,7 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 
 						break;
 					case 37:	//KingBoo
-						node->_ListObjects.push_back(new KingBoo(objectID, x, y));
+						node->_ListObjects.push_back(new KingBowser(objectID, x, y));
 						break;
 					default:
 						break;

@@ -200,6 +200,10 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		case eBullet:
 			switch (collisionDirection)
 			{
+			case eTop:
+				_MonsterVelocityX = -_MonsterVelocityX;
+				MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+				break;
 			case eRight:
 				_MonsterVelocityX = -GOOMBA_VELOCITY_X;
 				MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x

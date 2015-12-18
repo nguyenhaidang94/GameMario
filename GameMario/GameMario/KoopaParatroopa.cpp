@@ -158,6 +158,9 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 					{
 						switch (collisionDirection)
 						{
+						case eTop:
+							MonsterDead(2);
+							break;
 						case eRight:
 							MonsterDead(2);
 							break;
