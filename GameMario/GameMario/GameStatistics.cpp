@@ -1,4 +1,5 @@
 #include "GameStatistics.h"
+#include "Mario.h"
 #define GAME_TIME 400
 
 GameStatistics *GameStatistics::_Instance = NULL;
@@ -233,6 +234,9 @@ D3DXVECTOR2 GameStatistics::GetPositionEndGame()
 	case e1_1:
 		return D3DXVECTOR2(6540, 96);
 		break;
+	case eRight1_2:
+		return D3DXVECTOR2(908,96);
+		break;
 	case e1_3:
 		return D3DXVECTOR2(2160, 80);
 		break;
@@ -254,6 +258,9 @@ D3DXVECTOR2 GameStatistics::GetPositionEndAutoAnimation()
 		break;
 	case eHidden1_2:
 		return D3DXVECTOR2(480, 96);
+		break;
+	case eLeft1_2:
+		return D3DXVECTOR2(325, 96);
 		break;
 	default:
 		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint

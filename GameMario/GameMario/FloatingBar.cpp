@@ -2,6 +2,7 @@
 
 #define DEFAULT_VELOCITY 2
 #define MAX_VELOCITY 3
+#define MAX_VELOCITY_X 5
 #define ACCELERARION_X 0.1
 #define ACCELERARION_Y 0.035
 
@@ -75,28 +76,30 @@ void FloatingBar::Update()
 
 	//horizontal rotation
 	case 2:	
-		if(_Direction)
-		{
+		/*if(_Direction)
+		{*/
 			_Position.x += _Velocity.x;
-		}
-		else
+		//}
+	/*	else
 		{
 			_Position.x -= _Velocity.x;
-		}
+		}*/
+	
 		_Velocity.x += _Acceleration;
+	
 
 		//if bar reach max velocity or velocity = 0, revert acceleration
-		if(_Velocity.x >= MAX_VELOCITY || _Velocity.x <= 0)
+		if(_Velocity.x >= MAX_VELOCITY_X /*|| _Velocity.x <= 0*/)
 		{
-			_Acceleration = -_Acceleration;
+			//_Acceleration = -_Acceleration;
 
-			if( _Velocity.x <= 0)	//change direction if velociity reach 0
-			{
-				_Direction = !_Direction;
-			}
+			//if( _Velocity.x <= 0)	//change direction if velociity reach 0
+			//{
+			//	_Direction = !_Direction;
+			//}
+			_Velocity.x = -MAX_VELOCITY_X;
 		}
 		break;
-
 	//vertical rotation
 	case 3:	
 		if(_Direction)
