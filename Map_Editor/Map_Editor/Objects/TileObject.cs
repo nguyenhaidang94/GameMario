@@ -49,11 +49,17 @@ namespace Map_Editor.Objects
         BOSS,           //37
         LAVA,           //38
         LINE,           //39
-        BRIDGE          //40
+        BRIDGE,         //40
+        RED_FLY_HIGH_TURTLE,//41
+        COLUMN_FIRE,    //42
+        MUSHROOM_RETAINER,//43
+        PRINCESS,       //44
     }
 
     public class TileObject: IComparable<TileObject>
     {
+        public static int FLAG_WIDTH = 4;
+
         private int _Id;
         public int Id
         {

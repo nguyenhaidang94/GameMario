@@ -132,6 +132,10 @@ namespace Map_Editor
             _ListPicbox.Add(_pbLava);   //38
             _ListPicbox.Add(_pbTile16); //39
             _ListPicbox.Add(_pbTile17); //40
+            _ListPicbox.Add(_pbEnemy11);//41
+            _ListPicbox.Add(_pbEnemy12);//42
+            _ListPicbox.Add(_pbMushroomRetainer);//43
+            _ListPicbox.Add(_pbPrincess);//44
 
             foreach (PictureBox pb in _ListPicbox)
                 pb.Click += pictureBox_Click;
@@ -228,24 +232,75 @@ namespace Map_Editor
                     node.ListObject.Sort();
                     foreach (TileObject obj in node.ListObject)
                     {
-                        if (string.IsNullOrEmpty(obj.Note))
-                            sw.WriteLine(
-                                obj.Id.ToString() + " "
-                                    + obj.MovementRangeBox.X.ToString() + " "
-                                    + obj.MovementRangeBox.Y.ToString() + " "
-                                    + obj.MovementRangeBox.Width.ToString() + " "
-                                    + obj.MovementRangeBox.Height.ToString() + " "
-                                    + "-1"
-                                    );
-                        else
-                            sw.WriteLine(
-                                obj.Id.ToString() + " "
-                                    + obj.MovementRangeBox.X.ToString() + " "
-                                    + obj.MovementRangeBox.Y.ToString() + " "
-                                    + obj.MovementRangeBox.Width.ToString() + " "
-                                    + obj.MovementRangeBox.Height.ToString() + " "
-                                    + obj.Note
-                                    );
+                        switch (obj.Id)
+                        {
+                            case (int)eOBJECTID.COLUMN_FIRE:
+                                {
+                                    if (string.IsNullOrEmpty(obj.Note))
+                                        sw.WriteLine(
+                                            obj.Id.ToString() + " "
+                                                + obj.MovementRangeBox.X.ToString() + " "
+                                                + (obj.MovementRangeBox.Y + obj.MovementRangeBox.Height/2).ToString() + " "
+                                                + obj.MovementRangeBox.Width.ToString() + " "
+                                                + obj.MovementRangeBox.Height.ToString() + " "
+                                                + "0"
+                                                );
+                                    else
+                                        sw.WriteLine(
+                                            obj.Id.ToString() + " "
+                                                + obj.MovementRangeBox.X.ToString() + " "
+                                                + (obj.MovementRangeBox.Y + obj.MovementRangeBox.Height / 2).ToString() + " "
+                                                + obj.MovementRangeBox.Width.ToString() + " "
+                                                + obj.MovementRangeBox.Height.ToString() + " "
+                                                + obj.Note
+                                                );
+                                    break;
+                                }
+                            case (int)eOBJECTID.FLAG:
+                                {
+                                    if (string.IsNullOrEmpty(obj.Note))
+                                        sw.WriteLine(
+                                            obj.Id.ToString() + " "
+                                                + (obj.MovementRangeBox.X + 12).ToString() + " "
+                                                + obj.MovementRangeBox.Y.ToString() + " "
+                                                + TileObject.FLAG_WIDTH + " "
+                                                + obj.MovementRangeBox.Height.ToString() + " "
+                                                + "-1"
+                                                );
+                                    else
+                                        sw.WriteLine(
+                                            obj.Id.ToString() + " "
+                                                + (obj.MovementRangeBox.X + 12).ToString() + " "
+                                                + obj.MovementRangeBox.Y.ToString() + " "
+                                                + TileObject.FLAG_WIDTH + " "
+                                                + obj.MovementRangeBox.Height.ToString() + " "
+                                                + obj.Note
+                                                );
+                                    break;
+                                }
+                            default:
+                                {
+                                    if (string.IsNullOrEmpty(obj.Note))
+                                        sw.WriteLine(
+                                            obj.Id.ToString() + " "
+                                                + obj.MovementRangeBox.X.ToString() + " "
+                                                + obj.MovementRangeBox.Y.ToString() + " "
+                                                + obj.MovementRangeBox.Width.ToString() + " "
+                                                + obj.MovementRangeBox.Height.ToString() + " "
+                                                + "-1"
+                                                );
+                                    else
+                                        sw.WriteLine(
+                                            obj.Id.ToString() + " "
+                                                + obj.MovementRangeBox.X.ToString() + " "
+                                                + obj.MovementRangeBox.Y.ToString() + " "
+                                                + obj.MovementRangeBox.Width.ToString() + " "
+                                                + obj.MovementRangeBox.Height.ToString() + " "
+                                                + obj.Note
+                                                );
+                                    break;
+                                }
+                        }
                     }
                 }
                 //write subnodes

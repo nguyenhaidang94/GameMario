@@ -92,10 +92,14 @@
     <Content Include="Resources\Enemies\Boss.png" />
     <Content Include="Resources\Enemies\fire.png" />
     <None Include="Resources\Ground\lava.png" />
+    <None Include="Resources\Enemies\vertical-fire.png" />
+    <None Include="Resources\Enemies\turtle5.png" />
     <Content Include="Resources\Items\axe.png" />
     <Content Include="Resources\Items\gray-money-block.png" />
     <None Include="Resources\Tiles\line.png" />
     <None Include="Resources\Tiles\bridge.png" />
+    <None Include="Resources\Items\mushroom-retainer.png" />
+    <None Include="Resources\Items\princess.png" />
     <Content Include="Resources\Tiles\small-lift.png" />
     <Content Include="Yellowicon-Game-Stars-Mario.ico" />
     <None Include="Resources\Tiles\lift.png" />
