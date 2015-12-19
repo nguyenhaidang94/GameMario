@@ -57,6 +57,7 @@ void StartScene::Load()
 	if(GameStatistics::GetInstance()->GetWorldID() == eWorldID::eLeft1_2)
 	{
 		Mario::GetInstance()->SetFlagAutoAnimationRight(true);
+		Mario::GetInstance()->AutoAnimationRight(D3DXVECTOR2(310,96));
 	}
 }
 

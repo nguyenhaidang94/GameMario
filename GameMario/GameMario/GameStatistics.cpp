@@ -1,4 +1,5 @@
 #include "GameStatistics.h"
+#include "Mario.h"
 #define GAME_TIME 400
 
 GameStatistics *GameStatistics::_Instance = NULL;
@@ -33,6 +34,7 @@ void GameStatistics::Initialize()
 	_IsTimePause = true;
 	_ListObjectAddToScene = new std::vector<GameObject*>();
 	_IsPerformWorldClearStatus = false;
+	_IsGamePause = false;
 }
 
 #pragma region Game stats
@@ -44,6 +46,7 @@ void GameStatistics::Reset()
 	_CoinCount = 0;
 	_Time = GAME_TIME;
 	_IsReachCheckpoint = false;
+	_IsGamePause = false;
 
 	//clear list object add
 	for(int i = _ListObjectAddToScene->size() - 1; i >= 0; i--)
@@ -100,7 +103,7 @@ void GameStatistics::ChangeLife(bool isIncrease)
 
 void GameStatistics::DecreaseTime()
 {
-	if(!_IsTimePause)
+	if(!_IsTimePause || !_IsGamePause)	//stop descrease if time is paused or objects are paused
 	{
 		_Time--;
 	}
@@ -111,6 +114,7 @@ void GameStatistics::ResetWorld()
 	_IsTimePause = false;
 	_Time = GAME_TIME;
 	_IsPerformWorldClearStatus = false;
+	_IsGamePause = false;
 }
 
 void GameStatistics::PauseTime(bool isPause)
@@ -157,9 +161,10 @@ void GameStatistics::GoToNextWorld()
 	{
 		_WorldID = static_cast<eWorldID>(index + 1);	//next world also next enum
 	}
-	else	//temporary
+	else	//temporary, return to menu if there is no more scene
 	{
 		_WorldID == e1_1;
+		_CurrentSceneID = eSceneID::eMenu;
 	}
 }
 
@@ -182,6 +187,16 @@ void GameStatistics::PerformMarioReachFlagpoleStatus()
 bool GameStatistics::IsPerformMarioReachFlagpoleStatus()
 {
 	return _IsPerformWorldClearStatus;
+}
+
+void GameStatistics::PauseObject(bool isPause)
+{
+	_IsGamePause = isPause;
+}
+
+bool GameStatistics::IsPauseObject()
+{
+	return _IsGamePause;
 }
 
 void GameStatistics::AddObjectToScene(GameObject *object)
@@ -233,6 +248,9 @@ D3DXVECTOR2 GameStatistics::GetPositionEndGame()
 	case e1_1:
 		return D3DXVECTOR2(6540, 96);
 		break;
+	case eRight1_2:
+		return D3DXVECTOR2(908,96);
+		break;
 	case e1_3:
 		return D3DXVECTOR2(2160, 80);
 		break;
@@ -254,6 +272,9 @@ D3DXVECTOR2 GameStatistics::GetPositionEndAutoAnimation()
 		break;
 	case eHidden1_2:
 		return D3DXVECTOR2(480, 96);
+		break;
+	case eLeft1_2:
+		return D3DXVECTOR2(325, 96);
 		break;
 	default:
 		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint

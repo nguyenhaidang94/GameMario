@@ -44,6 +44,8 @@ private:
 	bool _CanGoLeft;
 	bool _CanGoRight;
 	float _TimeBeforeTranferToSmall;
+	float _VelocityFloatingBar;
+	bool _IsControl;
 
 public:
 	Mario(void);
@@ -59,6 +61,8 @@ public:
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection, float offsetX, float offsetY);
 
 	//Mario state
+	bool GetIsControl();
+	bool SetIsControl(bool flag);
 	void Jump();
 	void Fall();
 	void Stand();
@@ -80,6 +84,7 @@ public:
 	void AutoAnimationEndGame();
 	bool SetFlagAutoAnimationRight(bool flag);
 	bool GetFlagAutoAnimationRight();
+	bool SetDead(bool flag);
 
 	//New
 	//Get an instance of class mario

@@ -93,6 +93,7 @@ void Brick::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				//big mario destroy brick
 				case eMarioIsBig:
 				case eMarioIsBigInvincible:
+					_Tag = eGameTag::eBrickBounceUp;
 					_IsAboutToDestroy = 0;	//hold 1 tick for check collision before destroy
 					break;
 
