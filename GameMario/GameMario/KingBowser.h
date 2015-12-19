@@ -1,13 +1,14 @@
 ﻿#pragma once
 #include "Monster.h"
 #include "Mario.h"
+#include "KingBowserGun.h"
 #define KINGBOWSER_WIDTH 64
 #define KINGBOWSER_HEIGHT 64
 #define KINGBOWSER_VELOCITY_X 1.5f
 #define KINGBOWSER_VELOCITY_Y 6.0f
 #define KINGBOWSER_ACCELERATION 0.3f
 #define TIMES_TURN 100
-#define TIMES_TURN_VELOCITY 15
+#define TIMES_TURN_SHOOT 1500
 #define KOOPAPARATROOPA_ACCELERATION 0.3f
 
 class KingBowser : public Monster
@@ -17,13 +18,19 @@ protected:
 	FLOAT _KingBowserBoxWidthMin;					//Khoảng di chuyển của Bowser
 	FLOAT _KingBowserBoxWidthMax;
 	FLOAT _PositionX;
+	FLOAT _PositionY;
+	KingBowserGun _KingBowserGun;
+	bool _Left;
 	//Box
 	int _WorldWidth;
 	int _BoxWidthMin;
 	int _BoxWidthMax;
-	//velocity
+	//time bounce
 	DWORD _TimeStartBounce;
 	DWORD _TimePerBounce;
+	//time shoot
+	DWORD _TimeStartShoot;
+	DWORD _TimePerShoot;
 	
 public:
 	KingBowser();
@@ -51,5 +58,6 @@ public:
 	void SetFrame(int MonsterType);
 
 	void KingBowserMove();
+	void KingBowserGun();
 };
 

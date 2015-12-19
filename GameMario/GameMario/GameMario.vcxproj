@@ -75,6 +75,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBreakEffect.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletFire.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -86,6 +87,7 @@
     <ClCompile Include="HardBlock.cpp" />
     <ClCompile Include="ItemBrick.cpp" />
     <ClCompile Include="KingBowser.cpp" />
+    <ClCompile Include="KingBowserGun.cpp" />
     <ClCompile Include="KoopaParatroopa.cpp" />
     <ClCompile Include="KoopaTroopa.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -130,6 +132,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBreakEffect.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletFire.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="EffectManager.h" />
@@ -141,6 +144,7 @@
     <ClInclude Include="HardBlock.h" />
     <ClInclude Include="ItemBrick.h" />
     <ClInclude Include="KingBowser.h" />
+    <ClInclude Include="KingBowserGun.h" />
     <ClInclude Include="KoopaParatroopa.h" />
     <ClInclude Include="KoopaTroopa.h" />
     <ClInclude Include="Monster.h" />

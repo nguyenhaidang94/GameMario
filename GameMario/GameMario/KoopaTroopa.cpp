@@ -246,10 +246,17 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 							}
 						}
 						break;
+					case eGoomba:
+						DirectionsCollision(object, collisionDirection);
+						break;
 					case eKoopaTroopa:
 						DirectionsCollisionNoBox(object, collisionDirection);
-					default:
-						DirectionsCollision(object, collisionDirection);
+						break;
+					case eKoopaParatroopa:
+						DirectionsCollisionNoBox(object, collisionDirection);
+						break;
+					case eKingBowser:
+						DirectionsCollisionNoBox(object, collisionDirection);
 						break;
 				}
 			}

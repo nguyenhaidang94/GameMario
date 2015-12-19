@@ -237,6 +237,12 @@
     <ClCompile Include="KingBowser.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="BulletFire.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="KingBowserGun.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -396,6 +402,12 @@
       <Filter>GameObject\Mario</Filter>
     </ClInclude>
     <ClInclude Include="KingBowser.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="KingBowserGun.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFire.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>

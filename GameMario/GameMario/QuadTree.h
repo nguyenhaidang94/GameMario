@@ -16,6 +16,7 @@
 #include "KoopaParatroopa.h"
 #include "PiranhaPlant.h"
 #include "KingBowser.h"
+#include "BulletFire.h"
 
 class QuadTree
 {

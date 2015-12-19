@@ -25,6 +25,7 @@ enum eObjectTypeID
 	eFlagpole,
 	eMonster,
 	eMonsterDead,
+	eBoss,
 	eBullet,
 };
 
@@ -60,6 +61,7 @@ enum eSpriteID
 	ePiranhaPlantDead,
 	eKingBowser,
 	eKingBowserDead,
+	eBulletFire,
 	eSmallMario,
 	eMarioTransformBigToSmall,
 	eMarioTransformSmallToBig,
