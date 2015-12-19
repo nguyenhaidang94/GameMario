@@ -39,12 +39,10 @@ private:
 	bool _IsAnimationFlag; //Xác định mario bắt đầu thực hiện animation lúc lấy lá cờ
 	bool _IsAnimationRight;
 	bool _IsCollisionMonster; // Xác định mario va chạm với quái sẽ nhảy lên
-	bool _IsFloatingBarCollision;
 	bool _IsDead;
 	bool _CanGoLeft;
 	bool _CanGoRight;
 	float _TimeBeforeTranferToSmall;
-	float _VelocityFloatingBar;
 	bool _IsControl;
 
 public:

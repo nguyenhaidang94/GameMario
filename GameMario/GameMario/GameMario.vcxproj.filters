@@ -243,6 +243,7 @@
     <ClCompile Include="KingBowserGun.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Bridge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -410,6 +411,7 @@
     <ClInclude Include="BulletFire.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Bridge.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

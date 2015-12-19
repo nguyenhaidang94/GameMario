@@ -60,7 +60,7 @@ Mario::Mario(void)
 
 	_CanGoLeft = true;
 	_CanGoRight = true;
-	_VelocityFloatingBar = 0;
+	
 
 	_IsControl=true;
 
@@ -97,7 +97,7 @@ void Mario::HandlingInput()
 	if(_IsCollide==true && _IsGetMushroom==false && _IsGetFlowerToTranform == false && _IsAnimationPipe == false && _IsAnimationFlag ==false && _IsDead==false
 		&& _IsTranferToSmall==false && _IsAnimationRight==false && _IsControl==true )
 	{
-		if(_Velocity.x ==0 || (_IsFloatingBarCollision==true && _Velocity.x ==_VelocityFloatingBar)) 
+		if(_Velocity.x ==0 ) 
 		{
 			_State = eMarioState::eIdle;
 		}
@@ -106,7 +106,7 @@ void Mario::HandlingInput()
 		{
 			_IsCollide = false;
 			_IsRight = true;
-			_IsFloatingBarCollision=false;
+		
 			_State = eMarioState::eRunRight;
 		}
 		else
@@ -114,7 +114,6 @@ void Mario::HandlingInput()
 		{
 			_IsCollide = false;
 			_IsRight = false;
-			_IsFloatingBarCollision=false;
 			_State = eMarioState::eRunLeft;
 		}
 
@@ -211,7 +210,7 @@ void Mario::HandlingInput()
 	else
 	{
 		if(_Velocity.y < 0 && _IsGetMushroom==false && _IsGetFlowerToTranform == false   && _IsTranferToSmall==false && _IsDead==false && _IsAnimationRight==false
-			&& _IsCollide==false && _IsFloatingBarCollision==false && _IsControl==true)
+			&& _IsCollide==false && _IsControl==true)
 		{
 			_State = eMarioState::eFall;
 			_CountTimeJump=0;
@@ -257,27 +256,33 @@ void Mario::Jump()
 	DWORD now = GetTickCount();
 
 	//Nhảy và di chuyển
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_D))
+	if(_CanGoRight ==true)
 	{
-		_Velocity.x +=INCREASE_VELOCITY;
-		
-		if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+		if(Keyboard::GetInstance()->IsKeyDown(DIK_D))
 		{
-			if(_Velocity.x >=MAX_VELOCITYSHOOT) _Velocity.x = MAX_VELOCITYSHOOT;
+			_Velocity.x +=INCREASE_VELOCITY;
+		
+			if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			{
+				if(_Velocity.x >=MAX_VELOCITYSHOOT) _Velocity.x = MAX_VELOCITYSHOOT;
+			}
+			else 
+				if(_Velocity.x >=MAX_VELOCITYX) _Velocity.x = MAX_VELOCITYX;
 		}
-		else 
-			if(_Velocity.x >=MAX_VELOCITYX) _Velocity.x = MAX_VELOCITYX;
 	}
 
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_A))
+	if(_CanGoLeft==true)
 	{
-		_Velocity.x -=INCREASE_VELOCITY;
-		if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+		if(Keyboard::GetInstance()->IsKeyDown(DIK_A))
 		{
-			if(_Velocity.x <=-MAX_VELOCITYSHOOT) _Velocity.x = -MAX_VELOCITYSHOOT;
+			_Velocity.x -=INCREASE_VELOCITY;
+			if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			{
+				if(_Velocity.x <=-MAX_VELOCITYSHOOT) _Velocity.x = -MAX_VELOCITYSHOOT;
+			}
+			else 
+				if(_Velocity.x <=-MAX_VELOCITYX) _Velocity.x = -MAX_VELOCITYX;
 		}
-		else 
-			if(_Velocity.x <=-MAX_VELOCITYX) _Velocity.x = -MAX_VELOCITYX;
 	}
 	
 	if(_IsRight == true) 
@@ -466,7 +471,7 @@ void Mario::Stand()
 		_State = _PreState;
 	}
 
-	if(_IsFloatingBarCollision==false) _Velocity.x = 0; //xét trạng thái đứng yên
+	 _Velocity.x = 0; //xét trạng thái đứng yên
 	
 	if(_IsGetMushroom == true) //Nếu lấy được nấm biến lớn 
 	{
@@ -474,9 +479,7 @@ void Mario::Stand()
 		TranferSmallToBig();
 	}
 	else
-		if(_Velocity.y > 0) _Velocity.y = DEFAULT_VELOCITY;
-		else
-		if(_IsFloatingBarCollision==false)	_Velocity.y = DEFAULT_VELOCITY;
+		_Velocity.y = DEFAULT_VELOCITY;
 
 	if(_IsTranferToSmall == true) //Nếu bị biến nhỏ lại
 	{
@@ -622,7 +625,7 @@ void Mario::RunToRight()
 		AutoAnimationRight(GameStatistics::GetInstance()->GetPositionEndAutoAnimation());
 	}
 
-	if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0 && _IsFloatingBarCollision==false)
+	if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0 )
 	{
 		_Velocity.y --;
 	}
@@ -684,10 +687,10 @@ void Mario::RunToLeft()
 
 	if(_IsCollisionMonster==true) _IsCollisionMonster = false;//ko va chạm với quái
 
-	if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0 && _IsFloatingBarCollision==false)
+	/*if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0)
 	{
 		_Velocity.y --;
-	}
+	}*/
 
 	//shoot
 	if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsFlower==true && _IsGetStar==false)
@@ -719,18 +722,16 @@ void Mario::PreStandRight()
 	}
 
 		if(_Velocity.x<=0) _State=eMarioState::eIdle;
-		else
-		if(_IsFloatingBarCollision==true) _Velocity.x-=4*INCREASE_VELOCITY;
-		else _Velocity.x-=INCREASE_VELOCITY;
+		
+		_Velocity.x-=INCREASE_VELOCITY;
 
-	 
 	 _IsCollide =false;
-	 _IsFloatingBarCollision=false;
+	
 
-	 if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0 && _IsFloatingBarCollision==false)
-	{
-		_Velocity.y--;
-	}
+	// if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0 && _IsFloatingBarCollision==false)
+	//{
+	//	_Velocity.y--;
+	//}
 	 //shoot
 	if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsFlower==true && _IsGetStar==false)
 	{
@@ -761,23 +762,18 @@ void Mario::PreStandLeft()
 	}
 
 	if(_Velocity.x>=0) _State=eMarioState::eIdle;
-	else
-	if(_IsFloatingBarCollision==true)
-	{
-		_Velocity.x += 4*INCREASE_VELOCITY;
-	}
-	else  _Velocity.x += INCREASE_VELOCITY;
+	 _Velocity.x += INCREASE_VELOCITY;
 
 
 
 	 _IsCollide =false;
-	 _IsFloatingBarCollision=false;
+	
 
-	 if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0 && _IsFloatingBarCollision==false)
+	/* if(!Keyboard::GetInstance()->IsKeyDown(DIK_K) && _Velocity.y > 0 && _IsFloatingBarCollision==false)
 	{
 		_Velocity.y --;
 	}
-
+*/
 	 //shoot
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsGetStar==false )
 	{
@@ -1208,7 +1204,6 @@ void Mario::Update()
 	_CanGoLeft = true;
 	_CanGoRight = true;
 	_IsCollide=false;
-	_IsFloatingBarCollision=false;
 }
 
 void Mario::SetSpriteBeforeTransfromFlower()
@@ -1414,18 +1409,18 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				_Position.y = object->GetBoundaryBox().fY + _Size.y/2- DECREASE_BOX_Y;;
 				_Velocity.y =0 ;
 				_IsCollide = true;
-				_IsFloatingBarCollision = false;
+				
 				break;
 			case eRight:
 				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 + DECREASE_BOX_X;
 				_Velocity.x = 0;
-				_IsFloatingBarCollision = false;
+				
 				_CanGoRight = false;
 				break;
 			case eLeft:
 				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -DECREASE_BOX_X;
 				_Velocity.x = 0;
-				_IsFloatingBarCollision = false;
+				
 				_CanGoLeft = false;
 				break;
 			case eTop:
@@ -1558,7 +1553,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				_Position.y = object->GetBoundaryBox().fY + _Size.y/2- DECREASE_BOX_Y;;
 				_Velocity.y =0 ;
 				_IsCollide = true;
-				_IsFloatingBarCollision = false;
+			
 				//update position of mario base on floating bar velocity
 				_Position.y += object->GetBoundaryBox().fVy;
 				_Position.x += object->GetBoundaryBox().fVx;
@@ -1566,13 +1561,12 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			case eRight:
 				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 + DECREASE_BOX_X;
 				_Velocity.x = 0;
-				_IsFloatingBarCollision = false;
 				_CanGoRight = false;
 				break;
 			case eLeft:
 				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -DECREASE_BOX_X;
 				_Velocity.x = 0;
-				_IsFloatingBarCollision = false;
+
 				_CanGoLeft = false;
 				break;
 			case eTop:
@@ -1854,12 +1848,11 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			case eBottom:
 				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
 				_Velocity.y = object->GetBoundaryBox().fVy + _Velocity.y;
-				_VelocityFloatingBar = object->GetBoundaryBox().fVx;
+				
 				
 				_Velocity.x = object->GetBoundaryBox().fVx+ _Velocity.x;
 
 				_IsCollide = true;
-				_IsFloatingBarCollision = true;
 				break;
 			case eLeft:
 				_Velocity.x = 0;
