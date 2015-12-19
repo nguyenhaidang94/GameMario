@@ -18,7 +18,7 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Update()
 {
-	if((GetTickCount() - _StartTime) > WAIT_TIME || Keyboard::GetInstance()->IsKeyDown(DIK_SPACE));
+	if((GetTickCount() - _StartTime) > WAIT_TIME || Keyboard::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
 		GameStatistics::GetInstance()->ChangeScene(eSceneID::eMenu);
 	}

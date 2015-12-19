@@ -237,6 +237,9 @@
     <ClCompile Include="KingBowser.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Bridge.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="KingBowser.h">
       <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Bridge.h">
+      <Filter>GameObject\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

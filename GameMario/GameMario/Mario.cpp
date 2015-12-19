@@ -39,7 +39,7 @@ Mario::Mario(void)
 	_CurrentFrame = 0;
 	/*_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);*/
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
-	SetPosition(D3DXVECTOR2(2248,118));
+	SetPosition(D3DXVECTOR2(2000,80));
 	_IsCollide = false;
 	SetSize(D3DXVECTOR2(32, 32));
 
@@ -57,7 +57,7 @@ Mario::Mario(void)
 	_IsDead = false;
 	_TimeBeforeTranferToSmall=0;
 	_IsAnimationRight = false;
-	_IsFloatingBarCollision = false;
+
 	_CanGoLeft = true;
 	_CanGoRight = true;
 	_VelocityFloatingBar = 0;
@@ -1550,56 +1550,39 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		break;
 		}
 	case eFloatingBar:
+		if(_IsDead==false && _IsAnimationFlag==false)
 		{
-			if(_IsDead==false)
+			switch (collisionDirection)
 			{
-				switch (collisionDirection)
-				{
-				case eBottom:
-					_Position.y = object->GetBoundaryBox().fY + _Size.y / 2 - DECREASE_BOX_Y;
-
-					//Thanh chay doc
-				     
-					 _Velocity.y = object->GetBoundaryBox().fVy + _Velocity.y ;
-
-					 if(_Velocity.y <= object->GetBoundaryBox().fVy && object->GetBoundaryBox().fVy <0)
-						 _Velocity.y =  object->GetBoundaryBox().fVy;
-
-					 if(_Velocity.y >=object->GetBoundaryBox().fVy) 
-						 _Velocity.y =  object->GetBoundaryBox().fVy;
-
-					//Thanh chay ngang
-					_VelocityFloatingBar = object->GetBoundaryBox().fVx;
-
-					if(_State==eMarioState::eIdle ||_State==eMarioState::eRunRight && _Velocity.x <0 || _State==eMarioState::eRunLeft && _Velocity.x >0 ) 
-						_Velocity.x = 0;
-
-					_Velocity.x = object->GetBoundaryBox().fVx+ _Velocity.x;
-
-					if(_Velocity.x >=VELOCITY_FLOATINGBAR_MAX)
-						_Velocity.x = VELOCITY_FLOATINGBAR_MAX; 
-					if(_Velocity.x <= -VELOCITY_FLOATINGBAR_MAX)
-						_Velocity.x = -VELOCITY_FLOATINGBAR_MAX; 
-					
-
-					_IsCollide = true;
-					_IsFloatingBarCollision = true;
-					break;
-				case eLeft:
-					_Velocity.x = 0;
-					break;
-				case eRight:
-					_Velocity.x = 0;
-					break;
-				case eTop:
-					_Velocity.y = -_Velocity.y;
-					break;
-				default:
-					break;
-				}
+			case eBottom:
+				_Position.y = object->GetBoundaryBox().fY + _Size.y/2- DECREASE_BOX_Y;;
+				_Velocity.y =0 ;
+				_IsCollide = true;
+				_IsFloatingBarCollision = false;
+				//update position of mario base on floating bar velocity
+				_Position.y += object->GetBoundaryBox().fVy;
+				_Position.x += object->GetBoundaryBox().fVx;
+				break;
+			case eRight:
+				_Position.x = object->GetBoundaryBox().fX - _Size.x/2 + DECREASE_BOX_X;
+				_Velocity.x = 0;
+				_IsFloatingBarCollision = false;
+				_CanGoRight = false;
+				break;
+			case eLeft:
+				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x/2 -DECREASE_BOX_X;
+				_Velocity.x = 0;
+				_IsFloatingBarCollision = false;
+				_CanGoLeft = false;
+				break;
+			case eTop:
+				_Velocity.y = -_Velocity.y;
+				break;
+			default:
+				break;
 			}
-		break;
 		}
+		break;
 	default:
 		break;
 	}

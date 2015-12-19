@@ -18,6 +18,7 @@ private:
 	std::vector<GameObject*> *_ListObjectAddToScene;
 	bool _IsReachCheckpoint;	//if mario reach check point in the map
 	bool _IsPerformWorldClearStatus;	//mario reach FlagPole to perform count down time and increase score
+	bool _IsGamePause;		//stop update for all object except mario
 public:
 	GameStatistics(void);
 	~GameStatistics(void);
@@ -71,6 +72,10 @@ public:
 	void PerformMarioReachFlagpoleStatus();
 	//Check if mario reach FlagPole to Perform count down time and increase score
 	bool IsPerformMarioReachFlagpoleStatus();
+	//Call this to stop update object(ex: when mario change state)
+	void PauseObject(bool isPause);
+	//Check if object should be pause or not
+	bool IsPauseObject();
 
 	//Add a object to Scene
 	void AddObjectToScene(GameObject *object);

@@ -162,6 +162,9 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 37:	//KingBoo
 						node->_ListObjects.push_back(new KingBowser(objectID, x, y));
 						break;
+					case 40:	//bridge
+						node->_ListObjects.push_back(new Bridge(x, y, w, h));
+						break;
 					default:
 						break;
 					}
@@ -334,9 +337,14 @@ void QuadTree::UpdateObjectsOnScreen()
 		_ObjectsOnScreen.clear();
 	Box activeSite = Camera::GetInstance()->GetActiveSite();
 	UpdateObjectsInNode(_RootNode, activeSite);
-	for (std::vector<GameObject*>::iterator itr = _ObjectsOnScreen.begin(); itr != _ObjectsOnScreen.end(); itr++)
+
+	//Stop update object if pause object is call
+	if(!GameStatistics::GetInstance()->IsPauseObject())
 	{
-		(*itr)->Update();
+		for (std::vector<GameObject*>::iterator itr = _ObjectsOnScreen.begin(); itr != _ObjectsOnScreen.end(); itr++)
+		{
+			(*itr)->Update();
+		}
 	}
 }
 

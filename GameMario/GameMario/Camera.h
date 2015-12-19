@@ -10,6 +10,7 @@ private:
 	int _OldX, _OldY;				//old position of camera to detect if character is going back
 	bool _IsAllowBack;				//Is allow to going back or not
 	static Camera *Instance;
+	bool _IsPause;					//camera'll stop update if true
 public:
 	static Camera *GetInstance();
 	Camera(void);
@@ -20,6 +21,8 @@ public:
 	D3DXVECTOR2 GetWorldSize() const;
 	Box GetBoundaryBox() const;
 	Box GetActiveSite() const;
+	//Pause if true/Unpause if false
+	void PauseCamera(bool isPause);
 	//reset camera back to beginging position
 	void Reset();
 };
