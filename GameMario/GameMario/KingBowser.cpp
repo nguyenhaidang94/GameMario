@@ -12,23 +12,25 @@ KingBowser::~KingBowser()
 
 KingBowser::KingBowser(int objectTypeID, int positionX, int positionY)
 {
-	//Object																//set id
-	_Position = D3DXVECTOR2(positionX, positionY);							//set position
+	//Object																	//set id
+	_Position = D3DXVECTOR2(positionX, positionY);								//set position
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eKingBowser);	//set sprite
-	_Size = D3DXVECTOR2(KINGBOWSER_WIDTH, KINGBOWSER_HEIGHT);						//set size
+	_Size = D3DXVECTOR2(KINGBOWSER_WIDTH, KINGBOWSER_HEIGHT);					//set size
 	_Velocity = D3DXVECTOR2(0, 0);		//set position
 	_TypeSpriteID = eSpriteID::eKingBowser;										//set type Id of sprite
 	
 	// KingBowser
-	_TimeStartFrame = GetTickCount();										//set time now
-	_TimePerFrame = TIMES_TURN;												//set time the turn
-	_TimeStartShoot = GetTickCount();										//set time now
-	_TimePerShoot = TIMES_TURN_SHOOT;										//set time the turn
+	_TimeStartFrame = GetTickCount();											//set time now
+	_TimePerFrame = TIMES_TURN;													//set time the turn sprite
+	_TimeStartShoot = GetTickCount();											//set time now
+	_TimePerShoot = TIMES_TURN_SHOOT;											//set time the turn shoot
 	SetFrame(1);
 	_MonsterVelocityX = -KINGBOWSER_VELOCITY_X;
 	_MonsterVelocityY = -KINGBOWSER_VELOCITY_Y;
-	_KingBowserALive = 6;
-	_Left = true;
+	_KingBowserALive = 6;														//set the number alive
+	_Left = true;																//set the variable left
+	_TimeStartBounce = GetTickCount();											//set time now
+	_TimePerBounce = TIMES_TURN_BOUNCE;											//set time the turn bounce
 
 	//Box
 	_PositionX = positionX;
@@ -37,7 +39,7 @@ KingBowser::KingBowser(int objectTypeID, int positionX, int positionY)
 	iPosition *= SCREEN_WIDTH;								//lấy vị trí khung bắt đầu
 	_WorldWidth = Camera::GetInstance()->GetWorldSize().x;	//chiều dài thế giới game
 	_BoxWidthMin = iPosition + SCREEN_WIDTH / 4;
-	_BoxWidthMax = iPosition + SCREEN_HEIGHT;
+	_BoxWidthMax = iPosition + SCREEN_HEIGHT - SCREEN_WIDTH / 6 - 10;
 	//set lại vị trí cho vào khung đúng
 	if (positionX<_BoxWidthMin || positionX>_BoxWidthMax)
 	{
@@ -52,8 +54,11 @@ KingBowser::KingBowser(int objectTypeID, int positionX, int positionY)
 void KingBowser::KingBowserMove()
 { 
 	//int r = rand() % 255;
-
+	DWORD timeNow;
+	int iMarioPositionX = Mario::GetInstance()->GetPosition().x;
+	int iMarioPositionY = Mario::GetInstance()->GetPosition().y;
 	float iViewPortX = Camera::GetInstance()->GetViewPort().x;
+
 	_KingBowserBoxWidthMin = iViewPortX + SCREEN_WIDTH / 2;
 	_KingBowserBoxWidthMax = iViewPortX + SCREEN_WIDTH + BUFFER_FOR_SCREEN;
 
@@ -65,34 +70,46 @@ void KingBowser::KingBowserMove()
 	{
 		_KingBowserBoxWidthMax = _BoxWidthMax;
 	}
+
 	//giữa màn hình lớn hơn: giửa mh
 	//nhảy
-
-	int iMarioPositionX = Mario::GetInstance()->GetPosition().x;
-	
 	if (_Velocity.y == 0.0f)
 	{
-		if (iMarioPositionX >= _Position.x - KINGBOWSER_WIDTH && iMarioPositionX <= _Position.x + KINGBOWSER_WIDTH)
+		//mario vào vị trí này sẽ nhảy lên va chạm
+		if (iMarioPositionX >= _Position.x - KINGBOWSER_WIDTH && iMarioPositionX <= _Position.x + KINGBOWSER_WIDTH && iMarioPositionY > _PositionY)
 		{
 			_MonsterVelocityY = -_MonsterVelocityY;
 			_Velocity.y = _MonsterVelocityY;
 		}
 		else
 		{
-			int min = 0;
-			int max = 10;
-			int random = rand() % (max - min + 1) + min;
-			if (random == 0)
+			timeNow = GetTickCount();
+			//if (timeNow - _TimeStartBounce >= _TimePerBounce)						//time radom velocity and bounce
 			{
-			_MonsterVelocityY = -_MonsterVelocityY;
-			_Velocity.y = _MonsterVelocityY;
+				_TimeStartBounce = timeNow;
+
+				//random Velocity x
+				int minX = 1;
+				int maxX = 5;
+				int randomX = rand() % (maxX - minX + 1) + minX;
+				_Velocity.x = _MonsterVelocityX / randomX;
+
+				//random Velocity y
+				int minY = 0;
+				int maxY = 2;
+				int randomY = rand() % (maxY - minY + 1) + minY;
+				if (randomY == 0)
+				{
+					_MonsterVelocityY = -_MonsterVelocityY;//
+					_Velocity.y = _MonsterVelocityY;
+				}
 			}
 		}
 	}
 	else
 	{
 		//nhảy
-		_Velocity.y -= KOOPAPARATROOPA_ACCELERATION;
+		_Velocity.y -= KINGBOWSER_ACCELERATION;
 	}
 
 	//không được đổi ngược vận tốc phải gán tránh trường hợp thay đổi liên tục khi nằm ngoài vùng
@@ -115,21 +132,27 @@ void KingBowser::KingBowserMove()
 
 void KingBowser::KingBowserGun()
 {
+	//đưa này vào súng
 	DWORD timeNow = GetTickCount();
 	if (timeNow - _TimeStartShoot >= _TimePerShoot)
 	{
 		_TimeStartShoot = timeNow;
 
 		int iMarioPositionX = Mario::GetInstance()->GetPosition().x;
+
+		/*int minX = 0;
+		int maxX = 5;
+		int randomX = rand() % (maxX - minX + 1) + minX;*/
+
 		if (iMarioPositionX < _Position.x)
 		{
-			_KingBowserGun.GunShoot(D3DXVECTOR2(_Position.x - KINGBOWSER_WIDTH / 2, _Position.y), true, D3DXVECTOR2(_PositionX, _PositionY), 1);
+			_KingBowserGun.GunShoot(D3DXVECTOR2(_Position.x - KINGBOWSER_WIDTH / 2, _Position.y), true, D3DXVECTOR2(_PositionX, _PositionY), 3);
 		}
 		else
 		{
 			if (iMarioPositionX > _Position.x)
 			{
-				_KingBowserGun.GunShoot(D3DXVECTOR2(_Position.x + KINGBOWSER_WIDTH, _Position.y + KINGBOWSER_HEIGHT / 3), false, D3DXVECTOR2(_PositionX, _PositionY), 1);
+				_KingBowserGun.GunShoot(D3DXVECTOR2(_Position.x + KINGBOWSER_WIDTH / 2, _Position.y + KINGBOWSER_HEIGHT / 3), false, D3DXVECTOR2(_PositionX, _PositionY), 1);
 			}
 		}
 	}
@@ -171,7 +194,7 @@ void KingBowser::Update()
 			}
 
 			//location
-			_Position.x += _Velocity.x;
+			//_Position.x += _Velocity.x;
 			_Position.y += _Velocity.y;
 			
 			//_Velocity.y = -KINGBOWSER_VELOCITY_Y;
