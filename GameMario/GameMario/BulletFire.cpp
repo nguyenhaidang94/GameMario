@@ -145,7 +145,12 @@ void BulletFire::Release()
 
 void BulletFire::OnCollision(GameObject *object, eCollisionDirection collisionDirection)
 {
-	
+	switch (object->GetObjectTypeID())
+	{
+	case eMario:
+		int s = 3;
+		break;
+	}
 }
 
 void BulletFire::SetFrame(int MonsterType)

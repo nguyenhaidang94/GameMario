@@ -31,6 +31,8 @@ KingBowser::KingBowser(int objectTypeID, int positionX, int positionY)
 	_Left = true;																//set the variable left
 	_TimeStartBounce = GetTickCount();											//set time now
 	_TimePerBounce = TIMES_TURN_BOUNCE;											//set time the turn bounce
+	_KingBowserCountBullet = 0;
+	_KingBowserLevel = 10;
 
 	//Box
 	_PositionX = positionX;
@@ -46,9 +48,6 @@ KingBowser::KingBowser(int objectTypeID, int positionX, int positionY)
 		_Position.x = _BoxWidthMin;
 		_PositionX = _Position.x;
 	}
-		
-	//_KingBowserBoxWidthMin = 2624 * 2;						//2624= 5*512 + 512/8; Khoảng cách trong game mà quái duy chuyển
-	//_KingBowserBoxWidthMax = 2624*2 + SCREEN_WIDTH / 4*3;
 }
 
 void KingBowser::KingBowserMove()
@@ -62,6 +61,7 @@ void KingBowser::KingBowserMove()
 	_KingBowserBoxWidthMin = iViewPortX + SCREEN_WIDTH / 2;
 	_KingBowserBoxWidthMax = iViewPortX + SCREEN_WIDTH + BUFFER_FOR_SCREEN;
 
+	//Box
 	if (_KingBowserBoxWidthMin < _BoxWidthMin)
 	{
 		_KingBowserBoxWidthMin = _BoxWidthMin;
@@ -71,46 +71,6 @@ void KingBowser::KingBowserMove()
 		_KingBowserBoxWidthMax = _BoxWidthMax;
 	}
 
-	//giữa màn hình lớn hơn: giửa mh
-	//nhảy
-	if (_Velocity.y == 0.0f)
-	{
-		//mario vào vị trí này sẽ nhảy lên va chạm
-		if (iMarioPositionX >= _Position.x - KINGBOWSER_WIDTH && iMarioPositionX <= _Position.x + KINGBOWSER_WIDTH && iMarioPositionY > _PositionY)
-		{
-			_MonsterVelocityY = -_MonsterVelocityY;
-			_Velocity.y = _MonsterVelocityY;
-		}
-		else
-		{
-			timeNow = GetTickCount();
-			//if (timeNow - _TimeStartBounce >= _TimePerBounce)						//time radom velocity and bounce
-			{
-				_TimeStartBounce = timeNow;
-
-				//random Velocity x
-				int minX = 1;
-				int maxX = 5;
-				int randomX = rand() % (maxX - minX + 1) + minX;
-				_Velocity.x = _MonsterVelocityX / randomX;
-
-				//random Velocity y
-				int minY = 0;
-				int maxY = 2;
-				int randomY = rand() % (maxY - minY + 1) + minY;
-				if (randomY == 0)
-				{
-					_MonsterVelocityY = -_MonsterVelocityY;//
-					_Velocity.y = _MonsterVelocityY;
-				}
-			}
-		}
-	}
-	else
-	{
-		//nhảy
-		_Velocity.y -= KINGBOWSER_ACCELERATION;
-	}
 
 	//không được đổi ngược vận tốc phải gán tránh trường hợp thay đổi liên tục khi nằm ngoài vùng
 	if (_Position.x >= _KingBowserBoxWidthMax)
@@ -128,6 +88,57 @@ void KingBowser::KingBowserMove()
 			_Velocity.x = _MonsterVelocityX;
 		}
 	}
+
+	//giữa màn hình lớn hơn: giửa mh
+	//nhảy
+	if (_Velocity.y == 0.0f)
+	{
+		int minX, maxX, randomX;
+		int minY, maxY, randomY;
+		timeNow = GetTickCount();
+		if (timeNow - _TimeStartBounce >= _TimePerBounce)						//time radom velocity and bounce
+		{
+			_TimeStartBounce = timeNow;
+			//mario vào vị trí này sẽ nhảy lên va chạm
+			if (iMarioPositionX >= _Position.x - KINGBOWSER_WIDTH && iMarioPositionX <= _Position.x + KINGBOWSER_WIDTH && iMarioPositionY > _PositionY)
+			{
+				_MonsterVelocityY = -_MonsterVelocityY;
+				_Velocity.y = _MonsterVelocityY;
+			}
+			else
+			{
+				//random Velocity x
+				minX = 1;
+				minY = 1;
+
+				if (_KingBowserLevel / 2 < 1)			////Level of KingBowser
+				{
+					maxX = 1;
+					maxY = 1;
+				}
+				else
+				{
+					maxX = _KingBowserLevel / 2;
+					maxY = _KingBowserLevel / 3;
+				}
+				randomX = rand() % (maxX - minX + 1) + minX;
+				_Velocity.x = _MonsterVelocityX / randomX;
+
+				//random Velocity y
+				randomY = rand() % (maxY - minY + 1) + minY;
+				if (randomY == 1)
+				{
+					_MonsterVelocityY = -_MonsterVelocityY;
+					_Velocity.y = _MonsterVelocityY;
+				}
+			}
+		}
+	}
+	else
+	{
+		//nhảy
+		_Velocity.y -= KINGBOWSER_ACCELERATION;
+	}
 }
 
 void KingBowser::KingBowserGun()
@@ -138,22 +149,133 @@ void KingBowser::KingBowserGun()
 	{
 		_TimeStartShoot = timeNow;
 
+		//the initialization value
 		int iMarioPositionX = Mario::GetInstance()->GetPosition().x;
+		int iMarioPositionY = Mario::GetInstance()->GetPosition().y;
+		float iViewPortX = Camera::GetInstance()->GetViewPort().x;
+		int iBulletTypeMin, iBulletTypeMax, iBulletType;
+		int iGunLevelMin, iGunLevelMax, iGunLevel;
+		int iGunIQMin, iGunIQMax, iGunIQ;
+		D3DXVECTOR2 iPositionGun;
 
-		/*int minX = 0;
-		int maxX = 5;
-		int randomX = rand() % (maxX - minX + 1) + minX;*/
-
+		//set Position and direction
 		if (iMarioPositionX < _Position.x)
 		{
-			_KingBowserGun.GunShoot(D3DXVECTOR2(_Position.x - KINGBOWSER_WIDTH / 2, _Position.y), true, D3DXVECTOR2(_PositionX, _PositionY), 3);
+			iPositionGun = D3DXVECTOR2(_Position.x - KINGBOWSER_WIDTH / 2, _Position.y);
+			_Left = true;
 		}
 		else
 		{
 			if (iMarioPositionX > _Position.x)
 			{
-				_KingBowserGun.GunShoot(D3DXVECTOR2(_Position.x + KINGBOWSER_WIDTH / 2, _Position.y + KINGBOWSER_HEIGHT / 3), false, D3DXVECTOR2(_PositionX, _PositionY), 1);
+				iPositionGun = D3DXVECTOR2(_Position.x + KINGBOWSER_WIDTH / 2, _Position.y + KINGBOWSER_HEIGHT / 3);
+				_Left = false;
 			}
+		}
+
+		//if the list haven't bullet
+		if (_KingBowserCountBullet == 0)
+		{	
+			//rand Level
+			iGunLevelMin = 0;
+			iGunLevelMax = _KingBowserLevel;
+			iGunLevel = rand() % (iGunLevelMax - iGunLevelMin + 1) + iGunLevelMin;
+			
+			switch (iGunLevel)
+			{
+			case 0:				//very hard
+				//a clever
+				if (iMarioPositionY <= _PositionY)
+				{
+					iGunIQ = 1;
+				}
+				else
+				{
+					if (iMarioPositionY >= _PositionY + 32)
+					{
+						iGunIQ = 2;
+					}
+					else
+					{
+						iGunIQ = 3;
+					}
+				}
+				break;
+			case 1:				//hard
+			case 2:
+				//rand IQ
+				iGunIQMin = 1;
+				iGunIQMax = 3;
+				iGunIQ = rand() % (iGunIQMax - iGunIQMin + 1) + iGunIQMin;
+				break;
+			case 3:				//normal: 0-(0-3)
+			case 4:
+				iGunIQ = 0;													//bullet 1
+
+				iBulletTypeMin = 0;
+				iBulletTypeMax = 3;
+				iBulletType = rand() % (iBulletTypeMax - iBulletTypeMin + 1) + iBulletTypeMin;
+				_KingBowserCountBullet = 1;									//1 more bullet
+				_KingBowserTypeBullet = iBulletType;						//bullet 2
+				_TimePerShoot = TIMES_TURN_SHOOT_IQ;
+				break;
+			case 5:				//none
+			case 6:
+			case 7:
+			case 8:
+				iGunIQ = 0;
+				break;
+			default:			//easy
+				iGunIQ = 0;
+				break;
+			}
+
+			//case of type IQ
+			switch (iGunIQ)
+			{
+			case 0:				//0
+				iBulletTypeMin = 0;
+				iBulletTypeMax = 3;
+				iBulletType = rand() % (iBulletTypeMax - iBulletTypeMin + 1) + iBulletTypeMin;
+				_KingBowserGun.GunShoot(iPositionGun, _Left, D3DXVECTOR2(_PositionX, _PositionY), iBulletType);
+				break;
+			case 1:				//1 and 2-3
+				//Random type bulletFire: 2-3
+				iBulletTypeMin = 2;
+				iBulletTypeMax = 3;
+				iBulletType = rand() % (iBulletTypeMax - iBulletTypeMin + 1) + iBulletTypeMin;
+				_KingBowserCountBullet = 1;
+				_KingBowserTypeBullet = iBulletType;
+				_TimePerShoot = TIMES_TURN_SHOOT_IQ;
+
+				_KingBowserGun.GunShoot(iPositionGun, _Left, D3DXVECTOR2(_PositionX, _PositionY), 1);
+				break;
+			case 2:				//2 and 1
+				//Random type bulletFire: 1-3
+				_KingBowserCountBullet = 1;
+				_KingBowserTypeBullet = 1;
+				_TimePerShoot = TIMES_TURN_SHOOT_IQ;
+
+				_KingBowserGun.GunShoot(iPositionGun, _Left, D3DXVECTOR2(_PositionX, _PositionY), 2);
+				break;
+			case 3:				//3 and 1-2
+				//Random type bulletFire: 1-2
+				iBulletTypeMin = 1;
+				iBulletTypeMax = 2;
+				iBulletType = rand() % (iBulletTypeMax - iBulletTypeMin + 1) + iBulletTypeMin;
+				_KingBowserCountBullet = 1;
+				_KingBowserTypeBullet = iBulletType;
+				_TimePerShoot = TIMES_TURN_SHOOT_IQ;
+
+				_KingBowserGun.GunShoot(iPositionGun, _Left, D3DXVECTOR2(_PositionX, _PositionY), 3);
+				break;
+			}
+		}
+		else//if The list bullet have one, It will continue shoot.
+		{
+			_KingBowserGun.GunShoot(iPositionGun, _Left, D3DXVECTOR2(_PositionX, _PositionY), _KingBowserTypeBullet);
+			_KingBowserCountBullet = 0;
+			_TimePerShoot = TIMES_TURN_SHOOT;
 		}
 	}
 }
@@ -194,7 +316,7 @@ void KingBowser::Update()
 			}
 
 			//location
-			//_Position.x += _Velocity.x;
+			_Position.x += _Velocity.x;
 			_Position.y += _Velocity.y;
 			
 			//_Velocity.y = -KINGBOWSER_VELOCITY_Y;

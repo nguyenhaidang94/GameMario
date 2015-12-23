@@ -9,6 +9,7 @@
 #define KINGBOWSER_ACCELERATION 0.3f
 #define TIMES_TURN 100
 #define TIMES_TURN_SHOOT 2000
+#define TIMES_TURN_SHOOT_IQ 900
 #define TIMES_TURN_BOUNCE 300
 
 class KingBowser : public Monster
@@ -21,6 +22,10 @@ protected:
 	FLOAT _PositionY;
 	KingBowserGun _KingBowserGun;
 	bool _Left;
+	int _KingBowserCountBullet;
+	int _KingBowserTypeBullet;
+	int _KingBowserLevel;
+
 	//Box
 	int _WorldWidth;
 	int _BoxWidthMin;

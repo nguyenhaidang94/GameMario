@@ -2,7 +2,7 @@
 #include "Monster.h"
 #define BULLETFIRE_WIDTH 48
 #define BULLETFIRE_HEIGHT 16
-#define BULLETFIRE_VELOCITY_X 6.0f
+#define BULLETFIRE_VELOCITY_X 5.0f
 #define BULLETFIRE_VELOCITY_Y 6.0f
 #define TIMES_TURN 100
 
