@@ -16,6 +16,7 @@ private:
 
 	//manage ingame time
 	DWORD _FrameStart;
+	int _currentLife; //Life of mario when time > 0
 public:
 	PlayScene(void);
 	~PlayScene(void);

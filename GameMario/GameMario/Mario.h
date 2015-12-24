@@ -44,6 +44,7 @@ private:
 	bool _CanGoRight;
 	float _TimeBeforeTranferToSmall;
 	bool _IsControl;
+	bool _IsRender;
 
 public:
 	Mario(void);
@@ -61,6 +62,8 @@ public:
 	//Mario state
 	bool GetIsControl();
 	bool SetIsControl(bool flag);
+	bool GetFlagRender();
+	bool SetFlagRender(bool flag);
 	void Jump();
 	void Fall();
 	void Stand();
@@ -83,6 +86,7 @@ public:
 	bool SetFlagAutoAnimationRight(bool flag);
 	bool GetFlagAutoAnimationRight();
 	bool SetDead(bool flag);
+	bool GetDead();
 
 	//New
 	//Get an instance of class mario

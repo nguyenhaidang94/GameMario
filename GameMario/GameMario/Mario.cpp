@@ -21,7 +21,7 @@
 #define TIME_STAR 200
 #define TIME_BEFORE_BIG_TO_SMALL 50
 #define DECREASE_POSITION_Y_SITTING 4
-#define POSITION_Y_ANIMATION 100
+#define POSITION_Y_ANIMATION 150
 #define DECREASE_BOX_X 4
 #define DECREASE_BOX_Y 2
 #define VELOCITY_FLOATINGBAR_MAX 5
@@ -57,6 +57,7 @@ Mario::Mario(void)
 	_IsDead = false;
 	_TimeBeforeTranferToSmall=0;
 	_IsAnimationRight = false;
+	_IsRender=true;
 
 	_CanGoLeft = true;
 	_CanGoRight = true;
@@ -217,7 +218,17 @@ void Mario::HandlingInput()
 		}
 	}
 }
- 
+
+bool Mario::GetFlagRender()
+{
+	return _IsRender;
+}
+
+bool Mario::SetFlagRender(bool flag)
+{
+	return _IsRender=flag;
+}
+
 bool Mario::GetIsControl()
 {
 	return _IsControl;
@@ -241,13 +252,27 @@ bool Mario::SetDead(bool flag)
 {
 	return _IsDead=flag;
 }
+bool Mario::GetDead()
+{
+	return _IsDead;
+}
 void Mario::Dead()
 {
+	if(_Tag!=eMarioIsSmall)
+	{
+		_Tag=eMarioIsSmall;
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
+		
+	}
+
+	if(_Tag==eMarioIsSmall)
+	{
 	 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 0);
 	 _Velocity.x = 0;
 	 _Velocity.y--;
 
 	 if(_Velocity.y<=DEFAULT_VELOCITY) _Velocity.y = DEFAULT_VELOCITY * 5;
+	}
 
 }
 
@@ -370,7 +395,7 @@ void Mario::Fall()
 	}
 
 	//chết nếu mario rớt ra ngoài màn hình
-	if(_Position.y <= 10)
+	if(_Position.y <= 10 )
 	{
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
 		_IsDead=true;
@@ -381,7 +406,7 @@ void Mario::Fall()
 		GameStatistics::GetInstance()->ChangeLife(false);
 		SoundManager::GetInstance()->GetSound(eSoundID::eMarioDie)->Play();
 	}
-
+	
 
 	//transform to flowerman
 	
@@ -1120,7 +1145,6 @@ void Mario::Update()
 	default:
 		break;
 	}
-	//_Velocity.y -= FALLDOWN_VELOCITY_DECREASE;
 
 	_Position.x += _Velocity.x;
 	_Position.y += _Velocity.y;
@@ -1178,6 +1202,7 @@ void Mario::Update()
 					_Tag = eGameTag::eMarioIsSmall;
 			}
 	}
+	
 
 	//Nếu chết thì chuyển màn chơi về lại checkpoint nếu đã qua checkpoint hoặc gameover nếu hết mạng
 	if(_IsDead==true && _Position.y <= 0)
@@ -1253,20 +1278,23 @@ void Mario::SetSpriteBeforeTransfromFlower()
 
 void Mario::Render()
 {
-	if(_TimeBeforeTranferToSmall==0) 
-		_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame); //Nếu ko phải chuyển từ dạng mario to sang nhỏ thì render bình thường
-	else //Nếu từ mario to sang nhỏ lúc gặp quái thì render nhấp nháy ( lúc này ko xét va chạm với quái)
-		if(_TimeBeforeTranferToSmall >0 && (int)_TimeBeforeTranferToSmall % 2 ==0)
-		{
-			_Sprite->RenderAtFrameWithAlpha(_Position.x, _Position.y, _CurrentFrame,125);
-		}
-		else 
-			if(_TimeBeforeTranferToSmall >0 && (int)_TimeBeforeTranferToSmall % 2 !=0)
+	if(_IsRender==true)
+	{
+		if(_TimeBeforeTranferToSmall==0) 
+			_Sprite->RenderAtFrame(_Position.x, _Position.y, _CurrentFrame); //Nếu ko phải chuyển từ dạng mario to sang nhỏ thì render bình thường
+		else //Nếu từ mario to sang nhỏ lúc gặp quái thì render nhấp nháy ( lúc này ko xét va chạm với quái)
+			if(_TimeBeforeTranferToSmall >0 && (int)_TimeBeforeTranferToSmall % 2 ==0)
 			{
-				_Sprite->RenderAtFrameWithAlpha(_Position.x, _Position.y, _CurrentFrame,0);
+				_Sprite->RenderAtFrameWithAlpha(_Position.x, _Position.y, _CurrentFrame,125);
 			}
+			else 
+				if(_TimeBeforeTranferToSmall >0 && (int)_TimeBeforeTranferToSmall % 2 !=0)
+				{
+					_Sprite->RenderAtFrameWithAlpha(_Position.x, _Position.y, _CurrentFrame,0);
+				}
 
-	Gun::GetInstance()->Render();
+		Gun::GetInstance()->Render();
+	}
 }
 
 void Mario::Release()

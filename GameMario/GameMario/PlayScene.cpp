@@ -67,9 +67,16 @@ void PlayScene::Update()
 			GameStatistics::GetInstance()->DecreaseTime();
 		}
 	
-		if(GameStatistics::GetInstance()->GetTime() <= 0)
+		if(GameStatistics::GetInstance()->GetTime() > 0 )
 		{
-			//Play mario death animation here and move to timeup scene
+			_currentLife = GameStatistics::GetInstance()->GetLife();
+		}
+	
+		if(GameStatistics::GetInstance()->GetTime() == 0 )
+		{
+			Mario::GetInstance()->SetDead(true);
+			GameStatistics::GetInstance()->SetLife(_currentLife-1);
+		//Play mario death animation here and move to timeup scene
 		}
 	}
 	else	//mario reach flagpole, countdown time fast and inscrease score, this affect by current fps of the game...
@@ -78,10 +85,12 @@ void PlayScene::Update()
 		{
 			GameStatistics::GetInstance()->DecreaseTime();
 			GameStatistics::GetInstance()->ChangeScore(SCORE_PER_SECOND_LEFT);
+			Mario::GetInstance()->SetFlagRender(false);
 		}
 		//change to next world after finish countdown
 		else
 		{
+			Mario::GetInstance()->SetFlagRender(true);
 			GameStatistics::GetInstance()->GoToNextWorld();	//just change world id, change scene will update below
 		}
 	}

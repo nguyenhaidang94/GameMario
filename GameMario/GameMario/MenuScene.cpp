@@ -9,6 +9,7 @@ MenuScene::MenuScene(void)
 	_DemoMap = new PlayMap(eWorldID::e1_1);
 	_MushroomPositionY = SCREEN_HEIGHT/2 - 48;
 	_IsAutoRun = false;
+	Mario::GetInstance()->SetIsControl(false);
 }
 
 
@@ -64,7 +65,6 @@ void MenuScene::Load()
 	Mario::GetInstance()->SetPosition(D3DXVECTOR2(48, 80));
 	Camera::GetInstance()->Reset();
 	_IsAutoRun = false;
-	Mario::GetInstance()->SetIsControl(false);
 	try
 	{
 		ifstream infile(L"resources\\TopScore.txt");
@@ -89,6 +89,7 @@ void MenuScene::HandlingInput()
 		{
 			GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);
 			GameStatistics::GetInstance()->Reset();
+			Mario::GetInstance()->SetIsControl(true);
 		}
 
 		if(Keyboard::GetInstance()->IsKeyPress(DIK_T))
