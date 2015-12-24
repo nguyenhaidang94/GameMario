@@ -156,6 +156,9 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 31:	//KoopaParatroopa
 						node->_ListObjects.push_back(new KoopaParatroopa(objectID, x, y));
 						break;
+					case 35:
+						node->_ListObjects.push_back(new Axe(x, y, w, h));
+						break;
 					case 36:	//BulletFire
 						node->_ListObjects.push_back(new BulletFire(objectID, x, y));
 						break;
@@ -165,6 +168,8 @@ void QuadTree::BuildQuadTree(eWorldID mapID)
 					case 40:	//bridge
 						node->_ListObjects.push_back(new Bridge(x, y, w, h));
 						break;
+					case 43:	//MushroomRetainer
+						node->_ListObjects.push_back(new MushroomRetainer(x, y));
 					default:
 						break;
 					}

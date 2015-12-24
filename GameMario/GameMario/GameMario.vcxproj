@@ -18,7 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -70,6 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Axe.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Brick.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="KoopaTroopa.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="MushroomRetainer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="ObtainCoinEffect.cpp" />
     <ClCompile Include="FloatingTextEffect.cpp" />
@@ -128,6 +130,7 @@
     <ClCompile Include="Unility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Axe.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Brick.h" />
@@ -151,6 +154,7 @@
     <ClInclude Include="KoopaTroopa.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="MushroomRetainer.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObtainCoinEffect.h" />
     <ClInclude Include="FloatingTextEffect.h" />

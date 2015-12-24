@@ -1,6 +1,6 @@
 #include "Bridge.h"
 
-#define DESTROY_SPEED 6	//destroy 4 part a sec
+#define DESTROY_SPEED 8	//destroy 8 part a sec
 
 Bridge::Bridge(void)
 {
@@ -28,13 +28,14 @@ Bridge::~Bridge(void)
 
 void Bridge::Update()
 {
-	//testing
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_Z))
+	if(!_StartDestroyBridge)
 	{
-		_StartDestroyBridge = true;
+		if(!GameStatistics::GetInstance()->IsBowserDead() && GameStatistics::GetInstance()->IsMarioReachAxe())	//if mario reach axe and bowser still alive, destroy bridge
+		{
+			_StartDestroyBridge = true;
+		}
 	}
-
-	if(_StartDestroyBridge)
+	else
 	{
 		//manage frame rate
 		DWORD now = GetTickCount();
@@ -46,8 +47,11 @@ void Bridge::Update()
 		if(_PartLeft <= 0)
 		{
 			_Tag = eGameTag::eDestroyed;	//destroy bridge
+			Camera::GetInstance()->PauseCamera(false);	//stop pause camera
+			Camera::GetInstance()->AutoMoveCamera(true);	//auto move camera
 		}
 	}
+	
 }
 
 void Bridge::Render()

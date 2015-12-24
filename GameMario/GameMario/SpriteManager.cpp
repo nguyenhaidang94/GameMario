@@ -38,6 +38,9 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eBarSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\FloatingBar.png", 32, 16, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eFlagpoleSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flagpole.png", 16, 304, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eFlagSprite] = new Sprite(SpriteHandler, L"resources\\Sprites\\Flag.png", 32, 32, 1, 1,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eAxe] = new Sprite(SpriteHandler, L"resources\\Sprites\\Axe.png", 32, 32, 3,3,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eMushroomRetainer] = new Sprite(SpriteHandler, L"resources\\Sprites\\MushroomRetainer.png", 32, 48, 1,1,D3DCOLOR_XRGB(255, 0, 255));
+	_ListSprite[eSpriteID::eTopCoin] = new Sprite(SpriteHandler, L"resources\\Sprites\\TopCoin.png", 16, 16, 3, 3,D3DCOLOR_XRGB(255, 0, 255));
 	//Monster
 	_ListSprite[eSpriteID::eGoomba] = new Sprite(SpriteHandler, L"resources\\Sprites\\Goomba.png", 32, 32, 12, 3, D3DCOLOR_XRGB(255, 0, 255));
 	_ListSprite[eSpriteID::eGoombaDead] = new Sprite(SpriteHandler, L"resources\\Sprites\\GoombaDead.png", 32, 32, 4, 1, D3DCOLOR_XRGB(55, 0, 255));

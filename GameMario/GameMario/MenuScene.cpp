@@ -24,7 +24,6 @@ void MenuScene::Initialize()
 
 void MenuScene::Update()
 {
-	Mario::GetInstance()->SetIsControl(false);
 	if((GetTickCount() - _StartTime) > WAIT_TIME) _IsAutoRun=true;
 
 	if(_IsAutoRun==true)
@@ -65,7 +64,7 @@ void MenuScene::Load()
 	Mario::GetInstance()->SetPosition(D3DXVECTOR2(48, 80));
 	Camera::GetInstance()->Reset();
 	_IsAutoRun = false;
-	Mario::GetInstance()->SetIsControl(true);
+	Mario::GetInstance()->SetIsControl(false);
 	try
 	{
 		ifstream infile(L"resources\\TopScore.txt");

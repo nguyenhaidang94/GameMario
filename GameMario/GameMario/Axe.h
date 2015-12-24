@@ -1,25 +1,21 @@
 #pragma once
 #include "gameobject.h"
 #include "GameStatistics.h"
-#include "EffectManager.h"
-
-class Coin :
+class Axe :
 	public GameObject
 {
 private:
 	int _CurrentFrame;
-	eColorID _Color;			//color of the coin
-	//control rate
+	bool _IsPauseAlready;
+	//control frame rate
 	DWORD _CountPerFrame;
 	DWORD _FrameStart;
-
-	bool _IsHittedByBrick;	//play animation when get hitted by brick
 public:
-	Coin(void);
-	Coin(int x, int y);
-	~Coin(void);
+	Axe(void);
+	Axe(int x, int y, int width, int height);
+	~Axe(void);
 
-	//Inherited function
+	//Inherited funtion
 	void Update();
 	void Render();
 	void Release();

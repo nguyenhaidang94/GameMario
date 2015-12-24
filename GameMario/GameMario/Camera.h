@@ -11,6 +11,7 @@ private:
 	bool _IsAllowBack;				//Is allow to going back or not
 	static Camera *Instance;
 	bool _IsPause;					//camera'll stop update if true
+	bool _IsAutoMove;				//camera auto move
 public:
 	static Camera *GetInstance();
 	Camera(void);
@@ -23,6 +24,8 @@ public:
 	Box GetActiveSite() const;
 	//Pause if true/Unpause if false
 	void PauseCamera(bool isPause);
+	//Pause if true/Unpause if false
+	void AutoMoveCamera(bool isAutoMove);
 	//reset camera back to beginging position
 	void Reset();
 };

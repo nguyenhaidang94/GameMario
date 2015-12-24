@@ -35,6 +35,8 @@ void GameStatistics::Initialize()
 	_ListObjectAddToScene = new std::vector<GameObject*>();
 	_IsPerformWorldClearStatus = false;
 	_IsGamePause = false;
+	_IsMarioReachAxe = false;
+	_IsBowserDead= false;
 }
 
 #pragma region Game stats
@@ -47,6 +49,8 @@ void GameStatistics::Reset()
 	_Time = GAME_TIME;
 	_IsReachCheckpoint = false;
 	_IsGamePause = false;
+	_IsMarioReachAxe = false;
+	_IsBowserDead= false;
 
 	//clear list object add
 	for(int i = _ListObjectAddToScene->size() - 1; i >= 0; i--)
@@ -103,9 +107,12 @@ void GameStatistics::ChangeLife(bool isIncrease)
 
 void GameStatistics::DecreaseTime()
 {
-	if(!_IsTimePause || !_IsGamePause)	//stop descrease if time is paused or objects are paused
+	if(!_IsTimePause)	//stop descrease if time is paused or objects are paused
 	{
-		_Time--;
+		if(!_IsGamePause)
+		{
+			_Time--;
+		}
 	}
 }
 
@@ -115,6 +122,8 @@ void GameStatistics::ResetWorld()
 	_Time = GAME_TIME;
 	_IsPerformWorldClearStatus = false;
 	_IsGamePause = false;
+	_IsMarioReachAxe = false;
+	_IsBowserDead= false;
 }
 
 void GameStatistics::PauseTime(bool isPause)
@@ -207,6 +216,26 @@ void GameStatistics::AddObjectToScene(GameObject *object)
 std::vector<GameObject*>* GameStatistics::GetListObjectAddToScene()
 {
 	return _ListObjectAddToScene;
+}
+
+void GameStatistics::BowserIsDead()
+{
+	_IsBowserDead = true;
+}
+
+void GameStatistics::MarioReachAxe()
+{
+	_IsMarioReachAxe = true;
+}
+
+bool GameStatistics::IsBowserDead()
+{
+	return _IsBowserDead;
+}
+
+bool GameStatistics::IsMarioReachAxe()
+{
+	return _IsMarioReachAxe;
 }
 #pragma endregion
 

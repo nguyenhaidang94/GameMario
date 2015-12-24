@@ -243,7 +243,15 @@
     <ClCompile Include="KingBowserGun.cpp">
       <Filter>GameObject\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Bridge.cpp" />
+    <ClCompile Include="Bridge.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Axe.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MushroomRetainer.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -411,7 +419,15 @@
     <ClInclude Include="BulletFire.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Bridge.h" />
+    <ClInclude Include="Bridge.h">
+      <Filter>GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Axe.h">
+      <Filter>GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MushroomRetainer.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

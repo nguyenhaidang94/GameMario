@@ -19,6 +19,8 @@ private:
 	bool _IsReachCheckpoint;	//if mario reach check point in the map
 	bool _IsPerformWorldClearStatus;	//mario reach FlagPole to perform count down time and increase score
 	bool _IsGamePause;		//stop update for all object except mario
+	bool _IsBowserDead;		//if bowser died bridge won't collapse when mario collide with axe
+	bool _IsMarioReachAxe;	//bridge will collapse if bowser still alive and mario reach axe
 public:
 	GameStatistics(void);
 	~GameStatistics(void);
@@ -76,6 +78,14 @@ public:
 	void PauseObject(bool isPause);
 	//Check if object should be pause or not
 	bool IsPauseObject();
+	//Call this when bowser is killed, if bowser died bridge won't collapse when mario collide with axe
+	void BowserIsDead();
+	//Call this when mario reach axe in map 1_4
+	void MarioReachAxe();
+	//Check if bowser is dead or not
+	bool IsBowserDead();
+	//Check if mario reach axe
+	bool IsMarioReachAxe();
 
 	//Add a object to Scene
 	void AddObjectToScene(GameObject *object);

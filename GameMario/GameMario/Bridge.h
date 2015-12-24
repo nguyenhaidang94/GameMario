@@ -1,6 +1,7 @@
 #pragma once
 #include "gameobject.h"
-#include "Keyboard.h"
+#include "GameStatistics.h"
+
 class Bridge :
 	public GameObject
 {

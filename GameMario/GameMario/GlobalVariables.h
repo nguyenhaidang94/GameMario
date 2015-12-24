@@ -70,7 +70,10 @@ enum eSpriteID
 	eMarioFire,
 	eBulletSprite,
 	eMarioTransformFlower,
-	eBulletEF
+	eBulletEF,
+	eAxe,
+	eMushroomRetainer,
+	eTopCoin,
 };
 
 enum eMarioState
@@ -156,7 +159,7 @@ enum eGameTag
 	eToHidden1_2,	//hidden map of world 1_2
 	eToRight1_2,	//right map of world 1_2
 	eToMiddle1_2,	//middle of main map of world 1_2
-	
+
 	//item store by object tag
 	eStoreMushroom,
 	eStoreCoin,

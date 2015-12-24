@@ -15,8 +15,8 @@ Coin::Coin(int x, int y)
 	_CurrentFrame = 0;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eItems);
 	_Size = D3DXVECTOR2(COIN_WIDTH, COIN_HEIGHT);
-	count_per_frame = 1000 / COIN_FRAME_RATE;
-	frame_start = GetTickCount();
+	_CountPerFrame = 1000 / COIN_FRAME_RATE;
+	_FrameStart = GetTickCount();
 	_Color = eColorID::eBrown;	//map editor only have brown coin atm
 }
 
@@ -27,9 +27,9 @@ Coin::~Coin(void)
 void Coin::Update()
 {
 	DWORD now = GetTickCount();
-	if (now - frame_start >= count_per_frame) 
+	if (now - _FrameStart >= _CountPerFrame) 
 	{
-		frame_start = now;
+		_FrameStart = now;
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 16, 19);
 	}
 }

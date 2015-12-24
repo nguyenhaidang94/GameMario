@@ -18,6 +18,8 @@
 #include "KingBowser.h"
 #include "BulletFire.h"
 #include "Bridge.h"
+#include "Axe.h"
+#include "MushroomRetainer.h"
 
 class QuadTree
 {

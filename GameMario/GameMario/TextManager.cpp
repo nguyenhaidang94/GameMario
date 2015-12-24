@@ -1,6 +1,6 @@
 #include "TextManager.h"
 #define TEXT_SIZE 16		//each text sprite is 20x20
-#define COIN_FRAME_RATE 8	//coin at top score swap 8 time per sec
+#define COIN_FRAME_RATE 4	//coin at top score swap 4 time per sec
 
 TextManager *TextManager::_Instance = NULL;
 
@@ -80,7 +80,7 @@ void TextManager::RenderScoreOnTop()
 	FixedRender("mario", 92, 27);
 	FixedRender(Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetScore(), 6), 102, 50);
 	//Render coin effer at score on top
-	SpriteManager::GetInstance()->GetSprite(eSpriteID::eCoin)->FixedRenderAtFrame(180, 50, _CurrentFrame);
+	SpriteManager::GetInstance()->GetSprite(eSpriteID::eTopCoin)->FixedRenderAtFrame(190, 50, _CurrentFrame);
 	FixedRender("*" + Unility::IntToFixedLengthString(GameStatistics::GetInstance()->GetCoinCount(), 2), 230, 50);
 	FixedRender("world", 332, 27);
 	FixedRender(GameStatistics::GetInstance()->GetCurrentWorldName(), 338, 50);
@@ -93,6 +93,6 @@ void TextManager::RenderScoreOnTop()
 	if (now - _FrameStart >= _CountPerFrame) 
 	{
 		_FrameStart = now;
-		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 3);
+		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 2);
 	}
 }

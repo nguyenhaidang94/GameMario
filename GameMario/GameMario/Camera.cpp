@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+#define AUTO_MOVE_SPEED 4;
+
 Camera *Camera::Instance = NULL;
 
 Camera::Camera(void)
@@ -8,6 +10,7 @@ Camera::Camera(void)
 	_ViewPortY = SCREEN_HEIGHT;
 	_IsAllowBack = false;
 	_IsPause = false;
+	_IsAutoMove = false;
 }
 
 Camera::~Camera(void)
@@ -37,25 +40,38 @@ void Camera::Update(D3DXVECTOR2 characterPosition)
 		//If character not go back and camera allow go back
 		if(!_IsAllowBack)
 		{
-			if(characterPosition.x > _OldX)
+			if(characterPosition.x >= _OldX)
 			{
 				_OldX = characterPosition.x;
-				//If character in begin of the world
-				if(characterPosition.x - SCREEN_WIDTH/2 < 0)
+				if(!_IsAutoMove)
 				{
-					_ViewPortX = 0;
+					//If character in begin of the world
+					if(characterPosition.x - SCREEN_WIDTH/2 < 0)
+					{
+						_ViewPortX = 0;
+					}
+					else
+					{
+						//If character in end of world
+						if (characterPosition.x + SCREEN_WIDTH / 2 > _WorldWidth)
+						{
+							_ViewPortX = _WorldWidth - SCREEN_WIDTH;
+						}
+						//Normal case
+						else
+						{
+						
+							_ViewPortX = LONG(characterPosition.x) - SCREEN_WIDTH / 2;
+						}
+					}
 				}
 				else
 				{
-					//If character in end of world
-					if (characterPosition.x + SCREEN_WIDTH / 2 > _WorldWidth)
+					_ViewPortX += AUTO_MOVE_SPEED;
+					if((_ViewPortX + SCREEN_WIDTH) >= _WorldWidth) 
 					{
+						_IsAutoMove = false;
 						_ViewPortX = _WorldWidth - SCREEN_WIDTH;
-					}
-					//Normal case
-					else
-					{
-						_ViewPortX = LONG(characterPosition.x) - SCREEN_WIDTH / 2;
 					}
 				}
 			}
@@ -126,6 +142,11 @@ Box Camera::GetActiveSite() const
 void Camera::PauseCamera(bool isPause)
 {
 	_IsPause = isPause;
+}
+
+void Camera::AutoMoveCamera(bool isAutoMove)
+{
+	_IsAutoMove = isAutoMove;
 }
 
 void Camera::Reset()
