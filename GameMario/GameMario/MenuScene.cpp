@@ -9,7 +9,6 @@ MenuScene::MenuScene(void)
 	_DemoMap = new PlayMap(eWorldID::e1_1);
 	_MushroomPositionY = SCREEN_HEIGHT/2 - 48;
 	_IsAutoRun = false;
-	Mario::GetInstance()->SetIsControl(false);
 }
 
 

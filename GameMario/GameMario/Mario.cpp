@@ -134,19 +134,9 @@ void Mario::HandlingInput()
 			 }
 		}
 
-		if(Keyboard::GetInstance()->IsKeyPress(DIK_H) && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible) //Test Big mario
+		if(Keyboard::GetInstance()->IsKeyPress(DIK_H) && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioNotCollision) //Test Big mario
 		{
-			_IsGetMushroom=true;
-			_Tag = eGameTag::eMarioIsBig;
-			_PreState = _State;
-			_State=eMarioState::eIdle;
-			SoundManager::GetInstance()->GetSound(eSoundID::ePowerUp)->Play();
-
-			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformSmallToBig);
-			if(_IsRight==true) _CurrentFrame =  SPRITE_SMALL_R;
-			else _CurrentFrame =  SPRITE_SMALL_L;
-			_Velocity.y = 0;
-			SetSize(D3DXVECTOR2(32, 64));
+			InitTranferSmallToBig();
 		}
 
 		if(Keyboard::GetInstance()->IsKeyPress(DIK_V))
@@ -176,24 +166,13 @@ void Mario::HandlingInput()
 		{
 			if(_Tag==eGameTag::eMarioIsBig) 
 			{
-				_Tag = eGameTag::eMarioIsSmall;
-				_IsTranferToSmall = true;
-				_PreState = _State;
-				_State = eMarioState::eIdle;
-				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
-				_Velocity.y = 0;
-
-				if(_IsRight==true) _CurrentFrame =  SPRITE_BIG_R;
-				else _CurrentFrame=  SPRITE_BIG_L;
-				SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
+				InitTranferBigToSmall();
 			}
 			else if(_Tag==eGameTag::eMarioIsSmall)
 			{
 				_State = eMarioState::eDead;
 			}
 		}
-
-		
 
 		if(_PipeTag != eGameTag::eEmpty)
 		{
@@ -255,6 +234,17 @@ bool Mario::SetDead(bool flag)
 bool Mario::GetDead()
 {
 	return _IsDead;
+}
+void Mario::InitDead()
+{
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
+	_IsDead=true;
+	_IsFlower = false;
+	_Tag = eGameTag::eMarioIsDead;
+	_State = eMarioState::eDead;
+	_Velocity.y = MAX_VELOCITYDEAD;
+	GameStatistics::GetInstance()->ChangeLife(false);
+	SoundManager::GetInstance()->GetSound(eSoundID::eMarioDie)->Play();
 }
 void Mario::Dead()
 {
@@ -384,27 +374,10 @@ void Mario::Fall()
 			if(_Velocity.x <=-MAX_VELOCITYX) _Velocity.x = -MAX_VELOCITYX;
 	}
 
-	if(_IsGetFlowerToTranform==true && _CurrentFrame == 32 || _IsGetFlowerToTranform==true && _CurrentFrame==33) 
-	{
-		_IsGetFlowerToTranform = false;
-		_IsFlower = true;
-		if(_Sprite != SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire))
-		{
-			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire);
-		}
-	}
-
 	//chết nếu mario rớt ra ngoài màn hình
 	if(_Position.y <= 10 )
 	{
-		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
-		_IsDead=true;
-		_IsFlower = false;
-		_Tag = eGameTag::eMarioIsDead;
-		_State = eMarioState::eDead;
-		_Velocity.y = MAX_VELOCITYDEAD;
-		GameStatistics::GetInstance()->ChangeLife(false);
-		SoundManager::GetInstance()->GetSound(eSoundID::eMarioDie)->Play();
+		InitDead();
 	}
 	
 
@@ -429,7 +402,7 @@ void Mario::Fall()
 		{
 			if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsBigInvincible)
 			{
-			 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 33, 35);
+				 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 33, 35);
 			}
 			else 
 				if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsSmallInvincible) 
@@ -469,36 +442,14 @@ void Mario::Fall()
 
 }
 void Mario::Stand()
-{
-	DWORD now = GetTickCount();
-	
-	if(_IsGetMushroom == true && _CurrentFrame== SPRITE_BIG_R  || _IsGetMushroom == true && _CurrentFrame== SPRITE_BIG_L) 
-		{
-			_IsGetMushroom = false;
-			if(_IsGetStar==false && _Tag==eGameTag::eMarioIsBig) //Nếu vừa hết transform và mario lớn thì đổi sprite qua lớn
-			{
-				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
-			}
-			else 
-			if(_IsGetStar==true && _Tag==eGameTag::eMarioIsBigInvincible) //Nếu vừa hết transform  và đang bất tử lớn thì chuyển qua sprite bất tử lớn
-			{
-				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMarioStar);
-			}
-			
-			_State = _PreState; // chuyển về trạng thái trước khi transform
-	}
+{	
+	ExitTranferSmallToBig();
 
-	//big to small
-	if(_IsTranferToSmall == true && _CurrentFrame== SPRITE_SMALL_R|| _IsTranferToSmall==true && _CurrentFrame== SPRITE_SMALL_L)//Transform về sprite nhỏ 
-	{
-		_IsTranferToSmall = false;
-		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
-		_State = _PreState;
-	}
+	ExitTranferBigToSmall();
 
 	 _Velocity.x = 0; //xét trạng thái đứng yên
 	
-	if(_IsGetMushroom == true) //Nếu lấy được nấm biến lớn 
+	if(_IsGetMushroom == true) //Nếu lấy được nấm biến lớn và chưa kết thúc tranfer thì vẫn tiếp tục
 	{
 		_Velocity.y = 0;
 		TranferSmallToBig();
@@ -506,19 +457,19 @@ void Mario::Stand()
 	else
 		_Velocity.y = DEFAULT_VELOCITY;
 
-	if(_IsTranferToSmall == true) //Nếu bị biến nhỏ lại
+	if(_IsTranferToSmall == true) //Nếu bị biến nhỏ lại và chưa kết thúc tranfer thì vẫn tiếp tục
 	{
 		_Velocity.y = 0;
 		TranferBigToSmall();
 		SetSize(D3DXVECTOR2(32,32));
 	}
 
-	if(_IsAnimationFlag == true )
+	if(_IsAnimationFlag == true ) //Nếu đang ở auto animation end game mà chưa tới điểm kết thúc thì tiếp túc thực hiện
 	{
 		AutoAnimationEndGame();
 	}
 
-	if(_IsAnimationPipe == true )
+	if(_IsAnimationPipe == true ) //Nếu đang trong auto animation chui xuống ống nước mà mario chuyển qua trạng thái đứng thì kết thúc auto animation
 	{
 		_IsAnimationPipe = false;
 	}
@@ -529,22 +480,11 @@ void Mario::Stand()
 		TranferBigToFlower();
 	}
 
-	if(_IsCollisionMonster==true) _IsCollisionMonster = false;
+	ExitTranferBigToFlower();
 
-	if(_IsDead==true) Dead();
+	if(_IsCollisionMonster==true) _IsCollisionMonster = false; //Nếu đang nhảy lên moster mà chuyển qua đứng được thì xét hết va chạm bottom với monster
 
-	//flower man
-	if(_IsGetFlowerToTranform ==true && (_CurrentFrame==8|| _CurrentFrame == 11 ||  _CurrentFrame ==14 || _CurrentFrame==15||_CurrentFrame == 18||_CurrentFrame ==21 
-		|| _CurrentFrame==32||_CurrentFrame==33||_CurrentFrame==2|| _CurrentFrame==3 ))
-	{
-		_IsGetFlowerToTranform = false;
-		_IsFlower = true;
-		if(_Sprite != SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire))
-		{
-			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire);
-		}
-	}
-
+	if(_IsDead==true) Dead(); //Nếu Flag đang được bật thì tiếp tục thực hiện auto animation chết đết khi kết thúc
 
 	if(_IsRight == false && _IsGetMushroom == false && _IsTranferToSmall ==false && _IsGetFlowerToTranform==false 
 		&& _IsAnimationFlag ==false && _IsAnimationRight==false) //Nếu hoàn tất transform thì mới đổi sprite
@@ -635,13 +575,8 @@ void Mario::RunToRight()
 	}
 	else //Thả phím sẽ dừng từ từ
 	{
-		/*_IsCollide = false;
-		_Velocity.x -=INCREASE_VELOCITY;
-		if(_Velocity.x <0) _Velocity.x = 0;*/
 		_State = eMarioState::ePreStandRight;
 	}
-
-	
 
 	if(_IsCollisionMonster==true) _IsCollisionMonster = false;//ko va chạm với quái
 
@@ -852,6 +787,22 @@ void Mario::Sitting()
 
 	if(_Tag!=eGameTag::eMarioIsSmall && _IsAnimationPipe==false) _Position.y-=DECREASE_POSITION_Y_SITTING;
 }
+
+void Mario::InitTranferSmallToBig()
+{
+	_IsGetMushroom=true;
+	_Tag = eGameTag::eMarioIsBig;
+	_PreState = _State;
+	_State=eMarioState::eIdle;
+	SoundManager::GetInstance()->GetSound(eSoundID::ePowerUp)->Play();
+
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformSmallToBig);
+	if(_IsRight==true) _CurrentFrame =  SPRITE_SMALL_R;
+	else _CurrentFrame =  SPRITE_SMALL_L;
+	_Velocity.y = 0;
+	SetSize(D3DXVECTOR2(32, 64));
+}
+
 void Mario::TranferSmallToBig()
 {
 	DWORD now = GetTickCount();
@@ -864,6 +815,38 @@ void Mario::TranferSmallToBig()
 	
 }
 
+void Mario::ExitTranferSmallToBig()
+{
+	if(_IsGetMushroom == true && _CurrentFrame== SPRITE_BIG_R  || _IsGetMushroom == true && _CurrentFrame== SPRITE_BIG_L) 
+		{
+			_IsGetMushroom = false;
+			if(_IsGetStar==false && _Tag==eGameTag::eMarioIsBig) //Nếu vừa hết transform và mario lớn thì đổi sprite qua lớn
+			{
+				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);
+			}
+			else 
+			if(_IsGetStar==true && _Tag==eGameTag::eMarioIsBigInvincible) //Nếu vừa hết transform  và đang bất tử lớn thì chuyển qua sprite bất tử lớn
+			{
+				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMarioStar);
+			}
+			
+			_State = _PreState; // chuyển về trạng thái trước khi transform
+	}
+}
+
+void Mario::InitTranferBigToSmall()
+{
+	_Tag = eGameTag::eMarioIsSmall;
+	_IsTranferToSmall = true;
+	_PreState = _State;
+	_State = eMarioState::eIdle;
+	_IsFlower = false; //Khi va chạm quái sẽ mất trạng thái bắn chuyển về mario nhỏ
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
+	_Velocity.y = 0;
+	if (_IsRight == true) _CurrentFrame = SPRITE_BIG_R;
+	else _CurrentFrame = SPRITE_BIG_L;
+	SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
+}
 void Mario::TranferBigToSmall()
 {
 	DWORD now = GetTickCount();
@@ -874,6 +857,17 @@ void Mario::TranferBigToSmall()
 		else  _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0,6);
 	}
 }
+void Mario::ExitTranferBigToSmall()
+{
+	//big to small
+	if(_IsTranferToSmall == true && _CurrentFrame== SPRITE_SMALL_R|| _IsTranferToSmall==true && _CurrentFrame== SPRITE_SMALL_L)//Transform về sprite nhỏ 
+	{
+		_IsTranferToSmall = false;
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
+		_State = _PreState;
+	}
+}
+
 
 bool Mario::GetFlagAutoAnimationRight()
 {
@@ -1041,6 +1035,18 @@ void Mario::SetSpriteShoot()
 	}
 }
 
+void Mario::InitTranferBigToFlower()
+{
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformFlower);
+	_IsGetFlowerToTranform = true;
+	_PreState=_State;
+	_Velocity.y = 0;
+	_Velocity.x = 0;
+	_currentFrameBeforeTransformToFlower = _CurrentFrame;
+	SoundManager::GetInstance()->GetSound(eSoundID::ePowerUpAppears)->Play();
+	SetSpriteBeforeTransfromFlower();
+	_State=eMarioState::eIdle;
+}
 void Mario::TranferBigToFlower()
 {
 	DWORD now = GetTickCount();
@@ -1088,6 +1094,20 @@ void Mario::TranferBigToFlower()
 		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 12)
 		{
 			 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 30, 32); //jump R
+		}
+	}
+}
+void Mario::ExitTranferBigToFlower()
+{
+	//flower man
+	if(_IsGetFlowerToTranform ==true && (_CurrentFrame==8|| _CurrentFrame == 11 ||  _CurrentFrame ==14 || _CurrentFrame==15||_CurrentFrame == 18||_CurrentFrame ==21 
+		|| _CurrentFrame==32||_CurrentFrame==33||_CurrentFrame==2|| _CurrentFrame==3 ))
+	{
+		_IsGetFlowerToTranform = false;
+		_IsFlower = true;
+		if(_Sprite != SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire))
+		{
+			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire);
 		}
 	}
 }
@@ -1462,17 +1482,11 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	case eMagicMushroom:
 		if(collisionDirection!=eCollisionDirection::eNone && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible)
 		{
-			_IsGetMushroom=true;
-			_Tag = eGameTag::eMarioIsBig;
-			_PreState = _State;
-			_State=eMarioState::eIdle;
-			SoundManager::GetInstance()->GetSound(eSoundID::ePowerUp)->Play();
-
-			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformSmallToBig);
-			if(_IsRight==true) _CurrentFrame =  SPRITE_SMALL_R;
-			else _CurrentFrame =  SPRITE_SMALL_L;
-			_Velocity.y = 0;
-			SetSize(D3DXVECTOR2(32, 64));
+			if(_Tag==eGameTag::eMarioNotCollision)
+			{
+				_TimeBeforeTranferToSmall = 0;
+			}
+			InitTranferSmallToBig();
 		}
 		break;
 	case eStarMan :
@@ -1499,28 +1513,17 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		{	
 			if(_Tag==eGameTag::eMarioIsBig ||_Tag==eGameTag::eMarioIsBigInvincible)
 			{
-			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformFlower);
-				_IsGetFlowerToTranform = true;
-				_Velocity.y = 0;
-				_Velocity.x = 0;
-				_currentFrameBeforeTransformToFlower = _CurrentFrame;
-				SoundManager::GetInstance()->GetSound(eSoundID::ePowerUpAppears)->Play();
-				SetSpriteBeforeTransfromFlower();
-				_State=eMarioState::eIdle;
+				InitTranferBigToFlower();
+				
 			}
-			else if(_Tag==eGameTag::eMarioIsSmall|| _Tag==eGameTag::eMarioIsSmallInvincible)
+			else if(_Tag==eGameTag::eMarioIsSmall|| _Tag==eGameTag::eMarioIsSmallInvincible|| _Tag==eGameTag::eMarioNotCollision)
 			{
-				_IsGetMushroom=true;
-				_Tag = eGameTag::eMarioIsBig;
-				_PreState = _State;
-				_State=eMarioState::eIdle;
-				SoundManager::GetInstance()->GetSound(eSoundID::ePowerUp)->Play();
+				if(_Tag==eGameTag::eMarioNotCollision)
+				{
+					_TimeBeforeTranferToSmall = 0;
+				}
 
-				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformSmallToBig);
-				if(_IsRight==true) _CurrentFrame =  SPRITE_SMALL_R;
-				else _CurrentFrame =  SPRITE_SMALL_L;
-				_Velocity.y = 0;
-				SetSize(D3DXVECTOR2(32, 64));
+				InitTranferSmallToBig();
 			}
 		}
 		break;
@@ -1532,44 +1535,30 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 		break;
 	
 	case eMonster:
-		{
-			//if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0
-			//	&& _SpriteMosterDead != eKoopaTroopaStop)
-			//{
-			//	if (collisionDirection == eCollisionDirection::eBottom && _SpriteMosterDead!=ePiranhaPlant)
-			//	{
-			//		_IsCollisionMonster = true;
-			//		_State = eMarioState::eJump;
-			//		_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
-			//		break;
-			//	}
-			//	else if (collisionDirection != eCollisionDirection::eBottom && collisionDirection != eCollisionDirection::eNone|| _SpriteMosterDead==ePiranhaPlant)
-			//	{
-			//		if (_Tag == eGameTag::eMarioIsBig)
-			//		{
-			//			_Tag = eGameTag::eMarioIsSmall;
-			//			_IsTranferToSmall = true;
-			//			_PreState = _State;
-			//			_State = eMarioState::eIdle;
-			//			_IsFlower = false; //Khi va chạm quái sẽ mất trạng thái bắn chuyển về mario nhỏ
-			//			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
-			//			_Velocity.y = 0;
-			//			if (_IsRight == true) _CurrentFrame = SPRITE_BIG_R;
-			//			else _CurrentFrame = SPRITE_BIG_L;
-			//			SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
-			//		}
-			//		else if (_Tag == eGameTag::eMarioIsSmall)
-			//		{
-			//			_IsDead = true;
-			//			_IsFlower = false;
-			//			_Tag = eGameTag::eMarioIsDead;
-			//			_Velocity.y = MAX_VELOCITYDEAD;
-			//			_State = eMarioState::eDead;
-			//			GameStatistics::GetInstance()->ChangeLife(false);
+		{/*
+			if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0
+				&& _SpriteMosterDead != eKoopaTroopaStop)
+			{
+				if (collisionDirection == eCollisionDirection::eBottom && _SpriteMosterDead!=ePiranhaPlant)
+				{
+					_IsCollisionMonster = true;
+					_State = eMarioState::eJump;
+					_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
+					break;
+				}
+				else if (collisionDirection != eCollisionDirection::eBottom && collisionDirection != eCollisionDirection::eNone|| _SpriteMosterDead==ePiranhaPlant)
+				{
+					if (_Tag == eGameTag::eMarioIsBig)
+					{
+						InitTranferBigToSmall();
+					}
+					else if (_Tag == eGameTag::eMarioIsSmall)
+					{
+						InitDead();
 
-			//		}
-			//	}
-			//}
+					}
+				}
+			}*/
 		break;
 		}
 	case eFloatingBar:
