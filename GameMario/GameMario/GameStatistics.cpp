@@ -281,7 +281,7 @@ D3DXVECTOR2 GameStatistics::GetPositionEndGame()
 		return D3DXVECTOR2(908,96);
 		break;
 	case e1_3:
-		return D3DXVECTOR2(2160, 80);
+		return D3DXVECTOR2(5104, 96);
 		break;
 	default:
 		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint
@@ -305,6 +305,9 @@ D3DXVECTOR2 GameStatistics::GetPositionEndAutoAnimation()
 	case eLeft1_2:
 		return D3DXVECTOR2(325, 96);
 		break;
+	case e1_4:
+		return D3DXVECTOR2(4878, 96);
+		break;
 	default:
 		return D3DXVECTOR2(10000, 10000); //to make sure noone can reach checkpoint
 		break;
@@ -324,7 +327,7 @@ D3DXVECTOR2 GameStatistics::GetNewMarioPosition(eGameTag tag)
 	case eToMiddle1_2:
 		return D3DXVECTOR2(3712, 128);
 	case eToRight1_2:
-		return D3DXVECTOR2(900, 128);
+		return D3DXVECTOR2(128, 128);
 	default:
 		break;
 	}

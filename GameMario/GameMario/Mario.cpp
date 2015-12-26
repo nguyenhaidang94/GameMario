@@ -945,10 +945,6 @@ void Mario::AutoAnimationEndGame()
 		{
 			SoundManager::GetInstance()->GetSound(eSoundID::eStageClear)->Play();
 
-			//---
-			//---stop render mario here, and enable it later in start scene
-			//----
-
 			//countdown time and inscrease time before change map
 			GameStatistics::GetInstance()->PerformMarioReachFlagpoleStatus();
 
@@ -958,10 +954,10 @@ void Mario::AutoAnimationEndGame()
 
 void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 {
-	DWORD now1 = GetTickCount();
-
-	//transform to flower
    DWORD now = GetTickCount();
+
+  
+
 	if (now - _Frame_start >= _Tick_per_frame) 
 	{
 		_Frame_start = now;
@@ -978,7 +974,16 @@ void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 		 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 8, 10);
 	}
 
-	_Velocity.x = MAX_VELOCITYX;
+	 if(_IsCollide==false) 
+	 {
+			 _State=eFall;
+			 _Velocity.x = 0;
+	 }
+	 else
+	 {
+		_Velocity.x = MAX_VELOCITYX;
+		_Velocity.y = DEFAULT_VELOCITY;
+	 }
   
 	if(_Position.x >= PositionEndAutoAnimation.x)  
 	{
@@ -987,6 +992,7 @@ void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 		if(_PipeTag != eGameTag::eEmpty) 
 		{
 				GameStatistics::GetInstance()->ChangeWorld(Unility::GetWorldIDFromTag(_PipeTag));
+				if(_PipeTag==eToRight1_2) Camera::GetInstance()->Reset();
 				SetPosition(GameStatistics::GetInstance()->GetNewMarioPosition(_PipeTag));
 		}
 	}
@@ -1533,7 +1539,6 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			
 		}
 		break;
-	
 	case eMonster:
 		{/*
 			if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0

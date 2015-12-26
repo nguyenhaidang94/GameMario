@@ -1,4 +1,5 @@
 #include "Bridge.h"
+#include "Mario.h"
 
 #define DESTROY_SPEED 8	//destroy 8 part a sec
 
@@ -49,6 +50,7 @@ void Bridge::Update()
 			_Tag = eGameTag::eDestroyed;	//destroy bridge
 			Camera::GetInstance()->PauseCamera(false);	//stop pause camera
 			Camera::GetInstance()->AutoMoveCamera(true);	//auto move camera
+			Mario::GetInstance()->SetFlagAutoAnimationRight(true);
 		}
 	}
 	

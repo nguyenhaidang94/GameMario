@@ -11,7 +11,7 @@ MushroomRetainer::MushroomRetainer(void)
 MushroomRetainer::MushroomRetainer(int x, int y)
 {
 	SetPosition(D3DXVECTOR2(x, y));
-	_Size = D3DXVECTOR2(64, 32);	//width larger than actual sprite
+	_Size = D3DXVECTOR2(48, 32);	//width larger than actual sprite
 	_ObjectTypeID = eObjectTypeID::eGround;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMushroomRetainer);
 	_IsCollideMario = false;
