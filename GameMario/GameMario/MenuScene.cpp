@@ -62,6 +62,7 @@ void MenuScene::Load()
 	GameStatistics::GetInstance()->SetLife(1);
 	_DemoMap->Reload();
 	Mario::GetInstance()->SetPosition(D3DXVECTOR2(48, 80));
+	Mario::GetInstance()->SetIsControl(false);
 	Camera::GetInstance()->Reset();
 	_IsAutoRun = false;
 	try

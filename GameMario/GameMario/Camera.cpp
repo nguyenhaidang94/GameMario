@@ -40,11 +40,11 @@ void Camera::Update(D3DXVECTOR2 characterPosition)
 		//If character not go back and camera allow go back
 		if(!_IsAllowBack)
 		{
-			if(characterPosition.x >= _OldX)
+			if(!_IsAutoMove)
 			{
-				_OldX = characterPosition.x;
-				if(!_IsAutoMove)
+				if(characterPosition.x >= _OldX)
 				{
+					_OldX = characterPosition.x;
 					//If character in begin of the world
 					if(characterPosition.x - SCREEN_WIDTH/2 < 0)
 					{
@@ -65,14 +65,15 @@ void Camera::Update(D3DXVECTOR2 characterPosition)
 						}
 					}
 				}
-				else
+			}
+			else
+			{
+				_OldX = characterPosition.x;
+				_ViewPortX += AUTO_MOVE_SPEED;
+				if((_ViewPortX + SCREEN_WIDTH) >= _WorldWidth) 
 				{
-					_ViewPortX += AUTO_MOVE_SPEED;
-					if((_ViewPortX + SCREEN_WIDTH) >= _WorldWidth) 
-					{
-						_IsAutoMove = false;
-						_ViewPortX = _WorldWidth - SCREEN_WIDTH;
-					}
+					_IsAutoMove = false;
+					_ViewPortX = _WorldWidth - SCREEN_WIDTH;
 				}
 			}
 		}
@@ -155,4 +156,7 @@ void Camera::Reset()
 	_ViewPortY = SCREEN_HEIGHT;
 	_OldX = 0;
 	_OldY = 0;
+	_IsAutoMove = false;
+	_IsPause = false;
+
 }

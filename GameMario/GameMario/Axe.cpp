@@ -33,7 +33,7 @@ void Axe::Update()
 		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 2);
 	}
 
-	if((Camera::GetInstance()->GetBoundaryBox().fX +  Camera::GetInstance()->GetBoundaryBox().fWidth -128 > _Position.x) && !_IsPauseAlready)
+	if((Camera::GetInstance()->GetBoundaryBox().fX +  Camera::GetInstance()->GetBoundaryBox().fWidth -48 > _Position.x) && !_IsPauseAlready)
 	{
 		Camera::GetInstance()->PauseCamera(true);
 		_IsPauseAlready = true;
