@@ -40,7 +40,7 @@ Mario::Mario(void)
 	_CurrentFrame = 0;
 	/*_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);*/
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
-	SetPosition(D3DXVECTOR2(48,180));
+	SetPosition(D3DXVECTOR2(4148,180));
 	_IsCollide = false;
 	SetSize(D3DXVECTOR2(32, 32));
 
@@ -94,10 +94,6 @@ void Mario::Initialize()
 
 void Mario::HandlingInput()
 {
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_H))
-	{
-		GameStatistics::GetInstance()->PauseObject(true);
-	}
 
 	if(_IsDead==true && _IsControl==true) _State=eMarioState::eDead;
 
@@ -242,6 +238,7 @@ void Mario::InitDead()
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
 	_IsDead=true;
 	_IsFlower = false;
+	_IsAnimationRight = false;
 	_Tag = eGameTag::eIgnoreCollision;
 	_State = eMarioState::eDead;
 	_Velocity.y = MAX_VELOCITYDEAD;
@@ -959,8 +956,6 @@ void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 {
    DWORD now = GetTickCount();
 
-  
-
 	if (now - _Frame_start >= _Tick_per_frame) 
 	{
 		_Frame_start = now;
@@ -977,15 +972,14 @@ void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 		 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 8, 10);
 	}
 
-	 if(_IsCollide==false) 
+	if(_IsCollide==false && _IsDead==false) 
 	 {
-			 _State=eFall;
-			 _Velocity.x = 0;
+		_Velocity.x = 0;
+		_Velocity.y = 10*DEFAULT_VELOCITY;
 	 }
 	 else
 	 {
 		_Velocity.x = MAX_VELOCITYX;
-		_Velocity.y = DEFAULT_VELOCITY;
 	 }
   
 	if(_Position.x >= PositionEndAutoAnimation.x)  
@@ -1246,6 +1240,7 @@ void Mario::Update()
 			GameStatistics::GetInstance()->ChangeScene(eSceneID::eGameOver); //Chuyển về màn hình gameovern nếu hết mạng
 			_Tag=eGameTag::eMarioIsSmall;
 			_State=eMarioState::eIdle;
+			_IsControl=false;
 		}
 		else 
 		{
