@@ -26,7 +26,7 @@ bool Gun::GetStatus()
 
 void Gun::Shoot(D3DXVECTOR2 MarioPosition, bool IsRight)
 {
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_L))
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J))
 	{
 		if(PoolBullet.size()!=0)
 		{

@@ -13,10 +13,11 @@
 #define VELOCITY_COLLISION_MONSTER_Y 5
 #define MAX_VELOCITY2 11
 #define MAX_VELOCITYDEAD 13
-#define MAX_VELOCITYX 4.0f
+#define MAX_VELOCITYX 5.0f
 #define MAX_VELOCITYSHOOT 10
-#define ANIMATION_FRAME_RATE 15
-#define MARIO_FRAME_RATE 10
+#define ANIMATION_FRAME_RATE 20
+#define ANIMATION_FRAME_RATE_FLOWER 5
+#define MARIO_FRAME_RATE 15
 #define MARIO_FRAME_RATE_SLOW 5
 #define TIME_STAR 200
 #define TIME_BEFORE_BIG_TO_SMALL 50
@@ -39,7 +40,7 @@ Mario::Mario(void)
 	_CurrentFrame = 0;
 	/*_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);*/
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
-	SetPosition(D3DXVECTOR2(4148,180));
+	SetPosition(D3DXVECTOR2(48,180));
 	_IsCollide = false;
 	SetSize(D3DXVECTOR2(32, 32));
 
@@ -93,6 +94,11 @@ void Mario::Initialize()
 
 void Mario::HandlingInput()
 {
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_H))
+	{
+		GameStatistics::GetInstance()->PauseObject(true);
+	}
+
 	if(_IsDead==true && _IsControl==true) _State=eMarioState::eDead;
 
 	if(_IsCollide==true && _IsGetMushroom==false && _IsGetFlowerToTranform == false && _IsAnimationPipe == false && _IsAnimationFlag ==false && _IsDead==false
@@ -134,15 +140,11 @@ void Mario::HandlingInput()
 			 }
 		}
 
-		if(Keyboard::GetInstance()->IsKeyPress(DIK_H) && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioNotCollision) //Test Big mario
+		if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioNotCollision) //Test Big mario
 		{
 			InitTranferSmallToBig();
 		}
 
-		if(Keyboard::GetInstance()->IsKeyPress(DIK_V))
-		{
-			GameStatistics::GetInstance()->ChangeWorld(eWorldID::e1_3);
-		}
 
 		if(Keyboard::GetInstance()->IsKeyPress(DIK_N)) //Test bất tử
 		{
@@ -190,7 +192,7 @@ void Mario::HandlingInput()
 	else
 	{
 		if(_Velocity.y < 0 && _IsGetMushroom==false && _IsGetFlowerToTranform == false   && _IsTranferToSmall==false && _IsDead==false && _IsAnimationRight==false
-			&& _IsCollide==false && _IsControl==true)
+			&& _IsCollide==false && _IsControl==true )
 		{
 			_State = eMarioState::eFall;
 			_CountTimeJump=0;
@@ -240,7 +242,7 @@ void Mario::InitDead()
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
 	_IsDead=true;
 	_IsFlower = false;
-	_Tag = eGameTag::eMarioIsDead;
+	_Tag = eGameTag::eIgnoreCollision;
 	_State = eMarioState::eDead;
 	_Velocity.y = MAX_VELOCITYDEAD;
 	GameStatistics::GetInstance()->ChangeLife(false);
@@ -248,21 +250,18 @@ void Mario::InitDead()
 }
 void Mario::Dead()
 {
-	if(_Tag!=eMarioIsSmall)
+	if(_Sprite!= SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario))
 	{
-		_Tag=eMarioIsSmall;
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
 		
 	}
 
-	if(_Tag==eMarioIsSmall)
-	{
 	 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 0);
 	 _Velocity.x = 0;
 	 _Velocity.y--;
 
 	 if(_Velocity.y<=DEFAULT_VELOCITY) _Velocity.y = DEFAULT_VELOCITY * 5;
-	}
+	
 
 }
 
@@ -277,7 +276,7 @@ void Mario::Jump()
 		{
 			_Velocity.x +=INCREASE_VELOCITY;
 		
-			if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			if(Keyboard::GetInstance()->IsKeyDown(DIK_J))
 			{
 				if(_Velocity.x >=MAX_VELOCITYSHOOT) _Velocity.x = MAX_VELOCITYSHOOT;
 			}
@@ -291,7 +290,7 @@ void Mario::Jump()
 		if(Keyboard::GetInstance()->IsKeyDown(DIK_A))
 		{
 			_Velocity.x -=INCREASE_VELOCITY;
-			if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			if(Keyboard::GetInstance()->IsKeyDown(DIK_J))
 			{
 				if(_Velocity.x <=-MAX_VELOCITYSHOOT) _Velocity.x = -MAX_VELOCITYSHOOT;
 			}
@@ -340,7 +339,7 @@ void Mario::Jump()
 		if( _CountTimeJump >=MAX_VELOCITY2) _State = eMarioState::eFall;
 
 	//shoot
-	 if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsCollisionMonster ==false && _IsGetStar==false)
+	 if(Keyboard::GetInstance()->IsKeyDown(DIK_J) && _IsFlower==true && _IsCollisionMonster ==false && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 
@@ -355,7 +354,7 @@ void Mario::Fall()
 	{
 		_Velocity.x +=INCREASE_VELOCITY;
 		
-		if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+		if(Keyboard::GetInstance()->IsKeyDown(DIK_J))
 		{
 			if(_Velocity.x >=MAX_VELOCITYSHOOT) _Velocity.x = MAX_VELOCITYSHOOT;
 		}
@@ -366,7 +365,7 @@ void Mario::Fall()
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_A))
 	{
 		_Velocity.x -=INCREASE_VELOCITY;
-		if(Keyboard::GetInstance()->IsKeyDown(DIK_L))
+		if(Keyboard::GetInstance()->IsKeyDown(DIK_J))
 		{
 			if(_Velocity.x <=-MAX_VELOCITYSHOOT) _Velocity.x = -MAX_VELOCITYSHOOT;
 		}
@@ -435,7 +434,7 @@ void Mario::Fall()
 	}
 	
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L)&& _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_J)&& _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -524,7 +523,7 @@ void Mario::Stand()
 	}
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -565,7 +564,7 @@ void Mario::RunToRight()
 			_IsCollide = false;
 			_Velocity.x += INCREASE_VELOCITY;
 
-			if (Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			if (Keyboard::GetInstance()->IsKeyDown(DIK_J))
 			{
 				if (_Velocity.x >= MAX_VELOCITYSHOOT) _Velocity.x = MAX_VELOCITYSHOOT;
 			}
@@ -591,7 +590,7 @@ void Mario::RunToRight()
 	}
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -629,7 +628,7 @@ void Mario::RunToLeft()
 		{
 			_IsCollide = false;
 			_Velocity.x -= INCREASE_VELOCITY;
-			if (Keyboard::GetInstance()->IsKeyDown(DIK_L))
+			if (Keyboard::GetInstance()->IsKeyDown(DIK_J))
 			{
 				if (_Velocity.x <= -MAX_VELOCITYSHOOT) _Velocity.x = -MAX_VELOCITYSHOOT;
 			}
@@ -653,7 +652,7 @@ void Mario::RunToLeft()
 	}*/
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -693,7 +692,7 @@ void Mario::PreStandRight()
 	//	_Velocity.y--;
 	//}
 	 //shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
 	{
 		SetSpriteShoot();
 	}
@@ -735,7 +734,7 @@ void Mario::PreStandLeft()
 	}
 */
 	 //shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_L) && _IsFlower==true && _IsGetStar==false )
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_J) && _IsFlower==true && _IsGetStar==false )
 	{
 		SetSpriteShoot();
 	}
@@ -795,6 +794,7 @@ void Mario::InitTranferSmallToBig()
 	_PreState = _State;
 	_State=eMarioState::eIdle;
 	SoundManager::GetInstance()->GetSound(eSoundID::ePowerUp)->Play();
+	GameStatistics::GetInstance()->PauseObject(true);
 
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformSmallToBig);
 	if(_IsRight==true) _CurrentFrame =  SPRITE_SMALL_R;
@@ -831,6 +831,7 @@ void Mario::ExitTranferSmallToBig()
 			}
 			
 			_State = _PreState; // chuyển về trạng thái trước khi transform
+			GameStatistics::GetInstance()->PauseObject(false);
 	}
 }
 
@@ -846,6 +847,7 @@ void Mario::InitTranferBigToSmall()
 	if (_IsRight == true) _CurrentFrame = SPRITE_BIG_R;
 	else _CurrentFrame = SPRITE_BIG_L;
 	SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
+	GameStatistics::GetInstance()->PauseObject(true);
 }
 void Mario::TranferBigToSmall()
 {
@@ -865,6 +867,7 @@ void Mario::ExitTranferBigToSmall()
 		_IsTranferToSmall = false;
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
 		_State = _PreState;
+		GameStatistics::GetInstance()->PauseObject(false);
 	}
 }
 
@@ -1052,11 +1055,14 @@ void Mario::InitTranferBigToFlower()
 	SoundManager::GetInstance()->GetSound(eSoundID::ePowerUpAppears)->Play();
 	SetSpriteBeforeTransfromFlower();
 	_State=eMarioState::eIdle;
+	GameStatistics::GetInstance()->PauseObject(true);
 }
 void Mario::TranferBigToFlower()
 {
 	DWORD now = GetTickCount();
 	
+	_Tick_per_frame_animation = 1000/ANIMATION_FRAME_RATE_FLOWER;
+
 	if (now - _Frame_start >= _Tick_per_frame_animation) 
 	{
 		_Frame_start = now;
@@ -1115,6 +1121,7 @@ void Mario::ExitTranferBigToFlower()
 		{
 			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire);
 		}
+		GameStatistics::GetInstance()->PauseObject(false);
 	}
 }
 void Mario::Update()
