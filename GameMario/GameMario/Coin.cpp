@@ -1,6 +1,6 @@
 #include "Coin.h"
 
-#define COIN_FRAME_RATE 8	//coin at top score swap 8 time per sec
+#define COIN_FRAME_RATE 4	//coin fps
 #define COIN_SCORE 200		//200 score each coin
 #define COIN_WIDTH 20
 #define COIN_HEIGHT 28

@@ -9,8 +9,8 @@ Axe::Axe(void)
 Axe::Axe(int x, int y, int width, int height)
 {
 	SetPosition(D3DXVECTOR2(x, y));
-	_Size.x = width;
-	_Size.y = height;
+	_Size.x = width - 12;
+	_Size.y = height + 32;
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eAxe);
 	_IsPauseAlready = false;
 	_CurrentFrame = 0;

@@ -7,7 +7,7 @@
 #define STARMAN_SCORE 1000
 #define JUMP_VELOCITY_BOOST 5
 #define FALLDOWN_VELOCITY_DECREASE 0.15
-#define STARMAN_FRAME_RATE 8
+#define STARMAN_FRAME_RATE 4
 
 Starman::Starman(void)
 {

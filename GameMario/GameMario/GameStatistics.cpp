@@ -165,15 +165,24 @@ void GameStatistics::ChangeWorld(eWorldID worldID)
 
 void GameStatistics::GoToNextWorld()
 {
-	int index = _WorldID;
-	if(_WorldID != eWorldID::e1_4)	//if not the last world
+	_IsReachCheckpoint = false;	//reset check point status
+	if(_WorldID == eWorldID::e1_1 || _WorldID == eWorldID::eHidden1_1)
 	{
-		_WorldID = static_cast<eWorldID>(index + 1);	//next world also next enum
+		_WorldID = eWorldID::eLeft1_2;
 	}
-	else	//temporary, return to menu if there is no more scene
+	else
 	{
-		_WorldID == e1_1;
-		_CurrentSceneID = eSceneID::eMenu;
+		if(_WorldID == eWorldID::eRight1_2 || _WorldID == eWorldID::e1_2)
+		{
+			_WorldID = eWorldID::e1_3;
+		}
+		else
+		{
+			if(_WorldID == eWorldID::e1_3)
+			{
+				_WorldID = eWorldID::e1_4;
+			}	
+		}
 	}
 }
 

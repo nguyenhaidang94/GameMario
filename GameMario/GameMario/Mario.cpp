@@ -1245,6 +1245,10 @@ void Mario::Update()
 		else 
 		{
 			GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap); 
+			if(_Position.x >GameStatistics::GetInstance()->GetCheckpoint().x) //Quay về checkpoint nếu đã qua checkpoint
+ 			{
+ 				GameStatistics::GetInstance()->ChangeCheckpointStatus(true);
+ 			}
 			_Tag=eGameTag::eMarioIsSmall;
 			SetSize(D3DXVECTOR2(32,32));
 		

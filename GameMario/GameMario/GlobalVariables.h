@@ -92,12 +92,12 @@ enum eMarioState
 enum eWorldID
 {
 	e1_1 = 0,
-	eRight1_2,
+	eLeft1_2,
 	e1_3,
 	e1_4,
 	eHidden1_1,
 	e1_2,
-	eLeft1_2,
+	eRight1_2,
 	eHidden1_2,
 };
 

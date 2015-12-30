@@ -3,7 +3,7 @@
 #define FLOWER_SPAWM_VELOCITY_Y 0.5
 #define FLOWER_WIDTH 32
 #define FLOWER_HEIGHT 32
-#define FRAME_RATE 8
+#define FRAME_RATE 4
 #define FLOWER_SCORE 1000
 
 FireFlower::FireFlower(void)

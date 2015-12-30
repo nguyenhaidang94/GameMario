@@ -37,7 +37,6 @@ void StartScene::Release()
 void StartScene::Load()
 {
 	_StartTime = GetTickCount();
-
 	//set mario position
 	Mario::GetInstance()->SetPosition(GetMarioStartPosition());
 	Mario::GetInstance()->SetIsControl(true);	//allow control mario back
@@ -64,7 +63,7 @@ void StartScene::Load()
 
 D3DXVECTOR2 StartScene::GetMarioStartPosition()
 {
-	if(GameStatistics::GetInstance()->IsMarioReachCheckpoint())
+ 	if(GameStatistics::GetInstance()->IsMarioReachCheckpoint())
 	{
 		GameStatistics::GetInstance()->GetCheckpoint();
 	}
