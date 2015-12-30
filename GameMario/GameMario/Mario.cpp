@@ -1538,16 +1538,17 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	case eMonster:
 		{
 			if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0
-				&& _SpriteMosterDead != eKoopaTroopaStop)
+				&& _SpriteMosterDead != eKoopaTroopaStop && GameStatistics::GetInstance()->IsMarioReachAxe()==false)
 			{
-				if (collisionDirection == eCollisionDirection::eBottom && _SpriteMosterDead!=ePiranhaPlant)
+				if (collisionDirection == eCollisionDirection::eBottom && _SpriteMosterDead!=ePiranhaPlant && _SpriteMosterDead!=eKingBowser && _SpriteMosterDead!=eBulletFire)
 				{
 					_IsCollisionMonster = true;
 					_State = eMarioState::eJump;
 					_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
 					break;
 				}
-				else if (collisionDirection != eCollisionDirection::eBottom && collisionDirection != eCollisionDirection::eNone|| _SpriteMosterDead==ePiranhaPlant)
+				else if (collisionDirection != eCollisionDirection::eBottom &&  collisionDirection != eCollisionDirection::eNone|| _SpriteMosterDead==ePiranhaPlant 
+					|| _SpriteMosterDead!=eKingBowser || _SpriteMosterDead!=eBulletFire)
 				{
 					if (_Tag == eGameTag::eMarioIsBig)
 					{
