@@ -73,18 +73,18 @@ void KingBowser::KingBowserMove()
 
 
 	//không được đổi ngược vận tốc phải gán tránh trường hợp thay đổi liên tục khi nằm ngoài vùng
-	if (_Position.x >= _KingBowserBoxWidthMax)
+	if (_Position.x >= _KingBowserBoxWidthMax && _Velocity.y == 0.0)
 	{
 		_MonsterVelocityX = -KINGBOWSER_VELOCITY_X;
-		_TimeStartFrame = GetTickCount() - _TimePerFrame;
+	//	_TimeStartFrame = GetTickCount() - _TimePerFrame;
 		_Velocity.x = _MonsterVelocityX;
 	}
 	else
 	{
-		if (_Position.x <= _KingBowserBoxWidthMin)
+		if (_Position.x <= _KingBowserBoxWidthMin && _Velocity.y == 0.0)
 		{
 			_MonsterVelocityX = KINGBOWSER_VELOCITY_X;
-			_TimeStartFrame = GetTickCount() - _TimePerFrame;
+			//_TimeStartFrame = GetTickCount() - _TimePerFrame;
 			_Velocity.x = _MonsterVelocityX;
 		}
 	}
@@ -102,14 +102,20 @@ void KingBowser::KingBowserMove()
 			//mario vào vị trí này sẽ nhảy lên va chạm
 			if (iMarioPositionX >= _Position.x - KINGBOWSER_WIDTH && iMarioPositionX <= _Position.x + KINGBOWSER_WIDTH && iMarioPositionY > _PositionY)
 			{
-				_MonsterVelocityY = -_MonsterVelocityY;
-				_Velocity.y = _MonsterVelocityY;
+				minY = 0;
+				maxY = _KingBowserLevel / 5;
+				randomY = rand() % (maxY - minY + 1) + minY;
+				if (randomY == 1)
+				{
+					_MonsterVelocityY = -_MonsterVelocityY;
+					_Velocity.y = _MonsterVelocityY;
+				}
 			}
 			else
 			{
 				//random Velocity x
 				minX = 1;
-				minY = 1;
+				minY = 0;
 
 				if (_KingBowserLevel / 2 < 1)			////Level of KingBowser
 				{
@@ -155,7 +161,7 @@ void KingBowser::KingBowserGun()
 		float iViewPortX = Camera::GetInstance()->GetViewPort().x;
 		int iBulletTypeMin, iBulletTypeMax, iBulletType;
 		int iGunLevelMin, iGunLevelMax, iGunLevel;
-		int iGunIQMin, iGunIQMax, iGunIQ;
+		int iGunIQMin, iGunIQMax, iGunIQ = -1;
 		D3DXVECTOR2 iPositionGun;
 
 		//set Position and direction
@@ -209,7 +215,6 @@ void KingBowser::KingBowserGun()
 				iGunIQ = rand() % (iGunIQMax - iGunIQMin + 1) + iGunIQMin;
 				break;
 			case 3:				//normal: 0-(0-3)
-			case 4:
 				iGunIQ = 0;													//bullet 1
 
 				iBulletTypeMin = 0;
@@ -219,14 +224,12 @@ void KingBowser::KingBowserGun()
 				_KingBowserTypeBullet = iBulletType;						//bullet 2
 				_TimePerShoot = TIMES_TURN_SHOOT_IQ;
 				break;
-			case 5:				//none
+			case 4:				//none
+			case 5:	
 			case 6:
-			case 7:
-			case 8:
 				iGunIQ = 0;
 				break;
 			default:			//easy
-				iGunIQ = 0;
 				break;
 			}
 
@@ -285,53 +288,80 @@ void KingBowser::Update()
 	if (_TypeSpriteID == eSpriteID::eKingBowser)
 	{
 		DWORD timeNow = GetTickCount();
-
-		//--Random vị trí của KingBowser--------------------------------------------------------------------
-		KingBowserMove();
-		KingBowserGun();
-		_KingBowserGun.Update();
-		//---------------------------------------------------------------------------------------------------
-
-		if (_MonsterAlive)
+		
+		if (timeNow - _TimeStartFrame >= _TimePerFrame)
 		{
-			int iMarioPositionX = Mario::GetInstance()->GetPosition().x;
-
-			if (iMarioPositionX < _Position.x)
-			{
-				_FrameStart = 0;
-				_FrameEnd = 3;
-			}
-			else
-			{
-				if (iMarioPositionX >  _Position.x)
-				{
-					_FrameStart = 4;
-					_FrameEnd = 7;
-				}
-			}
-			if (timeNow - _TimeStartFrame >= _TimePerFrame)
-			{
-				_TimeStartFrame = timeNow;
-				_FrameCurrent = SpriteManager::GetInstance()->NextFrame(_FrameCurrent, _FrameStart, _FrameEnd);
-			}
-
-			//location
-			_Position.x += _Velocity.x;
-			_Position.y += _Velocity.y;
-			
-			//_Velocity.y = -KINGBOWSER_VELOCITY_Y;
-			//_Velocity.x = 0.0f;							///Cái này chặn tốc độ không cho di chuyển khi chưa cho phép nếu nhảy lên k chạm dất k di chuyển dc
-			/*if (_Position.x >= Camera::GetInstance()->GetViewPort().x + SCREEN_WIDTH + BUFFER_FOR_SCREEN)
-			{
-				_Position.x = Camera::GetInstance()->GetViewPort().x + SCREEN_WIDTH + BUFFER_FOR_SCREEN - 10;
-			}*/
-			
-			//delete object if it move out of active site
-			/*if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
-			{
-				this->_Tag = eGameTag::eDestroyed;
-			}*/
+			_TimeStartFrame = timeNow;
+			_FrameCurrent = SpriteManager::GetInstance()->NextFrame(_FrameCurrent, _FrameStart, _FrameEnd);
 		}
+
+		if (!GameStatistics::GetInstance()->IsMarioReachAxe())
+		{
+			if (_MonsterAlive)
+			{
+				//--Random vị trí của KingBowser--------------------------------------------------------------------
+				KingBowserMove();
+				KingBowserGun();
+				_KingBowserGun.Update();
+				//---------------------------------------------------------------------------------------------------
+				int iMarioPositionX = Mario::GetInstance()->GetPosition().x;
+
+				if (iMarioPositionX < _Position.x && _Velocity.y <= 0)
+				{
+					_FrameStart = 0;
+					_FrameEnd = 3;
+				}
+				else
+				{
+					if (iMarioPositionX >  _Position.x && _Velocity.y <= 0)
+					{
+						_FrameStart = 4;
+						_FrameEnd = 7;
+					}
+				}
+				//_Velocity.x = 0.0f;							///Cái này chặn tốc độ không cho di chuyển khi chưa cho phép nếu nhảy lên k chạm dất k di chuyển dc
+				/*if (_Position.x >= Camera::GetInstance()->GetViewPort().x + SCREEN_WIDTH + BUFFER_FOR_SCREEN)
+				{
+				_Position.x = Camera::GetInstance()->GetViewPort().x + SCREEN_WIDTH + BUFFER_FOR_SCREEN - 10;
+				}*/
+
+				//delete object if it move out of active site
+				/*if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
+				{
+				this->_Tag = eGameTag::eDestroyed;
+				}*/
+			}
+		}
+		else		//chết sau khi ăn rìu
+		{
+			_Velocity.x = 0.0;
+			_KingBowserGun.Release();
+		}
+
+		//location
+		_Position.x += _Velocity.x;
+		_Position.y += _Velocity.y;
+
+		if (_Velocity.y == 0.0)
+		{
+			_Velocity.y = -KINGBOWSER_VELOCITY_Y;
+		}
+	}
+	else//chết bị tác động
+	{
+		if (_Velocity.y == 0.0f)
+		{
+			_MonsterVelocityY = -_MonsterVelocityY;
+			_Velocity.y = _MonsterVelocityY;
+		}
+
+		//location
+		_Position.x += _Velocity.x;
+		_Position.y += _Velocity.y;
+
+		//set velocity
+		_Velocity.x = _MonsterVelocityX;
+		_Velocity.y -= KINGBOWSER_ACCELERATION;
 	}
 }
 
@@ -379,10 +409,10 @@ void KingBowser::OnCollision(GameObject *object, eCollisionDirection collisionDi
 				switch (collisionDirection)
 				{
 				case eRight:
-			//		MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
+					MonsterDead(2);//để sau _MonsterVelocityX để hàm cập nhật lại _Velocity.x
 					break;
 				case eLeft:
-			//		MonsterDead(2);
+					MonsterDead(2);
 					break;
 				}
 			}
@@ -440,14 +470,22 @@ void KingBowser::MonsterDead(int MonsterTypeDead)
 	switch (MonsterTypeDead)
 	{
 	case 1:
-
+		_MonsterAlive = false;
 		break;
 	case 2:
 		_KingBowserALive--;
 		if (_KingBowserALive < 1)
 		{
-			//dead
-			int a = 0;
+			_MonsterAlive = false;
+			SetObjectType(eMonsterDead);
+			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eGoombaDead);	//set sprite
+			_TypeSpriteID = eSpriteID::eGoombaDead;
+			_FrameStart = 0;
+			_FrameEnd = 0;
+			_FrameCurrent = 0;
+			_MonsterVelocityY = KINGBOWSER_VELOCITY_Y;
+			_Velocity.x = -_MonsterVelocityX;
+			_Velocity.y = _MonsterVelocityY;
 		}
 		break;
 	}

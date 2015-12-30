@@ -4,13 +4,20 @@
 #define KOOPAPARATROOPA_HEIGHT 48
 #define KOOPAPARATROOPA_VELOCITY_X 1.5f
 #define KOOPAPARATROOPA_VELOCITY_Y 6.0f
+#define KOOPAPARATROOPA31_VELOCITY_Y 2.4f
 #define KOOPAPARATROOPA_ACCELERATION 0.3f
+#define KOOPAPARATROOPA31_ACCELERATION 0.1f
 #define TIMES_TURN 100
 #define TIMES_REVIVED_VELOCITY 3000
+#define TIMES_TURN_STOP 1000
 
 class KoopaParatroopa: public KoopaTroopa
 {
 	bool _KoopaParatroopaRevived;
+	FLOAT _PositionY;
+	DWORD _TimeStartStop;
+	DWORD _TimePerStop;
+	bool _KoopaParatroopStop;
 public:
 	KoopaParatroopa();
 	~KoopaParatroopa();

@@ -88,7 +88,23 @@ void KingBowserGun::Render()
 //Removes a gameobject, component or asset.
 void KingBowserGun::Release()
 {
+	if (ListBullet.size() != 0)
+	{
+		for (int i = 0; i <= ListBullet.size() - 1; i++)
+		{
+			ListBullet[i]->SetTag(eRemove);
+			PoolBullet.push_back(ListBullet[i]);
 
+			if (ListBullet.size() != 0)
+			{
+				ListBullet.erase(ListBullet.begin() + i);
+				i--;
+			}
+
+			if (ListBullet.size() == 0)
+				break;
+		}
+	}
 }
 
 //Handling object when colision happened

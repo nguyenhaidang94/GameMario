@@ -73,9 +73,9 @@ void KoopaTroopa::Update()
 			else
 			{
 				if (_MonsterVelocityX > 0.0f)
-					_Velocity.x = 0.4f;
+					_Velocity.x = KOOPATROOPA_VELOCITY_X * 1.5;
 				else
-					_Velocity.x = -0.4f;
+					_Velocity.x = -KOOPATROOPA_VELOCITY_X * 1.5;
 			}
 		}
 
@@ -398,6 +398,11 @@ void KoopaTroopa::SetFrame(int MonsterType)
 				_FrameCurrent = _FrameStartType;
 				_FrameEndType = 15;
 				break;
+			case 31:
+				_FrameStartType = 8;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 11;
+				break;
 			default:
 				_FrameStartType = 0;
 				_FrameCurrent = _FrameStartType;
@@ -428,6 +433,11 @@ void KoopaTroopa::SetFrame(int MonsterType)
 				_FrameStartType = 6;
 				_FrameCurrent = _FrameStartType;
 				_FrameEndType = 7;
+				break;
+			case 31:
+				_FrameStartType = 4;
+				_FrameCurrent = _FrameStartType;
+				_FrameEndType = 5;
 				break;
 			default:
 				_FrameStartType = 0;
@@ -460,6 +470,11 @@ void KoopaTroopa::SetFrame(int MonsterType)
 			_FrameCurrent = 3;
 			_FrameStart = 3;
 			_FrameEnd = 3;
+			break;
+		case 31:
+			_FrameCurrent = 2;
+			_FrameStart = 2;
+			_FrameEnd = 2;
 			break;
 		default:
 			_FrameCurrent = 0;

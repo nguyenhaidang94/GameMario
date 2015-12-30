@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include "Mario.h"
 #include "KingBowserGun.h"
+#include "Goomba.h"
 #define KINGBOWSER_WIDTH 64
 #define KINGBOWSER_HEIGHT 64
 #define KINGBOWSER_VELOCITY_X 1.5f

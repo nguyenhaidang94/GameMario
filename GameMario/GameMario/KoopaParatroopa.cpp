@@ -19,6 +19,7 @@ KoopaParatroopa::KoopaParatroopa(int objectTypeID, int positionX, int positionY)
 	_Velocity = D3DXVECTOR2(0, 0);	//set position
 	_TypeSpriteID = eSpriteID::eKoopaParatroopa;										//set type Id of sprite
 	_MonsterTypeID = objectTypeID;														//set type id of object
+	_PositionY = positionY;
 
 	// KoopaParatroopa
 	_TimeStartFrame = GetTickCount();													//set time now
@@ -29,6 +30,8 @@ KoopaParatroopa::KoopaParatroopa(int objectTypeID, int positionX, int positionY)
 	_MonsterVelocityX = -KOOPAPARATROOPA_VELOCITY_X;
 	_MonsterVelocityY = -KOOPAPARATROOPA_VELOCITY_Y;
 	_KoopaParatroopaRevived = true;
+	_TimePerStop = TIMES_TURN_STOP;
+	_TimeStartStop = GetTickCount();
 }
 
 void KoopaParatroopa::Update()
@@ -36,6 +39,7 @@ void KoopaParatroopa::Update()
 	if (_KoopaParatroopaRevived)
 	{
 		DWORD timeNow = GetTickCount();
+
 		if (_MonsterVelocityX > 0.0f)//set frame bên phải
 		{
 			_FrameStart = _FrameStartType + 2;
@@ -46,29 +50,91 @@ void KoopaParatroopa::Update()
 			_FrameStart = _FrameStartType;
 			_FrameEnd = _FrameStart + 1;
 		}
-		if (_Velocity.y == 0.0f)
+
+		if (_MonsterTypeID == 31)
 		{
-			_MonsterVelocityY = -_MonsterVelocityY;
-			_Velocity.y = _MonsterVelocityY;
+			if (_Position.y >= _PositionY)//ở trên nguy hiểm
+			{
+				_Position.y = _PositionY;
+				_MonsterVelocityY = -KOOPAPARATROOPA31_VELOCITY_Y;
+				_Velocity.x = _MonsterVelocityX;
+				_KoopaParatroopStop = true;
+			}
+			else
+			{
+				if (_Position.y <= _PositionY - 4 * KOOPAPARATROOPA_HEIGHT)//_MonsterVelocityY<0: ở dưới
+				{
+					_Position.y = _PositionY - 4 * KOOPAPARATROOPA_HEIGHT;
+					_MonsterVelocityY = KOOPAPARATROOPA31_VELOCITY_Y;
+					_Velocity.x = _MonsterVelocityX;
+					_KoopaParatroopStop = true;
+				}
+				else
+				{
+					if (_Position.y <= _PositionY - 4 * KOOPAPARATROOPA_HEIGHT + KOOPAPARATROOPA31_VELOCITY_Y/KOOPAPARATROOPA_ACCELERATION && _MonsterVelocityY  < 0)
+					{
+						_Velocity.y += KOOPAPARATROOPA31_ACCELERATION;
+					}
+					else
+					{
+						if (_Position.y >= _PositionY - KOOPAPARATROOPA31_VELOCITY_Y / KOOPAPARATROOPA_ACCELERATION && _MonsterVelocityY  > 0)
+						{
+							_Velocity.y -= KOOPAPARATROOPA31_ACCELERATION;
+						}
+					}
+				}
+			}
+
+			if (_KoopaParatroopStop)
+			{
+				if (timeNow - _TimeStartStop >= _TimePerStop)// dừng 1 khoảng tg sẽ hoạt động tiếp
+				{
+					_TimeStartStop = timeNow;
+					_Velocity.y = _MonsterVelocityY;
+					_Position.y += _Velocity.y;				//thoát khỏi nị trí đứng yên
+					_KoopaParatroopStop = false;
+				}
+			}
+			else
+			{
+				_Position.y += _Velocity.y;
+			}
 		}
+		else
+		{
+			if (_Velocity.y == 0.0f)
+			{
+				_MonsterVelocityY = -_MonsterVelocityY;
+				_Velocity.y = _MonsterVelocityY;
+
+			}
+
+			//location
+			_Position.x += _Velocity.x;
+			_Position.y += _Velocity.y;
+
+			//set velocity
+			_Velocity.x = _MonsterVelocityX;
+			if (_MonsterTypeID == 31)
+			{
+
+			}
+			else
+				_Velocity.y -= KOOPAPARATROOPA_ACCELERATION;
+			//delete object if it move out of active site
+			if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
+			{
+				this->_Tag = eGameTag::eDestroyed;
+			}
+		}
+
 		if (timeNow - _TimeStartFrame >= _TimePerFrame)
 		{
 			_TimeStartFrame = timeNow;
 			_FrameCurrent = SpriteManager::GetInstance()->NextFrame(_FrameCurrent, _FrameStart, _FrameEnd);
 		}
 
-		//location
-		_Position.x += _Velocity.x;
-		_Position.y += _Velocity.y;
-
-		//set velocity
-		_Velocity.x = _MonsterVelocityX;
-		_Velocity.y -= KOOPAPARATROOPA_ACCELERATION;
-		//delete object if it move out of active site
-		if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
-		{
-			this->_Tag = eGameTag::eDestroyed;
-		}
+		
 	}
 	else
 	{
@@ -135,7 +201,7 @@ void KoopaParatroopa::OnCollision(GameObject *object, eCollisionDirection collis
 					}
 					break;
 				default:
-					DirectionsCollision(object, collisionDirection);
+					//DirectionsCollision(object, collisionDirection);
 					break;
 				}
 				break;
@@ -244,6 +310,6 @@ void KoopaParatroopa::MonsterDead(int MonsterTypeDead)
 
 	//set to KoopaParatroopa
 	_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
-	_MonsterTypeID = 30;														//set type id of object
-	KoopaTroopa::SetKoopaTroopa(30, _Position.x, _Position.y);
+	_MonsterTypeID = 31;														//set type id of object
+	KoopaTroopa::SetKoopaTroopa(_MonsterTypeID, _Position.x, _Position.y);
 }

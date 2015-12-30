@@ -158,6 +158,8 @@ void Goomba::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 					break;
 				}
 				break;
+			case eKoopaParatroopa:
+				break;
 			default:
 				DirectionsCollision(object, collisionDirection);
 				break;
