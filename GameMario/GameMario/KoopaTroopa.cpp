@@ -110,7 +110,7 @@ void KoopaTroopa::Update()
 		}
 		else
 		{
-			if (_KoopaTroopaStop)
+			if (_KoopaTroopaStop)//đứng yên
 			{
 				_FrameStart = _FrameStartType;//set về frame đứng yên
 				_FrameEnd = _FrameCurrent = _FrameStart;
@@ -250,6 +250,9 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 						DirectionsCollision(object, collisionDirection);
 						break;
 					case eKoopaTroopa:
+						DirectionsCollisionNoBox(object, collisionDirection);
+						break;
+					case eKoopaTroopaStop:
 						DirectionsCollisionNoBox(object, collisionDirection);
 						break;
 					case eKoopaParatroopa:

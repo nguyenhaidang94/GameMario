@@ -24,10 +24,10 @@ GameStatistics* GameStatistics::GetInstance()
 
 void GameStatistics::Initialize()
 {
-	_WorldID = eWorldID::e1_4;
-	_CurrentSceneID = eSceneID::ePlay;
+	_WorldID = eWorldID::e1_1;
+	_CurrentSceneID = eSceneID::eMenu;
 	_Score = 0;
-	_Life = 3;
+	_Life = 30;
 	_CoinCount = 0;
 	_IsReachCheckpoint = false;
 	_Time = GAME_TIME;
