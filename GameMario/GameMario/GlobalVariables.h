@@ -74,6 +74,7 @@ enum eSpriteID
 	eAxe,
 	eMushroomRetainer,
 	eTopCoin,
+	eBigMarioSitting,
 };
 
 enum eMarioState

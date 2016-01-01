@@ -126,6 +126,14 @@ int Keyboard::IsKeyPress(int keyCode) const
 	}
 	return false;
 }
+int Keyboard::IsKeyRelease(int keyCode) const
+{
+	if(!(_KeyStates[keyCode] & 0x00000080) && (_PreviousKeyStates[keyCode] & 0x00000080))
+	{
+		return true;
+	}
+	return false;
+}
 
 //void Keyboard::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta) { }
 void Keyboard::ProcessInput() { }

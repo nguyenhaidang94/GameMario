@@ -27,6 +27,7 @@ public:
 	void ProcessKeyBoard();
 	int IsKeyDown(int KeyCode) const;
 	int IsKeyPress(int KeyCode) const;
+	int IsKeyRelease(int KeyCode) const;
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
 	//virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, int Delta);

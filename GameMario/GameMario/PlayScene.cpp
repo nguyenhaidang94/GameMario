@@ -86,11 +86,13 @@ void PlayScene::Update()
 			GameStatistics::GetInstance()->DecreaseTime();
 			GameStatistics::GetInstance()->ChangeScore(SCORE_PER_SECOND_LEFT);
 			Mario::GetInstance()->SetFlagRender(false);
+			Mario::GetInstance()->SetIsControl(false);
 		}
 		//change to next world after finish countdown
 		else
 		{
 			Mario::GetInstance()->SetFlagRender(true);
+			Mario::GetInstance()->SetIsControl(true);
 			GameStatistics::GetInstance()->GoToNextWorld();	//just change world id, change scene will update below
 		}
 	}

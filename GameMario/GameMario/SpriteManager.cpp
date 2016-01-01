@@ -62,6 +62,8 @@ void SpriteManager::LoadSprite(LPD3DXSPRITE &SpriteHandler)
 	_ListSprite[eSpriteID::eBulletEF] = new Sprite(SpriteHandler,L"resources\\Sprites\\BulletEF.png",32,32,3,3,D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eMarioFire] =  new Sprite(SpriteHandler,L"resources\\Sprites\\MarioFire.png",32,64,24,24,D3DCOLOR_XRGB(255,0,255));
 	_ListSprite[eSpriteID::eMarioTransformFlower] = new Sprite(SpriteHandler,L"resources\\Sprites\\MarioTransformFlower.png",32,64,36,24,D3DCOLOR_XRGB(255,0,255));
+	_ListSprite[eSpriteID::eBigMarioSitting] = new Sprite(SpriteHandler,L"resources\\Sprites\\BigMarioSitting.png",32,46,10,10,D3DCOLOR_XRGB(255,0,255));
+
 }
 
 Sprite *SpriteManager::GetSprite(eSpriteID objectID)

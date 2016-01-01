@@ -74,6 +74,7 @@ public:
 	void PreStandRight();
 	void PreStandLeft();
 	void Sitting();
+	void ChangeSpriteSitting();
 
 	//Hiệu ứng chuyển đổi trạng thái của mario
 
