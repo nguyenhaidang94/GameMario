@@ -22,9 +22,6 @@
     <Filter Include="GameManager">
       <UniqueIdentifier>{fe369db1-fe66-434c-957d-fffd4481f2ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Time">
-      <UniqueIdentifier>{0affa303-d05b-4310-b0f3-bfe78c6f5d23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject">
       <UniqueIdentifier>{8573d58e-8015-403e-bb24-081f8beab9c3}</UniqueIdentifier>
     </Filter>
