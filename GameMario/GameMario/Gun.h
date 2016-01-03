@@ -26,7 +26,7 @@ public:
 	void Render();
 	void Shoot(D3DXVECTOR2 MarioPosition, bool IsRight);
 	void Release();
-	bool GetStatus();
+	int GetSizeListBullet();
 	bool SetStatus();
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
 	~Gun(void);

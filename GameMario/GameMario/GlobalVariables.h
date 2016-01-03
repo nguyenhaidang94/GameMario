@@ -27,6 +27,8 @@ enum eObjectTypeID
 	eMonsterDead,
 	eBoss,
 	eBullet,
+	eAxeBoss,
+	eBulletNotCollision,
 };
 
 enum eSpriteID

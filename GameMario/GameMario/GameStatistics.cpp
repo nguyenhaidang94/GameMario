@@ -24,8 +24,8 @@ GameStatistics* GameStatistics::GetInstance()
 
 void GameStatistics::Initialize()
 {
-	_WorldID = eWorldID::e1_1;
-	_CurrentSceneID = eSceneID::eMenu;
+	_WorldID = eWorldID::e1_4;
+	_CurrentSceneID = eSceneID::ePlay;
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;
@@ -42,7 +42,7 @@ void GameStatistics::Initialize()
 #pragma region Game stats
 void GameStatistics::Reset()
 {
-	_WorldID = eWorldID::e1_1;
+	_WorldID = eWorldID::e1_4;
 	_Score = 0;
 	_Life = 3;
 	_CoinCount = 0;

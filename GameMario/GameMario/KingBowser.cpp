@@ -32,7 +32,7 @@ KingBowser::KingBowser(int objectTypeID, int positionX, int positionY)
 	_TimeStartBounce = GetTickCount();											//set time now
 	_TimePerBounce = TIMES_TURN_BOUNCE;											//set time the turn bounce
 	_KingBowserCountBullet = 0;
-	_KingBowserLevel = 10;
+	_KingBowserLevel = 100;
 
 	//Box
 	_PositionX = positionX;

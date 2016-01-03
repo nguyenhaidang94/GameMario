@@ -17,6 +17,7 @@ Axe::Axe(int x, int y, int width, int height)
 
 	_CountPerFrame = 1000 / AXE_FRAME_RATE;
 	_FrameStart = GetTickCount();
+	SetObjectType(eAxeBoss);
 }
 
 

@@ -40,7 +40,7 @@ Mario::Mario(void)
 	_CurrentFrame = 0;
 	/*_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMario);*/
 	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
-	SetPosition(D3DXVECTOR2(48,180));
+	SetPosition(D3DXVECTOR2(4148,180));
 	_IsCollide = false;
 	SetSize(D3DXVECTOR2(32, 32));
 
@@ -68,6 +68,7 @@ Mario::Mario(void)
 
 	_Tick_per_frame = 1000 / MARIO_FRAME_RATE;
 	_Tick_per_frame_animation = 1000 / ANIMATION_FRAME_RATE;
+	_Tick_per_frame_animation_flower = 1000 / ANIMATION_FRAME_RATE_FLOWER;
 	_Frame_start = GetTickCount();
 }
 
@@ -88,6 +89,10 @@ Mario *Mario::GetInstance()
 void Mario::Initialize()
 {
 	_State = eMarioState::eIdle;
+	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
+	SetSize(D3DXVECTOR2( 32,32));
+	_Tag=eMarioIsSmall;
+
 	SetObjectType(eMario);
 }
 
@@ -146,9 +151,15 @@ void Mario::HandlingInput()
 			 }
 		}
 
-		if(Keyboard::GetInstance()->IsKeyPress(DIK_L) && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioNotCollision) //Test Big mario
+		if(Keyboard::GetInstance()->IsKeyPress(DIK_3) && _IsDead==false && _Tag!=eGameTag::eMarioIsBig && _Tag!=eGameTag::eMarioIsBigInvincible && _Tag!=eGameTag::eMarioNotCollision) //Test Big mario
 		{
 			InitTranferSmallToBig();
+		}
+
+		if(Keyboard::GetInstance()->IsKeyPress(DIK_4) && _IsDead==false && _Tag!=eGameTag::eMarioNotCollision && (_Tag==eMarioIsBig|| _Tag==eMarioIsBigInvincible))
+		{
+			InitTranferBigToFlower();
+			SetSize(D3DXVECTOR2(32,64));
 		}
 
 
@@ -345,7 +356,7 @@ void Mario::Jump()
 		if( _CountTimeJump >=MAX_VELOCITY2) _State = eMarioState::eFall;
 
 	//shoot
-	 if(Keyboard::GetInstance()->IsKeyDown(DIK_J) && _IsFlower==true && _IsCollisionMonster ==false && _IsGetStar==false)
+		if(Keyboard::GetInstance()->IsKeyDown(DIK_J) && _IsFlower==true && _IsCollisionMonster ==false && _IsGetStar==false && _IsControl==true)
 	{
 		SetSpriteShoot();
 
@@ -442,7 +453,7 @@ void Mario::Fall()
 	if(_Sprite==SpriteManager::GetInstance()->GetSprite(eBigMarioSitting)) Sitting(); //Nếu đang đứng mà chuyển qua ngồi thì bị chuyển qua trạng thái rớt, nên phải chuyển sprite qua ngồi để ko bị lỗi
 	
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_J)&& _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyDown(DIK_J)&& _IsFlower==true && _IsGetStar==false && _IsControl==true)
 	{
 		SetSpriteShoot();
 	}
@@ -537,7 +548,7 @@ void Mario::Stand()
 	}
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false && _IsControl==true)
 	{
 		SetSpriteShoot();
 	}
@@ -559,16 +570,17 @@ void Mario::RunToRight()
 	{
 		_Frame_start = now;
 		
-		if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsBigInvincible)
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 6, 14);
-		}
-		else if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsSmallInvincible)
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 3, 11);
-		}
-		else
-		 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 8, 10);
+			if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsBigInvincible)
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 6, 14);
+			}
+			else if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsSmallInvincible)
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 3, 11);
+			}
+			else
+			 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 8, 10);
+		
 	}
 
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_D)) //Nếu đè phím di chuyển
@@ -604,7 +616,7 @@ void Mario::RunToRight()
 	}
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false && _IsControl==true)
 	{
 		SetSpriteShoot();
 	}
@@ -629,16 +641,16 @@ void Mario::RunToLeft()
 	{
 		_Frame_start = now;
 		
-		 if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsBigInvincible)
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 15, 23);
-		}
-		else if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsSmallInvincible)
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 12, 20);
-		}
-		else
-		_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 3, 5);
+			 if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsBigInvincible)
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 15, 23);
+			}
+			else if(_IsGetStar ==true && _Tag==eGameTag::eMarioIsSmallInvincible)
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 12, 20);
+			}
+			else
+			_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 3, 5);
 	}
 	
 	if(Keyboard::GetInstance()->IsKeyDown(DIK_A))
@@ -671,7 +683,7 @@ void Mario::RunToLeft()
 	}
 
 	//shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false && _IsControl==true)
 	{
 		SetSpriteShoot();
 	}
@@ -711,7 +723,7 @@ void Mario::PreStandRight()
 	//	_Velocity.y--;
 	//}
 	 //shoot
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false)
+	 if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && _IsFlower==true && _IsGetStar==false && _IsControl==true)
 	{
 		SetSpriteShoot();
 	}
@@ -753,7 +765,7 @@ void Mario::PreStandLeft()
 	}
 */
 	 //shoot
-	if(Keyboard::GetInstance()->IsKeyDown(DIK_J) && _IsFlower==true && _IsGetStar==false )
+	 if(Keyboard::GetInstance()->IsKeyDown(DIK_J) && _IsFlower==true && _IsGetStar==false && _IsControl==true )
 	{
 		SetSpriteShoot();
 	}
@@ -833,7 +845,11 @@ void Mario::Sitting()
 void Mario::InitTranferSmallToBig()
 {
 	_IsGetMushroom=true;
-	_Tag = eGameTag::eMarioIsBig;
+
+	if(_Tag==eMarioIsSmall) _Tag = eGameTag::eMarioIsBig;
+	else 
+		if(_Tag==eGameTag::eMarioIsSmallInvincible) _Tag=eGameTag::eMarioIsBigInvincible;
+
 	_PreState = _State;
 	_State=eMarioState::eIdle;
 	SoundManager::GetInstance()->GetSound(eSoundID::ePowerUp)->Play();
@@ -911,6 +927,7 @@ void Mario::ExitTranferBigToSmall()
 		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMario);
 		_State = _PreState;
 		GameStatistics::GetInstance()->PauseObject(false);
+	/*	SetSize(D3DXVECTOR2(32,32));*/
 	}
 }
 
@@ -1015,6 +1032,7 @@ void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 {
    DWORD now = GetTickCount();
 
+
 	if (now - _Frame_start >= _Tick_per_frame) 
 	{
 		_Frame_start = now;
@@ -1044,6 +1062,7 @@ void Mario::AutoAnimationRight(D3DXVECTOR2 PositionEndAutoAnimation)
 	if(_Position.x >= PositionEndAutoAnimation.x)  
 	{
 		_IsAnimationRight = false;
+		_Velocity.x = 0;
 
 		if(_PipeTag != eGameTag::eEmpty) 
 		{
@@ -1099,67 +1118,74 @@ void Mario::SetSpriteShoot()
 
 void Mario::InitTranferBigToFlower()
 {
-	_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformFlower);
-	_IsGetFlowerToTranform = true;
-	_PreState=_State;
-	_Velocity.y = 0;
-	_Velocity.x = 0;
-	_currentFrameBeforeTransformToFlower = _CurrentFrame;
-	SoundManager::GetInstance()->GetSound(eSoundID::ePowerUpAppears)->Play();
-	SetSpriteBeforeTransfromFlower();
-	_State=eMarioState::eIdle;
-	GameStatistics::GetInstance()->PauseObject(true);
+	if(_Tag==eMarioIsBig)
+	{
+		_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformFlower);
+		_IsGetFlowerToTranform = true;
+		_PreState=_State;
+		_Velocity.y = 0;
+		_Velocity.x = 0;
+		_currentFrameBeforeTransformToFlower = _CurrentFrame;
+		SoundManager::GetInstance()->GetSound(eSoundID::ePowerUpAppears)->Play();
+		SetSpriteBeforeTransfromFlower();
+		_State=eMarioState::eIdle;
+		GameStatistics::GetInstance()->PauseObject(true);
+	}
+	else if(_Tag==eMarioIsBigInvincible)
+	{
+		_State=eMarioState::eIdle;
+		SoundManager::GetInstance()->GetSound(eSoundID::ePowerUpAppears)->Play();
+		_IsFlower = true;
+	}
 }
 void Mario::TranferBigToFlower()
 {
 	DWORD now = GetTickCount();
-	
-	_Tick_per_frame_animation = 1000/ANIMATION_FRAME_RATE_FLOWER;
 
-	if (now - _Frame_start >= _Tick_per_frame_animation) 
+	if (now - _Frame_start >= _Tick_per_frame_animation_flower) 
 	{
 		_Frame_start = now;
 
-		if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 1)
-		{
-			_CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 33, 35); //jump L
-		}
-		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 5) //run L
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 21, 23);
-		}
-		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 4)
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 18, 20);
-		}
-		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 3)
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 15, 17);
-		}
-		else if(_IsGetFlowerToTranform==true && _currentFrameBeforeTransformToFlower==6)
-		{
-			_CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 3, 5);//stand L
-		}
-		else if(_IsGetFlowerToTranform==true && _currentFrameBeforeTransformToFlower==7)
-		{
-			_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 2); //stand R
-		}
-		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 8)//run R
-		{
-			_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 12, 14);
-		}
-		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 9)
-		{
-			_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 9, 11);
-		}
-		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 10)
-		{
-			_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 6, 8);
-		}
-		else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 12)
-		{
-			 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 30, 32); //jump R
-		}
+		if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 1 )
+			{
+				_CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 33, 35); //jump L
+			}
+			else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 5 && _Tag==eMarioIsBig) //run L
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 21, 23);
+			}
+			else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 4)
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 18, 20);
+			}
+			else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 3)
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 15, 17);
+			}
+			else if(_IsGetFlowerToTranform==true && _currentFrameBeforeTransformToFlower==6)
+			{
+				_CurrentFrame = SpriteManager::GetInstance()->PreviousFrame(_CurrentFrame, 3, 5);//stand L
+			}
+			else if(_IsGetFlowerToTranform==true && _currentFrameBeforeTransformToFlower==7)
+			{
+				_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 0, 2); //stand R
+			}
+			else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 8)//run R
+			{
+				_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 12, 14);
+			}
+			else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 9)
+			{
+				_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 9, 11);
+			}
+			else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 10)
+			{
+				_CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 6, 8);
+			}
+			else if(_IsGetFlowerToTranform ==true && _currentFrameBeforeTransformToFlower == 12)
+			{
+				 _CurrentFrame = SpriteManager::GetInstance()->NextFrame(_CurrentFrame, 30, 32); //jump R
+			}
 	}
 }
 void Mario::ExitTranferBigToFlower()
@@ -1170,9 +1196,13 @@ void Mario::ExitTranferBigToFlower()
 	{
 		_IsGetFlowerToTranform = false;
 		_IsFlower = true;
-		if(_Sprite != SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire))
+		if(_Sprite != SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire) && _Tag==eMarioIsBig)
 		{
 			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioFire);
+		}
+		else if (_Tag==eMarioIsBigInvincible)
+		{
+			_Sprite= SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMarioStar);
 		}
 		GameStatistics::GetInstance()->PauseObject(false);
 	}
@@ -1242,9 +1272,7 @@ void Mario::Update()
 		_Velocity.y = DEFAULT_VELOCITY;
 	}
 
-	
-
-	if(_IsFlower == true ) // nếu ăn hoa rồi mới update đạn
+	if(_IsFlower == true || Gun::GetInstance()->GetSizeListBullet() > 0) // nếu ăn hoa rồi mới update đạn hoặc còn đạn trên màn hình
 	{
 		Gun::GetInstance()->Shoot(_Position,_IsRight);
 	}
@@ -1298,7 +1326,7 @@ void Mario::Update()
 		_IsDead=false;
 		if(GameStatistics::GetInstance()->GetLife() <=0)
 		{
-			GameStatistics::GetInstance()->ChangeScene(eSceneID::eGameOver); //Chuyển về màn hình gameovern nếu hết mạng
+			GameStatistics::GetInstance()->ChangeScene(eSceneID::eGameOver); //Chuyển về màn hình gameover nếu hết mạng
 			_Tag=eGameTag::eMarioIsSmall;
 			_State=eMarioState::eIdle;
 			_IsControl=false;
@@ -1323,46 +1351,52 @@ void Mario::Update()
 
 void Mario::SetSpriteBeforeTransfromFlower()
 {
-	
-	if( _currentFrameBeforeTransformToFlower == 1)
+	if(_Tag==eMarioIsBig)
 	{
-		_CurrentFrame = 35; //jump L
+		if( _currentFrameBeforeTransformToFlower == 1)
+		{
+			_CurrentFrame = 35; //jump L
+		}
+		else if(_currentFrameBeforeTransformToFlower == 5) //run L
+		{
+			 _CurrentFrame =  23;
+		}
+		else if( _currentFrameBeforeTransformToFlower == 4)
+		{
+			 _CurrentFrame = 20;
+		}
+		else if( _currentFrameBeforeTransformToFlower == 3)
+		{
+			 _CurrentFrame = 15;
+		}
+		else if( _currentFrameBeforeTransformToFlower==6)
+		{
+			_CurrentFrame = 3;//stand L
+		}
+		else if( _currentFrameBeforeTransformToFlower==7)
+		{
+			_CurrentFrame =  0; //stand R
+		}
+		else if( _currentFrameBeforeTransformToFlower == 8)//run R
+		{
+			_CurrentFrame = 12;
+		}
+		else if( _currentFrameBeforeTransformToFlower == 9)
+		{
+			_CurrentFrame = 9;
+		}
+		else if( _currentFrameBeforeTransformToFlower == 10)
+		{
+			_CurrentFrame =  6;
+		}
+		else if( _currentFrameBeforeTransformToFlower == 12)
+		{
+			 _CurrentFrame =  30; //jump R
+		}
 	}
-	else if(_currentFrameBeforeTransformToFlower == 5) //run L
+	else if(_Tag==eMarioIsBigInvincible)
 	{
-		 _CurrentFrame =  23;
-	}
-	else if( _currentFrameBeforeTransformToFlower == 4)
-	{
-		 _CurrentFrame = 20;
-	}
-	else if( _currentFrameBeforeTransformToFlower == 3)
-	{
-		 _CurrentFrame = 15;
-	}
-	else if( _currentFrameBeforeTransformToFlower==6)
-	{
-		_CurrentFrame = 3;//stand L
-	}
-	else if( _currentFrameBeforeTransformToFlower==7)
-	{
-		_CurrentFrame =  0; //stand R
-	}
-	else if( _currentFrameBeforeTransformToFlower == 8)//run R
-	{
-		_CurrentFrame = 12;
-	}
-	else if( _currentFrameBeforeTransformToFlower == 9)
-	{
-		_CurrentFrame = 9;
-	}
-	else if( _currentFrameBeforeTransformToFlower == 10)
-	{
-		_CurrentFrame =  6;
-	}
-	else if( _currentFrameBeforeTransformToFlower == 12)
-	{
-		 _CurrentFrame =  30; //jump R
+		_CurrentFrame = _currentFrameBeforeTransformToFlower;
 	}
 }
 
@@ -1610,7 +1644,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	case eMonster:
 		{
 			if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0
-				&& _SpriteMosterDead != eKoopaTroopaStop && GameStatistics::GetInstance()->IsMarioReachAxe()==false)
+				&& _SpriteMosterDead != eKoopaTroopaStop)
 			{
 				if (collisionDirection == eCollisionDirection::eBottom && _SpriteMosterDead!=ePiranhaPlant && _SpriteMosterDead!=eKingBowser && _SpriteMosterDead!=eBulletFire)
 				{
@@ -1634,6 +1668,12 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				}
 			}
 		break;
+		}
+	case eAxeBoss:
+		{
+			_IsControl=false;
+			_Velocity.x = 0;
+			break;
 		}
 	case eFloatingBar:
 		if(_IsDead==false && _IsAnimationFlag==false)
@@ -1668,299 +1708,6 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			}
 		}
 		break;
-	default:
-		break;
-	}
-}
-
-void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirection, float offsetX, float offsetY)
-{
-	eSpriteID _SpriteMosterDead = object->GetSpriteID(); //xác định va chạm vào mai rùa ko chết
-	//Handling collision by object goes here
-	switch (object->GetObjectTypeID())
-	{
-	case eGround:
-		if (_IsDead == false)
-		{
-			switch (collisionDirection)
-			{
-			case eBottom:
-				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
-				_Velocity.y = 0;
-				_IsCollide = true;
-				_IsAnimationPipe = false;
-				break;
-			case eLeft:
-				_Velocity.x = 0;
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
-				break;
-			case eRight:
-				_Velocity.x = 0;
-				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
-				break;
-			case eTop:
-				_Velocity.y = -_Velocity.y;
-				break;
-			default:
-				break;
-			}
-		}
-		break;
-	case ePipe:
-		if (_IsDead == false && _IsAnimationPipe == false && _IsAnimationRight == false)
-		{
-			switch (collisionDirection)
-			{
-			case eBottom:
-				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
-				_Velocity.y = 0;
-				if (object->GetTag() != eGameTag::eEmpty && Keyboard::GetInstance()->IsKeyDown(DIK_S))
-				{
-					_PipeTag = object->GetTag();
-					SoundManager::GetInstance()->GetSound(eSoundID::ePipeTravel)->Play();
-				}
-				_IsCollide = true;
-				break;
-			case eRight:
-				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
-				_Velocity.x = 0;
-				break;
-			case eLeft:
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
-				_Velocity.x = 0;
-				break;
-			default:
-				break;
-			}
-		}
-		break;
-	case ePipeHorizontal:
-		if (_IsDead == false && _IsAnimationRight == false)
-		{
-			switch (collisionDirection)
-			{
-			case eBottom:
-				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
-				_Velocity.y = 0;
-				_IsCollide = true;
-				break;
-			case eRight:
-				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2;
-				_PipeTag = object->GetTag();
-				if (_PipeTag != eGameTag::eEmpty)
-				{
-					_IsAnimationRight = true;
-					SoundManager::GetInstance()->GetSound(eSoundID::ePipeTravel)->Play();
-				}
-				_Velocity.x = 0;
-				break;
-			case eLeft:
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2;
-				_Velocity.x = 0;
-				break;
-			default:
-				break;
-			}
-		}
-		break;
-	case eBrick:
-		if (_IsDead == false)
-		{
-			switch (collisionDirection)
-			{
-			case eBottom:
-				if (offsetX > 2)
-				{
-					_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
-					_Velocity.y = 0;
-					_IsCollide = true;
-				}
-				break;
-			case eRight:
-				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
-				_Velocity.x = 0;
-				break;
-			case eLeft:
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
-				_Velocity.x = 0;
-				break;
-			case eTop:
-				//if (offsetX > 2)
-				{
-					_Velocity.y = -_Velocity.y;
-					if(_Tag ==eGameTag::eMarioIsSmall|| _Tag==eGameTag::eMarioIsSmallInvincible)
-					{
-						SoundManager::GetInstance()->GetSound(eSoundID::eBump)->Play();
-					}
-					else
-						SoundManager::GetInstance()->GetSound(eSoundID::eBrickSmash)->Play();
-				}
-				break;
-			default:
-				break;
-			}
-		}
-		break;
-	case eHardBrick:
-		if (_IsDead == false && _IsAnimationFlag == false)
-		{
-			switch (collisionDirection)
-			{
-			case eBottom:
-				//if (offsetX > 2)
-				{
-					_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
-					_Velocity.y = 0;
-					_IsCollide = true;
-				}
-				break;
-			case eRight:
-				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
-				_Velocity.x = 0;
-				break;
-			case eLeft:
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
-				_Velocity.x = 0;
-				break;
-			case eTop:
-				if (offsetX > 2)
-				{
-					_Velocity.y = -_Velocity.y;
-				}
-				break;
-			default:
-				break;
-			}
-		}
-		break;
-	case eMagicMushroom:
-		if (collisionDirection != eCollisionDirection::eNone && _IsDead == false && _Tag != eGameTag::eMarioIsBig && _Tag != eGameTag::eMarioIsBigInvincible)
-		{
-			_IsGetMushroom = true;
-			_Tag = eGameTag::eMarioIsBig;
-			_PreState = _State;
-			_State = eMarioState::eIdle;
-			SoundManager::GetInstance()->GetSound(eSoundID::ePowerUp)->Play();
-
-			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformSmallToBig);
-			if (_IsRight == true) _CurrentFrame = SPRITE_SMALL_R;
-			else _CurrentFrame = SPRITE_SMALL_L;
-			_Velocity.y = 0;
-			SetSize(D3DXVECTOR2(32, 64));
-		}
-		break;
-	case eStarMan:
-		if (collisionDirection != eCollisionDirection::eNone && _IsDead == false)
-		{
-			_IsGetStar = true;
-			_CountStar = 0;
-			if (_Tag == eGameTag::eMarioIsBig)
-			{
-				_Tag = eGameTag::eMarioIsBigInvincible;
-				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eBigMarioStar);
-			}
-			else if (_Tag == eGameTag::eMarioIsSmall)
-			{
-				_Tag = eGameTag::eMarioIsSmallInvincible;
-				_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eSmallMarioStar);
-			}
-
-			_Velocity.y = 0;
-		}
-		break;
-	case eFireFlower:
-		if (collisionDirection != eCollisionDirection::eNone && _IsDead == false)
-		{
-			_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformFlower);
-			_IsGetFlowerToTranform = true;
-			_Velocity.y = 0;
-			_Velocity.x = 0;
-			_currentFrameBeforeTransformToFlower = _CurrentFrame;
-			SoundManager::GetInstance()->GetSound(eSoundID::ePowerUpAppears)->Play();
-			SetSpriteBeforeTransfromFlower();
-			_State = eMarioState::eIdle;
-		}
-		break;
-	case eFlagpole:
-		{
-			_IsAnimationFlag = true;
-			SoundManager::GetInstance()->GetSound(eSoundID::eDownTheFlagpole)->Play();
-		}
-		break;
-
-	case eMonster:
-	{
-		if (_IsDead == false && _IsTranferToSmall == false && _Tag != eGameTag::eMarioIsBigInvincible && _Tag != eGameTag::eMarioIsSmallInvincible && _TimeBeforeTranferToSmall == 0)
-		{
-			if (collisionDirection == eCollisionDirection::eBottom)
-			{
-				_IsCollisionMonster = true;
-				_State = eMarioState::eJump;
-				_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
-				break;
-			}
-			else if (collisionDirection != eCollisionDirection::eBottom && collisionDirection != eCollisionDirection::eNone)
-			{
-				if (_Tag == eGameTag::eMarioIsBig)
-				{
-					_Tag = eGameTag::eMarioIsSmall;
-					_IsTranferToSmall = true;
-					_PreState = _State;
-					_State = eMarioState::eIdle;
-					_IsFlower = false; //Khi va chạm quái sẽ mất trạng thái bắn chuyển về mario nhỏ
-					_Sprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMarioTransformBigToSmall);
-					_Velocity.y = 0;
-					if (_IsRight == true) _CurrentFrame = SPRITE_BIG_R;
-					else _CurrentFrame = SPRITE_BIG_L;
-					SoundManager::GetInstance()->GetSound(eSoundID::eVine)->Play();
-				}
-				else if (_Tag == eGameTag::eMarioIsSmall)
-				{
-					_IsDead = true;
-					_IsFlower=false;
-					_Tag = eGameTag::eMarioIsDead;
-					_Velocity.y = MAX_VELOCITYDEAD;
-					_State = eMarioState::eDead;
-					GameStatistics::GetInstance()->ChangeLife(false);
-					SoundManager::GetInstance()->GetSound(eSoundID::eMarioDie)->Play();
-
-				}
-			}
-		}
-	
-		break;
-	}
-	case eFloatingBar:
-	{
-		if (_IsDead == false)
-		{
-			switch (collisionDirection)
-			{
-			case eBottom:
-				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
-				_Velocity.y = object->GetBoundaryBox().fVy + _Velocity.y;
-				
-				
-				_Velocity.x = object->GetBoundaryBox().fVx+ _Velocity.x;
-
-				_IsCollide = true;
-				break;
-			case eLeft:
-				_Velocity.x = 0;
-				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
-				break;
-			case eRight:
-				_Velocity.x = 0;
-				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
-				break;
-			case eTop:
-				_Velocity.y = -_Velocity.y;
-			default:
-				break;
-			}
-		}
-		break;
-	}
 	default:
 		break;
 	}

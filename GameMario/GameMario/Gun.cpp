@@ -1,4 +1,5 @@
 #include "Gun.h"
+#include "Mario.h"
 
 Gun *Gun::Instance = NULL;
 
@@ -19,14 +20,14 @@ Gun *Gun::GetInstance()
 	return Instance;
 }
 
-bool Gun::GetStatus()
+int Gun::GetSizeListBullet()
 {
-	return _IsShoot;
+	return ListBullet.size();
 }
 
 void Gun::Shoot(D3DXVECTOR2 MarioPosition, bool IsRight)
 {
-	if(Keyboard::GetInstance()->IsKeyPress(DIK_J))
+	if(Keyboard::GetInstance()->IsKeyPress(DIK_J) && Mario::GetInstance()->GetIsControl()==true )
 	{
 		if(PoolBullet.size()!=0)
 		{

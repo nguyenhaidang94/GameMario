@@ -27,7 +27,8 @@ private:
 	bool _IsRight; //Xác định mario đang quay mặt qua trái hay phải
 	DWORD _Frame_start;	
 	DWORD _Tick_per_frame; //FPS của mario
-	DWORD _Tick_per_frame_animation; //FPS lúc auto aniamtion
+	DWORD _Tick_per_frame_animation; //FPS lúc auto animation
+	DWORD _Tick_per_frame_animation_flower; //FPS luc auto animation flower
 	bool _IsGetMushroom;		//Lấy nấm
 	bool _IsGetStar;			//Lấy ngôi sao
 	bool _IsTranferToSmall;		//Xác định biến mario to thành mario nhỏ
@@ -56,9 +57,6 @@ public:
 	void Render();
 	void Release();
 	void OnCollision(GameObject *object, eCollisionDirection collisionDirection);
-	//handle collision using offset
-	void OnCollision(GameObject *object, eCollisionDirection collisionDirection, float offsetX, float offsetY);
-
 	
 	bool GetIsControl(); //Get biến _IsControl
 	bool SetIsControl(bool flag); //Set biến _IsControl
