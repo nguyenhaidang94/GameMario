@@ -27,7 +27,7 @@ void GameStatistics::Initialize()
 	_WorldID = eWorldID::e1_1;
 	_CurrentSceneID = eSceneID::eMenu;
 	_Score = 0;
-	_Life = 30;
+	_Life = 3;
 	_CoinCount = 0;
 	_IsReachCheckpoint = false;
 	_Time = GAME_TIME;

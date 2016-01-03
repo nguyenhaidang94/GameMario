@@ -288,16 +288,16 @@ void KingBowser::Update()
 	if (_TypeSpriteID == eSpriteID::eKingBowser)
 	{
 		DWORD timeNow = GetTickCount();
-		
+
 		if (timeNow - _TimeStartFrame >= _TimePerFrame)
 		{
 			_TimeStartFrame = timeNow;
 			_FrameCurrent = SpriteManager::GetInstance()->NextFrame(_FrameCurrent, _FrameStart, _FrameEnd);
 		}
 
-		if (!GameStatistics::GetInstance()->IsMarioReachAxe())
+		if (_MonsterAlive)
 		{
-			if (_MonsterAlive)
+			if (!GameStatistics::GetInstance()->IsMarioReachAxe())
 			{
 				//--Random vị trí của KingBowser--------------------------------------------------------------------
 				KingBowserMove();
@@ -319,31 +319,24 @@ void KingBowser::Update()
 						_FrameEnd = 7;
 					}
 				}
-				//_Velocity.x = 0.0f;							///Cái này chặn tốc độ không cho di chuyển khi chưa cho phép nếu nhảy lên k chạm dất k di chuyển dc
-				/*if (_Position.x >= Camera::GetInstance()->GetViewPort().x + SCREEN_WIDTH + BUFFER_FOR_SCREEN)
-				{
-				_Position.x = Camera::GetInstance()->GetViewPort().x + SCREEN_WIDTH + BUFFER_FOR_SCREEN - 10;
-				}*/
+			}
+			else		//chết sau khi ăn rìu
+			{
+				MonsterDead(1);
+			}
 
-				//delete object if it move out of active site
-				/*if (!AABBCheck(Camera::GetInstance()->GetActiveSite(), this->GetBoundaryBox()))
-				{
-				this->_Tag = eGameTag::eDestroyed;
-				}*/
+			//location
+			_Position.x += _Velocity.x;
+			_Position.y += _Velocity.y;
+
+			if (_Velocity.y == 0.0)
+			{
+				_Velocity.y = -KINGBOWSER_VELOCITY_Y;
 			}
 		}
-		else		//chết sau khi ăn rìu
+		else
 		{
-			_Velocity.x = 0.0;
-			_KingBowserGun.Release();
-		}
-
-		//location
-		_Position.x += _Velocity.x;
-		_Position.y += _Velocity.y;
-
-		if (_Velocity.y == 0.0)
-		{
+			_Position.y += _Velocity.y;
 			_Velocity.y = -KINGBOWSER_VELOCITY_Y;
 		}
 	}
@@ -367,7 +360,7 @@ void KingBowser::Update()
 
 void KingBowser::Render()
 {
-	_Sprite->RenderAtFrame(_Position.x, _Position.y, _FrameCurrent);
+	_Sprite->RenderAtFrame(_Position.x, _Position.y, _FrameCurrent, 0.6);
 	_KingBowserGun.Render();
 }
 
@@ -446,6 +439,18 @@ void KingBowser::OnCollision(GameObject *object, eCollisionDirection collisionDi
 		#pragma endregion
 		}
 	}
+	else
+	{
+		if (_TypeSpriteID == eSpriteID::eKingBowser)
+		{
+			switch (object->GetObjectTypeID())
+			{
+			case eGround:
+				DirectionsCollision(object, collisionDirection);
+				break;
+			}
+		}
+	}
 }
 
 void KingBowser::SetFrame(int MonsterType)
@@ -471,6 +476,10 @@ void KingBowser::MonsterDead(int MonsterTypeDead)
 	{
 	case 1:
 		_MonsterAlive = false;
+		_MonsterVelocityY = -KINGBOWSER_VELOCITY_Y;
+		_Velocity.x = 0.0;
+		_Velocity.y = _MonsterVelocityY;
+		_KingBowserGun.Release();
 		break;
 	case 2:
 		_KingBowserALive--;
@@ -486,6 +495,7 @@ void KingBowser::MonsterDead(int MonsterTypeDead)
 			_MonsterVelocityY = KINGBOWSER_VELOCITY_Y;
 			_Velocity.x = -_MonsterVelocityX;
 			_Velocity.y = _MonsterVelocityY;
+			_KingBowserGun.Release();
 		}
 		break;
 	}
