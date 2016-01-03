@@ -242,13 +242,11 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 			//top
 			if (moveY > 0.0f)
 			{
-				//MessageBox(_hWnd, L"top", L"collision", MB_OK);
 				return eCollisionDirection::eTop;
 			}
 			//bot
 			else
 			{
-				//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
 				return eCollisionDirection::eBottom;
 			}
 		}
@@ -258,13 +256,11 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 			//left
 			if (moveX < 0.0f)
 			{
-				//MessageBox(_hWnd, L"left", L"collision", MB_OK);
 				return eCollisionDirection::eLeft;
 			}
 			//right
 			else
 			{
-				//MessageBox(_hWnd, L"right", L"collision", MB_OK);
 				return eCollisionDirection::eRight;
 			}
 		}
@@ -286,25 +282,21 @@ eCollisionDirection PlayMap::CheckCollision(GameObject *targetObj, GameObject *u
 			//tiep xuc voi mat tren cua vat unknown
 			if (dynamicBox.fY - dynamicBox.fHeight == unknownBox.fY)
 			{
-				//MessageBox(_hWnd, L"top", L"collision", MB_OK);
 				return eCollisionDirection::eTop;
 			}
 			//tiep xuc o mat duoi cua vat unknown
 			else if (dynamicBox.fY == unknownBox.fY - unknownBox.fHeight)
 			{
-				//MessageBox(_hWnd, L"bottom", L"collision", MB_OK);
 				return eCollisionDirection::eBottom;
 			}
 			//tiep xuc o mat trai cua vat unknown
 			else if (dynamicBox.fX + dynamicBox.fWidth == unknownBox.fX)
 			{
-				//MessageBox(_hWnd, L"left", L"collision", MB_OK);
 				return eCollisionDirection::eLeft;
 			}
 			//tiep xuc o mat phai cua vat unknown
 			else if (dynamicBox.fX == unknownBox.fX + unknownBox.fWidth)
 			{
-				//MessageBox(_hWnd, L"right", L"collision", MB_OK);
 				return eCollisionDirection::eRight;
 			}
 		}

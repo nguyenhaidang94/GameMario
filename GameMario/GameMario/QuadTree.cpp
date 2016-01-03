@@ -231,12 +231,13 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 		//browse objects in nodes
 		for (int i = 0; i < node->_ListObjects.size(); )
 		{
-			//if object in the active site
+			//if object is in the active site
 			if (AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
 			{
+				//if object's tag is not destroy and is not remove
 				if (node->_ListObjects[i]->GetTag() != eGameTag::eDestroyed && node->_ListObjects[i]->GetTag() != eGameTag::eRemove)
 				{
-					//after updating, if object is out of active site, release it
+
 					if (!AABBCheck(activeSite, node->_ListObjects[i]->GetBoundaryBox()))
 					{
 						node->_ListObjects[i]->Release();
@@ -257,12 +258,11 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 							//add object to a new node and remove object from current node
 							if (AABBCheck(activeSite, currentObj->GetBoundaryBox()))
 							{
-								//this if is used for a special situation, but actually it doesn't have to used
-								//if (node != _RootNode)
 								//add object to root node
 								//then root node will add object to suitable subnode
 								int returnNodeId = -1;
 								_RootNode->InsertObject(_MapQuadTree, currentObj, currentObj->GetBoundaryBox(), returnNodeId);
+								//comment TiengViet
 								//khi chuyen tu node con(hoac node sau) sang node cha(hoac node truoc)
 								//thi object khong duoc add vao _ObjectsOnScreen
 								//do node cha(hoac node truoc) da duoc duyet roi
@@ -273,8 +273,6 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 								//delete node if it is empty
 								if (node->IsEmpty())
 									DeleteSubnode(node);
-								//truong hop nay khong add object vao _ObjectsOnScreen
-								//nen khong update object
 							}
 							//object moves out of node and out of active site
 							//remove object
@@ -289,6 +287,7 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 									DeleteSubnode(node);
 							}
 						}
+						//if object is static or object is still in node
 						else
 						{
 							_ObjectsOnScreen.push_back(currentObj);
@@ -296,17 +295,18 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 						}
 					}
 				}
+				//if object's tag is remove, remove object from quadtree
 				else if (node->_ListObjects[i]->GetTag() == eGameTag::eRemove)
 				{
 					node->_ListObjects.erase(node->_ListObjects.begin() + i);
-							//delete node if it is empty
+					//delete node if it is empty
 					if (node->IsEmpty())
-							DeleteSubnode(node);
-					
+						DeleteSubnode(node);
 				}
+				//if object's tag is destroy, destroy object
 				else 
 				{
-					//remomve object if it's destroyed
+					//remove object if it's tag is destroyed
 					node->_ListObjects[i]->Release();
 					delete node->_ListObjects[i];
 					node->_ListObjects[i] = NULL;
@@ -315,7 +315,9 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 					if (node->IsEmpty())
 						DeleteSubnode(node);
 				}
+			
 			}
+			//if object is not in the activesite
 			else
 			{
 				//destroy objects in the left of the active site
@@ -329,6 +331,7 @@ void QuadTree::UpdateObjectsInNode(Node* node, Box activeSite)
 					if (node->IsEmpty())
 						DeleteSubnode(node);
 				}
+				//increase index
 				else
 					i++;
 			}
