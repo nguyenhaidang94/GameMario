@@ -480,6 +480,7 @@ void KingBowser::MonsterDead(int MonsterTypeDead)
 		_Velocity.x = 0.0;
 		_Velocity.y = _MonsterVelocityY;
 		_KingBowserGun.Release();
+		UpPoint(MONSTER_POINT * 100);
 		break;
 	case 2:
 		_KingBowserALive--;
@@ -496,6 +497,7 @@ void KingBowser::MonsterDead(int MonsterTypeDead)
 			_Velocity.x = -_MonsterVelocityX;
 			_Velocity.y = _MonsterVelocityY;
 			_KingBowserGun.Release();
+			UpPoint(MONSTER_POINT * 100);
 		}
 		break;
 	}

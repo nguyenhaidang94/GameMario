@@ -302,6 +302,7 @@ void Goomba::MonsterDead(int MonsterTypeDead)
 {
 	_MonsterAlive = false;
 	SetObjectType(eMonsterDead);
+	UpPoint(MONSTER_POINT);
 	switch (MonsterTypeDead)
 	{
 		case 1://dậm trên đầu

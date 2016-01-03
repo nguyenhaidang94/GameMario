@@ -312,4 +312,5 @@ void KoopaParatroopa::MonsterDead(int MonsterTypeDead)
 	_TypeSpriteID = eSpriteID::eKoopaTroopa;										//set type Id of sprite
 	_MonsterTypeID = 31;														//set type id of object
 	KoopaTroopa::SetKoopaTroopa(_MonsterTypeID, _Position.x, _Position.y);
+	UpPoint(MONSTER_POINT);
 }

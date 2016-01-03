@@ -244,6 +244,7 @@ void PiranhaPlant::MonsterDead(int MonsterTypeDead)
 {
 	SetObjectType(eMonsterDead);//k cần lắm do đã gán destroyed
 	_Tag = eGameTag::eDestroyed;
+	UpPoint(MONSTER_POINT);
 }
 
 bool PiranhaPlant::GetPiranhaPlantDanger()

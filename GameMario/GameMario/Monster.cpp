@@ -63,3 +63,9 @@ void Monster::DirectionsCollisionNoBox(GameObject *object, eCollisionDirection c
 		break;
 	}
 }
+
+void Monster::UpPoint(int Point)
+{
+	GameStatistics::GetInstance()->ChangeScore(Point);		//inscrease score
+	EffectManager::GetInstance()->ShowEffect(_Position, eEffectID::eFloatingText, Point);
+}

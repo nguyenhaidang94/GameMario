@@ -184,7 +184,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 	{
 		switch (object->GetObjectTypeID())
 		{
-		#pragma region va chạm ngược
+#pragma region va chạm ngược
 		case eGround:
 			DirectionsCollision(object, collisionDirection);
 			break;
@@ -214,55 +214,86 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 		case eHardBrick:
 			DirectionsCollision(object, collisionDirection);
 			break;
-		#pragma endregion
-		#pragma region Monster
+#pragma endregion
+#pragma region Monster
 		case eMonster:
-			if (_KoopaTroopaRevived)//nếu nó di chuyển: Khi đứng yên thì tốc độ và hướng sẽ k thay đổi
+			if (_KoopaTroopaRevived == true && _KoopaTroopaStop == false)		//Đang sống (di chuyển): đang sống bình thường
 			{
 				switch (object->GetSpriteID())
 				{
-					case ePiranhaPlant:
+				case ePiranhaPlant:
+					break;
+				case eKoopaTroopaDanger:
+					switch (collisionDirection)
+					{
+					case eRight:
+						MonsterDead(2);
+						_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
 						break;
+					case eLeft:
+						MonsterDead(2);
+						_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
+						break;
+					default:
+						break;
+					}
+					break;
+				case eGoomba:
+					DirectionsCollision(object, collisionDirection);
+					break;
+				case eKoopaTroopa:
+					DirectionsCollisionNoBox(object, collisionDirection);
+					break;
+				case eKoopaTroopaStop:
+					DirectionsCollisionNoBox(object, collisionDirection);
+					break;
+				case eKoopaParatroopa:
+					DirectionsCollisionNoBox(object, collisionDirection);
+					break;
+				case eKingBowser:
+					DirectionsCollisionNoBox(object, collisionDirection);
+					break;
+				}
+			}
+			else
+			{
+				if (_KoopaTroopaStop)	// đang chết và đứng yên: đứng yên
+				{
+					switch (object->GetSpriteID())
+					{
+					case eKoopaTroopaDanger:
+
+						switch (collisionDirection)
+						{
+						case eRight:
+							MonsterDead(2);
+							_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
+							break;
+						case eLeft:
+							MonsterDead(2);
+							_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
+							break;
+						default:
+							break;
+						}
+						break;
+					}
+				}
+				else     //Đang chết và di chuyển: nguy hiểm
+				{
+					switch(object->GetSpriteID())
+					{
 					case eKoopaTroopaDanger:
 						if (_TypeSpriteID == eSpriteID::eKoopaTroopaDanger)//2 con nguy hiểm sẽ vội ra
 						{
 							DirectionsCollision(object, collisionDirection);
 							break;
 						}
-						else
-						{
-							switch (collisionDirection)
-							{
-							case eRight:
-								MonsterDead(2);
-								_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X;
-								break;
-							case eLeft:
-								MonsterDead(2);
-								_MonsterVelocityX = KOOPATROOPA_VELOCITY_X;
-								break;
-							default:
-								break;
-							}
-						}
 						break;
-					case eGoomba:
-						DirectionsCollision(object, collisionDirection);
-						break;
-					case eKoopaTroopa:
-						DirectionsCollisionNoBox(object, collisionDirection);
-						break;
-					case eKoopaTroopaStop:
-						DirectionsCollisionNoBox(object, collisionDirection);
-						break;
-					case eKoopaParatroopa:
-						DirectionsCollisionNoBox(object, collisionDirection);
-						break;
-					case eKingBowser:
-						DirectionsCollisionNoBox(object, collisionDirection);
-						break;
+					}
 				}
 			}
+
 			break;
 		#pragma endregion
 		#pragma region Mario
@@ -286,6 +317,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 						SetFrame(_MonsterTypeID);
 						_Size.y = KOOPATROOPASTOP_HEIGHT;
 						_TimeStartVelocity = GetTickCount();			//set time now: will revive
+						UpPoint(MONSTER_POINT);
 					}
 					break;
 				case eRight:
@@ -493,6 +525,7 @@ void KoopaTroopa::MonsterDead(int MonsterTypeDead)
 {
 	_MonsterAlive = false;
 	SetObjectType(eMonsterDead);
+	UpPoint(MONSTER_POINT);
 	switch (MonsterTypeDead)
 	{
 	case 2://bị tấn công
@@ -503,6 +536,7 @@ void KoopaTroopa::MonsterDead(int MonsterTypeDead)
 		_Velocity.x = _MonsterVelocityX;
 		_Velocity.y = _MonsterVelocityY;
 		_Size = D3DXVECTOR2(32, 32);
+
 		break;
 	}
 }

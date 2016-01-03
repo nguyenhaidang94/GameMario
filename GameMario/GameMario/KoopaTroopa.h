@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Monster.h"
 #define KOOPATROOPA_WIDTH 32
 #define KOOPATROOPA_HEIGHT 48
@@ -12,8 +12,8 @@
 class KoopaTroopa: public Monster
 {
 protected:
-	bool _KoopaTroopaRevived;
-	bool _KoopaTroopaStop;
+	bool _KoopaTroopaRevived;			//Hồi sinh: sống
+	bool _KoopaTroopaStop;				//Đứng yên
 	//frame type
 	DWORD _FrameStartType;
 	DWORD _FrameEndType;

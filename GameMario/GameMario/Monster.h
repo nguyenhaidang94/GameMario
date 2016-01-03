@@ -2,6 +2,8 @@
 #include "DynamicGameObject.h"
 #include "GlobalVariables.h"
 #include "GameStatistics.h"
+#include "EffectManager.h"
+#define MONSTER_POINT 200
 
 class Monster : public DynamicGameObject
 {
@@ -28,4 +30,5 @@ public:
 	//directions Collision
 	void DirectionsCollision(GameObject *object, eCollisionDirection collisionDirection);
 	void DirectionsCollisionNoBox(GameObject *object, eCollisionDirection collisionDirection);
+	void UpPoint(int Point);
 };
