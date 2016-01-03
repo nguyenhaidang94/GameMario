@@ -184,7 +184,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 	{
 		switch (object->GetObjectTypeID())
 		{
-#pragma region va chạm ngược
+		#pragma region va chạm ngược
 		case eGround:
 			DirectionsCollision(object, collisionDirection);
 			break;
@@ -215,7 +215,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 			DirectionsCollision(object, collisionDirection);
 			break;
 #pragma endregion
-#pragma region Monster
+		#pragma region Monster
 		case eMonster:
 			if (_KoopaTroopaRevived == true && _KoopaTroopaStop == false)		//Đang sống (di chuyển): đang sống bình thường
 			{
