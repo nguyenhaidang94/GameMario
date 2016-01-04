@@ -60,7 +60,7 @@ void MenuScene::Render()
 	}
 	else	//show help
 	{
-		_HelpSprite->FixedRenderAtFrame(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0);
+		_HelpSprite->FixedRenderAtFrame(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0, 0.6);
 	}
 }
 
