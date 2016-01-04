@@ -85,8 +85,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	DWORD frame_start = GetTickCount();	
 	DWORD count_per_frame = 1000 / FRAME_RATE;
-	DWORD game_time_start = GetTickCount();		//to minus current game time 
-
+	DWORD interval = 1;
 	//main message loop
 	int done = 0;
 	while (!done)
@@ -101,12 +100,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
+		
 		DWORD now = GetTickCount();
 		if (now - frame_start >= count_per_frame) 
 		{
+			interval = now - frame_start;
 			frame_start = now;
-			game->Game_Run(hWnd);
+			game->Game_Run(hWnd, interval);
 		}
 	}
 

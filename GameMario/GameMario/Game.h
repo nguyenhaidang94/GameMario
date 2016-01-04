@@ -21,13 +21,19 @@ private:
 	LPD3DXSPRITE _spriteHandler;
 	LPDIRECTSOUND8	_lpDirectSound;
 	DWORD _start;
+	//variable for calculate fps
+	int _tickindex;
+	int _ticksum;
+	int *_ticklist;
+	bool _isReachMaxSample;
+	double CalcAverageTick(int newtick);
 public:
 	Game(void);
 	int Init_Direct3D(HWND hWnd, int width, int height, int fullscreen);
 	int Init_DirectSound(HWND hWnd);
 	int Init_SpriteHandle();
 	int Game_Init(HINSTANCE hInstance, HWND hWnd);
-	void Game_Run(HWND hWnd);
+	void Game_Run(HWND hWnd, int interval);
 	void Game_End(HWND hWnd);
 	~Game();
 };

@@ -51,6 +51,7 @@ void Bridge::Update()
 			Camera::GetInstance()->PauseCamera(false);	//stop pause camera
 			Camera::GetInstance()->AutoMoveCamera(true);	//auto move camera
 			Mario::GetInstance()->SetFlagAutoAnimationRight(true);
+			SoundManager::GetInstance()->GetSound(eSoundID::eWorldClear)->Play();		//play victory sound
 		}
 	}
 	
