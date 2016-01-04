@@ -24,7 +24,7 @@ GameStatistics* GameStatistics::GetInstance()
 
 void GameStatistics::Initialize()
 {
-	_WorldID = eWorldID::e1_1;
+	_WorldID = eWorldID::e1_3;
 	_CurrentSceneID = eSceneID::ePlay;
 	_Score = 0;
 	_Life = 3;

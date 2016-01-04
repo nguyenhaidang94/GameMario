@@ -72,10 +72,20 @@ void KoopaTroopa::Update()
 			}
 			else
 			{
-				if (_MonsterVelocityX > 0.0f)
-					_Velocity.x = KOOPATROOPA_VELOCITY_X * 1.5;
+				if (!_KoopaTroopaRevived)
+				{
+					if (_MonsterVelocityX > 0.0f)
+						_Velocity.x = KOOPATROOPA_VELOCITYMAX_X - 1.5f;
+					else
+						_Velocity.x = -KOOPATROOPA_VELOCITYMAX_X + 1.5f;
+				}
 				else
-					_Velocity.x = -KOOPATROOPA_VELOCITY_X * 1.5;
+				{
+					if (_MonsterVelocityX > 0.0f)
+						_Velocity.x = KOOPATROOPA_VELOCITY_X * 1.5;
+					else
+						_Velocity.x = -KOOPATROOPA_VELOCITY_X * 1.5;
+				}
 			}
 		}
 
@@ -323,7 +333,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 				case eRight:
 						if (_KoopaTroopaStop == true)					//đứng yên: chết hoặc hồi sinh lại do đang cựa cậy
 						{
-							_MonsterVelocityX = -KOOPATROOPA_VELOCITY_X - 7.0;//tăng tốc khi bị đá
+							_MonsterVelocityX = -KOOPATROOPA_VELOCITYMAX_X;//tăng tốc khi bị đá
 							_Velocity.x = _MonsterVelocityX;
 							_KoopaTroopaStop = false;
 							_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
@@ -336,7 +346,7 @@ void KoopaTroopa::OnCollision(GameObject *object, eCollisionDirection collisionD
 				case eLeft:
 						if (_KoopaTroopaStop == true)
 						{
-							_MonsterVelocityX = KOOPATROOPA_VELOCITY_X + 7.0;
+							_MonsterVelocityX = KOOPATROOPA_VELOCITYMAX_X;
 							_Velocity.x = _MonsterVelocityX;
 							_KoopaTroopaStop = false;
 							_KoopaTroopaRevived = false;				// nếu đá có sống lại cũng chết
