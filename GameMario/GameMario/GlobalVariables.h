@@ -174,7 +174,6 @@ enum eGameTag
 	eMarioIsBig,				//mario is in big state only
 	eMarioIsBigInvincible,	//mario is in big state and invincible
 	eMarioIsDead,
-	eMarioNotCollision, //trạng thái mario ko xét va chạm với những vật khác
 			
 };
 

@@ -2,6 +2,7 @@
 #define DEFAULT_VELOCITY -1
 #define BULLET_FRAME_RATE 10
 #define SPRITE_EF 2
+#define MAX_VELOCITYX 8
 Bullet *Bullet::Instance = NULL;
 
 Bullet::Bullet(void)
@@ -102,7 +103,6 @@ void Bullet::Update()
 	   {
 		 _IsAlive==true;
 	 	 _TimeAlive=100;
-		 
 	  }
 	 
 	if(_IsAlive ==true)
@@ -121,7 +121,7 @@ void Bullet::Update()
 
 		if(_IsCollide==true)
 		{
-			 _Velocity = VanTocNemXien(_Time,8,0.523);
+			_Velocity = VanTocNemXien(_Time,MAX_VELOCITYX,0.523);
 
 			 if(_IsRight==true) 
 				 _Position.x += _Velocity.x;
@@ -132,7 +132,7 @@ void Bullet::Update()
 		}
 		else
 		{
-			 _Velocity = VanTocNemXien(_Time,8,-0.785);
+			_Velocity = VanTocNemXien(_Time,MAX_VELOCITYX,-0.785);
 			
 			 if(_IsRight==true) 
 				 _Position.x += _Velocity.x;
@@ -251,31 +251,58 @@ void Bullet::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 				_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
 				_Velocity.y = 0;
 				_IsAlive=false;
-				SetObjectType(eBulletNotCollision);
+				_Tag=eIgnoreCollision;
 				break;
 			case eRight:
 				_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
 				_Velocity.x = 0;
-				SetObjectType(eBulletNotCollision);
+				_Tag=eIgnoreCollision;
 				_IsAlive=false;
 				break;
 			case eLeft:
 				_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
 				_Velocity.x = 0;
 				_IsAlive=false;
-				SetObjectType(eBulletNotCollision);
+				_Tag=eIgnoreCollision;
 				break;
 			case eTop:
 				_IsAlive=false;
 				_Velocity.y = 0;
-				SetObjectType(eBulletNotCollision);
+				_Tag=eIgnoreCollision;
 				break;
 			default:
 				break;
 		}
-	}
-	
-		
+		case eMonsterDead:
+			switch (collisionDirection)
+			{
+				case eBottom:
+					_Position.y = object->GetBoundaryBox().fY + _Size.y / 2;
+					_Velocity.y = 0;
+					_IsAlive=false;
+					_Tag=eIgnoreCollision;
+					break;
+				case eRight:
+					_Position.x = object->GetBoundaryBox().fX - _Size.x / 2 + 4;
+					_Velocity.x = 0;
+					_Tag=eIgnoreCollision;
+					_IsAlive=false;
+					break;
+				case eLeft:
+					_Position.x = object->GetBoundaryBox().fX + object->GetBoundaryBox().fWidth + _Size.x / 2 - 4;
+					_Velocity.x = 0;
+					_IsAlive=false;
+					_Tag=eIgnoreCollision;
+					break;
+				case eTop:
+					_IsAlive=false;
+					_Velocity.y = 0;
+					_Tag=eIgnoreCollision;
+					break;
+				default:
+					break;
+			}
+	}	
 }
 
 Bullet::~Bullet(void)
