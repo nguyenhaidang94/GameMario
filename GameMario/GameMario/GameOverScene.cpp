@@ -36,30 +36,4 @@ void GameOverScene::Release()
 void GameOverScene::Load()
 {
 	_StartTime = GetTickCount();
-	//save score to file
-	try
-	{
-		fstream file(L"resources\\TopScore.txt");
-		string line;
-		int topScore;
-		while (getline(file, line))
-		{
-			topScore = atoi(line.c_str());
-		}
-
-		//if current score higher than top score, save
-		int currentScore = GameStatistics::GetInstance()->GetScore() ;
-		if(currentScore > topScore)
-		{
-			//cant write file directly, so have to reopen the file
-			file.close();
-			file.open(L"resources\\TopScore.txt", std::fstream::out | std::fstream::trunc);
-			file << currentScore;	//write to file
-		}
-		file.close();
-	}
-	catch(exception e)
-	{
-		//handle sth here
-	}
 }

@@ -20,6 +20,8 @@ private:
 	int _MushroomPositionY;
 	DWORD _StartTime;
 	bool _IsAutoRun;	//mario will start auto run
+	Sprite *_HelpSprite;//sprite to show help
+	bool _IsShowHelp;	//stop update scene if player show help
 public:
 	MenuScene(void);
 	~MenuScene(void);

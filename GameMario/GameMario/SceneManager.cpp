@@ -22,7 +22,7 @@ SceneManager *SceneManager::GetInstance()
 
 void SceneManager::Initialize()
 {
-	_CurrentSceneID = eSceneID::ePlay;
+	_CurrentSceneID = eSceneID::eMenu;
 	_ListScene[eSceneID::eMenu] = new MenuScene();
 	_ListScene[eSceneID::eStartMap] = new StartScene();
 	_ListScene[eSceneID::ePlay] = new PlayScene();

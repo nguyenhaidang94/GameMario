@@ -48,6 +48,7 @@ void PlayScene::Load()
 	_ListMap[_WorldID]->Load();
 	GameStatistics::GetInstance()->ResetWorld();
 	_FrameStart = GetTickCount();
+	_IsMusicPlay = false;
 }
 
 
@@ -122,8 +123,18 @@ void PlayScene::Update()
 			GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);	//move to startmap scene when switch world
 		}
 	}
+	
+	//manage world sound
+	if(Mario::GetInstance()->GetDead() || GameStatistics::GetInstance()->IsPerformMarioReachFlagpoleStatus() || GameStatistics::GetInstance()->IsMarioReachAxe())		//stop music if mario died or reach axe or reach flag
+	{
+		SoundManager::GetInstance()->GetSound(eSoundID::eWorldMusic)->Stop();
+	}
 
-
+	if(!_IsMusicPlay)
+	{
+		_IsMusicPlay = true;
+		SoundManager::GetInstance()->GetSound(eSoundID::eWorldMusic)->Repeat();
+	}
 }
 
 void PlayScene::Render()

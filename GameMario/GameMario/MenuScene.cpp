@@ -7,8 +7,10 @@ MenuScene::MenuScene(void)
 	_SpriteBanner = SpriteManager::GetInstance()->GetSprite(eSpriteID::eMenuBanner);
 	_SpriteMushroom =  SpriteManager::GetInstance()->GetSprite(eSpriteID::eMenuMushroom);
 	_DemoMap = new PlayMap(eWorldID::e1_1);
-	_MushroomPositionY = SCREEN_HEIGHT/2 - 48;
+	_MushroomPositionY = SCREEN_HEIGHT/2 - 32;
 	_IsAutoRun = false;
+	_IsShowHelp = false;	//not show help
+	_HelpSprite = SpriteManager::GetInstance()->GetSprite(eSpriteID::eHelp);
 }
 
 
@@ -24,31 +26,42 @@ void MenuScene::Initialize()
 
 void MenuScene::Update()
 {
-	if((GetTickCount() - _StartTime) > WAIT_TIME) _IsAutoRun=true;
+	if(!_IsShowHelp)
+	{
+		if((GetTickCount() - _StartTime) > WAIT_TIME) _IsAutoRun=true;
 
-	if(_IsAutoRun==true)
-	{
-		//Set mario state to auto run here
-		Mario::GetInstance()->SetFlagAutoAnimationRight(true);
-		Mario::GetInstance()->AutoAnimationRight(D3DXVECTOR2(896,96));
-	}
-	else	//testing, delete this after mario have auto run state
-	{
-			Mario::GetInstance()->SetFlagAutoAnimationRight(false);
+		if(_IsAutoRun==true)
+		{
+			//Set mario state to auto run here
+			Mario::GetInstance()->SetFlagAutoAnimationRight(true);
+			Mario::GetInstance()->AutoAnimationRight(D3DXVECTOR2(896,96));
+		}
+		else	//testing, delete this after mario have auto run state
+		{
+				Mario::GetInstance()->SetFlagAutoAnimationRight(false);
 		
+		}
+		_DemoMap->Update();
 	}
 	HandlingInput();
-	_DemoMap->Update();
 }
 
 void MenuScene::Render()
 {
-	_SpriteBanner->RenderFirstFrame(SCREEN_WIDTH/2, 2*SCREEN_HEIGHT/3);
-	_SpriteMushroom->RenderFirstFrame(SCREEN_WIDTH/2 - 144, _MushroomPositionY);
-	TextManager::GetInstance()->Render("1 Player Game", SCREEN_WIDTH/2 + 5, SCREEN_HEIGHT/2 - 48);
-	TextManager::GetInstance()->Render("2 Player Game", SCREEN_WIDTH/2 + 5, SCREEN_HEIGHT/2 - 80);
-	TextManager::GetInstance()->Render("Top - " + _TopScore, SCREEN_WIDTH/2 + 5, SCREEN_HEIGHT/2 - 128);
-	_DemoMap->Render();
+	if(!_IsShowHelp)	//render normally if not show help
+	{
+		_SpriteBanner->RenderFirstFrame(SCREEN_WIDTH/2, 2*SCREEN_HEIGHT/3);
+		_SpriteMushroom->RenderFirstFrame(SCREEN_WIDTH/2 - 144, _MushroomPositionY);
+		TextManager::GetInstance()->Render("1 Player Game", SCREEN_WIDTH/2 + 5, SCREEN_HEIGHT/2 - 32);
+		TextManager::GetInstance()->Render("2 Player Game", SCREEN_WIDTH/2 + 5, SCREEN_HEIGHT/2 - 64);
+		TextManager::GetInstance()->Render("Press F1 To See Help", SCREEN_WIDTH/2 + 5, SCREEN_HEIGHT/2 - 96);
+		TextManager::GetInstance()->Render("Top - " + _TopScore, SCREEN_WIDTH/2 + 5, SCREEN_HEIGHT/2 - 128);
+		_DemoMap->Render();
+	}
+	else	//show help
+	{
+		_HelpSprite->FixedRenderAtFrame(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0);
+	}
 }
 
 void MenuScene::Release()
@@ -68,13 +81,31 @@ void MenuScene::Load()
 	_IsAutoRun = false;
 	try
 	{
-		ifstream infile(L"resources\\TopScore.txt");
+		//read file high score
+		fstream file(L"resources\\TopScore.txt");
 		string line;
-		while (getline(infile, line))
+		int topScore;
+		while (getline(file, line))
 		{
-			_TopScore = Unility::IntToFixedLengthString(atoi(line.c_str()), 6);
+			topScore = atoi(line.c_str());
 		}
-		infile.close();
+
+		 //save score to file
+		//if current score higher than top score, save
+		int currentScore = GameStatistics::GetInstance()->GetScore() ;
+		if(currentScore > topScore)
+		{
+			//cant write file directly, so have to reopen the file
+			file.close();
+			file.open(L"resources\\TopScore.txt", std::fstream::out | std::fstream::trunc);
+			file << currentScore;	//write to file
+			_TopScore = Unility::IntToFixedLengthString(atoi(to_string(currentScore).c_str()),6);	//top score = current score and convert to string with 6 character
+		}
+		else
+		{
+			_TopScore = Unility::IntToFixedLengthString(atoi(to_string(topScore).c_str()),6);		//top score is score in file and convert to string with 6 character
+		}
+		file.close();
 	}
 	catch(exception e)
 	{
@@ -86,23 +117,39 @@ void MenuScene::HandlingInput()
 {
 	if(!_IsAutoRun)
 	{
-		if(Keyboard::GetInstance()->IsKeyPress(DIK_SPACE))
+		if(!_IsShowHelp)	//normal menu scene
 		{
-			GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);
-			GameStatistics::GetInstance()->Reset();
-			Mario::GetInstance()->SetIsControl(true);
-		}
-
-		if(Keyboard::GetInstance()->IsKeyPress(DIK_T))
-		{
-			_StartTime = GetTickCount();	//reset wait time
-			if(_MushroomPositionY == SCREEN_HEIGHT/2 - 48)
+			if(Keyboard::GetInstance()->IsKeyPress(DIK_SPACE))
 			{
-				_MushroomPositionY -= 32;
+				GameStatistics::GetInstance()->ChangeScene(eSceneID::eStartMap);
+				GameStatistics::GetInstance()->Reset();
+				Mario::GetInstance()->SetIsControl(true);
 			}
-			else
+
+			if(Keyboard::GetInstance()->IsKeyPress(DIK_T))
 			{
-				_MushroomPositionY += 32;
+				_StartTime = GetTickCount();	//reset wait time
+				if(_MushroomPositionY == SCREEN_HEIGHT/2 - 32)
+				{
+					_MushroomPositionY -= 32;
+				}
+				else
+				{
+					_MushroomPositionY += 32;
+				}
+			}
+
+			if(Keyboard::GetInstance()->IsKeyPress(DIK_F1))
+			{
+				_IsShowHelp = true;
+			}
+		}
+		else	//help
+		{
+			if(Keyboard::GetInstance()->IsKeyPress(DIK_F1))
+			{
+				_StartTime = GetTickCount();
+				_IsShowHelp = false;
 			}
 		}
 	}

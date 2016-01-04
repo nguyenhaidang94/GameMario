@@ -36,6 +36,7 @@ void SoundManager::LoadSounds(LPDIRECTSOUND8 lpDSound)
 	_ListSound[eSoundID::eSoundGameOver] = new Sound(lpDSound, L"resources\\Sounds\\smb_gameover.wav"); 
 	_ListSound[eSoundID::eStageClear] =  new Sound(lpDSound, L"resources\\Sounds\\smb_stage_clear.wav"); 
 	_ListSound[eSoundID::eWorldClear] = new Sound(lpDSound, L"resources\\Sounds\\smb_world_clear.wav"); 
+	_ListSound[eSoundID::eWorldMusic] = new Sound(lpDSound, L"resources\\Sounds\\smb_world_music.wav"); 
 }
 
 Sound *SoundManager::GetSound(eSoundID soundID)

@@ -77,6 +77,7 @@ enum eSpriteID
 	eMushroomRetainer,
 	eTopCoin,
 	eBigMarioSitting,
+	eHelp,
 };
 
 enum eMarioState
@@ -139,7 +140,8 @@ enum eSoundID
 	ePipeTravel,
 	ePowerUp,
 	eVine,
-	ePowerUpAppears
+	ePowerUpAppears,
+	eWorldMusic
 };
 
 //game tag use in game

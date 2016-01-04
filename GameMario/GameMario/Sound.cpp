@@ -91,7 +91,8 @@ void Sound::Play() const
 }
 void Sound::Repeat() const
 {
-		_SoundBuffer->Play(0, 0, DSBPLAY_LOOPING);
+	_SoundBuffer->SetCurrentPosition(0);
+	_SoundBuffer->Play(0, 0, DSBPLAY_LOOPING);
 }
 void Sound::Stop() const
 {

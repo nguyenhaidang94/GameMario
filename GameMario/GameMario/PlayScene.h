@@ -3,6 +3,7 @@
 #include "Unility.h"
 #include "PlayMap.h"
 #include "GameStatistics.h"
+#include "SoundManager.h"
 
 class PlayScene :
 	public GameScene
@@ -13,6 +14,8 @@ private:
 
 	//Handling collision of map object
 	void HandlingCollision();
+
+	bool _IsMusicPlay;	//check if world music is played
 
 	//manage ingame time
 	DWORD _FrameStart;
