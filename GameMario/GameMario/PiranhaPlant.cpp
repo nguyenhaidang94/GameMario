@@ -59,7 +59,7 @@ void PiranhaPlant::Update()
 			_MonsterVelocityY = PIRANHAPLANT_VELOCITY_Y;
 			_PiranhaPlantStop = true;
 			_Size.x = 90;
-			_Size.y = 170;
+			_Size.y = 48;
 			_PiranhaPlantDanger = false;//hết nguy hiểm
 			SetObjectType(eMonsterDead);//trạng thái chết tạm thời
 		}
