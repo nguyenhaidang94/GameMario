@@ -62,7 +62,7 @@ void PlayScene::Update()
 	//reduce time normally and check if timeup when not perform mario reach flagpole status
 	if(!GameStatistics::GetInstance()->IsPerformMarioReachFlagpoleStatus())
 	{
-		if (now - _FrameStart >= INGAME_SECOND) 
+		if (now - _FrameStart >= INGAME_SECOND && !Mario::GetInstance()->GetDead()) 
 		{
 			_FrameStart = now;
 			GameStatistics::GetInstance()->DecreaseTime();
@@ -73,7 +73,7 @@ void PlayScene::Update()
 			_currentLife = GameStatistics::GetInstance()->GetLife();
 		}
 	
-		if(GameStatistics::GetInstance()->GetTime() == 0 )
+		if(GameStatistics::GetInstance()->GetTime() == 0 && !Mario::GetInstance()->GetDead()) 
 		{
 			Mario::GetInstance()->SetDead(true);
 			GameStatistics::GetInstance()->SetLife(_currentLife-1);

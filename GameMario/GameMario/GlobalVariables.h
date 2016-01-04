@@ -141,7 +141,8 @@ enum eSoundID
 	ePowerUp,
 	eVine,
 	ePowerUpAppears,
-	eWorldMusic
+	eWorldMusic,
+	eMonsterMusic
 };
 
 //game tag use in game

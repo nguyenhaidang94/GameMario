@@ -53,6 +53,7 @@ void Coin::OnCollision(GameObject *object, eCollisionDirection collisionDirectio
 		_Tag = eGameTag::eDestroyed;
 		GameStatistics::GetInstance()->ChangeScore(COIN_SCORE);		//inscrease score
 		GameStatistics::GetInstance()->IncreaseCoin();		//inscrease score
+		SoundManager::GetInstance()->GetSound(eSoundID::eCoinAppear)->Play();
 		break;
 	case eBrick:
 		_Tag = eGameTag::eDestroyed;

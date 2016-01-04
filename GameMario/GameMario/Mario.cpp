@@ -1,6 +1,6 @@
 ﻿#include "Mario.h"
 
-#define JUMP_VELOCITY_BOOST 2
+#define JUMP_VELOCITY_BOOST 8.7f
 #define FALLDOWN_VELOCITY_DECREASE 1.0f
 #define DEFAULT_VELOCITY -1.0f
 #define INCREASE_VELOCITY 0.5 //velocity X
@@ -8,23 +8,23 @@
 #define SPRITE_BIG_R 0
 #define SPRITE_SMALL_R 6
 #define SPRITE_SMALL_L 7
-#define MAX_VELOCITY 8.7f
 #define VELOCITY_COLLISION_MONSTER_X 0
 #define VELOCITY_COLLISION_MONSTER_Y 5
 #define MAX_VELOCITY2 11
 #define MAX_VELOCITYDEAD 13
-#define MAX_VELOCITYX 4.0f
-#define MAX_VELOCITYSHOOT 10
+#define MAX_VELOCITYX 5.0f
+#define MAX_VELOCITYSHOOT 8
 #define ANIMATION_FRAME_RATE 20
 #define ANIMATION_FRAME_RATE_FLOWER 5
 #define MARIO_FRAME_RATE 15
 #define MARIO_FRAME_RATE_SLOW 5
-#define TIME_STAR 200
+#define TIME_STAR 300
 #define TIME_BEFORE_BIG_TO_SMALL 50
 #define DECREASE_POSITION_Y_SITTING 2
 #define POSITION_Y_ANIMATION 150
 #define DECREASE_BOX_X 4
 #define DECREASE_BOX_Y 2
+#define FLAG_DROP_DOWN_VELOCITY 4
 
 
 Mario *Mario::Instance = NULL;
@@ -147,7 +147,7 @@ void Mario::HandlingInput()
 				_IsCollide = false;
 				_State = eMarioState::eJump;
 				SoundManager::GetInstance()->GetSound(eSoundID::eJumpSmall)->Play();
-		       _Velocity.y = MAX_VELOCITY;  
+		       _Velocity.y = JUMP_VELOCITY_BOOST;  
 			 }
 		}
 
@@ -1322,7 +1322,7 @@ void Mario::Update()
 	//Nếu chết thì chuyển màn chơi về lại checkpoint nếu đã qua checkpoint hoặc gameover nếu hết mạng
 	if(_IsDead==true && _Position.y <= 0)
 	{
-		_IsDead=false;
+		/*_IsDead=false;*/
 		if(GameStatistics::GetInstance()->GetLife() <=0)
 		{
 			GameStatistics::GetInstance()->ChangeScene(eSceneID::eGameOver); //Chuyển về màn hình gameover nếu hết mạng
@@ -1527,7 +1527,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 			case eBottom:
 				if(object->GetTag()!=eGameTag::eInvisible)
 				{
-					_Position.y = object->GetBoundaryBox().fY + _Size.y/2- DECREASE_BOX_Y;;
+					_Position.y = object->GetBoundaryBox().fY + _Size.y/2- DECREASE_BOX_Y;
 					_Velocity.y =0 ;
 					_IsCollide = true;
 				}
@@ -1550,6 +1550,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				break;
 			case eTop:
 				_Velocity.y = -_Velocity.y;
+				SoundManager::GetInstance()->GetSound(eSoundID::eBump)->Play();
 				break;
 			default:
 				break;
@@ -1580,6 +1581,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 				break;
 			case eTop:
 				_Velocity.y = -_Velocity.y;
+				SoundManager::GetInstance()->GetSound(eSoundID::eBump)->Play();
 				break;
 			default:
 				break;
@@ -1630,6 +1632,8 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 	case eFlagpole:
 		{
 			_IsAnimationFlag = true;
+			_Velocity.x = 0;
+			_Velocity.y= -FLAG_DROP_DOWN_VELOCITY;
 			
 		}
 		break;
@@ -1643,6 +1647,7 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 					_IsCollisionMonster = true;
 					_State = eMarioState::eJump;
 					_Velocity.y = VELOCITY_COLLISION_MONSTER_Y;
+					SoundManager::GetInstance()->GetSound(eSoundID::eMonsterMusic)->Play();
 					break;
 				}
 				else if (collisionDirection != eCollisionDirection::eBottom && _TimeBeforeTranferToSmall ==0 && (collisionDirection != eCollisionDirection::eNone|| _SpriteMosterDead==ePiranhaPlant 
@@ -1655,7 +1660,6 @@ void Mario::OnCollision(GameObject *object, eCollisionDirection collisionDirecti
 					else if (_Tag == eGameTag::eMarioIsSmall)
 					{
 						InitDead();
-
 					}
 				}
 			}

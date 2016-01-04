@@ -27,7 +27,7 @@ KingBowser::KingBowser(int objectTypeID, int positionX, int positionY)
 	SetFrame(1);
 	_MonsterVelocityX = -KINGBOWSER_VELOCITY_X;
 	_MonsterVelocityY = -KINGBOWSER_VELOCITY_Y;
-	_KingBowserALive = 6;														//set the number alive
+	_KingBowserALive = 5;														//set the number alive
 	_Left = true;																//set the variable left
 	_TimeStartBounce = GetTickCount();											//set time now
 	_TimePerBounce = TIMES_TURN_BOUNCE;											//set time the turn bounce

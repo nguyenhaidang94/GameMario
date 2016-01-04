@@ -111,7 +111,11 @@ void GameStatistics::DecreaseTime()
 	{
 		if(!_IsGamePause)
 		{
-			_Time--;
+			if(_Time > 0)
+			{
+				_Time--;
+			}
+
 		}
 	}
 }

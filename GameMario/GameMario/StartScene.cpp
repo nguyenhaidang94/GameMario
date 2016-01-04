@@ -41,6 +41,8 @@ void StartScene::Load()
 	Mario::GetInstance()->SetPosition(GetMarioStartPosition());
 	Mario::GetInstance()->SetIsControl(true);	//allow control mario back
 
+	Mario::GetInstance()->SetDead(false);
+
 	//always return to main map if die in other map
 	if(GameStatistics::GetInstance()->GetWorldID() == eWorldID::e1_1 || GameStatistics::GetInstance()->GetWorldID() == eWorldID::eHidden1_1)
 	{

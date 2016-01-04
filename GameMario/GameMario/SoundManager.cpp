@@ -37,6 +37,7 @@ void SoundManager::LoadSounds(LPDIRECTSOUND8 lpDSound)
 	_ListSound[eSoundID::eStageClear] =  new Sound(lpDSound, L"resources\\Sounds\\smb_stage_clear.wav"); 
 	_ListSound[eSoundID::eWorldClear] = new Sound(lpDSound, L"resources\\Sounds\\smb_world_clear.wav"); 
 	_ListSound[eSoundID::eWorldMusic] = new Sound(lpDSound, L"resources\\Sounds\\smb_world_music.wav"); 
+	_ListSound[eSoundID::eMonsterMusic] = new Sound(lpDSound, L"resources\\Sounds\\smb_stomp.wav"); 
 }
 
 Sound *SoundManager::GetSound(eSoundID soundID)

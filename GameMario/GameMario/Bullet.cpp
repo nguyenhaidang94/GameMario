@@ -107,9 +107,6 @@ void Bullet::Update()
 	 
 	if(_IsAlive ==true)
 	{ 
-		
-		SetObjectType(eObjectTypeID::eBullet);
-
 		_Time ++;
 		_TimeAlive ++;
 
@@ -183,6 +180,10 @@ void Bullet::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 			_Velocity.x =0;
 			_Velocity.y =0;
 			break;
+		case eTop:
+			_Time = 0;
+			_IsCollide = true;
+			break;
 		default:
 			break;
 		}
@@ -216,12 +217,12 @@ void Bullet::OnCollision(GameObject *object, eCollisionDirection collisionDirect
 		}
 		break;
 	case eBrick:
-	if(collisionDirection== eCollisionDirection::eBottom)
+		if(collisionDirection== eCollisionDirection::eBottom && object->GetTag()!=eGameTag::eInvisible)
 		{
 			_Time = 0;
 			_IsCollide = true;
 		}
-		else if(collisionDirection!= eCollisionDirection::eBottom && collisionDirection!= eCollisionDirection::eNone)
+		else if(collisionDirection!= eCollisionDirection::eBottom && collisionDirection!= eCollisionDirection::eNone && object->GetTag()!=eGameTag::eInvisible)
 		{
 			_IsAlive=false;
 			_Velocity.x =0;

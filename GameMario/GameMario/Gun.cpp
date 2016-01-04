@@ -36,12 +36,12 @@ void Gun::Shoot(D3DXVECTOR2 MarioPosition, bool IsRight)
 			
 			if(IsRight==true) 
 			{
-				ListBullet[ListBullet.size()-1]->SetPosition(D3DXVECTOR2(MarioPosition.x+16,MarioPosition.y+32));
+				ListBullet[ListBullet.size()-1]->SetPosition(D3DXVECTOR2(MarioPosition.x+8,MarioPosition.y+32));
 				ListBullet[ListBullet.size()-1]->SetRight(IsRight);
 			}
 			else 
 			{
-				ListBullet[ListBullet.size()-1]->SetPosition(D3DXVECTOR2(MarioPosition.x-16,MarioPosition.y+32));
+				ListBullet[ListBullet.size()-1]->SetPosition(D3DXVECTOR2(MarioPosition.x-8,MarioPosition.y+32));
 				ListBullet[ListBullet.size()-1]->SetRight(IsRight);
 			}
 
